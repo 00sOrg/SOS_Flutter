@@ -5,18 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "nearhere",
+      "name": "sos",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "nearhere (profile mode)",
+      "name": "sos (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "nearhere (release mode)",
+      "name": "sos (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

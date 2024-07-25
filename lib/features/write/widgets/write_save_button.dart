@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nearhere/features/board/viewmodels/board_viewmodel.dart';
-import 'package:nearhere/features/write/viewmodels/write_viewmodel.dart';
-import 'package:nearhere/shared/models/location.dart';
-import 'package:nearhere/shared/services/location_service.dart';
+import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
+import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
+import 'package:sos/shared/models/location.dart';
+import 'package:sos/shared/services/location_service.dart';
 
 final tempLocationProvider = FutureProvider<Location>((ref) async {
   final locationService = LocationService();

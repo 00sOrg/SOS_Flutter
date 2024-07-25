@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nearhere/features/write/viewmodels/write_viewmodel.dart';
-import 'package:nearhere/shared/models/category.dart';
+import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
+import 'package:sos/shared/models/category.dart';
 
 class WriteDropdownField extends ConsumerStatefulWidget {
   final WriteViewModel viewModel;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nearhere/shared/viewmodels/location_viewmodel.dart';
+import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 
 class RefreshButton extends ConsumerWidget {
   final double? size;

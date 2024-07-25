@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nearhere/shared/widgets/refresh_button.dart';
+import 'package:sos/shared/widgets/refresh_button.dart';
 
 class GradientContainer extends StatelessWidget {
   final Widget child;

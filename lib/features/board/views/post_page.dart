@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nearhere/features/board/widgets/post_text_row.dart';
-import 'package:nearhere/shared/models/category.dart';
-import 'package:nearhere/shared/utils/format_date_time.dart';
-import 'package:nearhere/shared/widgets/custom_app_bar.dart';
+import 'package:sos/features/board/widgets/post_text_row.dart';
+import 'package:sos/shared/models/category.dart';
+import 'package:sos/shared/utils/format_date_time.dart';
+import 'package:sos/shared/widgets/custom_app_bar.dart';
 import '../viewmodels/post_viewmodel.dart';
 
 class PostPage extends ConsumerWidget {

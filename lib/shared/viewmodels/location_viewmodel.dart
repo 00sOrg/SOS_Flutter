@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nearhere/shared/models/location.dart';
-import 'package:nearhere/shared/services/location_service.dart';
+import 'package:sos/shared/models/location.dart';
+import 'package:sos/shared/services/location_service.dart';
 
 class LocationViewModel extends StateNotifier<AsyncValue<Location>> {
   final LocationService _locationService;

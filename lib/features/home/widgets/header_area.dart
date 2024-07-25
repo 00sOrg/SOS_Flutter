@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nearhere/shared/models/location.dart';
+import 'package:sos/shared/models/location.dart';
 
 class HeaderArea extends StatelessWidget {
   final Location location;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nearhere/shared/models/category.dart';
+import 'package:sos/shared/models/category.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PostTextRow extends StatelessWidget {

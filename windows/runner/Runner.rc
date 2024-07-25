@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "nearhere" "\0"
+            VALUE "FileDescription", "sos" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "nearhere" "\0"
+            VALUE "InternalName", "sos" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "nearhere.exe" "\0"
-            VALUE "ProductName", "nearhere" "\0"
+            VALUE "OriginalFilename", "sos.exe" "\0"
+            VALUE "ProductName", "sos" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

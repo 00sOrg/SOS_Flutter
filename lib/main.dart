@@ -3,8 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:nearhere/app_router.dart';
-import 'package:nearhere/shared/providers/location_provider.dart';
+import 'package:sos/app_router.dart';
+import 'package:sos/shared/providers/location_provider.dart';
 
 Future<void> main() async {
   await _initialize();
@@ -44,12 +44,12 @@ class MyApp extends ConsumerWidget {
     final locationAsyncValue = ref.watch(locationProvider);
 
     return MaterialApp(
-      title: 'NEARHERE',
+      title: 'SOS',
       debugShowCheckedModeBanner: false,
       home: locationAsyncValue.when(
         data: (location) {
           return MaterialApp.router(
-            title: 'NEARHERE',
+            title: 'SOS',
             routerConfig: _appRouter.router(location.adminAddress),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

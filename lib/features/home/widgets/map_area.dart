@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:nearhere/shared/models/location.dart';
+import 'package:sos/shared/models/location.dart';
 
 class MapArea extends StatelessWidget {
   final Location location;

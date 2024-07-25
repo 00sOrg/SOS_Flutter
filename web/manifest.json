@@ -1,6 +1,6 @@
 {
-    "name": "nearhere",
-    "short_name": "nearhere",
+    "name": "sos",
+    "short_name": "sos",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

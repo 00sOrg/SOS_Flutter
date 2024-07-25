@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:nearhere/features/write/widgets/write_custom_text_field.dart';
-import 'package:nearhere/features/write/widgets/write_dropdown_field.dart';
-import 'package:nearhere/features/write/widgets/write_image_picker.dart';
-import 'package:nearhere/features/write/widgets/write_labeled_input.dart';
-import 'package:nearhere/features/write/widgets/write_refresh_field.dart';
-import 'package:nearhere/features/write/widgets/write_save_button.dart';
-import 'package:nearhere/shared/viewmodels/location_viewmodel.dart';
-import 'package:nearhere/shared/widgets/custom_app_bar.dart';
+import 'package:sos/features/write/widgets/write_custom_text_field.dart';
+import 'package:sos/features/write/widgets/write_dropdown_field.dart';
+import 'package:sos/features/write/widgets/write_image_picker.dart';
+import 'package:sos/features/write/widgets/write_labeled_input.dart';
+import 'package:sos/features/write/widgets/write_refresh_field.dart';
+import 'package:sos/features/write/widgets/write_save_button.dart';
+import 'package:sos/shared/viewmodels/location_viewmodel.dart';
+import 'package:sos/shared/widgets/custom_app_bar.dart';
 import '../viewmodels/write_viewmodel.dart';
 
 class WritePage extends ConsumerWidget {

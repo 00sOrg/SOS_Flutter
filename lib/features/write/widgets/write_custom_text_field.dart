@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nearhere/shared/styles/border_styles.dart';
+import 'package:sos/shared/styles/border_styles.dart';
 
 class WriteCustomTextField extends StatelessWidget {
   final bool isOneLine;

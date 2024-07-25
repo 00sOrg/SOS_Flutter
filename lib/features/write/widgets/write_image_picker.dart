@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nearhere/features/write/viewmodels/write_viewmodel.dart';
-import 'package:nearhere/shared/widgets/gradient_container.dart';
+import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
+import 'package:sos/shared/widgets/gradient_container.dart';
 
 class WriteImagePicker extends ConsumerWidget {
   const WriteImagePicker({super.key});

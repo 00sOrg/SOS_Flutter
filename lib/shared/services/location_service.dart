@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:nearhere/shared/models/location.dart';
+import 'package:sos/shared/models/location.dart';
 
 class LocationService {
   Future<Location> getCurrentLocation() async {

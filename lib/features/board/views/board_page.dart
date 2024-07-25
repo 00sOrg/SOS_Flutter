@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nearhere/features/board/viewmodels/board_viewmodel.dart';
-import 'package:nearhere/features/board/widgets/post_grid_area.dart';
-import 'package:nearhere/shared/models/location.dart';
-import 'package:nearhere/shared/viewmodels/location_viewmodel.dart';
-import 'package:nearhere/shared/widgets/custom_app_bar.dart';
-import 'package:nearhere/shared/widgets/refresh_button.dart';
+import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
+import 'package:sos/features/board/widgets/post_grid_area.dart';
+import 'package:sos/shared/models/location.dart';
+import 'package:sos/shared/viewmodels/location_viewmodel.dart';
+import 'package:sos/shared/widgets/custom_app_bar.dart';
+import 'package:sos/shared/widgets/refresh_button.dart';
 
 class BoardPage extends ConsumerWidget {
   const BoardPage({super.key});
