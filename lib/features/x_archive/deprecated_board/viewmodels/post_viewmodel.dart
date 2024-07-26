@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../shared/models/post.dart';
-import '../../../shared/repositories/post_repository.dart';
+import '../../../../shared/models/post.dart';
+import '../../../../shared/repositories/post_repository.dart';
 
 class PostViewModel extends StateNotifier<AsyncValue<Post>> {
   PostViewModel(this._repository, this.id) : super(const AsyncValue.loading()) {

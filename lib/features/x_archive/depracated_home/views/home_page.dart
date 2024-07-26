@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/features/home/widgets/header_area.dart';
-import 'package:sos/features/home/widgets/map_area.dart';
-import 'package:sos/features/home/widgets/target_button.dart';
+import 'package:sos/features/x_archive/depracated_home/views/widgets/header_area.dart';
+import 'package:sos/features/x_archive/depracated_home/views/widgets/map_area.dart';
+import 'package:sos/features/x_archive/depracated_home/views/widgets/target_button.dart';
 import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 import 'package:sos/shared/widgets/gradient_container.dart';
 

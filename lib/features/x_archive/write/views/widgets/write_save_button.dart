@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
-import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
+import 'package:sos/features/x_archive/deprecated_board/viewmodels/board_viewmodel.dart';
+import 'package:sos/features/x_archive/write/viewmodels/write_viewmodel.dart';
 import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/services/location_service.dart';
 

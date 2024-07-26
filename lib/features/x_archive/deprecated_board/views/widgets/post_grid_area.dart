@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sos/features/board/widgets/post_item.dart';
+import 'package:sos/features/x_archive/deprecated_board/views/widgets/post_item.dart';
 import 'package:sos/shared/models/post.dart';
 
 class PostGridArea extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sos/features/board/views/board_page.dart';
-import 'package:sos/features/board/views/post_page.dart';
-import 'package:sos/features/home/views/home_page.dart';
-import 'package:sos/features/write/views/write_page.dart';
+import 'package:sos/features/x_archive/deprecated_board/views/board_page.dart';
+import 'package:sos/features/x_archive/deprecated_board/views/post_page.dart';
+import 'package:sos/features/x_archive/depracated_home/views/home_page.dart';
+import 'package:sos/features/x_archive/write/views/write_page.dart';
 import 'package:sos/shared/widgets/custom_nav_bar.dart';
 
 class AppRouter {
