@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:sos/app_router.dart';
+import 'package:sos/shared/navigation/app_router.dart';
 import 'package:sos/shared/providers/location_provider.dart';
 
 Future<void> main() async {
