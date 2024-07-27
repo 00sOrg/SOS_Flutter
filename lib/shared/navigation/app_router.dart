@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/features/board/views/board_page.dart';
 import 'package:sos/features/home/views/home_page.dart';
+import 'package:sos/features/notification/views/notification_page.dart';
 import 'package:sos/features/post/views/post_page.dart';
 import 'package:sos/features/profile/views/profile_page.dart';
 import 'package:sos/features/rescue/views/rescue_page.dart';
@@ -48,6 +49,10 @@ class AppRouter {
           path: '/profile',
           builder: (context, state) => ProfilePage(),
         ),
+        GoRoute(
+          path: '/notifications',
+          builder: (context, state) => NotificationPage(),
+        )
         // GoRoute(
         //   path: '/post/:id',
         //   builder: (context, state) {
