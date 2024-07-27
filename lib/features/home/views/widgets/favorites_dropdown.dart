@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 
-class FavoritesDropdown extends StatelessWidget {
+class FavoritesDropdown extends ConsumerWidget {
   final List<String> dummyUsers = ['user1', 'user2', 'user3', 'user4', 'user5'];
 
   FavoritesDropdown({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -24,15 +26,9 @@ class FavoritesDropdown extends StatelessWidget {
                 child: Text(item),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Scaffold(
-                      body: Center(
-                        child: Text(item),
-                      ),
-                    ),
-                  ),
-                );
+                ref
+                    .read(homeViewModelProvider.notifier)
+                    .navigateToUser(context, item);
               },
             );
           },
