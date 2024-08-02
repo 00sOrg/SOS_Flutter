@@ -12,7 +12,7 @@ class SplashPage extends StatelessWidget {
       body: Center(
         child: SvgPicture.asset(
           'assets/icons/logo.svg',
-          width: 108.w,
+          width: 181.w,
         ),
       ),
     );

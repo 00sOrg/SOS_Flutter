@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sos/features/auth/views/login_page.dart';
+import 'package:sos/features/auth/views/splash_page.dart';
 import 'package:sos/features/board/views/board_page.dart';
 import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
@@ -13,6 +15,14 @@ class AppRouter {
   GoRouter router(String locationAddress) {
     return GoRouter(
       routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const SplashPage(),
+        ),
+        GoRoute(
+          path: '/login',
+          builder: (context, state) => LoginPage(),
+        ),
         ShellRoute(
           builder: (context, state, child) {
             return Scaffold(
@@ -30,7 +40,7 @@ class AppRouter {
 
   static List<GoRoute> get _routes => [
         GoRoute(
-          path: '/',
+          path: '/home',
           builder: (context, state) => HomePage(),
         ),
         GoRoute(
