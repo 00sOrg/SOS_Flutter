@@ -39,7 +39,6 @@ Future<void> _initialize() async {
 class MyApp extends ConsumerWidget {
   MyApp({super.key});
 
-  final AppRouter _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,9 +52,10 @@ class MyApp extends ConsumerWidget {
             debugShowCheckedModeBanner: false,
             home: locationAsyncValue.when(
               data: (location) {
+                final appRouter = AppRouter(ref);
                 return MaterialApp.router(
                   title: 'SOS',
-                  routerConfig: _appRouter.router(location.adminAddress),
+                  routerConfig: appRouter.router(location.adminAddress),
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                     fontFamily: 'Pretendard',
