@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
-import 'package:sos/features/home/views/widgets/favorites_btn.dart';
+import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
 import 'package:sos/features/home/views/widgets/map_area.dart';
-import 'package:sos/features/home/views/widgets/notification_btn.dart';
 import 'package:sos/shared/providers/location_provider.dart';
 
 class HomePage extends ConsumerWidget {
@@ -60,15 +59,17 @@ class HomePage extends ConsumerWidget {
           children: [
             // 이건 여차하면 Favorites랑 Notification 버튼을 한 위젯으로 합칠 수 있을 것 같아서 일단 onTap을 파라미터로 받도록 구현해둔거임
             // 이런 경우 아니라면 그냥 각 위젯 안에 onTap 넣는게 깔끔쓰
-            FavoritesBtn(
+            HeaderBtn(
               onTap: () =>
                   ref.read(homeViewModelProvider.notifier).toggleDropdown(),
+              icon: const Icon(Icons.notifications),
             ),
             HomeSearchBar(),
-            NotificationBtn(
+            HeaderBtn(
               onTap: () => ref
                   .read(homeViewModelProvider.notifier)
                   .navigateToNotificationPage(context),
+              icon: const Icon(Icons.people),
             ),
           ],
         ),

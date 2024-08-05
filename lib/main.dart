@@ -1,10 +1,13 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sos/shared/navigation/app_router.dart';
 import 'package:sos/shared/providers/location_provider.dart';
+import 'package:sos/shared/utils/log_util.dart';
 
 Future<void> main() async {
   await _initialize();
@@ -16,22 +19,21 @@ Future<void> _initialize() async {
   try {
     await dotenv.load(fileName: '.env');
   } catch (e) {
-    debugPrint("Could not load .env file: $e");
+    LogUtil.e("Could not load .env file: $e");
   }
   await NaverMapSdk.instance.initialize(
     clientId: dotenv.env['NAVER_MAP_API_ID']!,
     onAuthFailed: (ex) {
-      debugPrint("********* 네이버맵 인증오류 : $ex *********");
+      LogUtil.e("네이버맵 인증오류 : $ex");
     },
   );
   await Geolocator.checkPermission();
   await Geolocator.requestPermission();
   final position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best);
-      
-  // debugPrint('&&&&&&&&&&&&&');
-  debugPrint('latitude: ${position.latitude}');
-  debugPrint('longitude: ${position.longitude}');
+
+  log('latitude: ${position.latitude}');
+  log('longitude: ${position.longitude}');
 }
 
 class MyApp extends ConsumerWidget {
@@ -43,29 +45,33 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locationAsyncValue = ref.watch(locationProvider);
 
-    return MaterialApp(
-      title: 'SOS',
-      debugShowCheckedModeBanner: false,
-      home: locationAsyncValue.when(
-        data: (location) {
-          return MaterialApp.router(
+    return ScreenUtilInit(
+        designSize: const Size(393, 852),
+        builder: (context, child) {
+          return MaterialApp(
             title: 'SOS',
-            routerConfig: _appRouter.router(location.adminAddress),
             debugShowCheckedModeBanner: false,
+            home: locationAsyncValue.when(
+              data: (location) {
+                return MaterialApp.router(
+                  title: 'SOS',
+                  routerConfig: _appRouter.router(location.adminAddress),
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(
+                    fontFamily: 'Pretendard',
+                    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+                  ),
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(
+                child: Text('Error: $error'),
+              ),
+            ),
             theme: ThemeData(
               fontFamily: 'Pretendard',
-              scaffoldBackgroundColor: const Color(0xFFFFFFFF),
             ),
           );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(
-          child: Text('Error: $error'),
-        ),
-      ),
-      theme: ThemeData(
-        fontFamily: 'Bangers',
-      ),
-    );
+        });
   }
 }
