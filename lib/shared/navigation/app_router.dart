@@ -7,7 +7,7 @@ import 'package:sos/features/auth/views/splash_page.dart';
 import 'package:sos/features/board/views/board_page.dart';
 import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
-import 'package:sos/features/post/views/post_page.dart';
+import 'package:sos/features/write/views/write_page.dart';
 import 'package:sos/features/profile/views/profile_page.dart';
 import 'package:sos/features/rescue/views/rescue_page.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
@@ -67,8 +67,8 @@ class AppRouter {
           builder: (context, state) => RescuePage(),
         ),
         GoRoute(
-          path: '/post',
-          builder: (context, state) => PostPage(),
+          path: '/write',
+          builder: (context, state) => WritePage(),
         ),
         GoRoute(
           path: '/board',

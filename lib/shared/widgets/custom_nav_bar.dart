@@ -63,7 +63,7 @@ class CustomNavBar extends StatelessWidget {
           color: selectedIdx == 2 ? Colors.black54 : Colors.black12,
           size: 32,
         ),
-        label: 'Post',
+        label: 'Write',
       ),
       NavigationDestination(
         icon: Icon(
