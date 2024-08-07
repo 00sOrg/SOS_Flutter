@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
+import 'package:sos/features/write/views/widgets/write_submit_btn.dart';
 
 class WritePage extends ConsumerWidget {
   const WritePage({super.key});
@@ -26,13 +28,18 @@ class WritePage extends ConsumerWidget {
                 const Divider(height: 1, thickness: 1),
                 const SizedBox(height: 21),
                 titleField(),
-                const SizedBox(height: 9),
-                Container(
-                  height: 1.3,
-                  color: const Color(0xFFE9E9E9),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Container(
+                    height: 1.3,
+                    color: const Color(0xFFE9E9E9),
+                  ),
                 ),
-                const SizedBox(height: 12),
                 contentField(),
+                const SizedBox(height: 300),
+                const WriteCautionsBlock(),
+                const SizedBox(height: 24),
+                const WriteSubmitBtn(),
               ],
             ),
           ),
@@ -68,10 +75,11 @@ class WritePage extends ConsumerWidget {
     return TextField(
       keyboardType: TextInputType.multiline,
       autocorrect: false,
+      minLines: 2,
       maxLines: null,
       decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        hintText: '내용을 입력하세요',
+        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+        hintText: '내용을 입력하세요.',
         hintStyle: TextStyle(
           fontSize: 14,
           color: Color(0xFFB6B6B6),
@@ -83,6 +91,7 @@ class WritePage extends ConsumerWidget {
         fontSize: 14,
         color: Color(0xFF060606),
         fontWeight: FontWeight.w400,
+        height: 1.2,
       ),
       onTap: () {},
     );

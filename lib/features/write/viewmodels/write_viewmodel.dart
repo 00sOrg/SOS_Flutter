@@ -1,6 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/repositories/post_repository.dart';
 
@@ -21,6 +25,11 @@ class WriteViewModel extends StateNotifier<Post> {
         );
 
   final ImagePicker _picker = ImagePicker();
+
+  void dummySubmitButtonTap(BuildContext context) {
+    log('SUBIT PRESSED');
+    GoRouter.of(context).go('/board');
+  }
 
   Future<void> createPost(String address) async {
     if (state.image != null) {
