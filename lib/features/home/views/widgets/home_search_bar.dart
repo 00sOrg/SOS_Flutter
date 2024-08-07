@@ -17,6 +17,7 @@ class HomeSearchBar extends ConsumerWidget {
             ),
             filled: true,
             fillColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+            suffixIcon: const Icon(Icons.search),
           ),
           onChanged: (query) {},
         ),
