@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/models/x_post.dart';
 import 'package:sos/shared/repositories/post_repository.dart';
 
-class BoardViewModel extends StateNotifier<AsyncValue<List<Post>>> {
+class BoardViewModel extends StateNotifier<AsyncValue<List<XPost>>> {
   final PostRepository _repository;
 
   BoardViewModel(this._repository)
@@ -30,7 +30,7 @@ class BoardViewModel extends StateNotifier<AsyncValue<List<Post>>> {
 }
 
 final boardViewModelProvider =
-    StateNotifierProvider<BoardViewModel, AsyncValue<List<Post>>>(
+    StateNotifierProvider<BoardViewModel, AsyncValue<List<XPost>>>(
   (ref) {
     final repository = ref.watch(postRepositoryProvider);
     return BoardViewModel(repository);

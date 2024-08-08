@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../shared/models/post.dart';
+import '../../../../shared/models/x_post.dart';
 import '../../../../shared/repositories/post_repository.dart';
 
-class PostViewModel extends StateNotifier<AsyncValue<Post>> {
+class PostViewModel extends StateNotifier<AsyncValue<XPost>> {
   PostViewModel(this._repository, this.id) : super(const AsyncValue.loading()) {
     fetchPost();
   }
@@ -21,7 +21,7 @@ class PostViewModel extends StateNotifier<AsyncValue<Post>> {
 }
 
 final postViewModelProvider =
-    StateNotifierProvider.family<PostViewModel, AsyncValue<Post>, String>(
+    StateNotifierProvider.family<PostViewModel, AsyncValue<XPost>, String>(
         (ref, id) {
   final repository = ref.watch(postRepositoryProvider);
   return PostViewModel(repository, id);

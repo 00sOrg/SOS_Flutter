@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'post.dart';
+part of 'x_post.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Post _$PostFromJson(Map<String, dynamic> json) {
-  return _Post.fromJson(json);
+XPost _$XPostFromJson(Map<String, dynamic> json) {
+  return _XPost.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Post {
+mixin _$XPost {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -30,13 +30,13 @@ mixin _$Post {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PostCopyWith<Post> get copyWith => throw _privateConstructorUsedError;
+  $XPostCopyWith<XPost> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PostCopyWith<$Res> {
-  factory $PostCopyWith(Post value, $Res Function(Post) then) =
-      _$PostCopyWithImpl<$Res, Post>;
+abstract class $XPostCopyWith<$Res> {
+  factory $XPostCopyWith(XPost value, $Res Function(XPost) then) =
+      _$XPostCopyWithImpl<$Res, XPost>;
   @useResult
   $Res call(
       {String id,
@@ -49,9 +49,9 @@ abstract class $PostCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PostCopyWithImpl<$Res, $Val extends Post>
-    implements $PostCopyWith<$Res> {
-  _$PostCopyWithImpl(this._value, this._then);
+class _$XPostCopyWithImpl<$Res, $Val extends XPost>
+    implements $XPostCopyWith<$Res> {
+  _$XPostCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -103,10 +103,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
 }
 
 /// @nodoc
-abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
-  factory _$$PostImplCopyWith(
-          _$PostImpl value, $Res Function(_$PostImpl) then) =
-      __$$PostImplCopyWithImpl<$Res>;
+abstract class _$$XPostImplCopyWith<$Res> implements $XPostCopyWith<$Res> {
+  factory _$$XPostImplCopyWith(
+          _$XPostImpl value, $Res Function(_$XPostImpl) then) =
+      __$$XPostImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -120,10 +120,11 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$PostImplCopyWithImpl<$Res>
-    extends _$PostCopyWithImpl<$Res, _$PostImpl>
-    implements _$$PostImplCopyWith<$Res> {
-  __$$PostImplCopyWithImpl(_$PostImpl _value, $Res Function(_$PostImpl) _then)
+class __$$XPostImplCopyWithImpl<$Res>
+    extends _$XPostCopyWithImpl<$Res, _$XPostImpl>
+    implements _$$XPostImplCopyWith<$Res> {
+  __$$XPostImplCopyWithImpl(
+      _$XPostImpl _value, $Res Function(_$XPostImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -137,7 +138,7 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? content = null,
     Object? createdAt = null,
   }) {
-    return _then(_$PostImpl(
+    return _then(_$XPostImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -172,8 +173,8 @@ class __$$PostImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PostImpl implements _Post {
-  _$PostImpl(
+class _$XPostImpl implements _XPost {
+  _$XPostImpl(
       {required this.id,
       required this.title,
       required this.address,
@@ -182,8 +183,8 @@ class _$PostImpl implements _Post {
       required this.content,
       required this.createdAt});
 
-  factory _$PostImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PostImplFromJson(json);
+  factory _$XPostImpl.fromJson(Map<String, dynamic> json) =>
+      _$$XPostImplFromJson(json);
 
   @override
   final String id;
@@ -202,14 +203,14 @@ class _$PostImpl implements _Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, title: $title, address: $address, category: $category, image: $image, content: $content, createdAt: $createdAt)';
+    return 'XPost(id: $id, title: $title, address: $address, category: $category, image: $image, content: $content, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PostImpl &&
+            other is _$XPostImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.address, address) || other.address == address) &&
@@ -229,28 +230,28 @@ class _$PostImpl implements _Post {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PostImplCopyWith<_$PostImpl> get copyWith =>
-      __$$PostImplCopyWithImpl<_$PostImpl>(this, _$identity);
+  _$$XPostImplCopyWith<_$XPostImpl> get copyWith =>
+      __$$XPostImplCopyWithImpl<_$XPostImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PostImplToJson(
+    return _$$XPostImplToJson(
       this,
     );
   }
 }
 
-abstract class _Post implements Post {
-  factory _Post(
+abstract class _XPost implements XPost {
+  factory _XPost(
       {required final String id,
       required final String title,
       required final String address,
       required final String category,
       final String? image,
       required final String content,
-      required final DateTime createdAt}) = _$PostImpl;
+      required final DateTime createdAt}) = _$XPostImpl;
 
-  factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
+  factory _XPost.fromJson(Map<String, dynamic> json) = _$XPostImpl.fromJson;
 
   @override
   String get id;
@@ -268,6 +269,6 @@ abstract class _Post implements Post {
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
-  _$$PostImplCopyWith<_$PostImpl> get copyWith =>
+  _$$XPostImplCopyWith<_$XPostImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
