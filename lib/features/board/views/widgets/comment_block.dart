@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/models/comment.dart';
 import 'package:sos/shared/utils/format_date_time.dart';
 
-class PostPreviewBlock extends StatelessWidget {
-  final Post post;
+class CommentBlock extends StatelessWidget {
+  final Comment comment;
 
-  const PostPreviewBlock({super.key, required this.post});
+  const CommentBlock({super.key, required this.comment});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,9 @@ class PostPreviewBlock extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(99),
-                child: post.profilePic != null
+                child: comment.profilePic != null
                     ? Image.network(
-                        post.profilePic!,
+                        comment.profilePic!,
                         width: 32,
                       )
                     : SvgPicture.asset(
@@ -33,7 +33,7 @@ class PostPreviewBlock extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    post.userName,
+                    comment.userName,
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
@@ -41,7 +41,7 @@ class PostPreviewBlock extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    formatDateTime(post.createdAt),
+                    formatDateTime(comment.createdAt),
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w100,
@@ -53,7 +53,7 @@ class PostPreviewBlock extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            post.content,
+            comment.content,
             style: const TextStyle(
               fontSize: 10,
             ),

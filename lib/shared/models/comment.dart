@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'post.freezed.dart';
-part 'post.g.dart';
+part 'comment.freezed.dart';
+part 'comment.g.dart';
 
 @freezed
-class Post with _$Post {
-  factory Post({
+class Comment with _$Comment {
+  factory Comment({
     // required String id,
     // required String title,
     // String? image,
@@ -14,7 +14,7 @@ class Post with _$Post {
     required String userName,
     required String content,
     required DateTime createdAt,
-  }) = _Post;
+  }) = _Comment;
 
-  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
+  factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
 }

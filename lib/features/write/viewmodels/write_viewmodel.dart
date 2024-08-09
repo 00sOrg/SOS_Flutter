@@ -2,13 +2,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/models/comment.dart';
 
-class WriteViewModel extends StateNotifier<Post> {
+class WriteViewModel extends StateNotifier<Comment> {
 
   WriteViewModel()
       : super(
-          Post(
+          Comment(
             userName: '',
             content: '',
             createdAt: DateTime.now(),
@@ -21,7 +21,7 @@ class WriteViewModel extends StateNotifier<Post> {
   }
 }
 
-final writeViewModelProvider = StateNotifierProvider<WriteViewModel, Post>(
+final writeViewModelProvider = StateNotifierProvider<WriteViewModel, Comment>(
   (ref) {
     // final repository = ref.watch(postRepositoryProvider);
     return WriteViewModel();
