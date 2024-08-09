@@ -34,7 +34,8 @@ class AppRouter {
             if (authViewModel.checkIfLoggedIn()) {
               return '/home';
             } else {
-              return '/login';
+              //return '/login';
+              return '/home';
             }
           },
         ),
