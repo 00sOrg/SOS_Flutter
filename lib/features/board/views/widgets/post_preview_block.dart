@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/utils/format_date_time.dart';
 
 class PostPreviewBlock extends StatelessWidget {
   final Post post;
@@ -40,7 +41,7 @@ class PostPreviewBlock extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    post.createdAt.toString(),
+                    formatDateTime(post.createdAt),
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w100,
