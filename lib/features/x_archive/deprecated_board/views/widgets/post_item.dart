@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/shared/models/category.dart';
-import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/models/x_post.dart';
 
 class PostItem extends StatelessWidget {
-  final Post post;
+  final XPost post;
 
   const PostItem({super.key, required this.post});
 
