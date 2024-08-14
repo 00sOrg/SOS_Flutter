@@ -13,6 +13,7 @@ import 'package:sos/features/profile/views/profile_page.dart';
 import 'package:sos/features/rescue/views/rescue_page.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
 import 'package:sos/shared/widgets/custom_nav_bar.dart';
+import 'package:sos/features/post/views/post_page.dart';
 
 class AppRouter {
   final WidgetRef ref;
@@ -45,6 +46,13 @@ class AppRouter {
         ),
         ShellRoute(
           builder: (context, state, child) {
+            // 홈 페이지가 아닌 다른 페이지로 이동 시 바텀시트 닫기
+            if (state.uri.path != '/home') {
+              ref
+                  .read(bottomSheetControllerProvider.notifier)
+                  .closeBottomSheet();
+            }
+
             return Scaffold(
               body: child,
               bottomNavigationBar: Builder(
@@ -59,7 +67,7 @@ class AppRouter {
                     onOtherPressed: () {
                       ref
                           .read(bottomSheetControllerProvider.notifier)
-                          .closeBottomSheet(); // Context 사용
+                          .closeBottomSheet();
                     },
                   );
                 },
@@ -96,14 +104,14 @@ class AppRouter {
         GoRoute(
           path: '/notifications',
           builder: (context, state) => NotificationPage(),
-        )
-        // GoRoute(
-        //   path: '/post/:id',
-        //   builder: (context, state) {
-        //     final postId = state.pathParameters['id'];
-        //     return PostPage(id: postId!);
-        //   },
-        // ),
+        ),
+        GoRoute(
+          path: '/post/:id',
+          builder: (context, state) {
+            final postId = state.pathParameters['id'];
+            return PostPage(id: postId!);
+          },
+        ),
       ];
 
   static int calculateSelectedIdx(String location) {

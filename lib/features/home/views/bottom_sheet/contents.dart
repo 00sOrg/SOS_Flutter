@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 
-class BottomSheetContent extends StatelessWidget {
+class BottomSheetContent extends ConsumerWidget {
   final ScrollController scrollController;
   final List<String> dummyData = List.generate(10, (index) => 'Event $index');
 
   BottomSheetContent({required this.scrollController});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
       controller:
           scrollController, // DraggableScrollableSheet에서 전달된 controller 사용
@@ -39,29 +42,18 @@ class BottomSheetContent extends StatelessWidget {
           // 리스트 아이템
           return ListTile(
             title: Text(dummyData[index - 2]), // 인덱스를 조정하여 데이터 표시
-            onTap: () => _showEventDetails(context, dummyData[index - 2]),
+            onTap: () => _navigateToPost(context, ref, index - 2),
           );
         }
       },
     );
   }
 
-//TODO: 이벤트 불러오기 & 누르면 이벤트 페이지로 넘어가게
-  void _showEventDetails(BuildContext context, String event) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Event Detail'),
-          content: Text('$event 상세 내용입니다.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('닫기'),
-            ),
-          ],
-        );
-      },
-    );
+  // 페이지 이동 전에 바텀시트를 닫고 페이지로 이동하는 함수
+  void _navigateToPost(BuildContext context, WidgetRef ref, int postId) {
+    ref.read(bottomSheetControllerProvider.notifier).closeBottomSheet();
+
+    // 페이지 전환
+    context.go('/post/$postId');
   }
 }
