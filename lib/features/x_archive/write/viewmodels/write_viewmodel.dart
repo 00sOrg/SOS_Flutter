@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/models/x_post.dart';
 import 'package:sos/shared/repositories/post_repository.dart';
 
-class WriteViewModel extends StateNotifier<Post> {
+class WriteViewModel extends StateNotifier<XPost> {
   final PostRepository _repository;
 
   WriteViewModel(this._repository)
       : super(
-          Post(
+          XPost(
             id: '',
             title: '',
             address: '',
@@ -55,7 +55,7 @@ class WriteViewModel extends StateNotifier<Post> {
   }
 }
 
-final writeViewModelProvider = StateNotifierProvider<WriteViewModel, Post>(
+final writeViewModelProvider = StateNotifierProvider<WriteViewModel, XPost>(
   (ref) {
     final repository = ref.watch(postRepositoryProvider);
     return WriteViewModel(repository);

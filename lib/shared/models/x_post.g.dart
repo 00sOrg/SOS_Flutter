@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'post.dart';
+part of 'x_post.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
+_$XPostImpl _$$XPostImplFromJson(Map<String, dynamic> json) => _$XPostImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       address: json['address'] as String,
@@ -16,7 +16,7 @@ _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
-Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
+Map<String, dynamic> _$$XPostImplToJson(_$XPostImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,

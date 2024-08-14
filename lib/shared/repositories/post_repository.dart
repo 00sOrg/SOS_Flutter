@@ -2,29 +2,29 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/models/x_post.dart';
 
 class PostRepository {
   final Dio _dio = Dio(
     BaseOptions(baseUrl: dotenv.env['BASE_URL']!),
   );
 
-  Future<List<Post>> getPosts() async {
+  Future<List<XPost>> getPosts() async {
     final response = await _dio.get('/posts');
-    return (response.data as List).map((post) => Post.fromJson(post)).toList();
+    return (response.data as List).map((post) => XPost.fromJson(post)).toList();
   }
 
-  Future<Post> getPost(String id) async {
+  Future<XPost> getPost(String id) async {
     final response = await _dio.get('/posts/$id');
-    return Post.fromJson(response.data);
+    return XPost.fromJson(response.data);
   }
 
-  Future<Post> createPost(Post post) async {
+  Future<XPost> createPost(XPost post) async {
     final response = await _dio.post(
       '/posts',
       data: post.toJson(),
     );
-    return Post.fromJson(response.data);
+    return XPost.fromJson(response.data);
   }
 
   Future<void> deletePost(String id) async {

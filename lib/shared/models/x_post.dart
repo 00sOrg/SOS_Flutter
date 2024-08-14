@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'post.freezed.dart';
-part 'post.g.dart';
+part 'x_post.freezed.dart';
+part 'x_post.g.dart';
 
 @freezed
-class Post with _$Post {
-  factory Post({
+class XPost with _$XPost {
+  factory XPost({
     required String id,
     required String title,
     required String address,
@@ -13,7 +13,7 @@ class Post with _$Post {
     String? image,
     required String content,
     required DateTime createdAt,
-  }) = _Post;
+  }) = _XPost;
 
-  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
+  factory XPost.fromJson(Map<String, dynamic> json) => _$XPostFromJson(json);
 }

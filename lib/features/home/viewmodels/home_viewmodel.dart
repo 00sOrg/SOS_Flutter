@@ -1,16 +1,45 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeViewModel extends StateNotifier<bool> {
-  HomeViewModel() : super(false);
+class HomeState {
+  final bool isSwitchLeft;
+  final bool isFavoritesOpen;
+
+  HomeState({
+    this.isSwitchLeft = false,
+    this.isFavoritesOpen = false,
+  });
+
+  HomeState copyWith({
+    bool? isSwitchLeft,
+    bool? isFavoritesOpen,
+  }) {
+    return HomeState(
+      isSwitchLeft: isSwitchLeft ?? this.isSwitchLeft,
+      isFavoritesOpen: isFavoritesOpen ?? this.isFavoritesOpen,
+    );
+  }
+}
+
+class HomeViewModel extends StateNotifier<HomeState> {
+  HomeViewModel() : super(HomeState());
+
+  void toggleSwitch() {
+    state = state.copyWith(isSwitchLeft: !state.isSwitchLeft);
+    if (state.isSwitchLeft) {
+      log("SWITCH LEFT");
+    } else {
+      log("SWITCH RIGHT");
+    }
+  }
 
   void toggleDropdown() {
-    state = !state;
+    state = state.copyWith(isFavoritesOpen: !state.isFavoritesOpen);
   }
 
   void navigateToUser(BuildContext context, String user) {
-    // 이건 임시로 버튼 액션 만들어놓은거라 그냥 Navigator.of 씀 (가라로 함)
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Scaffold(
@@ -30,11 +59,11 @@ class HomeViewModel extends StateNotifier<bool> {
   }
 
   void navigateToNotificationPage(BuildContext context) {
-    // 이건 실제로 이 페이지로 이동하는게 확정이라 GoRouter 씀 (제대로 함)
     context.push('/notifications');
   }
 }
 
-final homeViewModelProvider = StateNotifierProvider<HomeViewModel, bool>((ref) {
+final homeViewModelProvider =
+    StateNotifierProvider<HomeViewModel, HomeState>((ref) {
   return HomeViewModel();
 });
