@@ -5,6 +5,7 @@ import 'package:sos/features/auth/viewmodels/auth_viewmodel.dart';
 import 'package:sos/features/auth/views/login_page.dart';
 import 'package:sos/features/auth/views/splash_page.dart';
 import 'package:sos/features/board/views/board_page.dart';
+import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
 import 'package:sos/features/write/views/write_page.dart';
@@ -20,7 +21,7 @@ class AppRouter {
 
   GoRouter router(String locationAddress) {
     return GoRouter(
-      initialLocation: '/',
+      initialLocation: '/home',
       routes: [
         GoRoute(
           path: '/',
@@ -34,8 +35,7 @@ class AppRouter {
             if (authViewModel.checkIfLoggedIn()) {
               return '/home';
             } else {
-              //return '/login';
-              return '/home';
+              return '/login';
             }
           },
         ),
@@ -47,8 +47,22 @@ class AppRouter {
           builder: (context, state, child) {
             return Scaffold(
               body: child,
-              bottomNavigationBar: CustomNavBar(
-                selectedIdx: calculateSelectedIdx(state.uri.path),
+              bottomNavigationBar: Builder(
+                builder: (context) {
+                  return CustomNavBar(
+                    selectedIdx: calculateSelectedIdx(state.uri.path),
+                    onHomePressed: () {
+                      ref
+                          .read(bottomSheetControllerProvider.notifier)
+                          .toggleBottomSheet(context); // Context 사용
+                    },
+                    onOtherPressed: () {
+                      ref
+                          .read(bottomSheetControllerProvider.notifier)
+                          .closeBottomSheet(); // Context 사용
+                    },
+                  );
+                },
               ),
             );
           },

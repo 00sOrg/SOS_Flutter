@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/features/board/views/widgets/comment_block.dart';
+import 'package:sos/features/post/views/widgets/comment_block.dart';
 import 'package:sos/shared/models/comment.dart';
 
 class CommentList extends ConsumerWidget {
