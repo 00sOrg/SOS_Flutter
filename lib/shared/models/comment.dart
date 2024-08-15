@@ -6,7 +6,8 @@ part 'comment.g.dart';
 @freezed
 class Comment with _$Comment {
   factory Comment({
-    // required String id,
+    // required int commentId,
+    required int postId,
     // required String title,
     // String? image,
     // required String address,
@@ -16,5 +17,6 @@ class Comment with _$Comment {
     required DateTime createdAt,
   }) = _Comment;
 
-  factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
+  factory Comment.fromJson(Map<String, dynamic> json) =>
+      _$CommentFromJson(json);
 }

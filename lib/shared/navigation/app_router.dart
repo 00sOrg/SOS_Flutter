@@ -108,8 +108,9 @@ class AppRouter {
         GoRoute(
           path: '/post/:id',
           builder: (context, state) {
-            final postId = state.pathParameters['id'];
-            return PostPage(id: postId!);
+            final postId = int.parse(
+                state.pathParameters['id']!); // Convert the string to an int
+            return PostPage(postId: postId);
           },
         ),
       ];

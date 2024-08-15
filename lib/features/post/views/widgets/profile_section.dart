@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
+import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/utils/format_date_time.dart';
 
 class ProfileSection extends StatelessWidget {
-  final PostViewModel viewModel;
+  final Post post;
 
-  const ProfileSection({super.key, required this.viewModel});
+  const ProfileSection({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +13,17 @@ class ProfileSection extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 24.0,
-          backgroundImage: NetworkImage(viewModel.profileImageUrl),
+          // Assuming post has a profileImageUrl or similar field
+          backgroundImage: post.media != null && post.media!.isNotEmpty
+              ? NetworkImage(post.media!)
+              : null, // Provide a fallback or placeholder if needed
         ),
         const SizedBox(width: 16.0),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              viewModel.title,
+              post.title,
               style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -27,7 +31,7 @@ class ProfileSection extends StatelessWidget {
             ),
             const SizedBox(height: 4.0),
             Text(
-              '${viewModel.date} · ${viewModel.location}',
+              '${formatDateTime(post.createdAt)} · ${post.city}, ${post.gu}', // Adjust this to match your actual data
               style: TextStyle(
                 fontSize: 12.0,
                 color: Colors.grey[600],

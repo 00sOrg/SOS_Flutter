@@ -8,6 +8,7 @@ part of 'comment.dart';
 
 _$CommentImpl _$$CommentImplFromJson(Map<String, dynamic> json) =>
     _$CommentImpl(
+      postId: (json['postId'] as num).toInt(),
       profilePic: json['profilePic'] as String?,
       userName: json['userName'] as String,
       content: json['content'] as String,
@@ -16,6 +17,7 @@ _$CommentImpl _$$CommentImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$CommentImplToJson(_$CommentImpl instance) =>
     <String, dynamic>{
+      'postId': instance.postId,
       'profilePic': instance.profilePic,
       'userName': instance.userName,
       'content': instance.content,

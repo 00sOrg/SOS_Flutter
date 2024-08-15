@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/views/bottom_sheet/contents.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
-import 'package:sos/shared/utils/log_util.dart';
 
 final DraggableScrollableController _scrollableController =
     DraggableScrollableController();
@@ -65,7 +64,7 @@ class BottomSheetController extends StateNotifier<bool> {
                 final sheetNotifier =
                     ref.read(bottomSheetViewModelProvider.notifier);
 
-                debugPrint('Current extent: $extent');
+                //debugPrint('Current extent: $extent');
 
                 if (extent > previousExtent && previousExtent >= 0.2) {
                   sheetNotifier.setSheetPercentage(0.8);
@@ -98,7 +97,7 @@ class BottomSheetController extends StateNotifier<bool> {
     );
 
     controller.closed.then((_) {
-      LogUtil.e("Bottom sheet closed");
+      debugPrint("Bottom sheet closed");
       ref.read(bottomSheetViewModelProvider.notifier).setSheetPercentage(0.2);
       _controller = null;
       state = false;
