@@ -1,14 +1,11 @@
 name: sos
 description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
-
 environment:
-  sdk: '>=3.4.3 <4.0.0'
-
+  sdk: ">=3.4.3 <4.0.0"
 
 dependencies:
   flutter:
@@ -48,7 +45,6 @@ dependencies:
   mime: ^1.0.5
   path: ^1.9.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -57,44 +53,51 @@ dev_dependencies:
   build_runner: ^2.4.11
   freezed: ^2.5.2
 
-
 flutter:
   uses-material-design: true
 
   assets:
-      - assets/icons/
-      - .env
+    - assets/icons/
+    - .env
 
   fonts:
     - family: Pretendard
       fonts:
-        - asset: assets/fonts/Pretendard-Black.ttf
-        - asset: assets/fonts/Pretendard-Bold.ttf
-        - asset: assets/fonts/Pretendard-ExtraLight.ttf
-        - asset: assets/fonts/Pretendard-Light.ttf
-        - asset: assets/fonts/Pretendard-Medium.ttf
-        - asset: assets/fonts/Pretendard-Regular.ttf
-        - asset: assets/fonts/Pretendard-SemiBold.ttf
-        - asset: assets/fonts/Pretendard-Thin.ttf
+        - asset: assets/fonts/x_archive/Pretendard-Black.ttf
+        - asset: assets/fonts/x_archive/Pretendard-Bold.ttf
+        - asset: assets/fonts/x_archive/Pretendard-ExtraLight.ttf
+        - asset: assets/fonts/x_archive/Pretendard-Light.ttf
+        - asset: assets/fonts/x_archive/Pretendard-Medium.ttf
+        - asset: assets/fonts/x_archive/Pretendard-Regular.ttf
+        - asset: assets/fonts/x_archive/Pretendard-SemiBold.ttf
+        - asset: assets/fonts/x_archive/Pretendard-Thin.ttf
     - family: Bangers
       fonts:
-        - asset: assets/fonts/Bangers-Regular.ttf
+        - asset: assets/fonts/x_archive/Bangers-Regular.ttf
     - family: AppleSD
       fonts:
-        - asset: assets/fonts/AppleSDGothicNeoB.ttf
-        - asset: assets/fonts/AppleSDGothicNeoEB.ttf
-        - asset: assets/fonts/AppleSDGothicNeoH.ttf
-        - asset: assets/fonts/AppleSDGothicNeoL.ttf
-        - asset: assets/fonts/AppleSDGothicNeoM.ttf
-        - asset: assets/fonts/AppleSDGothicNeoR.ttf
-        - asset: assets/fonts/AppleSDGothicNeoSB.ttf
-        - asset: assets/fonts/AppleSDGothicNeoT.ttf
         - asset: assets/fonts/AppleSDGothicNeoUL.ttf
-
+          weight: 100
+        - asset: assets/fonts/AppleSDGothicNeoT.ttf
+          weight: 200
+        - asset: assets/fonts/AppleSDGothicNeoL.ttf
+          weight: 300
+        - asset: assets/fonts/AppleSDGothicNeoR.ttf
+          weight: 400
+        - asset: assets/fonts/AppleSDGothicNeoM.ttf
+          weight: 500
+        - asset: assets/fonts/AppleSDGothicNeoSB.ttf
+          weight: 600
+        - asset: assets/fonts/AppleSDGothicNeoB.ttf
+          weight: 700
+        - asset: assets/fonts/AppleSDGothicNeoEB.ttf
+          weight: 800
+        - asset: assets/fonts/AppleSDGothicNeoH.ttf
+          weight: 900
 
 flutter_native_splash:
-  color: "#ffffff" 
-  image: assets/icons/logo.png 
+  color: "#ffffff"
+  image: assets/icons/logo.png
   android: true
   ios: true
   web: true

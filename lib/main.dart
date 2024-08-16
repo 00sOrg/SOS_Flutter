@@ -68,7 +68,7 @@ class MyApp extends ConsumerWidget {
               ),
             ),
             theme: ThemeData(
-              fontFamily: 'Pretendard',
+              fontFamily: 'AppleSD',
             ),
           );
         });
