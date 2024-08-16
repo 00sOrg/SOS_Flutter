@@ -39,7 +39,6 @@ Future<void> _initialize() async {
 class MyApp extends ConsumerWidget {
   MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locationAsyncValue = ref.watch(locationProvider);

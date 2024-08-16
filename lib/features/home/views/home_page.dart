@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
+import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
 import 'package:sos/features/home/views/widgets/map_area.dart';
 import 'package:sos/features/home/views/widgets/map_toggle_switch.dart';
 import 'package:sos/shared/providers/location_provider.dart';
+import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 페이지 로드 후 바텀 시트를 자동으로 엽니다.
+      ref
+          .read(bottomSheetControllerProvider.notifier)
+          .toggleBottomSheet(context);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final locationAsyncValue = ref.watch(locationProvider);
     final isFavoritesOpen = ref
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
-    final homeViewModel = ref.read(homeViewModelProvider.notifier);
 
     return Scaffold(
       body: Stack(
@@ -37,14 +53,12 @@ class HomePage extends ConsumerWidget {
               );
             },
             error: (error, stack) => Center(
-              child: Text(
-                'Error: $error',
-              ),
+              child: Text('Error: $error'),
             ),
             loading: () => const Center(
               child: CircularProgressIndicator(),
             ),
-          )
+          ),
         ],
       ),
     );

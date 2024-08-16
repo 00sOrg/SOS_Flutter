@@ -4,10 +4,22 @@ import 'package:sos/shared/navigation/app_routes.dart';
 
 class CustomNavBar extends StatelessWidget {
   final int selectedIdx;
+  final VoidCallback onHomePressed;
+  final VoidCallback onOtherPressed;
 
-  const CustomNavBar({super.key, required this.selectedIdx});
+  const CustomNavBar({
+    super.key,
+    required this.selectedIdx,
+    required this.onHomePressed,
+    required this.onOtherPressed,
+  });
 
   void _onItemTap(BuildContext context, int idx) {
+    if (idx == 0) {
+      onHomePressed(); // 홈 버튼을 눌렀을 때 바텀시트를 열고 닫는 동작
+    } else {
+      onOtherPressed(); // 다른 버튼을 눌렀을 때 바텀시트를 닫는 동작
+    }
     final route = AppRoutes.values[idx];
     context.go(route.path);
   }
