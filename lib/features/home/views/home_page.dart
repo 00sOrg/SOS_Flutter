@@ -67,13 +67,13 @@ class HomePageState extends ConsumerState<HomePage> {
   Positioned _homeTopArea(BuildContext context, WidgetRef ref) {
     return Positioned(
       top: 70,
-      left: 20,
+      left: 15, // 좌우 패딩 설정
+      right: 15,
       child: Column(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width - 40,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 HeaderBtn(
@@ -81,7 +81,9 @@ class HomePageState extends ConsumerState<HomePage> {
                       ref.read(homeViewModelProvider.notifier).toggleDropdown(),
                   icon: const Icon(Icons.people),
                 ),
+                const SizedBox(width: 15),
                 HomeSearchBar(),
+                const SizedBox(width: 15),
                 HeaderBtn(
                   onTap: () => ref
                       .read(homeViewModelProvider.notifier)
