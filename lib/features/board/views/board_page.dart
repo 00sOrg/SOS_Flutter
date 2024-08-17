@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/board/models/board_model.dart';
+import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_item.dart';
+import 'package:sos/features/board/views/widgets/board_search_bar.dart';
 
-class BoardPage extends StatelessWidget {
+class BoardPage extends ConsumerWidget {
   BoardPage({super.key});
 
   final List<BoardModel> dummyBoardItems = List.generate(20, (index) {
@@ -15,25 +18,44 @@ class BoardPage extends StatelessWidget {
     );
   });
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 1,
-                  mainAxisSpacing: 1,
-                  childAspectRatio: 1,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SafeArea(
+      top: true,
+      bottom: false,
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const BoardSearchBar(),
+            Expanded(
+              child: RefreshIndicator.adaptive(
+                displacement: 12,
+                onRefresh: () async {
+                  ref.read(boardViewModelProvider).refreshBoard();
+                },
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  controller: _scrollController,
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 1,
+                    mainAxisSpacing: 1,
+                    childAspectRatio: 1,
+                  ),
+                  itemCount: dummyBoardItems.length,
+                  itemBuilder: (context, idx) {
+                    return BoardItem(post: dummyBoardItems[idx]);
+                  },
+                  physics: const PageScrollPhysics(),
                 ),
-                itemCount: dummyBoardItems.length,
-                itemBuilder: (context, idx) {
-                  return BoardItem(post: dummyBoardItems[idx]);
-                }),
-          )
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
