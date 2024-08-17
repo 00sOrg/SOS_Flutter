@@ -12,7 +12,8 @@ class HomeSearchBar extends ConsumerWidget {
         height: 42,
         child: TextField(
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
             border: AppBorders.defaultBorder,
             focusedBorder: AppBorders.defaultBorder,
             enabledBorder: AppBorders.defaultBorder,
@@ -24,6 +25,12 @@ class HomeSearchBar extends ConsumerWidget {
           cursorHeight: 20,
           autocorrect: false,
           onChanged: (query) {},
+          style: const TextStyle(
+            color: AppColors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            height: 1.1,
+          ),
         ),
       ),
     );

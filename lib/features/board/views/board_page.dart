@@ -23,7 +23,6 @@ class BoardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
-      top: true,
       bottom: false,
       child: Scaffold(
         body: Column(
@@ -32,15 +31,15 @@ class BoardPage extends ConsumerWidget {
             const BoardSearchBar(),
             Expanded(
               child: RefreshIndicator.adaptive(
-                displacement: 12,
+                displacement: 20,
                 onRefresh: () async {
                   ref.read(boardViewModelProvider).refreshBoard();
                 },
                 child: GridView.builder(
                   shrinkWrap: true,
+                  padding: EdgeInsets.zero,
                   controller: _scrollController,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 1,
                     mainAxisSpacing: 1,

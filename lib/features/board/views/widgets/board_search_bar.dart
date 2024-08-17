@@ -7,8 +7,17 @@ class BoardSearchBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.lineGray,
+            width: 1,
+          ),
+        ),
+      ),
       child: SizedBox(
         height: 42,
         child: TextField(
@@ -26,6 +35,12 @@ class BoardSearchBar extends ConsumerWidget {
           cursorHeight: 20,
           autocorrect: false,
           onChanged: (query) {},
+          style: const TextStyle(
+            color: AppColors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            height: 1.1,
+          ),
         ),
       ),
     );
