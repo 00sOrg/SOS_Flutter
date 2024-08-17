@@ -16,12 +16,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade300,
-            width: 1,
-          ),
-        ),
+
+        boxShadow: [
+          BoxShadow(
+            color: Color(0xFF000000).withOpacity(0.05),
+            offset: const Offset(0, 1),
+            blurRadius: 4,
+            spreadRadius: 0,
+          )
+        ],
       ),
       child: AppBar(
         backgroundColor: Colors.white,
@@ -33,30 +36,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  size: 24,
+                  size: 26,
                 ),
               )
             : const SizedBox.shrink(),
         title: Text(
           title,
-          style: const TextStyle(fontSize: 20),
-          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         actions: [
-          (trailingAction == null)
-              ? IconButton(
-                  onPressed: () {
-                    debugPrint('MORE button pressed');
-                  },
-                  icon: const Icon(
-                    Icons.more_vert,
-                    size: 24,
-                  ),
-                )
-              : trailingAction!,
-          const SizedBox(
-            width: 6,
-          ),
+          trailingAction ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -64,4 +56,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  // Size get preferredSize => const Size.fromHeight(56);
 }
