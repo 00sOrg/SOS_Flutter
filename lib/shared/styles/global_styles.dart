@@ -13,12 +13,14 @@ class AppTexts {
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: Color(0xFF000000),
+    height: 1.2,
   );
 
   static const TextStyle bodyStyle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: Color(0xFF000000),
+    height: 1.2,
   );
 }
 
