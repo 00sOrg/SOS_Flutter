@@ -3,45 +3,64 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
 import 'package:sos/features/write/views/widgets/write_submit_btn.dart';
+import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/widgets/custom_app_bar.dart';
 
-class WritePage extends ConsumerWidget {
+class WritePage extends ConsumerStatefulWidget {
   const WritePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // final viewModel = ref.watch(writeViewModelProvider.notifier);
+  ConsumerState<WritePage> createState() => _WritePageState();
+}
 
+class _WritePageState extends ConsumerState<WritePage> {
+  final TextEditingController _contentTEC = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _contentTEC.addListener(_handleContentChange);
+  }
+
+  @override
+  void dispose() {
+    _contentTEC.removeListener(_handleContentChange);
+    _contentTEC.dispose();
+    super.dispose();
+  }
+
+  void _handleContentChange() {
+    setState(() {
+      // 텍스트필드 내용 변하면 리빌드 트리거함
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // final viewModel = ref.watch(writeViewModelProvider.notifier);
     return KeyboardDismisser(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFFFFFFFF),
-          title: const Text(
-            '사건/사고 게시물 작성',
-            style: TextStyle(fontSize: 17),
-          ),
+        appBar: const CustomAppBar(
+          title: '사건/사고 게시물 작성',
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Divider(height: 1, thickness: 1),
-                const SizedBox(height: 21),
-                titleField(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Container(
-                    height: 1.3,
-                    color: const Color(0xFFE9E9E9),
-                  ),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+          child: Column(
+            children: [
+              titleField(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Container(
+                  height: 0.5,
+                  color: AppColors.lineGray,
                 ),
-                contentField(),
-                const SizedBox(height: 300),
-                const WriteCautionsBlock(),
-                const SizedBox(height: 24),
-                const WriteSubmitBtn(),
-              ],
-            ),
+              ),
+              Expanded(child: contentField()),
+              if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
+              const SizedBox(height: 15),
+              const WriteSubmitBtn(),
+              const SizedBox(height: 18),
+            ],
           ),
         ),
       ),
@@ -53,46 +72,31 @@ class WritePage extends ConsumerWidget {
       keyboardType: TextInputType.text,
       autocorrect: false,
       maxLines: 1,
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.zero,
         hintText: '제목',
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Color(0xFFB6B6B6),
-          fontWeight: FontWeight.w700,
-        ),
+        hintStyle: AppTexts.titleStyle.copyWith(color: AppColors.textGray),
         border: InputBorder.none,
       ),
-      style: const TextStyle(
-        color: Color(0xFF060606),
-        fontWeight: FontWeight.w700,
-      ),
+      style: AppTexts.titleStyle,
       onTap: () {},
     );
   }
 
   Widget contentField() {
     return TextField(
+      controller: _contentTEC,
       keyboardType: TextInputType.multiline,
       autocorrect: false,
       minLines: 2,
       maxLines: null,
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.zero,
         hintText: '내용을 입력하세요.',
-        hintStyle: TextStyle(
-          fontSize: 14,
-          color: Color(0xFFB6B6B6),
-          fontWeight: FontWeight.w400,
-        ),
+        hintStyle: AppTexts.bodyStyle.copyWith(color: AppColors.textGray),
         border: InputBorder.none,
       ),
-      style: const TextStyle(
-        fontSize: 14,
-        color: Color(0xFF060606),
-        fontWeight: FontWeight.w400,
-        height: 1.2,
-      ),
+      style: AppTexts.bodyStyle,
       onTap: () {},
     );
   }

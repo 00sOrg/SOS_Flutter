@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sos/shared/styles/border_styles.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class WriteCustomTextField extends StatelessWidget {
   final bool isOneLine;
@@ -17,9 +17,9 @@ class WriteCustomTextField extends StatelessWidget {
         maxLines: isOneLine ? 1 : 5,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          border: BorderStyles.defaultBorder,
-          enabledBorder: BorderStyles.defaultBorder,
-          focusedBorder: BorderStyles.defaultBorder,
+          border: AppBorders.defaultBorder,
+          enabledBorder: AppBorders.defaultBorder,
+          focusedBorder: AppBorders.defaultBorder,
           filled: true,
           fillColor: Colors.white,
         ),

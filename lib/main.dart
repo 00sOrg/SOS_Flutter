@@ -57,7 +57,7 @@ class MyApp extends ConsumerWidget {
                   routerConfig: appRouter.router(location.adminAddress),
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
-                    fontFamily: 'Pretendard',
+                    fontFamily: 'AppleSD', 
                     scaffoldBackgroundColor: const Color(0xFFFFFFFF),
                   ),
                 );
@@ -68,7 +68,7 @@ class MyApp extends ConsumerWidget {
               ),
             ),
             theme: ThemeData(
-              fontFamily: 'Pretendard',
+              fontFamily: 'AppleSD',
             ),
           );
         });
