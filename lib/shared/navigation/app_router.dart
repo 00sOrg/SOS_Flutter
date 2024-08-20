@@ -8,9 +8,12 @@ import 'package:sos/features/board/views/board_page.dart';
 import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
+//import 'package:sos/features/setting/views/subpages/setting_health_page.dart';
+//import 'package:sos/features/setting/views/subpages/setting_profile_page.dart';
 import 'package:sos/features/write/views/write_page.dart';
-import 'package:sos/features/profile/views/profile_page.dart';
+// import 'package:sos/features/setting/views/setting_page.dart';
 import 'package:sos/features/rescue/views/rescue_page.dart';
+import 'package:sos/features/x_archive/geolocator_test_page.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
 import 'package:sos/shared/widgets/custom_nav_bar.dart';
 
@@ -21,7 +24,7 @@ class AppRouter {
 
   GoRouter router(String locationAddress) {
     return GoRouter(
-      initialLocation: '/home',
+      initialLocation: '/location-test',
       routes: [
         GoRoute(
           path: '/',
@@ -89,14 +92,14 @@ class AppRouter {
           path: '/board',
           builder: (context, state) => BoardPage(),
         ),
-        GoRoute(
-          path: '/profile',
-          builder: (context, state) => ProfilePage(),
-        ),
+        // GoRoute(
+        //   path: '/setting',
+        //   builder: (context, state) => SettingPage(),
+        // ),
         GoRoute(
           path: '/notifications',
           builder: (context, state) => NotificationPage(),
-        )
+        ),
         // GoRoute(
         //   path: '/post/:id',
         //   builder: (context, state) {
@@ -104,6 +107,18 @@ class AppRouter {
         //     return PostPage(id: postId!);
         //   },
         // ),
+        // GoRoute(
+        //   path: '/setting-profile',
+        //   builder: (context, state) => SettingProfilePage(),
+        // ),
+        // GoRoute(
+        //   path: '/setting-health',
+        //   builder: (context, state) => SettingHealthPage(),
+        // ),
+        GoRoute(
+          path: '/location-test',
+          builder: (context, state) => GeolocatorTestPage(),
+        ),
       ];
 
   static int calculateSelectedIdx(String location) {

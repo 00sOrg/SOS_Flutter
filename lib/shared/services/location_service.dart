@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:sos/shared/models/location.dart';
+import 'package:sos/shared/services/geolocator_service.dart';
 
 class LocationService {
   Future<Location> getCurrentLocation() async {
-    final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
+    final position = await GeolocatorService.getCurrentPosition();
     final lat = position.latitude;
     final lon = position.longitude;
 
