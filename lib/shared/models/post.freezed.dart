@@ -29,7 +29,7 @@ mixin _$Post {
   DateTime get createdAt => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
-  String? get city => throw _privateConstructorUsedError;
+  String? get si => throw _privateConstructorUsedError;
   String? get gu => throw _privateConstructorUsedError;
   String? get dong => throw _privateConstructorUsedError;
   String? get disasterLevel => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $PostCopyWith<$Res> {
       DateTime createdAt,
       double latitude,
       double longitude,
-      String? city,
+      String? si,
       String? gu,
       String? dong,
       String? disasterLevel,
@@ -92,7 +92,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? createdAt = null,
     Object? latitude = null,
     Object? longitude = null,
-    Object? city = freezed,
+    Object? si = freezed,
     Object? gu = freezed,
     Object? dong = freezed,
     Object? disasterLevel = freezed,
@@ -133,9 +133,9 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
+      si: freezed == si
+          ? _value.si
+          : si // ignore: cast_nullable_to_non_nullable
               as String?,
       gu: freezed == gu
           ? _value.gu
@@ -181,7 +181,7 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       DateTime createdAt,
       double latitude,
       double longitude,
-      String? city,
+      String? si,
       String? gu,
       String? dong,
       String? disasterLevel,
@@ -210,7 +210,7 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? latitude = null,
     Object? longitude = null,
-    Object? city = freezed,
+    Object? si = freezed,
     Object? gu = freezed,
     Object? dong = freezed,
     Object? disasterLevel = freezed,
@@ -251,9 +251,9 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
+      si: freezed == si
+          ? _value.si
+          : si // ignore: cast_nullable_to_non_nullable
               as String?,
       gu: freezed == gu
           ? _value.gu
@@ -295,7 +295,7 @@ class _$PostImpl implements _Post {
       required this.createdAt,
       required this.latitude,
       required this.longitude,
-      this.city,
+      this.si,
       this.gu,
       this.dong,
       this.disasterLevel,
@@ -326,7 +326,7 @@ class _$PostImpl implements _Post {
   @override
   final double longitude;
   @override
-  final String? city;
+  final String? si;
   @override
   final String? gu;
   @override
@@ -351,7 +351,7 @@ class _$PostImpl implements _Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, type: $type, media: $media, title: $title, content: $content, createdAt: $createdAt, latitude: $latitude, longitude: $longitude, city: $city, gu: $gu, dong: $dong, disasterLevel: $disasterLevel, likesCount: $likesCount, commentsCount: $commentsCount, comments: $comments)';
+    return 'Post(postId: $postId, type: $type, media: $media, title: $title, content: $content, createdAt: $createdAt, latitude: $latitude, longitude: $longitude, si: $si, gu: $gu, dong: $dong, disasterLevel: $disasterLevel, likesCount: $likesCount, commentsCount: $commentsCount, comments: $comments)';
   }
 
   @override
@@ -370,7 +370,7 @@ class _$PostImpl implements _Post {
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
-            (identical(other.city, city) || other.city == city) &&
+            (identical(other.si, si) || other.si == si) &&
             (identical(other.gu, gu) || other.gu == gu) &&
             (identical(other.dong, dong) || other.dong == dong) &&
             (identical(other.disasterLevel, disasterLevel) ||
@@ -394,7 +394,7 @@ class _$PostImpl implements _Post {
       createdAt,
       latitude,
       longitude,
-      city,
+      si,
       gu,
       dong,
       disasterLevel,
@@ -428,7 +428,7 @@ abstract class _Post implements Post {
       required final DateTime createdAt,
       required final double latitude,
       required final double longitude,
-      final String? city,
+      final String? si,
       final String? gu,
       final String? dong,
       final String? disasterLevel,
@@ -455,7 +455,7 @@ abstract class _Post implements Post {
   @override
   double get longitude;
   @override
-  String? get city;
+  String? get si;
   @override
   String? get gu;
   @override

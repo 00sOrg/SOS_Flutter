@@ -11,7 +11,7 @@ class CommentBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start, // 정렬을 왼쪽 정렬로 수정
         children: [
@@ -38,8 +38,9 @@ class CommentBlock extends StatelessWidget {
                   Text(
                     comment.userName,
                     style: const TextStyle(
-                      fontSize: 11,
+                      fontSize: 16,
                       fontWeight: FontWeight.w700,
+                      height: 0,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -47,8 +48,11 @@ class CommentBlock extends StatelessWidget {
                   Text(
                     formatDateTime(comment.createdAt),
                     style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w100,
+                      fontSize: 12,
+                      color: Color(0xFFB9B9B9),
+                      fontFamily: 'Apple SD Gothic Neo',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
                     ),
                   ),
                 ],
@@ -60,7 +64,10 @@ class CommentBlock extends StatelessWidget {
           Text(
             comment.content,
             style: const TextStyle(
-              fontSize: 10,
+              fontSize: 16,
+              fontFamily: 'Apple SD Gothic Neo',
+              fontWeight: FontWeight.w400,
+              height: 0,
             ),
           )
         ],

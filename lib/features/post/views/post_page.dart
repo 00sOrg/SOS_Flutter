@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
-import 'widgets/profile_section.dart';
+import 'package:sos/shared/widgets/custom_app_bar.dart';
+import 'widgets/header_section.dart';
 import 'widgets/image_section.dart';
 import 'widgets/content_section.dart';
 import 'widgets/like_and_comment_section.dart';
@@ -19,25 +20,17 @@ class PostPage extends ConsumerWidget {
     final post = ref.watch(postByIdProvider(postId));
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Text(post.title), // Post의 제목 사용
-      ),
+      appBar: CustomAppBar(title: post.title),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
           // "실시간!!" Badge
-          const PostBadge(text: '실시간!!', color: Colors.blue),
+          PostBadge(post: post),
 
           const SizedBox(height: 8),
 
           // Profile Section (사용자 정보 및 날짜)
-          ProfileSection(post: post), // Post 객체 전달
+          HeaderSection(post: post), // Post 객체 전달
 
           const SizedBox(height: 16),
 

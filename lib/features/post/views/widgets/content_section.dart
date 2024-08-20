@@ -8,9 +8,26 @@ class ContentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      post.content ?? '', // Use the content field from the Post class
-      style: const TextStyle(fontSize: 16.0),
+    // Check if the content is null or empty
+    if (post.content == null || post.content!.isEmpty) {
+      return const SizedBox.shrink(); // If empty, return an empty widget
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      alignment: Alignment.center,
+      child: SizedBox(
+        child: Text(
+          post.content!,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontFamily: 'Apple SD Gothic Neo',
+            fontWeight: FontWeight.w400,
+            height: 1.2,
+          ),
+        ),
+      ),
     );
   }
 }

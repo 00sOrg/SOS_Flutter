@@ -5,7 +5,7 @@ import 'package:sos/features/auth/viewmodels/auth_viewmodel.dart';
 import 'package:sos/features/auth/views/login_page.dart';
 import 'package:sos/features/auth/views/splash_page.dart';
 import 'package:sos/features/board/views/board_page.dart';
-import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
+import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
 import 'package:sos/features/write/views/write_page.dart';
@@ -49,7 +49,7 @@ class AppRouter {
             // 홈 페이지가 아닌 다른 페이지로 이동 시 바텀시트 닫기
             if (state.uri.path != '/home') {
               ref
-                  .read(bottomSheetControllerProvider.notifier)
+                  .read(bottomSheetViewModelProvider.notifier)
                   .closeBottomSheet();
             }
 
@@ -61,12 +61,12 @@ class AppRouter {
                     selectedIdx: calculateSelectedIdx(state.uri.path),
                     onHomePressed: () {
                       ref
-                          .read(bottomSheetControllerProvider.notifier)
+                          .read(bottomSheetViewModelProvider.notifier)
                           .toggleBottomSheet(context); // Context 사용
                     },
                     onOtherPressed: () {
                       ref
-                          .read(bottomSheetControllerProvider.notifier)
+                          .read(bottomSheetViewModelProvider.notifier)
                           .closeBottomSheet();
                     },
                   );

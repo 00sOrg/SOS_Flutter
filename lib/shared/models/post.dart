@@ -5,8 +5,6 @@ import 'comment.dart';
 part 'post.freezed.dart';
 part 'post.g.dart';
 
-//X_post 파일은 뭔지??
-
 @freezed
 class Post with _$Post {
   factory Post({
@@ -20,7 +18,7 @@ class Post with _$Post {
     required DateTime createdAt,
     required double latitude,
     required double longitude,
-    String? city,
+    String? si,
     String? gu,
     String? dong,
     String? disasterLevel,

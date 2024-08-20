@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
+import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
@@ -23,7 +23,7 @@ class HomePageState extends ConsumerState<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // 페이지 로드 후 바텀 시트를 자동으로 엽니다.
       ref
-          .read(bottomSheetControllerProvider.notifier)
+          .read(bottomSheetViewModelProvider.notifier)
           .toggleBottomSheet(context);
     });
   }
