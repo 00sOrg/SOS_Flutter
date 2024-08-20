@@ -24,7 +24,7 @@ class AppRouter {
 
   GoRouter router(String locationAddress) {
     return GoRouter(
-      initialLocation: '/location-test',
+      initialLocation: '/',
       routes: [
         GoRoute(
           path: '/',
