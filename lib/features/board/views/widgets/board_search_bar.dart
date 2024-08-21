@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
-class HomeSearchBar extends ConsumerWidget {
-  const HomeSearchBar({super.key});
+class BoardSearchBar extends ConsumerWidget {
+  const BoardSearchBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Expanded(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.lineGray,
+            width: 1,
+          ),
+        ),
+      ),
       child: SizedBox(
         height: 42,
         child: TextField(

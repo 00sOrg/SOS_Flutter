@@ -6,10 +6,11 @@ class WriteCautionsBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: const Color(0xFFF8F8F8),
-        borderRadius: BorderRadius.circular(21),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,7 +19,7 @@ class WriteCautionsBlock extends StatelessWidget {
             '※ 주의사항 ※',
             style: TextStyle(
               color: Color(0xFFA1A1A1),
-              fontSize: 10,
+              fontSize: 12,
               height: 1.2,
             ),
           ),
@@ -31,9 +32,10 @@ class WriteCautionsBlock extends StatelessWidget {
 의사가 아닌 이상, 의학적 조언을 제공하지 않도록 주의하세요. 특정 건강 문제에 대한 진단이나 치료법을 제시하는 것은 위험할 수 있습니다.''',
             style: TextStyle(
               color: Color(0xFFA1A1A1),
-              fontSize: 10, 
+              fontSize: 12,
               height: 1.2,
             ),
+            textAlign: TextAlign.justify,
           ),
         ],
       ),

@@ -14,17 +14,18 @@ class WriteSubmitBtn extends ConsumerWidget {
         writeViewModel.dummySubmitButtonTap(context);
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         decoration: BoxDecoration(
           color: const Color(0xFF0066FF),
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: const Text(
           '등록하기',
           style: TextStyle(
             color: Color(0xFFFFFFFF),
             fontWeight: FontWeight.w700,
-            fontSize: 16,
+            fontSize: 20,
+            height: 1.2,
           ),
         ),
       ),
