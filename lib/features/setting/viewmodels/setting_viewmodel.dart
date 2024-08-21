@@ -44,14 +44,15 @@ class SettingViewModel extends StateNotifier<SettingState> {
   void showLogoutModal(BuildContext context) {
     showCupertinoModalPopup(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext modalContext) {
         return SettingModal(
           title: '로그아웃',
           content: '정말 로그아웃 하시겠습니까?',
           leftBtn: '취소',
           rightBtn: '로그아웃',
           onRightBtnPressed: () {
-            _logout(context);
+            Navigator.of(modalContext).pop();
+            logout(context);
           },
         );
       },
@@ -61,32 +62,29 @@ class SettingViewModel extends StateNotifier<SettingState> {
   void showDeleteAccountModal(BuildContext context) {
     showCupertinoModalPopup(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext modalContext) {
         return SettingModal(
           title: '계정 삭제',
           content: '정말 계정을 삭제 하시겠습니까?\n다시 이용하려면 새로 가입해야 합니다.',
           leftBtn: '취소',
           rightBtn: '계정 삭제',
           onRightBtnPressed: () {
-            _deleteAccount(context);
+            Navigator.of(modalContext).pop();
+            deleteAccount(context);
           },
         );
       },
     );
   }
 
-  void _logout(BuildContext context) {
+  void logout(BuildContext context) {
     // ref.read(authViewModelProvider).logout();
     debugPrint('TODO:: LOGOUT ACTION');
-    Future.delayed(const Duration(milliseconds: 900), () {
-      Navigator.of(context).pop();
-    });
+    GoRouter.of(context).go('/login');
   }
 
-  void _deleteAccount(BuildContext context) {
+  void deleteAccount(BuildContext context) {
     debugPrint('TODO:: DELETE ACCOUNT ACTION');
-    Future.delayed(const Duration(milliseconds: 900), () {
-      Navigator.of(context).pop();
-    });
+    GoRouter.of(context).go('/setting-deleted-account');
   }
 }

@@ -15,8 +15,8 @@ class SettingModal extends StatelessWidget {
     required this.leftBtn,
     required this.rightBtn,
     required this.onRightBtnPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
