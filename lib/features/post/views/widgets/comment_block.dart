@@ -26,7 +26,7 @@ class CommentBlock extends StatelessWidget {
                         width: 32,
                       )
                     : SvgPicture.asset(
-                        'assets/icons/cute_icon_colored.svg',
+                        'assets/icons/default_profile_icon.svg',
                         width: 32,
                       ),
               ),

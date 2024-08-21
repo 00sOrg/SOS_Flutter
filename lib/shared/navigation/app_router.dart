@@ -49,13 +49,6 @@ class AppRouter {
         ),
         ShellRoute(
           builder: (context, state, child) {
-            // 홈 페이지가 아닌 다른 페이지로 이동 시 바텀시트 닫기
-            if (state.uri.path != '/home') {
-              ref
-                  .read(bottomSheetViewModelProvider.notifier)
-                  .closeBottomSheet();
-            }
-
             return Scaffold(
               body: child,
               bottomNavigationBar: Builder(
@@ -65,7 +58,7 @@ class AppRouter {
                     onHomePressed: () {
                       ref
                           .read(bottomSheetViewModelProvider.notifier)
-                          .toggleBottomSheet(context); // Context 사용
+                          .openBottomSheet(context); // Context 사용
                     },
                     onOtherPressed: () {
                       ref

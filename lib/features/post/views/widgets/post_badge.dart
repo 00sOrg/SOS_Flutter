@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class PostBadge extends StatelessWidget {
   final Post post;

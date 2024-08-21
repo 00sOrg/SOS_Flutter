@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/utils/format_date_time.dart';
 import 'package:sos/shared/utils/format_time_ago.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class HeaderSection extends StatelessWidget {
   final Post post;

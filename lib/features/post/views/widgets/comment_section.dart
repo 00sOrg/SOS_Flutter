@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sos/shared/models/comment.dart';
 import 'package:sos/features/post/views/widgets/comment_block.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class CommentSection extends StatelessWidget {
   final List<Comment>? comments;
