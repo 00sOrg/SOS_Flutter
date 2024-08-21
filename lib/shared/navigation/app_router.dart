@@ -116,6 +116,7 @@ class AppRouter {
                 state.pathParameters['id']!); // Convert the string to an int
             return PostPage(postId: postId);
           },
+        ),
         // GoRoute(
         //   path: '/setting-profile',
         //   builder: (context, state) => SettingProfilePage(),
