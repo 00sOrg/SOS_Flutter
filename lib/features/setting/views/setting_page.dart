@@ -35,8 +35,12 @@ class SettingPage extends ConsumerWidget {
             settingTile(
                 title: '즐겨찾는 지인 관리',
                 onTap: () => settingViewModel.goToFavorites(context)),
-            settingTile(title: '계정 삭제', onTap: () {}),
-            settingTile(title: '로그아웃', onTap: () {}),
+            settingTile(
+                title: '계정 삭제',
+                onTap: () => settingViewModel.showDeleteAccountModal(context)),
+            settingTile(
+                title: '로그아웃',
+                onTap: () => settingViewModel.showLogoutModal(context)),
           ],
         ),
       ),
