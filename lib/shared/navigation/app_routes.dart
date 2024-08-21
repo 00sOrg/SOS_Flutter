@@ -18,7 +18,7 @@ extension AppRoutesExtension on AppRoutes {
       case AppRoutes.board:
         return '/board';
       case AppRoutes.profile:
-        return '/profile';
+        return '/setting';
       default:
         return '/';
     }
@@ -34,7 +34,7 @@ extension AppRoutesExtension on AppRoutes {
         return AppRoutes.write;
       case '/board':
         return AppRoutes.board;
-      case '/profile':
+      case '/setting':
         return AppRoutes.profile;
       default:
         return AppRoutes.home;
