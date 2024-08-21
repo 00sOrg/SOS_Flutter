@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -16,10 +17,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF000000).withOpacity(0.05),
+            color: const Color(0xFF000000).withOpacity(0.05),
             offset: const Offset(0, 1),
             blurRadius: 4,
             spreadRadius: 0,
@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading: hasLeading!
             ? IconButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  GoRouter.of(context).pop();
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
