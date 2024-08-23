@@ -25,7 +25,7 @@ class AppRouter {
 
   GoRouter router(String locationAddress) {
     return GoRouter(
-      initialLocation: '/',
+      initialLocation: '/home',
       routes: [
         GoRoute(
           path: '/',
@@ -54,18 +54,12 @@ class AppRouter {
               bottomNavigationBar: Builder(
                 builder: (context) {
                   return CustomNavBar(
-                    selectedIdx: calculateSelectedIdx(state.uri.path),
-                    onHomePressed: () {
-                      ref
-                          .read(bottomSheetViewModelProvider.notifier)
-                          .openBottomSheet(context); // Context 사용
-                    },
-                    onOtherPressed: () {
-                      ref
-                          .read(bottomSheetViewModelProvider.notifier)
-                          .closeBottomSheet();
-                    },
-                  );
+                      selectedIdx: calculateSelectedIdx(state.uri.path),
+                      onHomePressed: () {
+                        ref
+                            .read(bottomSheetViewModelProvider.notifier)
+                            .toggleBottomSheet();
+                      });
                 },
               ),
             );
