@@ -6,19 +6,24 @@ import 'package:go_router/go_router.dart';
 class HomeState {
   final bool isSwitchLeft;
   final bool isFavoritesOpen;
+  final bool isNotificationSideSheetOpen;
 
   HomeState({
     this.isSwitchLeft = false,
     this.isFavoritesOpen = false,
+    this.isNotificationSideSheetOpen = false, // 초기값 설정
   });
 
   HomeState copyWith({
     bool? isSwitchLeft,
     bool? isFavoritesOpen,
+    bool? isNotificationSideSheetOpen,
   }) {
     return HomeState(
       isSwitchLeft: isSwitchLeft ?? this.isSwitchLeft,
       isFavoritesOpen: isFavoritesOpen ?? this.isFavoritesOpen,
+      isNotificationSideSheetOpen:
+          isNotificationSideSheetOpen ?? this.isNotificationSideSheetOpen,
     );
   }
 }
@@ -37,6 +42,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   void toggleDropdown() {
     state = state.copyWith(isFavoritesOpen: !state.isFavoritesOpen);
+  }
+
+  void toggleNotificationSideSheet() {
+    state = state.copyWith(
+        isNotificationSideSheetOpen: !state.isNotificationSideSheetOpen);
   }
 
   void navigateToUser(BuildContext context, String user) {
@@ -59,8 +69,12 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   void navigateToNotificationPage(BuildContext context) {
-    context.push('/notifications');
+    toggleNotificationSideSheet(); // 사이드 시트 열기/닫기 로직
   }
+
+  // void navigateToNotificationPage(BuildContext context) {
+  //   context.push('/notifications');
+  // }
 }
 
 final homeViewModelProvider =

@@ -6,6 +6,7 @@ import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
 import 'package:sos/features/home/views/widgets/map_area.dart';
 import 'package:sos/features/home/views/widgets/map_toggle_switch.dart';
+import 'package:sos/features/home/views/widgets/notification_side_sheet.dart';
 import 'package:sos/shared/providers/location_provider.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 
@@ -22,6 +23,8 @@ class HomePageState extends ConsumerState<HomePage> {
     final locationAsyncValue = ref.watch(locationProvider);
     final isFavoritesOpen = ref
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
+    final isSideSheetOpen = ref.watch(homeViewModelProvider
+        .select((state) => state.isNotificationSideSheetOpen));
 
     return Scaffold(
       body: Stack(
@@ -48,6 +51,7 @@ class HomePageState extends ConsumerState<HomePage> {
               child: CircularProgressIndicator(),
             ),
           ),
+          if (isSideSheetOpen) const NotificationSideSheet(),
         ],
       ),
       bottomSheet: HomePageBottomSheet(), // 여기에 바텀시트를 추가하여 항상 하단에 위치하게 합니다.
@@ -75,11 +79,15 @@ class HomePageState extends ConsumerState<HomePage> {
                 HomeSearchBar(),
                 const SizedBox(width: 15),
                 HeaderBtn(
-                  onTap: () => ref
-                      .read(homeViewModelProvider.notifier)
-                      .navigateToNotificationPage(context),
+                  onTap: () => showNotificationSideSheet(context),
                   icon: const Icon(Icons.notifications),
                 ),
+                // HeaderBtn(
+                //   onTap: () => ref
+                //       .read(homeViewModelProvider.notifier)
+                //       .navigateToNotificationPage(context),
+                //   icon: const Icon(Icons.notifications),
+                // ),
               ],
             ),
           ),
