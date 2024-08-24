@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/bottom_sheet/nearbyEvents.dart';
+import 'package:sos/features/home/views/bottom_sheet/nearbyStatus.dart';
 
 class BottomSheetContent extends ConsumerWidget {
   final List<String> dummyData = List.generate(10, (index) => 'Event $index');
