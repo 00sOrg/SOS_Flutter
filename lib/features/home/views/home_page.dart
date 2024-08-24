@@ -19,15 +19,6 @@ class HomePage extends ConsumerStatefulWidget {
 class HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () {
-      // Check the state and ensure the bottom sheet opens if it's supposed to be open
-      if (ref.read(bottomSheetViewModelProvider) == 0.0) {
-        ref
-            .read(bottomSheetViewModelProvider.notifier)
-            .openBottomSheet(context);
-      }
-    });
-
     final locationAsyncValue = ref.watch(locationProvider);
     final isFavoritesOpen = ref
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
@@ -59,6 +50,7 @@ class HomePageState extends ConsumerState<HomePage> {
           ),
         ],
       ),
+      bottomSheet: HomePageBottomSheet(), // 여기에 바텀시트를 추가하여 항상 하단에 위치하게 합니다.
     );
   }
 
