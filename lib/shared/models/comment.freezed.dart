@@ -20,8 +20,9 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Comment {
-// required String id,
-// required String title,
+// required int commentId,
+  int get postId =>
+      throw _privateConstructorUsedError; // required String title,
 // String? image,
 // required String address,
   String? get profilePic => throw _privateConstructorUsedError;
@@ -29,8 +30,12 @@ mixin _$Comment {
   String get content => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
+  /// Serializes this Comment to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Comment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CommentCopyWith<Comment> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -40,7 +45,8 @@ abstract class $CommentCopyWith<$Res> {
       _$CommentCopyWithImpl<$Res, Comment>;
   @useResult
   $Res call(
-      {String? profilePic,
+      {int postId,
+      String? profilePic,
       String userName,
       String content,
       DateTime createdAt});
@@ -56,15 +62,22 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Comment
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? postId = null,
     Object? profilePic = freezed,
     Object? userName = null,
     Object? content = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
+      postId: null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
       profilePic: freezed == profilePic
           ? _value.profilePic
           : profilePic // ignore: cast_nullable_to_non_nullable
@@ -93,7 +106,8 @@ abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? profilePic,
+      {int postId,
+      String? profilePic,
       String userName,
       String content,
       DateTime createdAt});
@@ -107,15 +121,22 @@ class __$$CommentImplCopyWithImpl<$Res>
       _$CommentImpl _value, $Res Function(_$CommentImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Comment
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? postId = null,
     Object? profilePic = freezed,
     Object? userName = null,
     Object? content = null,
     Object? createdAt = null,
   }) {
     return _then(_$CommentImpl(
+      postId: null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
       profilePic: freezed == profilePic
           ? _value.profilePic
           : profilePic // ignore: cast_nullable_to_non_nullable
@@ -140,7 +161,8 @@ class __$$CommentImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CommentImpl implements _Comment {
   _$CommentImpl(
-      {this.profilePic,
+      {required this.postId,
+      this.profilePic,
       required this.userName,
       required this.content,
       required this.createdAt});
@@ -148,7 +170,9 @@ class _$CommentImpl implements _Comment {
   factory _$CommentImpl.fromJson(Map<String, dynamic> json) =>
       _$$CommentImplFromJson(json);
 
-// required String id,
+// required int commentId,
+  @override
+  final int postId;
 // required String title,
 // String? image,
 // required String address,
@@ -163,7 +187,7 @@ class _$CommentImpl implements _Comment {
 
   @override
   String toString() {
-    return 'Comment(profilePic: $profilePic, userName: $userName, content: $content, createdAt: $createdAt)';
+    return 'Comment(postId: $postId, profilePic: $profilePic, userName: $userName, content: $content, createdAt: $createdAt)';
   }
 
   @override
@@ -171,6 +195,7 @@ class _$CommentImpl implements _Comment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CommentImpl &&
+            (identical(other.postId, postId) || other.postId == postId) &&
             (identical(other.profilePic, profilePic) ||
                 other.profilePic == profilePic) &&
             (identical(other.userName, userName) ||
@@ -180,12 +205,14 @@ class _$CommentImpl implements _Comment {
                 other.createdAt == createdAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, profilePic, userName, content, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, postId, profilePic, userName, content, createdAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Comment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CommentImplCopyWith<_$CommentImpl> get copyWith =>
@@ -201,17 +228,20 @@ class _$CommentImpl implements _Comment {
 
 abstract class _Comment implements Comment {
   factory _Comment(
-      {final String? profilePic,
+      {required final int postId,
+      final String? profilePic,
       required final String userName,
       required final String content,
       required final DateTime createdAt}) = _$CommentImpl;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$CommentImpl.fromJson;
 
-  @override // required String id,
-// required String title,
+// required int commentId,
+  @override
+  int get postId; // required String title,
 // String? image,
 // required String address,
+  @override
   String? get profilePic;
   @override
   String get userName;
@@ -219,8 +249,11 @@ abstract class _Comment implements Comment {
   String get content;
   @override
   DateTime get createdAt;
+
+  /// Create a copy of Comment
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CommentImplCopyWith<_$CommentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

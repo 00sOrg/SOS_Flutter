@@ -1,40 +1,41 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/shared/models/post.dart';
+import 'package:sos/features/post/viewmodels/post_list.dart';
 
-class PostViewModel {
-  final String profileImageUrl;
-  final String title;
-  final String date;
-  final String location;
-  final String imageUrl;
-  final bool hasImage;
-  final String content;
-  final int likes;
-  final int comments;
+class PostViewModelNotifier extends StateNotifier<List<Post>> {
+  PostViewModelNotifier() : super(dummyPosts);
 
-  PostViewModel({
-    required this.profileImageUrl,
-    required this.title,
-    required this.date,
-    required this.location,
-    required this.imageUrl,
-    required this.hasImage,
-    required this.content,
-    required this.likes,
-    required this.comments,
-  });
+  Post getPostById(int postId) {
+    return state.firstWhere(
+      (post) => post.postId == postId,
+      orElse: () => Post(
+        postId: 0,
+        createdAt: DateTime(0),
+        title: 'Unknown Post',
+        latitude: 0.0,
+        longitude: 0.0,
+        comments: [],
+      ),
+    );
+  }
 }
 
-final postViewModelProvider = Provider<PostViewModel>((ref) {
-  // 여기에 실제 데이터를 제공하세요. 예를 들어, API로부터 데이터를 받아와서 PostViewModel로 초기화할 수 있습니다.
-  return PostViewModel(
-    profileImageUrl: 'https://via.placeholder.com/150',
-    title: '게시글 제목',
-    date: '2024-08-09',
-    location: '서울특별시',
-    imageUrl: 'https://via.placeholder.com/400x200',
-    hasImage: true,
-    content: '여기에 본문 내용이 들어갑니다.',
-    likes: 100,
-    comments: 25,
+final postViewModelProvider =
+    StateNotifierProvider<PostViewModelNotifier, List<Post>>((ref) {
+  return PostViewModelNotifier();
+});
+
+final postByIdProvider = Provider.family<Post, int>((ref, postId) {
+  final posts = ref.watch(postViewModelProvider);
+  return posts.firstWhere(
+    (post) => post.postId == postId,
+    orElse: () => Post(
+      postId: 0,
+      createdAt: DateTime(0),
+      title: 'Unknown Post No.$postId',
+      latitude: 0.0,
+      longitude: 0.0,
+      comments: [],
+    ),
   );
 });
