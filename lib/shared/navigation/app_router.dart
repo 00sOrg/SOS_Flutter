@@ -5,7 +5,7 @@ import 'package:sos/features/auth/viewmodels/auth_viewmodel.dart';
 import 'package:sos/features/auth/views/login_page.dart';
 import 'package:sos/features/auth/views/splash_page.dart';
 import 'package:sos/features/board/views/board_page.dart';
-import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
+import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
 import 'package:sos/features/setting/views/setting_page.dart';
@@ -18,6 +18,7 @@ import 'package:sos/features/rescue/views/rescue_page.dart';
 import 'package:sos/features/x_archive/geolocator_test_page.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
 import 'package:sos/shared/widgets/custom_nav_bar.dart';
+import 'package:sos/features/post/views/post_page.dart';
 
 class AppRouter {
   final WidgetRef ref;
@@ -26,7 +27,7 @@ class AppRouter {
 
   GoRouter router(String locationAddress) {
     return GoRouter(
-      initialLocation: '/',
+      initialLocation: '/home',
       routes: [
         GoRoute(
           path: '/',
@@ -59,18 +60,12 @@ class AppRouter {
               bottomNavigationBar: Builder(
                 builder: (context) {
                   return CustomNavBar(
-                    selectedIdx: calculateSelectedIdx(state.uri.path),
-                    onHomePressed: () {
-                      ref
-                          .read(bottomSheetControllerProvider.notifier)
-                          .toggleBottomSheet(context); // Context 사용
-                    },
-                    onOtherPressed: () {
-                      ref
-                          .read(bottomSheetControllerProvider.notifier)
-                          .closeBottomSheet(); // Context 사용
-                    },
-                  );
+                      selectedIdx: calculateSelectedIdx(state.uri.path),
+                      onHomePressed: () {
+                        ref
+                            .read(bottomSheetViewModelProvider.notifier)
+                            .toggleBottomSheet();
+                      });
                 },
               ),
             );
@@ -106,13 +101,14 @@ class AppRouter {
           path: '/notifications',
           builder: (context, state) => NotificationPage(),
         ),
-        // GoRoute(
-        //   path: '/post/:id',
-        //   builder: (context, state) {
-        //     final postId = state.pathParameters['id'];
-        //     return PostPage(id: postId!);
-        //   },
-        // ),
+        GoRoute(
+          path: '/post/:id',
+          builder: (context, state) {
+            final postId = int.parse(
+                state.pathParameters['id']!); // Convert the string to an int
+            return PostPage(postId: postId);
+          },
+        ),
         GoRoute(
           path: '/setting-profile',
           builder: (context, state) => SettingProfilePage(),

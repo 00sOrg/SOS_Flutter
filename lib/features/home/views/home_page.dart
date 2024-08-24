@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
+import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
@@ -17,17 +17,6 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class HomePageState extends ConsumerState<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // 페이지 로드 후 바텀 시트를 자동으로 엽니다.
-      ref
-          .read(bottomSheetControllerProvider.notifier)
-          .toggleBottomSheet(context);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final locationAsyncValue = ref.watch(locationProvider);
@@ -61,6 +50,7 @@ class HomePageState extends ConsumerState<HomePage> {
           ),
         ],
       ),
+      bottomSheet: HomePageBottomSheet(), // 여기에 바텀시트를 추가하여 항상 하단에 위치하게 합니다.
     );
   }
 

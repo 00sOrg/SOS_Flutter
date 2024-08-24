@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:sos/shared/models/comment.dart';
 
 class WriteViewModel extends StateNotifier<Comment> {
-
   WriteViewModel()
       : super(
           Comment(
+            postId: 0,
             userName: '',
             content: '',
             createdAt: DateTime.now(),
