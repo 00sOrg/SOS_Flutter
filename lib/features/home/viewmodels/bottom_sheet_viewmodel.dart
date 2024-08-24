@@ -86,7 +86,7 @@ class BottomSheetViewModel extends StateNotifier<double> {
 
   void navigateToPost(BuildContext context, int postId) {
     closeBottomSheet();
-    context.go('/post/$postId'); // 포스트 페이지로 이동
+    context.push('/post/$postId'); // 포스트 페이지로 이동
   }
 }
 
