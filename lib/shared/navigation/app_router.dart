@@ -10,7 +10,7 @@ import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
 import 'package:sos/features/setting/views/setting_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_deleted_account_page.dart';
-import 'package:sos/features/setting/views/subpages/setting_favorites_page.dart';
+import 'package:sos/features/setting/views/subpages/setting_favorite_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_health_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_profile_page.dart';
 import 'package:sos/features/write/views/write_page.dart';
@@ -123,7 +123,7 @@ class AppRouter {
         ),
         GoRoute(
           path: '/setting-favorite',
-          builder: (context, state) => SettingFavoritesPage(),
+          builder: (context, state) => SettingFavoritePage(),
         ),
         GoRoute(
           path: '/location-test',
