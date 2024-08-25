@@ -8,10 +8,12 @@ import 'package:sos/features/board/views/board_page.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/home_page.dart';
 import 'package:sos/features/notification/views/notification_page.dart';
-//import 'package:sos/features/setting/views/subpages/setting_health_page.dart';
-//import 'package:sos/features/setting/views/subpages/setting_profile_page.dart';
+import 'package:sos/features/setting/views/setting_page.dart';
+import 'package:sos/features/setting/views/subpages/setting_deleted_account_page.dart';
+import 'package:sos/features/setting/views/subpages/setting_favorite_page.dart';
+import 'package:sos/features/setting/views/subpages/setting_health_page.dart';
+import 'package:sos/features/setting/views/subpages/setting_profile_page.dart';
 import 'package:sos/features/write/views/write_page.dart';
-// import 'package:sos/features/setting/views/setting_page.dart';
 import 'package:sos/features/rescue/views/rescue_page.dart';
 import 'package:sos/features/x_archive/geolocator_test_page.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
@@ -25,7 +27,7 @@ class AppRouter {
 
   GoRouter router(String locationAddress) {
     return GoRouter(
-      initialLocation: '/home',
+      initialLocation: '/',
       routes: [
         GoRoute(
           path: '/',
@@ -46,6 +48,10 @@ class AppRouter {
         GoRoute(
           path: '/login',
           builder: (context, state) => LoginPage(),
+        ),
+        GoRoute(
+          path: '/setting-deleted-account',
+          builder: (context, state) => SettingDeletedAccountPage(),
         ),
         ShellRoute(
           builder: (context, state, child) {
@@ -87,15 +93,14 @@ class AppRouter {
           path: '/board',
           builder: (context, state) => BoardPage(),
         ),
-        // GoRoute(
-        //   path: '/setting',
-        //   builder: (context, state) => SettingPage(),
-        // ),
+        GoRoute(
+          path: '/setting',
+          builder: (context, state) => SettingPage(),
+        ),
         GoRoute(
           path: '/notifications',
           builder: (context, state) => NotificationPage(),
         ),
-
         GoRoute(
           path: '/post/:id',
           builder: (context, state) {
@@ -104,14 +109,18 @@ class AppRouter {
             return PostPage(postId: postId);
           },
         ),
-        // GoRoute(
-        //   path: '/setting-profile',
-        //   builder: (context, state) => SettingProfilePage(),
-        // ),
-        // GoRoute(
-        //   path: '/setting-health',
-        //   builder: (context, state) => SettingHealthPage(),
-        // ),
+        GoRoute(
+          path: '/setting-profile',
+          builder: (context, state) => SettingProfilePage(),
+        ),
+        GoRoute(
+          path: '/setting-health',
+          builder: (context, state) => SettingHealthPage(),
+        ),
+        GoRoute(
+          path: '/setting-favorite',
+          builder: (context, state) => SettingFavoritePage(),
+        ),
         GoRoute(
           path: '/location-test',
           builder: (context, state) => GeolocatorTestPage(),

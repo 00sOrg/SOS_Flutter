@@ -5,7 +5,8 @@ class WriteCustomTextField extends StatelessWidget {
   final bool isOneLine;
   final ValueChanged<String> onChanged;
 
-  const WriteCustomTextField({super.key, required this.isOneLine, required this.onChanged});
+  const WriteCustomTextField(
+      {super.key, required this.isOneLine, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,11 @@ class WriteCustomTextField extends StatelessWidget {
         autocorrect: false,
         maxLines: isOneLine ? 1 : 5,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          border: AppBorders.defaultBorder,
-          enabledBorder: AppBorders.defaultBorder,
-          focusedBorder: AppBorders.defaultBorder,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          border: AppBorders.defaultBlueBorder,
+          enabledBorder: AppBorders.defaultBlueBorder,
+          focusedBorder: AppBorders.defaultBlueBorder,
           filled: true,
           fillColor: Colors.white,
         ),
