@@ -14,7 +14,23 @@ class SettingProfileViewModel extends StateNotifier<User> {
             birthDay: DateTime(2000, 1, 1),
             profilePicture: '',
           ),
-        );
+        ) {
+    emailTEC = TextEditingController(text: state.email);
+    nicknameTEC = TextEditingController(text: state.nickname);
+    numberTEC = TextEditingController(text: state.phoneNumber);
+    yearTEC = TextEditingController(text: state.birthDay.year.toString());
+    monthTEC = TextEditingController(
+        text: state.birthDay.month.toString().padLeft(2, '0'));
+    dayTEC = TextEditingController(
+        text: state.birthDay.day.toString().padLeft(2, '0'));
+  }
+
+  late TextEditingController emailTEC;
+  late TextEditingController nicknameTEC;
+  late TextEditingController numberTEC;
+  late TextEditingController yearTEC;
+  late TextEditingController monthTEC;
+  late TextEditingController dayTEC;
 
   void loadUserData() {
     // 일단 더미
@@ -28,6 +44,16 @@ class SettingProfileViewModel extends StateNotifier<User> {
       profilePicture: '',
     );
     state = dummyUser;
+    updateControllers();
+  }
+
+  void updateControllers() {
+    emailTEC.text = state.email;
+    nicknameTEC.text = state.nickname;
+    numberTEC.text = state.phoneNumber;
+    yearTEC.text = state.birthDay.year.toString();
+    monthTEC.text = state.birthDay.month.toString().padLeft(2, '0');
+    dayTEC.text = state.birthDay.day.toString().padLeft(2, '0');
   }
 
   void updateEmail(String email) {
@@ -66,6 +92,17 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   Future<void> submit() async {
     debugPrint('유저정보: ${state.nickname}, ${state.email}');
+  }
+
+  @override
+  void dispose() {
+    emailTEC.dispose();
+    nicknameTEC.dispose();
+    numberTEC.dispose();
+    yearTEC.dispose();
+    monthTEC.dispose();
+    dayTEC.dispose();
+    super.dispose();
   }
 }
 
