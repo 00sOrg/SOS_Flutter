@@ -16,6 +16,7 @@ class SettingProfilePage extends ConsumerStatefulWidget {
 }
 
 class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
+
   @override
   void initState() {
     super.initState();
@@ -70,7 +71,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                   hintText: '이메일',
                   maxLength: 80,
                   keyboardType: TextInputType.emailAddress,
-                  controller: TextEditingController(text: user.email),
+                  controller: viewModel.emailTEC,
                   onChanged: viewModel.updateEmail,
                 ),
                 const SizedBox(height: 9),
@@ -96,8 +97,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                         child: SettingTextfield(
                           hintText: '16자 이내로 입력해 주세요.',
                           maxLength: 16,
-                          controller:
-                              TextEditingController(text: user.nickname),
+                          controller: viewModel.nicknameTEC,
                           onChanged: viewModel.updateNickname,
                         ),
                       ),
@@ -113,7 +113,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                     maxLength: 16,
                     keyboardType:
                         const TextInputType.numberWithOptions(signed: true),
-                    controller: TextEditingController(text: user.phoneNumber),
+                    controller: viewModel.numberTEC,
                     onChanged: viewModel.updatePhoneNumber,
                   ),
                 ),
@@ -147,8 +147,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                           hintText: 'YYYY',
                           maxLength: 4,
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(
-                              text: user.birthDay.year.toString()),
+                          controller: viewModel.yearTEC,
                           onChanged: (value) {
                             final year = int.tryParse(value) ?? 2000;
                             viewModel.updateBirthDate(DateTime(
@@ -162,10 +161,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                           hintText: 'MM',
                           maxLength: 2,
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(
-                              text: user.birthDay.month
-                                  .toString()
-                                  .padLeft(2, '0')),
+                          controller: viewModel.monthTEC,
                           onChanged: (value) {
                             final month = int.tryParse(value) ?? 1;
                             viewModel.updateBirthDate(
@@ -183,9 +179,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                         child: SettingTextfield(
                           hintText: 'DD',
                           maxLength: 2,
-                          controller: TextEditingController(
-                              text:
-                                  user.birthDay.day.toString().padLeft(2, '0')),
+                          controller: viewModel.dayTEC,
                           onChanged: (value) {
                             final day = int.tryParse(value) ?? 1;
                             viewModel.updateBirthDate(
