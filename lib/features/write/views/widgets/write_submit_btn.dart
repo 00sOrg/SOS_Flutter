@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class WriteSubmitBtn extends ConsumerWidget {
   const WriteSubmitBtn({super.key});
@@ -16,13 +17,13 @@ class WriteSubmitBtn extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFF0066FF),
+          color: AppColors.blue,
           borderRadius: BorderRadius.circular(10),
         ),
         child: const Text(
           '등록하기',
           style: TextStyle(
-            color: Color(0xFFFFFFFF),
+            color: AppColors.white,
             fontWeight: FontWeight.w700,
             fontSize: 20,
             height: 1.2,

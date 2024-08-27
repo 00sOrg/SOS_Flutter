@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
 import 'package:sos/features/write/views/widgets/write_submit_btn.dart';
@@ -15,6 +16,8 @@ class WritePage extends ConsumerStatefulWidget {
 
 class _WritePageState extends ConsumerState<WritePage> {
   final TextEditingController _contentTEC = TextEditingController();
+  final dummyAdress = '서울시 서초구 서초동';
+  final dummyImg = 'https://picsum.photos/180/300';
 
   @override
   void initState() {
@@ -47,19 +50,13 @@ class _WritePageState extends ConsumerState<WritePage> {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
           child: Column(
             children: [
-              titleField(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Container(
-                  height: 0.5,
-                  color: AppColors.lineGray,
-                ),
-              ),
-              Expanded(child: contentField()),
+              _topArea(),
+              const SizedBox(height: 13),
+              Expanded(child: _contentField()),
               if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 16),
               const WriteSubmitBtn(),
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -67,13 +64,52 @@ class _WritePageState extends ConsumerState<WritePage> {
     );
   }
 
-  Widget titleField() {
+  Widget _topArea() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(dummyImg),
+              fit: BoxFit.cover,
+            ),
+          ),
+          width: 87.w,
+          height: 87.w,
+        ),
+        const SizedBox(width: 14),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _titleField(),
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 7),
+                child: Container(
+                  height: 0.5,
+                  color: AppColors.lineGray,
+                ),
+              ),
+              Text(
+                dummyAdress,
+                style: const TextStyle(fontSize: 14, height: 1.2),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _titleField() {
     return TextField(
       keyboardType: TextInputType.text,
       autocorrect: false,
       maxLines: 1,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.zero,
+        isDense: true,
+        contentPadding: const EdgeInsets.only(top: 5),
         hintText: '제목',
         hintStyle: AppTexts.titleStyle.copyWith(color: AppColors.textGray),
         border: InputBorder.none,
@@ -83,7 +119,7 @@ class _WritePageState extends ConsumerState<WritePage> {
     );
   }
 
-  Widget contentField() {
+  Widget _contentField() {
     return TextField(
       controller: _contentTEC,
       keyboardType: TextInputType.multiline,
@@ -96,7 +132,7 @@ class _WritePageState extends ConsumerState<WritePage> {
         hintStyle: AppTexts.bodyStyle.copyWith(color: AppColors.textGray),
         border: InputBorder.none,
       ),
-      style: AppTexts.bodyStyle,
+      style: AppTexts.bodyStyle.copyWith(height: 1.3125),
       onTap: () {},
     );
   }
