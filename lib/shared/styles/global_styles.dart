@@ -26,13 +26,18 @@ class AppTexts {
 }
 
 class AppBorders {
-  static final OutlineInputBorder defaultBorder = OutlineInputBorder(
+  static final OutlineInputBorder defaultBlueBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFF0066FF), width: 3),
+    borderRadius: BorderRadius.circular(10),
+  );
+
+  static final OutlineInputBorder thinGrayBorder = OutlineInputBorder(
+    borderSide: const BorderSide(color: Color(0xFFE9E9E9), width: 1),
     borderRadius: BorderRadius.circular(10),
   );
 
   static final OutlineInputBorder errorBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFFED4337), width: 1),
-    borderRadius: BorderRadius.circular(8),
+    borderRadius: BorderRadius.circular(10),
   );
 }
