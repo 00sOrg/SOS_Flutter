@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
@@ -28,12 +30,11 @@ class _SettingDeletedAccountPageState extends State<SettingDeletedAccountPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            color: AppColors.lineGray,
-            width: 124,
-            height: 124,
-          ),
-          const SizedBox(height: 52, width: double.infinity),
+          SvgPicture.asset(
+          'assets/images/circle_check.svg',
+          width: 114.w,
+        ),
+          const SizedBox(height: 43, width: double.infinity),
           const Text('계정 삭제 완료', style: AppTexts.titleStyle),
           const SizedBox(height: 26),
           const Text(

@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/shared/models/user.dart';
+// import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class SettingProfileViewModel extends StateNotifier<User> {
   SettingProfileViewModel()
@@ -76,10 +77,6 @@ class SettingProfileViewModel extends StateNotifier<User> {
     state = state.copyWith(profilePicture: imagePath); // trigger
   }
 
-  // void updateEmail(String email) {
-  //   state = state.copyWith(email: email);
-  // }
-
   void updatePassword(String password) {
     state = state.copyWith(password: password);
   }
@@ -87,10 +84,6 @@ class SettingProfileViewModel extends StateNotifier<User> {
   void updateNickname(String nickname) {
     state = state.copyWith(nickname: nickname);
   }
-
-  // void updatePhoneNumber(String phoneNumber) {
-  //   state = state.copyWith(phoneNumber: phoneNumber);
-  // }
 
   void updateGender(String? gender) {
     if (gender != null) {
@@ -106,8 +99,21 @@ class SettingProfileViewModel extends StateNotifier<User> {
     debugPrint('닉네임 중복확인 액션');
   }
 
-  Future<void> submit() async {
+  bool areFieldsValid() {
+    return nicknameTEC.text.isNotEmpty &&
+        yearTEC.text.isNotEmpty &&
+        monthTEC.text.isNotEmpty &&
+        dayTEC.text.isNotEmpty;
+  }
+
+  Future<void> submit(BuildContext context) async {
+    // if (areFieldsValid()) {
     debugPrint('유저정보: ${state.nickname}, ${state.email}');
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     //customSnackBar(text: '입력값을 확인해주세요')
+    //   );
+    // }
   }
 
   @override

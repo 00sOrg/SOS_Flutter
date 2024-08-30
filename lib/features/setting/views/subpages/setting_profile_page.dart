@@ -201,31 +201,10 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
           padding: const EdgeInsets.fromLTRB(30, 15, 30, 25),
           child: BottomWideButton(
             text: '저장하기',
-            onTap: () => viewModel.submit(),
+            onTap: () => viewModel.submit(context),
           )),
     );
   }
-
-  // Widget _imagePicker() {
-  //   return Stack(
-  //     clipBehavior: Clip.none,
-  //     children: [
-  //       CircleAvatar(
-  //         backgroundColor: Colors.grey[300],
-  //         radius: 48,
-  //       ),
-  //       const Positioned(
-  //         bottom: -3,
-  //         right: -3,
-  //         child: CircleAvatar(
-  //           backgroundColor: AppColors.textGray,
-  //           radius: 15,
-  //           child: Icon(Icons.add),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
 
   Widget _customRadioListTile({
     required String title,
