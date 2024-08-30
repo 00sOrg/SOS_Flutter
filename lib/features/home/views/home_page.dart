@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
+import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
 import 'package:sos/features/home/views/widgets/map_area.dart';
 import 'package:sos/features/home/views/widgets/map_toggle_switch.dart';
-import 'package:sos/features/home/views/widgets/notification_side_sheet.dart';
+import 'package:sos/features/home/views/side_sheet/notification_side_sheet.dart';
 import 'package:sos/shared/providers/location_provider.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 
@@ -18,6 +19,16 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    // 페이지가 로드될 때 사용자 정보를 불러옵니다.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(userViewModelProvider.notifier).loadUserInfo();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final locationAsyncValue = ref.watch(locationProvider);
@@ -79,15 +90,9 @@ class HomePageState extends ConsumerState<HomePage> {
                 HomeSearchBar(),
                 const SizedBox(width: 15),
                 HeaderBtn(
-                  onTap: () => showNotificationSideSheet(context),
+                  onTap: () => showNotificationSideSheet(context, ref),
                   icon: const Icon(Icons.notifications),
                 ),
-                // HeaderBtn(
-                //   onTap: () => ref
-                //       .read(homeViewModelProvider.notifier)
-                //       .navigateToNotificationPage(context),
-                //   icon: const Icon(Icons.notifications),
-                // ),
               ],
             ),
           ),

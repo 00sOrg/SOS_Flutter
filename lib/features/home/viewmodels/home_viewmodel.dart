@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class HomeState {
   final bool isSwitchLeft;
@@ -11,7 +10,7 @@ class HomeState {
   HomeState({
     this.isSwitchLeft = false,
     this.isFavoritesOpen = false,
-    this.isNotificationSideSheetOpen = false, // 초기값 설정
+    this.isNotificationSideSheetOpen = false,
   });
 
   HomeState copyWith({
@@ -67,14 +66,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
       ),
     );
   }
-
-  void navigateToNotificationPage(BuildContext context) {
-    toggleNotificationSideSheet(); // 사이드 시트 열기/닫기 로직
-  }
-
-  // void navigateToNotificationPage(BuildContext context) {
-  //   context.push('/notifications');
-  // }
 }
 
 final homeViewModelProvider =
