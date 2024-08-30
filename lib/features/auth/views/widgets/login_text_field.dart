@@ -1,35 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class LoginTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
+  final int maxLength;
   final bool obscureText;
 
   const LoginTextField({
     super.key,
     required this.hintText,
     required this.controller,
+    required this.maxLength,
     this.obscureText = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 251.w,
       child: TextField(
         controller: controller,
+        maxLength: maxLength,
         obscureText: obscureText,
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           hintText: hintText,
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue),
-            borderRadius: BorderRadius.circular(3),
+          hintStyle: const TextStyle(
+            fontSize: 14,
+            color: AppColors.textGray,
+            height: 1.25,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue),
-            borderRadius: BorderRadius.circular(3),
-          ),
+          border: AppBorders.defaultBlueBorder,
+          enabledBorder: AppBorders.defaultBlueBorder,
+          focusedBorder: AppBorders.defaultBlueBorder,
+          counterText: "",
+        ),
+        style: const TextStyle(
+          fontSize: 14,
+          color: AppColors.black,
+          height: 1.25,
         ),
       ),
     );
