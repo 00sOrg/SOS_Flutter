@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/features/auth/viewmodels/auth_viewmodel.dart';
 import 'package:sos/features/auth/views/login_page.dart';
+import 'package:sos/features/auth/views/signup_page.dart';
 import 'package:sos/features/auth/views/splash_page.dart';
 import 'package:sos/features/board/views/board_page.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
@@ -47,11 +48,15 @@ class AppRouter {
         ),
         GoRoute(
           path: '/login',
-          builder: (context, state) => LoginPage(),
+          builder: (context, state) => const LoginPage(),
+        ),
+        GoRoute(
+          path: '/signup',
+          builder: (context, state) => const SignupPage(),
         ),
         GoRoute(
           path: '/setting-deleted-account',
-          builder: (context, state) => SettingDeletedAccountPage(),
+          builder: (context, state) => const SettingDeletedAccountPage(),
         ),
         ShellRoute(
           builder: (context, state, child) {
@@ -79,15 +84,15 @@ class AppRouter {
   static List<GoRoute> get _routes => [
         GoRoute(
           path: '/home',
-          builder: (context, state) => HomePage(),
+          builder: (context, state) => const HomePage(),
         ),
         GoRoute(
           path: '/rescue',
-          builder: (context, state) => RescuePage(),
+          builder: (context, state) => const RescuePage(),
         ),
         GoRoute(
           path: '/write',
-          builder: (context, state) => WritePage(),
+          builder: (context, state) =>const WritePage(),
         ),
         GoRoute(
           path: '/board',
@@ -95,8 +100,9 @@ class AppRouter {
         ),
         GoRoute(
           path: '/setting',
-          builder: (context, state) => SettingPage(),
+          builder: (context, state) => const SettingPage(),
         ),
+        // TODO: delete noti page (according to ui change)
         GoRoute(
           path: '/notifications',
           builder: (context, state) => NotificationPage(),
@@ -111,7 +117,7 @@ class AppRouter {
         ),
         GoRoute(
           path: '/setting-profile',
-          builder: (context, state) => SettingProfilePage(),
+          builder: (context, state) => const SettingProfilePage(),
         ),
         GoRoute(
           path: '/setting-health',
@@ -119,11 +125,11 @@ class AppRouter {
         ),
         GoRoute(
           path: '/setting-favorite',
-          builder: (context, state) => SettingFavoritePage(),
+          builder: (context, state) => const SettingFavoritePage(),
         ),
         GoRoute(
           path: '/location-test',
-          builder: (context, state) => GeolocatorTestPage(),
+          builder: (context, state) => const GeolocatorTestPage(),
         ),
       ];
 
