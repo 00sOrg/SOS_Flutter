@@ -8,6 +8,7 @@ class SettingModal extends StatelessWidget {
   final String leftBtn;
   final String rightBtn;
   final VoidCallback onRightBtnPressed;
+  final Color? rightBtnColor;
 
   const SettingModal({
     required this.title,
@@ -16,6 +17,7 @@ class SettingModal extends StatelessWidget {
     required this.rightBtn,
     required this.onRightBtnPressed,
     super.key,
+    this.rightBtnColor,
   });
 
   @override
@@ -36,7 +38,7 @@ class SettingModal extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           style: TextButton.styleFrom(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             shape:
                 const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           ),
@@ -44,7 +46,7 @@ class SettingModal extends StatelessWidget {
             leftBtn,
             style: const TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
               color: AppColors.blue,
             ),
           ),
@@ -52,22 +54,16 @@ class SettingModal extends StatelessWidget {
         TextButton(
           onPressed: onRightBtnPressed,
           style: TextButton.styleFrom(
-            padding: const EdgeInsets.all(20),
-            shape: const RoundedRectangleBorder(
-                // borderRadius: BorderRadius.only(
-                //   topLeft: Radius.circular(0),
-                //   topRight: Radius.circular(0),
-                //   bottomRight: Radius.circular(0),
-                //   bottomLeft: Radius.circular(20),
-                // ),
-                borderRadius: BorderRadius.zero),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            shape:
+                const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           ),
           child: Text(
             rightBtn,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.bold,
-              color: AppColors.blue,
+              color: rightBtnColor ?? AppColors.blue,
             ),
           ),
         ),

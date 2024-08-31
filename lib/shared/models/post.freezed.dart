@@ -37,12 +37,8 @@ mixin _$Post {
   int get commentsCount => throw _privateConstructorUsedError;
   List<Comment>? get comments => throw _privateConstructorUsedError;
 
-  /// Serializes this Post to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $PostCopyWith<Post> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -79,8 +75,6 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -197,8 +191,6 @@ class __$$PostImplCopyWithImpl<$Res>
   __$$PostImplCopyWithImpl(_$PostImpl _value, $Res Function(_$PostImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -382,7 +374,7 @@ class _$PostImpl implements _Post {
             const DeepCollectionEquality().equals(other._comments, _comments));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -402,9 +394,7 @@ class _$PostImpl implements _Post {
       commentsCount,
       const DeepCollectionEquality().hash(_comments));
 
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PostImplCopyWith<_$PostImpl> get copyWith =>
@@ -439,16 +429,16 @@ abstract class _Post implements Post {
   factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
 
   @override
-  int get postId; // required user,
-  @override
+  int get postId;
+  @override // required user,
   String? get type;
   @override
   String? get media;
   @override
   String get title;
   @override
-  String? get content; //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
-  @override
+  String? get content;
+  @override //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
   DateTime get createdAt;
   @override
   double get latitude;
@@ -468,11 +458,8 @@ abstract class _Post implements Post {
   int get commentsCount;
   @override
   List<Comment>? get comments;
-
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PostImplCopyWith<_$PostImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

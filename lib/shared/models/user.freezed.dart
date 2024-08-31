@@ -21,6 +21,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   String? get profilePicture => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String? profilePicture,
+      String name,
       String email,
       String password,
       String nickname,
@@ -62,6 +64,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? profilePicture = freezed,
+    Object? name = null,
     Object? email = null,
     Object? password = null,
     Object? nickname = null,
@@ -74,6 +77,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -111,6 +118,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String? profilePicture,
+      String name,
       String email,
       String password,
       String nickname,
@@ -130,6 +138,7 @@ class __$$UserImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? profilePicture = freezed,
+    Object? name = null,
     Object? email = null,
     Object? password = null,
     Object? nickname = null,
@@ -142,6 +151,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -175,6 +188,7 @@ class __$$UserImplCopyWithImpl<$Res>
 class _$UserImpl implements _User {
   _$UserImpl(
       {this.profilePicture,
+      required this.name,
       required this.email,
       required this.password,
       required this.nickname,
@@ -187,6 +201,8 @@ class _$UserImpl implements _User {
 
   @override
   final String? profilePicture;
+  @override
+  final String name;
   @override
   final String email;
   @override
@@ -202,7 +218,7 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(profilePicture: $profilePicture, email: $email, password: $password, nickname: $nickname, phoneNumber: $phoneNumber, gender: $gender, birthDay: $birthDay)';
+    return 'User(profilePicture: $profilePicture, name: $name, email: $email, password: $password, nickname: $nickname, phoneNumber: $phoneNumber, gender: $gender, birthDay: $birthDay)';
   }
 
   @override
@@ -212,6 +228,7 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.profilePicture, profilePicture) ||
                 other.profilePicture == profilePicture) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
@@ -226,8 +243,8 @@ class _$UserImpl implements _User {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, profilePicture, email, password,
-      nickname, phoneNumber, gender, birthDay);
+  int get hashCode => Object.hash(runtimeType, profilePicture, name, email,
+      password, nickname, phoneNumber, gender, birthDay);
 
   @JsonKey(ignore: true)
   @override
@@ -246,6 +263,7 @@ class _$UserImpl implements _User {
 abstract class _User implements User {
   factory _User(
       {final String? profilePicture,
+      required final String name,
       required final String email,
       required final String password,
       required final String nickname,
@@ -257,6 +275,8 @@ abstract class _User implements User {
 
   @override
   String? get profilePicture;
+  @override
+  String get name;
   @override
   String get email;
   @override

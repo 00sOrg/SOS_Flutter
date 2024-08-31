@@ -43,16 +43,23 @@ class SettingTextfield extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: AppTexts.bodyStyle.copyWith(color: AppColors.textGray),
-          border: AppBorders.thinGrayBorder,
-          enabledBorder: AppBorders.thinGrayBorder,
-          focusedBorder: AppBorders.thinGrayBorder,
+          border: AppBorders.thinBlackBorder,
+          enabledBorder: AppBorders.thinBlackBorder,
+          disabledBorder: AppBorders.thinGrayBorder,
+          focusedBorder: AppBorders.thinBlackBorder,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 12,
             horizontal: 16,
           ),
           counterText: "",
         ),
-        style: AppTexts.bodyStyle,
+        style: isEnabled
+            ? AppTexts.bodyStyle
+            : AppTexts.bodyStyle.copyWith(
+                color: const Color(
+                  0xFF595959,
+                ),
+              ),
       ),
     );
   }

@@ -36,6 +36,11 @@ class AppBorders {
     borderRadius: BorderRadius.circular(10),
   );
 
+  static final OutlineInputBorder thinBlackBorder = OutlineInputBorder(
+    borderSide: const BorderSide(color: Color(0xFFA9A9A9), width: 1),
+    borderRadius: BorderRadius.circular(10),
+  );
+
   static final OutlineInputBorder errorBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFFED4337), width: 1),
     borderRadius: BorderRadius.circular(10),

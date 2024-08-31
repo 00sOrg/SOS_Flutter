@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/shared/models/user.dart';
+// import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class SettingProfileViewModel extends StateNotifier<User> {
   SettingProfileViewModel()
       : super(
           User(
+            name: '',
             email: '',
             password: '',
             nickname: '',
@@ -16,6 +18,9 @@ class SettingProfileViewModel extends StateNotifier<User> {
           ),
         ) {
     emailTEC = TextEditingController(text: state.email);
+    passwordTEC = TextEditingController();
+    passwordCheckTEC = TextEditingController();
+    nameTEC = TextEditingController(text: state.name);
     nicknameTEC = TextEditingController(text: state.nickname);
     numberTEC = TextEditingController(text: state.phoneNumber);
     yearTEC = TextEditingController(text: state.birthDay.year.toString());
@@ -26,6 +31,9 @@ class SettingProfileViewModel extends StateNotifier<User> {
   }
 
   late TextEditingController emailTEC;
+  late TextEditingController passwordTEC;
+  late TextEditingController passwordCheckTEC;
+  late TextEditingController nameTEC;
   late TextEditingController nicknameTEC;
   late TextEditingController numberTEC;
   late TextEditingController yearTEC;
@@ -35,13 +43,14 @@ class SettingProfileViewModel extends StateNotifier<User> {
   void loadUserData() {
     // 일단 더미
     final dummyUser = User(
+      name: '김채리',
       email: 'dummy@example.com',
       password: '',
       nickname: '챌챌',
       phoneNumber: '010-8575-4997',
       gender: '여자',
       birthDay: DateTime(2000, 9, 25),
-      profilePicture: '',
+      profilePicture: 'https://picsum.photos/100',
     );
     state = dummyUser;
     updateControllers();
@@ -49,6 +58,7 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   void updateControllers() {
     emailTEC.text = state.email;
+    nameTEC.text = state.name;
     nicknameTEC.text = state.nickname;
     numberTEC.text = state.phoneNumber;
     yearTEC.text = state.birthDay.year.toString();
@@ -56,8 +66,15 @@ class SettingProfileViewModel extends StateNotifier<User> {
     dayTEC.text = state.birthDay.day.toString().padLeft(2, '0');
   }
 
-  void updateEmail(String email) {
-    state = state.copyWith(email: email);
+  String? localImagePath;
+  void updateProfilePicture(String? imagePath) {
+    if (imagePath != null && imagePath.isNotEmpty) {
+      localImagePath = imagePath;
+    } else {
+      state = state.copyWith(profilePicture: '');
+      localImagePath = null;
+    }
+    state = state.copyWith(profilePicture: imagePath); // trigger
   }
 
   void updatePassword(String password) {
@@ -66,10 +83,6 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   void updateNickname(String nickname) {
     state = state.copyWith(nickname: nickname);
-  }
-
-  void updatePhoneNumber(String phoneNumber) {
-    state = state.copyWith(phoneNumber: phoneNumber);
   }
 
   void updateGender(String? gender) {
@@ -82,21 +95,51 @@ class SettingProfileViewModel extends StateNotifier<User> {
     state = state.copyWith(birthDay: birthDay);
   }
 
-  void updateProfilePicture(String profilePicture) {
-    state = state.copyWith(profilePicture: profilePicture);
-  }
-
+  bool isNicknameAvailable = false;
+  bool isCheckingNickname = false;
+  bool hasCheckedNickname = false;
   Future<void> checkName() async {
-    debugPrint('중복확인 액션');
+    debugPrint('닉네임 중복확인 액션');
+    if (nicknameTEC.text.isEmpty) return;
+
+    isCheckingNickname = true;
+    hasCheckedNickname = false;
+    state = state.copyWith(); // trigger
+    // dummy 시간 줌
+    await Future.delayed(const Duration(seconds: 1));
+
+    // dummy 닉네임
+    isNicknameAvailable =
+        (nicknameTEC.text != 'hi') && (nicknameTEC.text.isNotEmpty);
+
+    isCheckingNickname = false;
+    hasCheckedNickname = true;
+    state = state.copyWith(); // trigger
   }
 
-  Future<void> submit() async {
+  bool areFieldsValid() {
+    return nicknameTEC.text.isNotEmpty &&
+        yearTEC.text.isNotEmpty &&
+        monthTEC.text.isNotEmpty &&
+        dayTEC.text.isNotEmpty;
+  }
+
+  Future<void> submit(BuildContext context) async {
+    // if (areFieldsValid()) {
     debugPrint('유저정보: ${state.nickname}, ${state.email}');
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     //customSnackBar(text: '입력값을 확인해주세요')
+    //   );
+    // }
   }
 
   @override
   void dispose() {
     emailTEC.dispose();
+    passwordTEC.dispose();
+    passwordCheckTEC.dispose();
+    nameTEC.dispose();
     nicknameTEC.dispose();
     numberTEC.dispose();
     yearTEC.dispose();

@@ -6,7 +6,9 @@ import 'package:sos/features/setting/views/widgets/setting_labled_field.dart';
 import 'package:sos/features/setting/views/widgets/setting_textfield.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/bottom_wide_button.dart';
+import 'package:sos/shared/widgets/check_duplicate_button.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
+import 'package:sos/shared/widgets/profile_image_picker.dart';
 
 class SettingProfilePage extends ConsumerStatefulWidget {
   const SettingProfilePage({super.key});
@@ -40,38 +42,22 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: GestureDetector(
-                    onTap: () {},
-                    // child: CircleAvatar(
-                    //   radius: 50,
-                    //   backgroundImage: user.profilePicture.isNotEmpty
-                    //       ? NetworkImage(user.profilePicture)
-                    //       : null,
-                    //   child: user.profilePicture.isEmpty
-                    //       ? Icon(Icons.add_a_photo)
-                    //       : null,
-                    // ),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey[300],
-                      minRadius: 48,
-                      maxRadius: 48,
-                    ),
+                  child: ProfileImagePicker(
+                    profilePicture: user.profilePicture,
+                    localImagePath: viewModel.localImagePath,
+                    onImageSelected: (newImg) {
+                      viewModel.updateProfilePicture(newImg ?? '');
+                    },
                   ),
                 ),
                 const SizedBox(height: 38),
-                SettingExpandingTextfield(
-                  hintText:
-                      '건우를 위한 긴 텍스트필드,, 글자 넘 연한건 신경쓰지말고 걍 개발하면 됨요!! 디자인 바뀌는거 따라서 파라미터 몇개 조정해야할수도',
-                  onChanged: (temp) => (),
-                  maxLength: 250,
-                ),
-                const SizedBox(height: 30),
                 SettingTextfield(
+                  isEnabled: false,
                   hintText: '이메일',
                   maxLength: 80,
                   keyboardType: TextInputType.emailAddress,
                   controller: viewModel.emailTEC,
-                  onChanged: viewModel.updateEmail,
+                  onChanged: (_) {},
                 ),
                 const SizedBox(height: 9),
                 SettingTextfield(
@@ -89,7 +75,18 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                 ),
                 const SizedBox(height: 36),
                 SettingLabledField(
+                  label: '이름',
+                  child: SettingTextfield(
+                    isEnabled: false,
+                    hintText: '이름',
+                    maxLength: 10,
+                    controller: viewModel.nameTEC,
+                    onChanged: (_) {},
+                  ),
+                ),
+                SettingLabledField(
                   label: '닉네임',
+                  bottomPadding: 5,
                   child: Row(
                     children: [
                       Expanded(
@@ -101,19 +98,23 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                         ),
                       ),
                       const SizedBox(width: 9),
-                      _checkNameBtn(viewModel),
+                      CheckDuplicateButton(onTap: viewModel.checkName),
                     ],
                   ),
                 ),
+                if (viewModel.hasCheckedNickname)
+                  _nameCheckResult(viewModel.isNicknameAvailable),
+                const SizedBox(height: 30),
                 SettingLabledField(
                   label: '전화번호',
                   child: SettingTextfield(
+                    isEnabled: false,
                     hintText: '010-0000-0000',
                     maxLength: 16,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(signed: true),
+                    // keyboardType:
+                    //     const TextInputType.numberWithOptions(signed: true),
                     controller: viewModel.numberTEC,
-                    onChanged: viewModel.updatePhoneNumber,
+                    onChanged: (_) {},
                   ),
                 ),
                 SettingLabledField(
@@ -200,39 +201,33 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
         ),
       ),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 15, 30, 25),
-          child: BottomWideButton(
-            text: '가입하기',
-            onTap: () => viewModel.submit(),
-          )),
-    );
-  }
-
-  Widget _checkNameBtn(SettingProfileViewModel viewModel) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: () => viewModel.checkName(),
-      child: Container(
-        height: 42,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.blue, width: 1),
-        ),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const Text(
-          '중복확인',
-          style: TextStyle(
-            color: AppColors.blue,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
+        padding: const EdgeInsets.fromLTRB(30, 15, 30, 25),
+        child: BottomWideButton(
+          text: '저장하기',
+          onTap: () => viewModel.submit(context),
         ),
       ),
     );
   }
 
-  // 수평배열 신경쓰기 싫어서 그냥 일단 여기서만 쓸 수 있는 애로 이 파일에 만들어둠
+  Widget _nameCheckResult(bool isOkay) {
+    return Row(
+      children: [
+        Icon(
+          isOkay ? Icons.check : Icons.close,
+          color: isOkay ? AppColors.blue : AppColors.red,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          isOkay ? '사용 가능한 닉네임입니다.' : '사용 불가한 닉네임입니다.',
+          style: TextStyle(
+            color: isOkay ? AppColors.blue : AppColors.red,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _customRadioListTile({
     required String title,
     required String value,
