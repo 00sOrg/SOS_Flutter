@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/auth/viewmodels/auth_viewmodel.dart';
+import 'package:sos/features/auth/views/widgets/login_button.dart';
 import 'package:sos/features/auth/views/widgets/login_text_field.dart';
 
 class LoginPage extends ConsumerWidget {
@@ -10,34 +14,51 @@ class LoginPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authViewModel = ref.read(authViewModelProvider);
 
-    final TextEditingController _idTEC = TextEditingController();
-    final TextEditingController _passwordTEC = TextEditingController();
+    final TextEditingController emailTEC = TextEditingController();
+    final TextEditingController passwordTEC = TextEditingController();
 
     return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            LoginTextField(
-              hintText: '아이디',
-              controller: _idTEC,
-            ),
-            const SizedBox(height: 24),
-            LoginTextField(
-              hintText: '비밀번호',
-              controller: _passwordTEC,
-              obscureText: true,
-            ),
-            const SizedBox(height: 36),
-            ElevatedButton(
-              onPressed: () {
-                authViewModel.handleLogin(context);
-              },
-              child: const Text('Login'),
-            ),
-          ],
+      body: KeyboardDismisser(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 71.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/logo.svg',
+                width: 96.w,
+              ),
+              const SizedBox(height: 60),
+              LoginTextField(
+                hintText: '이메일',
+                controller: emailTEC,
+                maxLength: 80,
+              ),
+              const SizedBox(height: 24),
+              LoginTextField(
+                hintText: '비밀번호',
+                controller: passwordTEC,
+                obscureText: true,
+                maxLength: 100,
+              ),
+              const SizedBox(height: 54),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  LoginButton(
+                    text: '로그인',
+                    onTap: () => authViewModel.handleLogin(context),
+                  ),
+                  LoginButton(
+                    text: '회원가입',
+                    onTap: () => authViewModel.goToSignupPage(context),
+                  )
+                ],
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

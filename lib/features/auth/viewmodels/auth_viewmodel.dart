@@ -16,4 +16,8 @@ class AuthViewModel {
     log("LOGIN BTN PRESSED");
     GoRouter.of(context).go('/home');
   }
+
+  void goToSignupPage(BuildContext context) {
+    GoRouter.of(context).push('/signup');
+  }
 }

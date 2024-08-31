@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
-class BottomWideButton extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
 
-  const BottomWideButton({
+  const LoginButton({
     super.key,
     required this.text,
     required this.onTap,
@@ -16,9 +17,13 @@ class BottomWideButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        height: 46,
+        width: 114.w,
         decoration: BoxDecoration(
-            color: AppColors.blue, borderRadius: BorderRadius.circular(10)),
-        padding: const EdgeInsets.all(15),
+          color: AppColors.blue,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        alignment: Alignment.center,
         child: Text(
           text,
           style: const TextStyle(
@@ -27,7 +32,6 @@ class BottomWideButton extends StatelessWidget {
             fontSize: 20,
             height: 1,
           ),
-          textAlign: TextAlign.center,
         ),
       ),
     );
