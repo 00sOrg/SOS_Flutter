@@ -1,24 +1,28 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class HomeState {
   final bool isSwitchLeft;
   final bool isFavoritesOpen;
+  final bool isNotificationSideSheetOpen;
 
   HomeState({
     this.isSwitchLeft = false,
     this.isFavoritesOpen = false,
+    this.isNotificationSideSheetOpen = false,
   });
 
   HomeState copyWith({
     bool? isSwitchLeft,
     bool? isFavoritesOpen,
+    bool? isNotificationSideSheetOpen,
   }) {
     return HomeState(
       isSwitchLeft: isSwitchLeft ?? this.isSwitchLeft,
       isFavoritesOpen: isFavoritesOpen ?? this.isFavoritesOpen,
+      isNotificationSideSheetOpen:
+          isNotificationSideSheetOpen ?? this.isNotificationSideSheetOpen,
     );
   }
 }
@@ -39,6 +43,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
     state = state.copyWith(isFavoritesOpen: !state.isFavoritesOpen);
   }
 
+  void toggleNotificationSideSheet() {
+    state = state.copyWith(
+        isNotificationSideSheetOpen: !state.isNotificationSideSheetOpen);
+  }
+
   void navigateToUser(BuildContext context, String user) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -56,10 +65,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
         ),
       ),
     );
-  }
-
-  void navigateToNotificationPage(BuildContext context) {
-    context.push('/notifications');
   }
 }
 

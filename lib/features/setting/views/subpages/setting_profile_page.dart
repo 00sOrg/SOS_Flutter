@@ -16,7 +16,6 @@ class SettingProfilePage extends ConsumerStatefulWidget {
 }
 
 class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
-
   @override
   void initState() {
     super.initState();
