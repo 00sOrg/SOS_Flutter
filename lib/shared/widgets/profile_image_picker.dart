@@ -18,14 +18,22 @@ class ProfileImagePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ImageProvider<Object> imageProvider;
-
+    Widget imageWidget;
     if (localImagePath != null && localImagePath!.isNotEmpty) {
-      imageProvider = FileImage(File(localImagePath!));
+      imageWidget = Image.file(
+        File(localImagePath!),
+        fit: BoxFit.cover,
+      );
     } else if (profilePicture != null && profilePicture!.isNotEmpty) {
-      imageProvider = NetworkImage(profilePicture!);
+      imageWidget = Image.network(
+        profilePicture!,
+        fit: BoxFit.cover,
+      );
     } else {
-      imageProvider = const AssetImage('assets/images/default_user.png');
+      imageWidget = Image.asset(
+        'assets/images/default_profile.png',
+        width: 64,
+      );
     }
 
     return GestureDetector(
@@ -36,13 +44,15 @@ class ProfileImagePicker extends StatelessWidget {
           CircleAvatar(
             backgroundColor: Colors.grey[300],
             radius: 48,
-            backgroundImage: imageProvider,
+            child: ClipOval(
+              child: imageWidget,
+            ),
           ),
           const Positioned(
             bottom: -3,
             right: -3,
             child: CircleAvatar(
-              backgroundColor: AppColors.textGray,
+              backgroundColor: AppColors.lineGray,
               radius: 15,
               child: Icon(Icons.add),
             ),

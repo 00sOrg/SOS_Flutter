@@ -1,61 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/small_text_button.dart';
 
 class SettingFavoriteBlock extends StatelessWidget {
   final Friend friend;
-  final TextEditingController nicknameTEC;
-  final bool isEditMode;
-  final VoidCallback onEdit;
-  final VoidCallback onSave;
-  final VoidCallback onDelete;
+  final SettingFavoriteViewModel viewModel;
 
   const SettingFavoriteBlock({
     super.key,
     required this.friend,
-    required this.nicknameTEC,
-    required this.isEditMode,
-    required this.onEdit,
-    required this.onSave,
-    required this.onDelete,
+    required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      height: 142,
-      padding: const EdgeInsets.all(18),
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF3F3F3),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF000000).withOpacity(0.25),
-            blurRadius: 4,
-            offset: const Offset(0, 4),
-            spreadRadius: 0,
+    return Stack(
+      children: [
+        Container(
+          width: double.maxFinite,
+          height: 136.w,
+          padding: const EdgeInsets.all(18),
+          margin: const EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3F3F3),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF000000).withOpacity(0.25),
+                blurRadius: 4,
+                offset: const Offset(0, 4),
+                spreadRadius: 0,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.grey[300],
-            radius: 51,
-            backgroundImage: (friend.profilePicture != null &&
-                    friend.profilePicture!.isNotEmpty)
-                ? NetworkImage(friend.profilePicture!)
-                : const AssetImage('assets/images/default_user.png'),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                radius: 51,
+                child: (friend.profilePicture != null &&
+                        friend.profilePicture!.isNotEmpty)
+                    ? ClipOval(
+                        child: Image.network(
+                          friend.profilePicture!,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Image.asset(
+                        'assets/images/default_profile.png',
+                        width: 76,
+                      ),
+              ),
+              const SizedBox(width: 24),
+              viewModel.isEditMode(friend.id) ? _inEditMode() : _inStaticMode(),
+              const SizedBox(width: 6),
+            ],
           ),
-          const SizedBox(width: 35),
-          isEditMode ? _inEditMode() : _inStaticMode(),
-          const SizedBox(width: 6),
-        ],
-      ),
+        ),
+        Positioned(
+          top: 10,
+          left: 8,
+          child: InkWell(
+            onTap: () => viewModel.showDeleteModal(
+              context: context,
+              id: friend.id,
+              name: friend.name,
+            ),
+            child: const Icon(
+              Icons.close,
+              color: AppColors.textGray,
+              size: 22,
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -65,9 +87,9 @@ class SettingFavoriteBlock extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            friend.name,
+            friend.nickName ?? friend.name,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.w700,
               height: 1.2,
             ),
@@ -78,7 +100,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           Text(
             friend.address,
             style: const TextStyle(
-              fontSize: 10,
+              fontSize: 14,
               color: AppColors.textGray,
               fontWeight: FontWeight.w700,
               height: 1.2,
@@ -89,7 +111,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           const Spacer(),
           SmallTextButton(
             text: '수정',
-            onTap: onEdit,
+            onTap: () => viewModel.editFavorite(friend.id),
             buttonColor: const Color(0xFFFFFFFF),
             textColor: AppColors.blue,
           ),
@@ -114,7 +136,7 @@ class SettingFavoriteBlock extends StatelessWidget {
                   TextField(
                     autofocus: true,
                     textAlign: TextAlign.end,
-                    controller: nicknameTEC,
+                    controller: viewModel.getNicknameTEC(friend.id),
                     autocorrect: false,
                     maxLength: 16,
                     maxLines: 2,
@@ -123,7 +145,7 @@ class SettingFavoriteBlock extends StatelessWidget {
                       hintText: friend.name,
                       hintStyle: const TextStyle(
                         color: AppColors.textGray,
-                        fontSize: 14,
+                        fontSize: 18,
                         fontWeight: FontWeight.w700,
                         height: 1.2,
                       ),
@@ -138,7 +160,7 @@ class SettingFavoriteBlock extends StatelessWidget {
                     ),
                     style: const TextStyle(
                       color: AppColors.black,
-                      fontSize: 14,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
                       height: 1.2,
                     ),
@@ -147,9 +169,9 @@ class SettingFavoriteBlock extends StatelessWidget {
                     right: 10,
                     bottom: 6,
                     child: Text(
-                      '${nicknameTEC.text.length}/16',
-                      style: TextStyle(
-                        fontSize: 12,
+                      '${viewModel.getNicknameTEC(friend.id).text.length}/16',
+                      style: const TextStyle(
+                        fontSize: 14,
                         fontWeight: FontWeight.w400,
                         color: AppColors.textGray,
                       ),
@@ -164,15 +186,15 @@ class SettingFavoriteBlock extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SmallTextButton(
-                text: '삭제',
-                onTap: onDelete,
+                text: '취소',
+                onTap: () => viewModel.cancelEditFavorite(friend.id),
                 buttonColor: const Color(0xFFFFFFFF),
                 textColor: AppColors.black,
               ),
               const SizedBox(width: 16),
               SmallTextButton(
                 text: '완료',
-                onTap: onSave,
+                onTap: () => viewModel.saveFavorite(friend.id, friend.name),
               ),
             ],
           ),

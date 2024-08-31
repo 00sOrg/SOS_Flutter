@@ -18,7 +18,6 @@ class SettingProfilePage extends ConsumerStatefulWidget {
 }
 
 class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
-
   @override
   void initState() {
     super.initState();
@@ -87,6 +86,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                 ),
                 SettingLabledField(
                   label: '닉네임',
+                  bottomPadding: 5,
                   child: Row(
                     children: [
                       Expanded(
@@ -102,6 +102,9 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                     ],
                   ),
                 ),
+                if (viewModel.hasCheckedNickname)
+                  _nameCheckResult(viewModel.isNicknameAvailable),
+                const SizedBox(height: 30),
                 SettingLabledField(
                   label: '전화번호',
                   child: SettingTextfield(
@@ -198,11 +201,30 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
         ),
       ),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 15, 30, 25),
-          child: BottomWideButton(
-            text: '저장하기',
-            onTap: () => viewModel.submit(context),
-          )),
+        padding: const EdgeInsets.fromLTRB(30, 15, 30, 25),
+        child: BottomWideButton(
+          text: '저장하기',
+          onTap: () => viewModel.submit(context),
+        ),
+      ),
+    );
+  }
+
+  Widget _nameCheckResult(bool isOkay) {
+    return Row(
+      children: [
+        Icon(
+          isOkay ? Icons.check : Icons.close,
+          color: isOkay ? AppColors.blue : AppColors.red,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          isOkay ? '사용 가능한 닉네임입니다.' : '사용 불가한 닉네임입니다.',
+          style: TextStyle(
+            color: isOkay ? AppColors.blue : AppColors.red,
+          ),
+        ),
+      ],
     );
   }
 

@@ -26,12 +26,7 @@ class SettingFavoritePage extends ConsumerWidget {
                   .map(
                     (friend) => SettingFavoriteBlock(
                       friend: friend,
-                      nicknameTEC:
-                          viewModel.getNicknameTEC(friend.id),
-                      isEditMode: viewModel.isEditMode(friend.id),
-                      onEdit: () => viewModel.editFavorite(friend.id),
-                      onSave: () => viewModel.saveFavorite(friend.id),
-                      onDelete: () => viewModel.deleteFavorite(friend.id),
+                      viewModel: viewModel,
                     ),
                   )
                   .toList(),

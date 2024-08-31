@@ -95,8 +95,26 @@ class SettingProfileViewModel extends StateNotifier<User> {
     state = state.copyWith(birthDay: birthDay);
   }
 
+  bool isNicknameAvailable = false;
+  bool isCheckingNickname = false;
+  bool hasCheckedNickname = false;
   Future<void> checkName() async {
     debugPrint('닉네임 중복확인 액션');
+    if (nicknameTEC.text.isEmpty) return;
+
+    isCheckingNickname = true;
+    hasCheckedNickname = false;
+    state = state.copyWith(); // trigger
+    // dummy 시간 줌
+    await Future.delayed(const Duration(seconds: 1));
+
+    // dummy 닉네임
+    isNicknameAvailable =
+        (nicknameTEC.text != 'hi') && (nicknameTEC.text.isNotEmpty);
+
+    isCheckingNickname = false;
+    hasCheckedNickname = true;
+    state = state.copyWith(); // trigger
   }
 
   bool areFieldsValid() {
