@@ -1,30 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
 import 'package:sos/features/setting/views/widgets/setting_favorite_block.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 
-class SettingFavoritePage extends StatelessWidget {
+class SettingFavoritePage extends ConsumerWidget {
   const SettingFavoritePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.watch(settingFavoriteViewModelProvider.notifier);
+    final friends = ref.watch(settingFavoriteViewModelProvider);
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: '즐겨찾는 지인 관리',
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 33),
-          child: Column(
-            children: [
-              SettingFavoriteBlock(
-                id: 1,
-                content: '밀어봐용~',
-                onSlide: () {
-                  debugPrint('SLIDE ACTION 구현');
-                },
-              ),
-              const SizedBox(height: 20),
-            ],
+      body: KeyboardDismisser(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 33),
+            child: Column(
+              children: friends
+                  .map(
+                    (friend) => SettingFavoriteBlock(
+                      friend: friend,
+                      nicknameTEC:
+                          viewModel.getNicknameTEC(friend.id),
+                      isEditMode: viewModel.isEditMode(friend.id),
+                      onEdit: () => viewModel.editFavorite(friend.id),
+                      onSave: () => viewModel.saveFavorite(friend.id),
+                      onDelete: () => viewModel.deleteFavorite(friend.id),
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
         ),
       ),
