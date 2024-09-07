@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/auth/viewmodels/auth_viewmodel.dart';
 import 'package:sos/features/auth/views/widgets/login_button.dart';
@@ -25,8 +24,14 @@ class LoginPage extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/icons/logo.svg',
+              // TODO: svg 파일 확인 필요ㄴ
+              // SvgPicture.asset(
+              //   'assets/icons/logo_lean.svg',
+              //   width: 96,
+              //   height: 45,
+              // ),
+              Image.asset(
+                'assets/icons/logo_lean.png',
                 width: 96.w,
               ),
               const SizedBox(height: 60),
