@@ -39,6 +39,11 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
         date: DateTime.now().subtract(const Duration(days: 1)),
         type: AlarmType.userActivity,
       ),
+      Alarm(
+        content: '관심 있는 사용자가 새로운 글을 게시했습니다. 관심 있는 사용자가 새로운 글을 게시했습니다. ',
+        date: DateTime.now().subtract(const Duration(days: 3)),
+        type: AlarmType.userActivity,
+      ),
     ];
   }
 

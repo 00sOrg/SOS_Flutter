@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sos/features/home/viewmodels/alarm_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/side_sheet/alarm_list.dart';
@@ -85,6 +86,16 @@ class _NotificationSideSheetState extends ConsumerState<NotificationSideSheet> {
                     ),
                   ),
                   const SizedBox(height: 15),
+
+                  Center(
+                    child: Container(
+                      width: 212,
+                      color: Colors.grey.withOpacity(0.5), // 회색 구분선
+                      height: 1,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  // 알림 리스트
                   AlarmList(alarms: alarms, ref: ref), // 알림 리스트 표시
                 ],
               ),
