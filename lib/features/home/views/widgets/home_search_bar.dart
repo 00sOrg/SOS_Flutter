@@ -24,7 +24,7 @@ class HomeSearchBar extends ConsumerWidget {
             suffixIcon: Padding(
               padding: const EdgeInsets.all(8.0), // 패딩을 추가하여 아이콘 크기 조정
               child: SvgPicture.asset(
-                'assets/icons/home_search.svg',
+                'assets/icons/home/home_search.svg',
                 width: 16, // 원하는 크기로 설정
                 height: 16,
                 fit: BoxFit.contain,

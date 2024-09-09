@@ -86,7 +86,7 @@ class HomePageState extends ConsumerState<HomePage> {
                   onTap: () =>
                       ref.read(homeViewModelProvider.notifier).toggleDropdown(),
                   icon: SvgPicture.asset(
-                    'assets/icons/favorites.svg',
+                    'assets/icons/home/favorites.svg',
                     width: 24,
                     height: 24,
                   ),
@@ -97,7 +97,7 @@ class HomePageState extends ConsumerState<HomePage> {
                 HeaderBtn(
                   onTap: () => showNotificationSideSheet(context, ref),
                   icon: SvgPicture.asset(
-                    'assets/icons/notification.svg',
+                    'assets/icons/home/notification.svg',
                     width: 24,
                     height: 24,
                   ),
