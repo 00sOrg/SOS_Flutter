@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/home/views/side_sheet/favorite_alert_modal.dart';
 
 enum AlarmType { friendRequest, nearbyEvent, userActivity }
 
@@ -58,27 +59,16 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text('친구 요청'),
-          content: Text('사용자를 관심 사용자로 추가하시겠습니까?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                // 수락 로직 구현
-                markAsRead(index); // 알림을 읽음으로 처리하고 목록에서 제거
-              },
-              child: Text('수락'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                // 거절 로직 구현
-                markAsRead(index); // 알림을 읽음으로 처리하고 목록에서 제거
-              },
-              child: Text('거절'),
-            ),
-          ],
+        return SettingModal(
+          title: '친구 요청',
+          content: '사용자를 관심 사용자로 추가하시겠습니까?',
+          leftBtn: '거절',
+          rightBtn: '수락',
+          onRightBtnPressed: () {
+            Navigator.of(context).pop();
+            // 수락 로직 구현
+            markAsRead(index); // 알림을 읽음으로 처리하고 목록에서 제거
+          },
         );
       },
     );

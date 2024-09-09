@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/home/viewmodels/alarm_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/side_sheet/alarm_list.dart';
@@ -71,10 +72,10 @@ class _NotificationSideSheetState extends ConsumerState<NotificationSideSheet> {
                       children: [
                         if (user != null)
                           Text(
-                            '${user.nickname} 님',
+                            '${user.nickname}님',
                             style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 18,
                               fontFamily: 'Apple SD Gothic Neo',
                               fontWeight: FontWeight.w700,
                             ),
@@ -89,7 +90,7 @@ class _NotificationSideSheetState extends ConsumerState<NotificationSideSheet> {
 
                   Center(
                     child: Container(
-                      width: 212,
+                      width: 212.w,
                       color: Colors.grey.withOpacity(0.5), // 회색 구분선
                       height: 1,
                     ),
