@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class HeaderBtn extends StatelessWidget {
   final VoidCallback onTap;
@@ -18,12 +19,10 @@ class HeaderBtn extends StatelessWidget {
         width: 42,
         height: 42,
         decoration: BoxDecoration(
-          color: const Color(0xFF0066FF).withOpacity(0.6),
+          color: AppColors.lightBlue,
           shape: BoxShape.circle,
         ),
-        child: Center(
-          child: icon
-        ),
+        child: Center(child: icon),
       ),
     );
   }

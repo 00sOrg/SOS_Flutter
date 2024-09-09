@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class HomeSearchBar extends ConsumerWidget {
@@ -14,13 +15,21 @@ class HomeSearchBar extends ConsumerWidget {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
-            border: AppBorders.defaultBlueBorder,
+            border: AppBorders.defaultLightBlueBorder,
             focusedBorder: AppBorders.defaultBlueBorder,
-            enabledBorder: AppBorders.defaultBlueBorder,
+            enabledBorder: AppBorders.defaultLightBlueBorder,
             filled: true,
             fillColor: const Color(0xFFFFFFFF).withOpacity(0.7),
-            suffixIcon: const Icon(Icons.search, size: 26),
-            // suffixIcon: SvgPicture.asset('assets/icons/search.svg')),
+            // suffixIcon: const Icon(Icons.search, size: 26),
+            suffixIcon: Padding(
+              padding: const EdgeInsets.all(8.0), // 패딩을 추가하여 아이콘 크기 조정
+              child: SvgPicture.asset(
+                'assets/icons/home_search.svg',
+                width: 16, // 원하는 크기로 설정
+                height: 16,
+                fit: BoxFit.contain,
+              ),
+            ),
           ),
           cursorHeight: 20,
           autocorrect: false,
