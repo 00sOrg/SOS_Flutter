@@ -92,7 +92,7 @@ class AppRouter {
         ),
         GoRoute(
           path: '/write',
-          builder: (context, state) =>const WritePage(),
+          builder: (context, state) => const WritePage(),
         ),
         GoRoute(
           path: '/board',
