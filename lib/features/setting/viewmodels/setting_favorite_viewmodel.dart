@@ -35,7 +35,6 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
         profilePicture: 'https://picsum.photos/202',
         status: FriendStatus.pending,
       ),
-      
     ];
 
     state = dummyFriends;
@@ -122,7 +121,26 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
     GoRouter.of(context).push('/setting-favorite-search');
   }
 
-  void searchFriend() {}
+  void searchFriend(BuildContext context, String text) {
+    debugPrint('검색: $text');
+    // 사실 search 결과 실패시 어케할지 처리 하는게 정석이지만,, 시간이 없으니 패스함
+    // 무조건 올바른 검색 결과가 있다고 가정
+    GoRouter.of(context).push('/setting-favorite-search-result');
+  }
+
+  void requestFavorite(BuildContext context, int id) {
+    debugPrint('친친요청 리퀘 보냄 - id: $id');
+    GoRouter.of(context).pop();
+    GoRouter.of(context).pop();
+  }
+
+  Friend dummySearchResultFriend = Friend(
+    id: 30,
+    name: '이름임',
+    nickName: '닉네임임',
+    address: '주소 주소임',
+    status: FriendStatus.stranger,
+  );
 
   @override
   void dispose() {
