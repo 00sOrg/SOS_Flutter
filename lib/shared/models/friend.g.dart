@@ -9,7 +9,7 @@ part of 'friend.dart';
 _$FriendImpl _$$FriendImplFromJson(Map<String, dynamic> json) => _$FriendImpl(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      address: json['address'] as String,
+      address: json['address'] as String?,
       status: $enumDecodeNullable(_$FriendStatusEnumMap, json['status']) ??
           FriendStatus.stranger,
       profilePicture: json['profilePicture'] as String?,

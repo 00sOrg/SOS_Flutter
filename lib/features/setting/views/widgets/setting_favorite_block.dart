@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
+import 'package:sos/features/setting/views/widgets/setting_favorite_add_button.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/small_text_button.dart';
@@ -25,7 +26,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           margin: const EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F3F3),
+            color: AppColors.finalGray,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
@@ -98,7 +99,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           ),
           const SizedBox(height: 4, width: double.maxFinite),
           Text(
-            friend.address,
+            friend.address!,
             style: const TextStyle(
               fontSize: 14,
               color: AppColors.textGray,
@@ -203,4 +204,42 @@ class SettingFavoriteBlock extends StatelessWidget {
       ),
     );
   }
+}
+
+class SettingFavoriteBlockForEmpty extends StatelessWidget {
+  const SettingFavoriteBlockForEmpty({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      height: 136.w,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppColors.finalGray,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF000000).withOpacity(0.25),
+            blurRadius: 4,
+            offset: const Offset(0, 4),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: const Center(child: SettingFavoriteAddButton()),
+    );
+  }
+}
+
+Text textWhenEmpty() {
+  return const Text(
+    '즐겨찾는 지인을 추가해보세요!',
+    style: TextStyle(
+      height: 1.2,
+      fontWeight: FontWeight.w400,
+      fontSize: 14.4,
+      color: AppColors.textGray,
+    ),
+  );
 }

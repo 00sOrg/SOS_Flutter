@@ -9,7 +9,7 @@ class Friend with _$Friend {
   factory Friend({
     required int id,
     required String name,
-    required String address,
+    String? address,
     @Default(FriendStatus.stranger) FriendStatus status,
     String? profilePicture,
     String? nickName,
