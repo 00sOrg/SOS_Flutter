@@ -34,76 +34,64 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
       appBar: const CustomAppBar(title: '건강 정보 등록 및 수정'),
       body: KeyboardDismisser(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.fromLTRB(20, 33, 20, 0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  child: const Text(
-                    '키 · 몸무게',
-                    style: TextStyle(
-                      fontSize: 16,
-                      height: 1.2,
-                      fontWeight: FontWeight.w700,
-                    ),
+                SettingLabledField(
+                  label: '키 · 몸무게',
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: SettingTextfield(
+                          hintText: '키',
+                          maxLength: 5,
+                          keyboardType: TextInputType.number,
+                          controller: viewModel.heightTEC,
+                          onChanged: (value) {
+                            final height = double.tryParse(value) ?? 0.0;
+                            viewModel.updateHeight(height);
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      const Text(
+                        'cm',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Apple SD Gothic Neo',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: SettingTextfield(
+                          hintText: '몸무게',
+                          maxLength: 5,
+                          keyboardType: TextInputType.number,
+                          controller: viewModel.weightTEC,
+                          onChanged: (value) {
+                            final weight = double.tryParse(value) ?? 0.0;
+                            viewModel.updateWeight(weight);
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      const Text(
+                        'kg',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Apple SD Gothic Neo',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: SettingTextfield(
-                        hintText: '키',
-                        maxLength: 5,
-                        keyboardType: TextInputType.number,
-                        controller: viewModel.heightTEC,
-                        onChanged: (value) {
-                          final height = double.tryParse(value) ?? 0.0;
-                          viewModel.updateHeight(height);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      'cm',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Apple SD Gothic Neo',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: SettingTextfield(
-                        hintText: '몸무게',
-                        maxLength: 5,
-                        keyboardType: TextInputType.number,
-                        controller: viewModel.weightTEC,
-                        onChanged: (value) {
-                          final weight = double.tryParse(value) ?? 0.0;
-                          viewModel.updateWeight(weight);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      'kg',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Apple SD Gothic Neo',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
                 SettingLabledField(
                   label: '혈액형',
                   child: Row(
@@ -141,6 +129,7 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 3),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -153,7 +142,7 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 6),
                 SettingExpandingTextfield(
                   hintText: '고혈압, 당뇨, 등 질병 목록 (최대 250자)',
                   onChanged: (temp) => (),
@@ -172,7 +161,7 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 6),
                 SettingExpandingTextfield(
                   hintText: '고혈압, 당뇨, 등 질병 목록 (최대 250자)',
                   onChanged: (temp) => (),

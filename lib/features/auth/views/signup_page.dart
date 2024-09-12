@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/auth/viewmodels/signup_viewmodel.dart';
+import 'package:sos/features/auth/views/widgets/signup_textfield.dart';
 import 'package:sos/features/setting/views/widgets/setting_labled_field.dart';
-import 'package:sos/features/setting/views/widgets/setting_textfield.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/bottom_wide_button.dart';
 import 'package:sos/shared/widgets/check_duplicate_button.dart';
@@ -45,7 +45,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: SettingTextfield(
+                      child: SignupTextfield(
                         hintText: '이메일',
                         maxLength: 80,
                         keyboardType: TextInputType.emailAddress,
@@ -57,8 +57,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     CheckDuplicateButton(onTap: viewModel.checkEmail),
                   ],
                 ),
-                const SizedBox(height: 9),
-                SettingTextfield(
+                const SizedBox(height: 2),
+                if (viewModel.hasCheckedEmail)
+                  _emailCheckResult(viewModel.isEmailAvailable),
+                const SizedBox(height: 12),
+                SignupTextfield(
                   hintText: '비밀번호',
                   maxLength: 100,
                   obscureText: true,
@@ -66,7 +69,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   onChanged: viewModel.updatePassword,
                 ),
                 const SizedBox(height: 9),
-                SettingTextfield(
+                SignupTextfield(
                   hintText: '비밀번호 확인',
                   maxLength: 100,
                   obscureText: true,
@@ -76,7 +79,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 const SizedBox(height: 36),
                 SettingLabledField(
                   label: '이름',
-                  child: SettingTextfield(
+                  child: SignupTextfield(
                     hintText: '이름',
                     maxLength: 10,
                     controller: viewModel.nameTEC,
@@ -85,10 +88,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 ),
                 SettingLabledField(
                   label: '닉네임',
+                  bottomPadding: 0,
                   child: Row(
                     children: [
                       Expanded(
-                        child: SettingTextfield(
+                        child: SignupTextfield(
                           hintText: '16자 이내로 입력해 주세요.',
                           maxLength: 16,
                           controller: viewModel.nicknameTEC,
@@ -100,9 +104,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 2),
+                if (viewModel.hasCheckedNickname)
+                  _nameCheckResult(viewModel.isNicknameAvailable),
+                const SizedBox(height: 18),
                 SettingLabledField(
                   label: '전화번호',
-                  child: SettingTextfield(
+                  child: SignupTextfield(
                     hintText: '010-0000-0000',
                     maxLength: 16,
                     keyboardType:
@@ -137,7 +145,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: SettingTextfield(
+                        child: SignupTextfield(
                           hintText: 'YYYY',
                           maxLength: 4,
                           keyboardType: TextInputType.number,
@@ -156,7 +164,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: SettingTextfield(
+                        child: SignupTextfield(
                           hintText: 'MM',
                           maxLength: 2,
                           keyboardType: TextInputType.number,
@@ -175,7 +183,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       ),
                       const SizedBox(width: 7),
                       Expanded(
-                        child: SettingTextfield(
+                        child: SignupTextfield(
                           hintText: 'DD',
                           maxLength: 2,
                           controller: viewModel.dayTEC,
@@ -205,6 +213,42 @@ class _SignupPageState extends ConsumerState<SignupPage> {
             text: '가입하기',
             onTap: () => viewModel.submit(context),
           )),
+    );
+  }
+
+  Widget _nameCheckResult(bool isOkay) {
+    return Row(
+      children: [
+        Icon(
+          isOkay ? Icons.check : Icons.close,
+          color: isOkay ? AppColors.blue : AppColors.red,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          isOkay ? '사용 가능한 닉네임입니다.' : '사용 불가한 닉네임입니다.',
+          style: TextStyle(
+            color: isOkay ? AppColors.blue : AppColors.red,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _emailCheckResult(bool isOkay) {
+    return Row(
+      children: [
+        Icon(
+          isOkay ? Icons.check : Icons.close,
+          color: isOkay ? AppColors.blue : AppColors.red,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          isOkay ? '사용 가능한 이메일입니다.' : '사용 불가한 이메일입니다.',
+          style: TextStyle(
+            color: isOkay ? AppColors.blue : AppColors.red,
+          ),
+        ),
+      ],
     );
   }
 

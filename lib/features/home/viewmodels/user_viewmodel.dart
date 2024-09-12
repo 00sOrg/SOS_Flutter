@@ -6,10 +6,10 @@ class UserViewModel extends StateNotifier<User?> {
 
   void loadUserInfo() {
     final user = User(
+      name: '윤지민',
       profilePicture: 'https://example.com/profile.jpg',
       email: 'user@example.com',
       password: 'password123',
-      name: '윤지민',
       nickname: '지민닉네임',
       phoneNumber: '010-1234-5678',
       gender: '여성',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
@@ -84,14 +85,22 @@ class HomePageState extends ConsumerState<HomePage> {
                 HeaderBtn(
                   onTap: () =>
                       ref.read(homeViewModelProvider.notifier).toggleDropdown(),
-                  icon: const Icon(Icons.people),
+                  icon: SvgPicture.asset(
+                    'assets/icons/home/favorites.svg',
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
                 const SizedBox(width: 15),
                 HomeSearchBar(),
                 const SizedBox(width: 15),
                 HeaderBtn(
                   onTap: () => showNotificationSideSheet(context, ref),
-                  icon: const Icon(Icons.notifications),
+                  icon: SvgPicture.asset(
+                    'assets/icons/home/notification.svg',
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
               ],
             ),

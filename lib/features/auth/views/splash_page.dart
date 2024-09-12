@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -10,10 +9,14 @@ class SplashPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
-        child: SvgPicture.asset(
-          'assets/icons/logo.svg',
+        child: Image.asset(
+          'assets/icons/logo_lean.png',
           width: 181.w,
         ),
+        // SvgPicture.asset(
+        //   'assets/icons/logo.svg', 
+        //   width: 181.w,
+        // ),
       ),
     );
   }

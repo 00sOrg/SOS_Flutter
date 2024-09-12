@@ -83,7 +83,7 @@ class SettingExpandingTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextField(
-        minLines: 3,
+        minLines: 4,
         maxLines: 5,
         onChanged: onChanged,
         controller: controller,
