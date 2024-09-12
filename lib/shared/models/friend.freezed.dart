@@ -22,7 +22,7 @@ Friend _$FriendFromJson(Map<String, dynamic> json) {
 mixin _$Friend {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
   FriendStatus get status => throw _privateConstructorUsedError;
   String? get profilePicture => throw _privateConstructorUsedError;
   String? get nickName => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $FriendCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String address,
+      String? address,
       FriendStatus status,
       String? profilePicture,
       String? nickName});
@@ -61,7 +61,7 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? address = null,
+    Object? address = freezed,
     Object? status = null,
     Object? profilePicture = freezed,
     Object? nickName = freezed,
@@ -75,10 +75,10 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -105,7 +105,7 @@ abstract class _$$FriendImplCopyWith<$Res> implements $FriendCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String address,
+      String? address,
       FriendStatus status,
       String? profilePicture,
       String? nickName});
@@ -124,7 +124,7 @@ class __$$FriendImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? address = null,
+    Object? address = freezed,
     Object? status = null,
     Object? profilePicture = freezed,
     Object? nickName = freezed,
@@ -138,10 +138,10 @@ class __$$FriendImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -164,7 +164,7 @@ class _$FriendImpl implements _Friend {
   _$FriendImpl(
       {required this.id,
       required this.name,
-      required this.address,
+      this.address,
       this.status = FriendStatus.stranger,
       this.profilePicture,
       this.nickName});
@@ -177,7 +177,7 @@ class _$FriendImpl implements _Friend {
   @override
   final String name;
   @override
-  final String address;
+  final String? address;
   @override
   @JsonKey()
   final FriendStatus status;
@@ -229,7 +229,7 @@ abstract class _Friend implements Friend {
   factory _Friend(
       {required final int id,
       required final String name,
-      required final String address,
+      final String? address,
       final FriendStatus status,
       final String? profilePicture,
       final String? nickName}) = _$FriendImpl;
@@ -241,7 +241,7 @@ abstract class _Friend implements Friend {
   @override
   String get name;
   @override
-  String get address;
+  String? get address;
   @override
   FriendStatus get status;
   @override

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
+import 'package:sos/features/setting/views/widgets/setting_favorite_add_button.dart';
 import 'package:sos/features/setting/views/widgets/setting_favorite_block.dart';
+import 'package:sos/shared/enums/status_enum.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 
 class SettingFavoritePage extends ConsumerWidget {
@@ -22,14 +24,31 @@ class SettingFavoritePage extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 33),
             child: Column(
-              children: friends
-                  .map(
-                    (friend) => SettingFavoriteBlock(
-                      friend: friend,
-                      viewModel: viewModel,
-                    ),
-                  )
-                  .toList(),
+              children: [
+                if (friends.isEmpty) ...[
+                  const SettingFavoriteBlockForEmpty(),
+                  const SizedBox(height: 26),
+                  textWhenEmpty(),
+                ] else ...[
+                  ...friends.map(
+                    (friend) {
+                      if (friend.status == FriendStatus.friend) {
+                        return SettingFavoriteBlock(
+                          friend: friend,
+                          viewModel: viewModel,
+                        );
+                      } else {
+                        return SettingNotFavoriteBlock(
+                          friend: friend,
+                          viewModel: viewModel,
+                        );
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  const SettingFavoriteAddButton(),
+                ]
+              ],
             ),
           ),
         ),

@@ -8,10 +8,9 @@ class UserViewModel extends StateNotifier<User?> {
     final user = User(
       name: '윤지민',
       profilePicture: 'https://example.com/profile.jpg',
-      name: '윤지민',
       email: 'user@example.com',
       password: 'password123',
-      nickname: '윤지미니미닝',
+      nickname: '지민닉네임',
       phoneNumber: '010-1234-5678',
       gender: '여성',
       birthDay: DateTime(2000, 1, 1),

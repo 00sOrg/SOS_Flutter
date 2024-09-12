@@ -5,6 +5,7 @@ class AppColors {
   static const Color lightBlue = Color(0xFF6398E9);
   static const Color lineGray = Color(0xFFE9E9E9);
   static const Color textGray = Color(0xFFB6B6B6);
+  static const Color finalGray = Color(0xFFF3F3F3);
   static const Color red = Color(0xFFFF0000);
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
@@ -29,6 +30,11 @@ class AppTexts {
 class AppBorders {
   static final OutlineInputBorder defaultBlueBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFF0066FF), width: 3),
+    borderRadius: BorderRadius.circular(10),
+  );
+
+  static final OutlineInputBorder thickGrayBorder = OutlineInputBorder(
+    borderSide: const BorderSide(color: Color(0xFFB6B6B6), width: 3),
     borderRadius: BorderRadius.circular(10),
   );
 

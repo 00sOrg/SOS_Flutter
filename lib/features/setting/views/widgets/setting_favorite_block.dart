@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
+import 'package:sos/features/setting/views/widgets/setting_favorite_add_button.dart';
+import 'package:sos/shared/enums/status_enum.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/small_text_button.dart';
@@ -25,7 +27,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           margin: const EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F3F3),
+            color: AppColors.finalGray,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
@@ -98,7 +100,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           ),
           const SizedBox(height: 4, width: double.maxFinite),
           Text(
-            friend.address,
+            friend.address!,
             style: const TextStyle(
               fontSize: 14,
               color: AppColors.textGray,
@@ -203,4 +205,133 @@ class SettingFavoriteBlock extends StatelessWidget {
       ),
     );
   }
+}
+
+class SettingNotFavoriteBlock extends StatelessWidget {
+  final Friend friend;
+  final SettingFavoriteViewModel viewModel;
+
+  const SettingNotFavoriteBlock({
+    super.key,
+    required this.friend,
+    required this.viewModel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // !isPending 은 검색 결과인 경우임
+    bool isPending = friend.status == FriendStatus.pending;
+
+    return Stack(
+      children: [
+        Container(
+          width: double.maxFinite,
+          height: 136.w,
+          padding: const EdgeInsets.all(18),
+          margin: const EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            color: AppColors.finalGray,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF000000).withOpacity(0.25),
+                blurRadius: 4,
+                offset: const Offset(0, 4),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Opacity(
+                opacity: isPending ? 0.2 : 1,
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey[300],
+                  radius: 51,
+                  child: (friend.profilePicture != null &&
+                          friend.profilePicture!.isNotEmpty)
+                      ? ClipOval(
+                          child: Image.network(
+                            friend.profilePicture!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Image.asset(
+                          'assets/images/default_profile.png',
+                          width: 76,
+                        ),
+                ),
+              ),
+              const SizedBox(width: 24),
+              Text(
+                friend.name,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                  color: isPending ? AppColors.black.withOpacity(0.2) : null,
+                ),
+                softWrap: true,
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ),
+        ),
+        isPending
+            ? SizedBox(
+                height: 136.w,
+                child: const Center(
+                  child: Text(
+                    '즐겨찾기 요청 수락 대기중...',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+}
+
+class SettingFavoriteBlockForEmpty extends StatelessWidget {
+  const SettingFavoriteBlockForEmpty({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      height: 136.w,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppColors.finalGray,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF000000).withOpacity(0.25),
+            blurRadius: 4,
+            offset: const Offset(0, 4),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: const Center(child: SettingFavoriteAddButton()),
+    );
+  }
+}
+
+Text textWhenEmpty() {
+  return const Text(
+    '즐겨찾는 지인을 추가해보세요!',
+    style: TextStyle(
+      height: 1.2,
+      fontWeight: FontWeight.w400,
+      fontSize: 14.4,
+      color: AppColors.textGray,
+    ),
+  );
 }
