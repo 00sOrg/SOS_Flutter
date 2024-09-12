@@ -19,9 +19,9 @@ class WriteCustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          border: AppBorders.defaultBlueBorder,
-          enabledBorder: AppBorders.defaultBlueBorder,
-          focusedBorder: AppBorders.defaultBlueBorder,
+          border: AppBorders.thickBlueBorder,
+          enabledBorder: AppBorders.thickBlueBorder,
+          focusedBorder: AppBorders.thickBlueBorder,
           filled: true,
           fillColor: Colors.white,
         ),
