@@ -64,6 +64,11 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
           content: '사용자를 관심 사용자로 추가하시겠습니까?',
           leftBtn: '거절',
           rightBtn: '수락',
+          onLeftBtnPressed: () {
+            // 거절 로직 구현
+            Navigator.of(context).pop();
+            markAsRead(index); // 알림을 읽음으로 처리하고 목록에서 제거
+          },
           onRightBtnPressed: () {
             Navigator.of(context).pop();
             // 수락 로직 구현
