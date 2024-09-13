@@ -22,7 +22,7 @@ class LocationService {
     }
 
     final jsonData = jsonDecode(response.body);
-    log('[[SUCCESS]] Naver Map API Response: $jsonData');
+    // log('[[SUCCESS]] Naver Map API Response: $jsonData');
 
     if (jsonData["results"] == null || jsonData["results"].isEmpty) {
       throw RangeError("No results found in the response");
