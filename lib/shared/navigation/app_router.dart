@@ -8,7 +8,6 @@ import 'package:sos/features/auth/views/splash_page.dart';
 import 'package:sos/features/board/views/board_page.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/home_page.dart';
-import 'package:sos/features/notification/views/notification_page.dart';
 import 'package:sos/features/setting/views/setting_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_deleted_account_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_favorite_page.dart';
@@ -103,11 +102,6 @@ class AppRouter {
         GoRoute(
           path: '/setting',
           builder: (context, state) => const SettingPage(),
-        ),
-        // TODO: delete noti page (according to ui change)
-        GoRoute(
-          path: '/notifications',
-          builder: (context, state) => NotificationPage(),
         ),
         GoRoute(
           path: '/post/:id',

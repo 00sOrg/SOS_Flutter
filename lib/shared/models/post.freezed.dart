@@ -23,7 +23,7 @@ mixin _$Post {
   int get postId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
-  String? get mediaUrl => throw _privateConstructorUsedError;
+  String? get media => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
   String? get type =>
       throw _privateConstructorUsedError; //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
@@ -50,7 +50,7 @@ abstract class $PostCopyWith<$Res> {
       {int postId,
       String title,
       String? content,
-      String? mediaUrl,
+      String? media,
       User? user,
       String? type,
       DateTime createdAt,
@@ -81,7 +81,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? postId = null,
     Object? title = null,
     Object? content = freezed,
-    Object? mediaUrl = freezed,
+    Object? media = freezed,
     Object? user = freezed,
     Object? type = freezed,
     Object? createdAt = null,
@@ -106,9 +106,9 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
-      mediaUrl: freezed == mediaUrl
-          ? _value.mediaUrl
-          : mediaUrl // ignore: cast_nullable_to_non_nullable
+      media: freezed == media
+          ? _value.media
+          : media // ignore: cast_nullable_to_non_nullable
               as String?,
       user: freezed == user
           ? _value.user
@@ -177,7 +177,7 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       {int postId,
       String title,
       String? content,
-      String? mediaUrl,
+      String? media,
       User? user,
       String? type,
       DateTime createdAt,
@@ -206,7 +206,7 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? postId = null,
     Object? title = null,
     Object? content = freezed,
-    Object? mediaUrl = freezed,
+    Object? media = freezed,
     Object? user = freezed,
     Object? type = freezed,
     Object? createdAt = null,
@@ -231,9 +231,9 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
-      mediaUrl: freezed == mediaUrl
-          ? _value.mediaUrl
-          : mediaUrl // ignore: cast_nullable_to_non_nullable
+      media: freezed == media
+          ? _value.media
+          : media // ignore: cast_nullable_to_non_nullable
               as String?,
       user: freezed == user
           ? _value.user
@@ -286,7 +286,7 @@ class _$PostImpl implements _Post {
       {required this.postId,
       required this.title,
       this.content,
-      this.mediaUrl,
+      this.media,
       this.user,
       this.type,
       required this.createdAt,
@@ -309,7 +309,7 @@ class _$PostImpl implements _Post {
   @override
   final String? content;
   @override
-  final String? mediaUrl;
+  final String? media;
   @override
   final User? user;
   @override
@@ -343,7 +343,7 @@ class _$PostImpl implements _Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, title: $title, content: $content, mediaUrl: $mediaUrl, user: $user, type: $type, createdAt: $createdAt, roadAddress: $roadAddress, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, likesCount: $likesCount, commentsCount: $commentsCount, comments: $comments)';
+    return 'Post(postId: $postId, title: $title, content: $content, media: $media, user: $user, type: $type, createdAt: $createdAt, roadAddress: $roadAddress, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, likesCount: $likesCount, commentsCount: $commentsCount, comments: $comments)';
   }
 
   @override
@@ -354,8 +354,7 @@ class _$PostImpl implements _Post {
             (identical(other.postId, postId) || other.postId == postId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.mediaUrl, mediaUrl) ||
-                other.mediaUrl == mediaUrl) &&
+            (identical(other.media, media) || other.media == media) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.createdAt, createdAt) ||
@@ -382,7 +381,7 @@ class _$PostImpl implements _Post {
       postId,
       title,
       content,
-      mediaUrl,
+      media,
       user,
       type,
       createdAt,
@@ -413,7 +412,7 @@ abstract class _Post implements Post {
       {required final int postId,
       required final String title,
       final String? content,
-      final String? mediaUrl,
+      final String? media,
       final User? user,
       final String? type,
       required final DateTime createdAt,
@@ -434,7 +433,7 @@ abstract class _Post implements Post {
   @override
   String? get content;
   @override
-  String? get mediaUrl;
+  String? get media;
   @override
   User? get user;
   @override

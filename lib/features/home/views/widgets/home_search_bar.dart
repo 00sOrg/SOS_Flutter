@@ -15,9 +15,9 @@ class HomeSearchBar extends ConsumerWidget {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
-            border: AppBorders.defaultLightBlueBorder,
-            focusedBorder: AppBorders.defaultBlueBorder,
-            enabledBorder: AppBorders.defaultLightBlueBorder,
+            border: AppBorders.thickLightBlueBorder,
+            focusedBorder: AppBorders.thickBlueBorder,
+            enabledBorder: AppBorders.thickLightBlueBorder,
             filled: true,
             fillColor: const Color(0xFFFFFFFF).withOpacity(0.7),
             // suffixIcon: const Icon(Icons.search, size: 26),

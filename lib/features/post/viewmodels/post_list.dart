@@ -1,18 +1,21 @@
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/models/comment.dart';
 
+// 주변에 일어난 사건 더미 데이터 (현재 그냥 이벤트용 더미데이터로도 사용중)
 final List<Post> dummyPosts = [
   Post(
     postId: 1,
     type: 'fire',
-    mediaUrl: 'https://via.placeholder.com/331x234',
-    title: '강남구청 근처 화재 발생',
+    media: 'https://via.placeholder.com/331x234',
+    title: '강남역 근처 화재 발생',
     content:
         "늘 강남역 근처에서 정말 큰일을 겪었어요. 오후 3시쯤 친구랑 강남역에서 만나기로 해서 가는 길이었는데, 갑자기 하늘에 검은 연기가 자욱하게 올라가는 게 보이더라고요. 점점 가까워질수록 연기 냄새도 심해지고, 사람들이 웅성거리며 몰려있는 걸 보니 뭔가 큰일이 난 게 분명했어요.상가 건물에서 불이 난 것 같았어요. 불길이 창문 밖으로 튀어나오는 걸 보고 정말 깜짝 놀랐어요. 소방차가 여러 대 출동해서 물을 뿌리고 있었고, 소방관들이 바쁘게 움직이는 모습이 보였어요. 다행히 인명 피해는 없다는 소리를 들었지만, 현장은 정말 아수라장이었어요.이런 큰 화재를 실제로 보게 되니까 무섭기도 하고, 빨리 진화되길 바라는 마음뿐이었어요. 오늘 강남역은 정말 난리도 아니었어요. 다들 조심하시고, 소방관분들께도 감사한 마음을 전하고 싶어요.. 인근 주민들은 주의하시기 바랍니다.",
     createdAt: DateTime.now(),
-    latitude: 37.5172,
-    longitude: 127.0473,
-    roadAddress: '서울특별시 강남구 삼성동',
+    latitude: 37.496467,
+    longitude: 127.029327,
+    // si: '서울특별시',
+    // gu: '서초구',
+    // dong: '서초2동',
     disasterLevel: 'High',
     likesCount: 50,
     commentsCount: 10,
@@ -34,7 +37,7 @@ final List<Post> dummyPosts = [
   Post(
     postId: 2,
     type: 'traffic',
-    mediaUrl: 'https://via.placeholder.com/400x300',
+    media: 'https://via.placeholder.com/400x300',
     title: '올림픽대로 대형 교통사고 발생',
     content: '올림픽대로에서 대형 교통사고가 발생하여 교통이 전면 통제되었습니다. 출근길 우회하시기 바랍니다.',
     createdAt: DateTime.now().subtract(Duration(days: 1)),
@@ -89,7 +92,7 @@ final List<Post> dummyPosts = [
   Post(
     postId: 4,
     type: 'earthquake',
-    mediaUrl: 'https://via.placeholder.com/400x300',
+    media: 'https://via.placeholder.com/400x300',
     title: '부산광역시 지진 발생',
     content:
         '부산광역시 해운대구에서 지진이 발생했습니다. 현재 피해 상황을 조사 중입니다. 주민 여러분, 대피소로 이동해주시기 바랍니다.',
@@ -118,7 +121,7 @@ final List<Post> dummyPosts = [
   Post(
     postId: 5,
     type: 'explosion',
-    mediaUrl: 'https://via.placeholder.com/400x300',
+    media: 'https://via.placeholder.com/400x300',
     title: '울산 석유화학단지 폭발 사고',
     content: '오늘 오전 울산 석유화학단지에서 대규모 폭발 사고가 발생했습니다. 현재 인명 피해를 조사 중입니다.',
     createdAt: DateTime.now().subtract(Duration(days: 4)),
@@ -146,7 +149,7 @@ final List<Post> dummyPosts = [
   Post(
     postId: 6,
     type: 'storm',
-    mediaUrl: 'https://via.placeholder.com/400x300',
+    media: 'https://via.placeholder.com/400x300',
     title: '태풍 경보 발령 - 제주도',
     content: '제주도에 태풍 경보가 발령되었습니다. 현재 강한 바람과 비가 몰아치고 있으며, 피해가 예상됩니다.',
     createdAt: DateTime.now().subtract(Duration(days: 5)),
@@ -174,7 +177,7 @@ final List<Post> dummyPosts = [
   Post(
     postId: 7,
     type: 'landslide',
-    mediaUrl: 'https://via.placeholder.com/400x300',
+    media: 'https://via.placeholder.com/400x300',
     title: '강원도 산사태 발생',
     content: '강원도에서 산사태가 발생하여 도로가 끊기고, 몇몇 주택이 피해를 입었습니다. 현재 구조 작업이 진행 중입니다.',
     createdAt: DateTime.now().subtract(Duration(days: 6)),
@@ -194,6 +197,36 @@ final List<Post> dummyPosts = [
       Comment(
         postId: 7,
         userName: 'User14',
+        content: '모두들 안전하게 대피하시길 바랍니다.',
+        createdAt: DateTime.now().subtract(Duration(hours: 14)),
+      ),
+    ],
+  ),
+  Post(
+    postId: 8,
+    type: 'traffic',
+    media: 'https://via.placeholder.com/400x300',
+    title: '강남역 교통사고 발생',
+    content: '강남역 근처에서 교통사고가 발생하여 교통이 혼잡합니다. 주변 도로를 피하시기 바랍니다.',
+    createdAt: DateTime.now().subtract(Duration(days: 6)),
+    latitude: 37.49762,
+    longitude: 127.02759,
+    // si: '서울특별시',
+    // gu: '서초구',
+    // dong: '서초2동',
+    disasterLevel: 'Medium',
+    likesCount: 100,
+    commentsCount: 15,
+    comments: [
+      Comment(
+        postId: 8,
+        userName: 'User11',
+        content: '이런 상황이 너무 안타깝네요. 구조 작업이 잘 되길.',
+        createdAt: DateTime.now().subtract(Duration(hours: 13)),
+      ),
+      Comment(
+        postId: 8,
+        userName: 'User1',
         content: '모두들 안전하게 대피하시길 바랍니다.',
         createdAt: DateTime.now().subtract(Duration(hours: 14)),
       ),

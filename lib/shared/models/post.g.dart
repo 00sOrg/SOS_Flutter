@@ -10,7 +10,7 @@ _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       postId: (json['postId'] as num).toInt(),
       title: json['title'] as String,
       content: json['content'] as String?,
-      mediaUrl: json['mediaUrl'] as String?,
+      media: json['media'] as String?,
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
@@ -32,7 +32,7 @@ Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
       'postId': instance.postId,
       'title': instance.title,
       'content': instance.content,
-      'mediaUrl': instance.mediaUrl,
+      'media': instance.media,
       'user': instance.user,
       'type': instance.type,
       'createdAt': instance.createdAt.toIso8601String(),

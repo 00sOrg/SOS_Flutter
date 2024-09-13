@@ -12,7 +12,7 @@ class Post with _$Post {
     required int postId,
     required String title,
     String? content,
-    String? mediaUrl,
+    String? media,
     User? user,
     String? type,
     //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까

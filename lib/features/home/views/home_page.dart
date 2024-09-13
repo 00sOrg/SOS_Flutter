@@ -37,6 +37,7 @@ class HomePageState extends ConsumerState<HomePage> {
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
     final isSideSheetOpen = ref.watch(homeViewModelProvider
         .select((state) => state.isNotificationSideSheetOpen));
+    final homeState = ref.watch(homeViewModelProvider);
 
     return Scaffold(
       body: Stack(
@@ -45,7 +46,8 @@ class HomePageState extends ConsumerState<HomePage> {
             data: (location) {
               return Stack(
                 children: [
-                  MapWidget(location: location),
+                  // MapWidget에 위치와 Post 리스트를 전달합니다.
+                  MapWidget(location: location, posts: homeState.posts),
                   _homeTopArea(context, ref),
                   if (isFavoritesOpen)
                     Positioned(

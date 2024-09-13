@@ -16,8 +16,8 @@ class HeaderSection extends StatelessWidget {
         CircleAvatar(
           radius: 18,
           // Assuming post has a profileImageUrl or similar field
-          backgroundImage: post.mediaUrl != null && post.mediaUrl!.isNotEmpty
-              ? NetworkImage(post.mediaUrl!)
+          backgroundImage: post.media != null && post.media!.isNotEmpty
+              ? NetworkImage(post.media!)
               : null, // Provide a fallback or placeholder if needed
         ),
         const SizedBox(width: 16.0),
