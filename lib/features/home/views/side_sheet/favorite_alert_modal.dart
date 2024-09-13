@@ -7,6 +7,7 @@ class SettingModal extends StatelessWidget {
   final String content;
   final String leftBtn;
   final String rightBtn;
+  final VoidCallback onLeftBtnPressed;
   final VoidCallback onRightBtnPressed;
   final Color? rightBtnColor;
 
@@ -15,6 +16,7 @@ class SettingModal extends StatelessWidget {
     required this.content,
     required this.leftBtn,
     required this.rightBtn,
+    required this.onLeftBtnPressed,
     required this.onRightBtnPressed,
     super.key,
     this.rightBtnColor,
@@ -36,7 +38,7 @@ class SettingModal extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: onLeftBtnPressed,
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             shape:

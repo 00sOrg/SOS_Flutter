@@ -1,20 +1,21 @@
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/models/comment.dart';
 
+// 주변에 일어난 사건 더미 데이터 (현재 그냥 이벤트용 더미데이터로도 사용중)
 final List<Post> dummyPosts = [
   Post(
     postId: 1,
     type: 'fire',
     media: 'https://via.placeholder.com/331x234',
-    title: '강남구청 근처 화재 발생',
+    title: '강남역 근처 화재 발생',
     content:
         "늘 강남역 근처에서 정말 큰일을 겪었어요. 오후 3시쯤 친구랑 강남역에서 만나기로 해서 가는 길이었는데, 갑자기 하늘에 검은 연기가 자욱하게 올라가는 게 보이더라고요. 점점 가까워질수록 연기 냄새도 심해지고, 사람들이 웅성거리며 몰려있는 걸 보니 뭔가 큰일이 난 게 분명했어요.상가 건물에서 불이 난 것 같았어요. 불길이 창문 밖으로 튀어나오는 걸 보고 정말 깜짝 놀랐어요. 소방차가 여러 대 출동해서 물을 뿌리고 있었고, 소방관들이 바쁘게 움직이는 모습이 보였어요. 다행히 인명 피해는 없다는 소리를 들었지만, 현장은 정말 아수라장이었어요.이런 큰 화재를 실제로 보게 되니까 무섭기도 하고, 빨리 진화되길 바라는 마음뿐이었어요. 오늘 강남역은 정말 난리도 아니었어요. 다들 조심하시고, 소방관분들께도 감사한 마음을 전하고 싶어요.. 인근 주민들은 주의하시기 바랍니다.",
     createdAt: DateTime.now(),
-    latitude: 37.5172,
-    longitude: 127.0473,
+    latitude: 37.496467,
+    longitude: 127.029327,
     si: '서울특별시',
-    gu: '강남구',
-    dong: '삼성동',
+    gu: '서초구',
+    dong: '서초2동',
     disasterLevel: 'High',
     likesCount: 50,
     commentsCount: 10,
@@ -208,6 +209,36 @@ final List<Post> dummyPosts = [
       Comment(
         postId: 7,
         userName: 'User14',
+        content: '모두들 안전하게 대피하시길 바랍니다.',
+        createdAt: DateTime.now().subtract(Duration(hours: 14)),
+      ),
+    ],
+  ),
+  Post(
+    postId: 8,
+    type: 'traffic',
+    media: 'https://via.placeholder.com/400x300',
+    title: '강남역 교통사고 발생',
+    content: '강남역 근처에서 교통사고가 발생하여 교통이 혼잡합니다. 주변 도로를 피하시기 바랍니다.',
+    createdAt: DateTime.now().subtract(Duration(days: 6)),
+    latitude: 37.49762,
+    longitude: 127.02759,
+    si: '서울특별시',
+    gu: '서초구',
+    dong: '서초2동',
+    disasterLevel: 'Medium',
+    likesCount: 100,
+    commentsCount: 15,
+    comments: [
+      Comment(
+        postId: 8,
+        userName: 'User11',
+        content: '이런 상황이 너무 안타깝네요. 구조 작업이 잘 되길.',
+        createdAt: DateTime.now().subtract(Duration(hours: 13)),
+      ),
+      Comment(
+        postId: 8,
+        userName: 'User1',
         content: '모두들 안전하게 대피하시길 바랍니다.',
         createdAt: DateTime.now().subtract(Duration(hours: 14)),
       ),

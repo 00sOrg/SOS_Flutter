@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sos/shared/models/post.dart';
-import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/format_time_ago.dart';
 
 class EventPreview extends StatelessWidget {
