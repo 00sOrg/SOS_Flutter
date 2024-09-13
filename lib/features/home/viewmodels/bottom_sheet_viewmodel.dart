@@ -5,8 +5,33 @@ import 'package:sos/features/home/views/bottom_sheet/bottom_sheet_wrapper.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/features/post/viewmodels/post_list.dart'; // Import the dummy data
 
-class BottomSheetViewModel extends StateNotifier<double> {
-  BottomSheetViewModel() : super(0.15) {
+class BottomSheetState {
+  final Post? tappedPost;
+  final List<Post> nearbyEvents;
+  final double sheetHeight;
+
+  BottomSheetState({
+    this.tappedPost,
+    required this.nearbyEvents,
+    required this.sheetHeight,
+  });
+
+  BottomSheetState copyWith({
+    Post? tappedPost,
+    List<Post>? nearbyEvents,
+    double? sheetHeight,
+  }) {
+    return BottomSheetState(
+      tappedPost: tappedPost ?? this.tappedPost,
+      nearbyEvents: nearbyEvents ?? this.nearbyEvents,
+      sheetHeight: sheetHeight ?? this.sheetHeight,
+    );
+  }
+}
+
+class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
+  BottomSheetViewModel()
+      : super(BottomSheetState(nearbyEvents: [], sheetHeight: 0.15)) {
     _fetchNearbyEvents();
   }
 
@@ -14,71 +39,64 @@ class BottomSheetViewModel extends StateNotifier<double> {
       DraggableScrollableController();
 
   bool _wasExpanded = false;
-  List<Post> _nearbyEvents = [];
-
-  List<Post> get nearbyEvents => _nearbyEvents;
 
   void _fetchNearbyEvents() {
-    // 여기서 실제 API를 호출하는 대신, 더미 데이터를 사용합니다.
-    _nearbyEvents = dummyPosts;
-    state = state; // 상태를 트리거하여 UI 업데이트
+    state = state.copyWith(nearbyEvents: dummyPosts);
+  }
+
+  void tapPost(Post post) {
+    state = state.copyWith(tappedPost: post);
+  }
+
+  void clearTappedPost() {
+    state = state.copyWith(tappedPost: null);
   }
 
   void toggleBottomSheet() {
     if (_scrollableController.isAttached) {
-      if (state == 0.0) {
-        // 0.0 상태에서 0.15로 확장
+      if (state.sheetHeight == 0.0) {
         _scrollableController.animateTo(
           0.15,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
-        state = 0.15;
-        _wasExpanded = false; // 아직 확장되지 않음
-      } else if (state == 0.15 && !_wasExpanded) {
-        // 0.15 상태에서 0.75로 확장
+        state = state.copyWith(sheetHeight: 0.15);
+        _wasExpanded = false;
+      } else if (state.sheetHeight == 0.15 && !_wasExpanded) {
         _scrollableController.animateTo(
           0.75,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
-        state = 0.75;
-        _wasExpanded = true; // 0.75로 확장됨
-      } else if (state == 0.75) {
-        // 0.75 상태에서 0.15로 축소
+        state = state.copyWith(sheetHeight: 0.75);
+        _wasExpanded = true;
+      } else if (state.sheetHeight == 0.75) {
         _scrollableController.animateTo(
           0.15,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
-        state = 0.15;
-        _wasExpanded = true; // 0.75에서 축소됨
-      } else if (state == 0.15 && _wasExpanded) {
-        // 0.75였다가 0.15일때 0.0으로 닫기
+        state = state.copyWith(sheetHeight: 0.15);
+        _wasExpanded = true;
+      } else if (state.sheetHeight == 0.15 && _wasExpanded) {
         _scrollableController.animateTo(
           0.0,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
-        state = 0.0;
-        _wasExpanded = false; // 닫힘
+        state = state.copyWith(sheetHeight: 0.0);
+        _wasExpanded = false;
       }
     }
   }
 
   void closeBottomSheet() {
-    if (_scrollableController.isAttached) {
-      _scrollableController.animateTo(
-        0.0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = 0.0;
-    }
-  }
-
-  bool shouldShowStatus() {
-    return state <= 0.15;
+    _scrollableController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    state = state.copyWith(sheetHeight: 0.0);
   }
 
   DraggableScrollableController get scrollableController =>
@@ -91,9 +109,8 @@ class BottomSheetViewModel extends StateNotifier<double> {
 }
 
 final bottomSheetViewModelProvider =
-    StateNotifierProvider<BottomSheetViewModel, double>((ref) {
-  return BottomSheetViewModel();
-});
+    StateNotifierProvider<BottomSheetViewModel, BottomSheetState>(
+        (ref) => BottomSheetViewModel());
 
 class HomePageBottomSheet extends ConsumerWidget {
   @override

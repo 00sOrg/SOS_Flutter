@@ -10,7 +10,7 @@ class HandleBar extends StatelessWidget {
       child: Container(
         height: 4,
         width: 94,
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           color: Colors.grey[400],
           borderRadius: BorderRadius.circular(10),
