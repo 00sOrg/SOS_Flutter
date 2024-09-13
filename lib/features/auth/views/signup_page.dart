@@ -62,7 +62,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   _emailCheckResult(viewModel.isEmailAvailable),
                 const SizedBox(height: 12),
                 SignupTextfield(
-                  hintText: '비밀번호',
+                  hintText: '비밀번호(문자/숫자 포함 6-20자)',
                   maxLength: 100,
                   obscureText: true,
                   controller: viewModel.passwordTEC,

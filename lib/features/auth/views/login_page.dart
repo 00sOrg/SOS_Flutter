@@ -2,19 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:sos/features/auth/viewmodels/auth_viewmodel.dart';
+import 'package:sos/features/auth/viewmodels/login_viewmodel.dart';
 import 'package:sos/features/auth/views/widgets/login_button.dart';
 import 'package:sos/features/auth/views/widgets/login_text_field.dart';
 
-class LoginPage extends ConsumerWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final authViewModel = ref.read(authViewModelProvider);
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
 
-    final TextEditingController emailTEC = TextEditingController();
-    final TextEditingController passwordTEC = TextEditingController();
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final TextEditingController emailTEC = TextEditingController();
+  final TextEditingController passwordTEC = TextEditingController();
+
+  @override
+  void dispose() {
+    emailTEC.dispose();
+    passwordTEC.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final loginState = ref.watch(loginViewModelProvider);
+    final loginViewModel = ref.read(loginViewModelProvider.notifier);
 
     return Scaffold(
       body: KeyboardDismisser(
@@ -48,17 +61,24 @@ class LoginPage extends ConsumerWidget {
                 maxLength: 100,
               ),
               const SizedBox(height: 54),
+              if (loginState.isLoading) const CircularProgressIndicator(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   LoginButton(
                     text: '로그인',
-                    onTap: () => authViewModel.handleLogin(context),
+                    onTap: () => loginViewModel.handleLogin(
+                      context,
+                      emailTEC.text,
+                      passwordTEC.text,
+                    ),
                   ),
                   LoginButton(
                     text: '회원가입',
-                    onTap: () => authViewModel.goToSignupPage(context),
-                  )
+                    onTap: loginState.isLoading
+                        ? () {}
+                        : () => loginViewModel.goToSignupPage(context),
+                  ),
                 ],
               ),
               const SizedBox(height: 20),

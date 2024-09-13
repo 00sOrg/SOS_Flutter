@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/auth/repositories/auth_repository.dart';
 import 'package:sos/shared/models/user.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class SignupViewmodel extends StateNotifier<User> {
-  SignupViewmodel()
+  final AuthRepository authRepository;
+
+  SignupViewmodel(this.authRepository)
       : emailTEC = TextEditingController(),
         passwordTEC = TextEditingController(),
         passwordCheckTEC = TextEditingController(),
@@ -81,40 +84,44 @@ class SignupViewmodel extends StateNotifier<User> {
   bool isEmailAvailable = false;
   bool isCheckingEmail = false;
   bool hasCheckedEmail = false;
+
   Future<void> checkEmail() async {
-    debugPrint('이메일 중복확인 액션');
     if (emailTEC.text.isEmpty) return;
 
     isCheckingEmail = true;
     hasCheckedEmail = false;
-    state = state.copyWith();
+    state = state.copyWith(); // trigger
 
-    await Future.delayed(const Duration(seconds: 1));
-
-    isEmailAvailable = (emailTEC.text != 'test') && (emailTEC.text.isNotEmpty);
+    try {
+      isEmailAvailable = await authRepository.checkEmail(emailTEC.text);
+    } catch (e) {
+      debugPrint('이메일 검증 실패: $e');
+      isEmailAvailable = false;
+    }
 
     isCheckingEmail = false;
     hasCheckedEmail = true;
-    state = state.copyWith();
-    
+    state = state.copyWith(); // trigger
   }
 
   bool isNicknameAvailable = false;
   bool isCheckingNickname = false;
   bool hasCheckedNickname = false;
+
   Future<void> checkName() async {
-    debugPrint('닉네임 중복확인 액션');
     if (nicknameTEC.text.isEmpty) return;
 
     isCheckingNickname = true;
     hasCheckedNickname = false;
     state = state.copyWith(); // trigger
-    // dummy 시간 줌
-    await Future.delayed(const Duration(seconds: 1));
 
-    // dummy 닉네임
-    isNicknameAvailable =
-        (nicknameTEC.text != 'hi') && (nicknameTEC.text.isNotEmpty);
+    try {
+      isNicknameAvailable =
+          await authRepository.checkNickname(nicknameTEC.text);
+    } catch (e) {
+      debugPrint('닉네임 검증 실패: $e');
+      isNicknameAvailable = false;
+    }
 
     isCheckingNickname = false;
     hasCheckedNickname = true;
@@ -122,13 +129,11 @@ class SignupViewmodel extends StateNotifier<User> {
   }
 
   bool areFieldsValid() {
-    return hasCheckedNickname &&
-        isNicknameAvailable &&
-        hasCheckedEmail &&
+    return isNicknameAvailable &&
         isEmailAvailable &&
         emailTEC.text.isNotEmpty &&
         passwordTEC.text.isNotEmpty &&
-        passwordCheckTEC.text.isNotEmpty &&
+        passwordCheckTEC.text == passwordTEC.text &&
         nameTEC.text.isNotEmpty &&
         nicknameTEC.text.isNotEmpty &&
         numberTEC.text.isNotEmpty &&
@@ -140,6 +145,33 @@ class SignupViewmodel extends StateNotifier<User> {
   Future<void> submit(BuildContext context) async {
     if (areFieldsValid()) {
       debugPrint('유저정보: ${state.nickname}, ${state.email}');
+      final birthDate = DateTime(
+        int.parse(yearTEC.text),
+        int.parse(monthTEC.text),
+        int.parse(dayTEC.text),
+      );
+
+      final updatedUser = state.copyWith(
+        email: emailTEC.text,
+        password: passwordTEC.text,
+        name: nameTEC.text,
+        nickname: nicknameTEC.text,
+        phoneNumber: numberTEC.text,
+        birthDay: birthDate,
+      );
+
+      final success =
+          await authRepository.signupUser(updatedUser, localImagePath ?? '');
+
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(text: '회원가입에 성공했습니다'),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(text: '이미 등록된 회원입니다.'),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         customSnackBar(
@@ -165,5 +197,5 @@ class SignupViewmodel extends StateNotifier<User> {
 }
 
 final signupViewModelProvider = StateNotifierProvider<SignupViewmodel, User>(
-  (ref) => SignupViewmodel(),
+  (ref) => SignupViewmodel(AuthRepository()),
 );

@@ -37,8 +37,8 @@ dependencies:
   json_serializable: ^6.8.0
 
   # Network
-  http: ^1.2.1
-  dio: ^5.5.0+1
+  http: ^1.2.2
+  dio: ^5.7.0
 
   # backend
   alfred: ^1.1.1
