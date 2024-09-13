@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
 import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
 import 'package:sos/features/write/views/widgets/write_submit_btn.dart';
+import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 
 class WritePage extends ConsumerStatefulWidget {
@@ -15,9 +18,9 @@ class WritePage extends ConsumerStatefulWidget {
 }
 
 class _WritePageState extends ConsumerState<WritePage> {
+  final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _contentTEC = TextEditingController();
-  final dummyAdress = '서울시 서초구 서초동';
-  final dummyImg = 'https://picsum.photos/180/300';
+  final dummyImg = 'https://picsum.photos/180/300'; // TODO: 실제 카메라 이미지로 교체
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _WritePageState extends ConsumerState<WritePage> {
   void dispose() {
     _contentTEC.removeListener(_handleContentChange);
     _contentTEC.dispose();
+    _titleTEC.dispose();
     super.dispose();
   }
 
@@ -40,7 +44,9 @@ class _WritePageState extends ConsumerState<WritePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final viewModel = ref.watch(writeViewModelProvider.notifier);
+    final viewModel = ref.watch(writeViewModelProvider.notifier);
+    final location = ref.watch(locationProvider);
+
     return KeyboardDismisser(
       child: Scaffold(
         appBar: const CustomAppBar(
@@ -50,12 +56,24 @@ class _WritePageState extends ConsumerState<WritePage> {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
           child: Column(
             children: [
-              _topArea(),
+              _topArea(location),
               const SizedBox(height: 13),
               Expanded(child: _contentField()),
               if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
               const SizedBox(height: 16),
-              const WriteSubmitBtn(),
+              WriteSubmitBtn(onTap: () async {
+                location.whenData((loc) {
+                  viewModel.submitPost(
+                    context,
+                    _titleTEC.text,
+                    _contentTEC.text,
+                    // loc.roadAddress,
+                    loc.latitude,
+                    loc.longitude,
+                    null,
+                  );
+                });
+              }),
               const SizedBox(height: 20),
             ],
           ),
@@ -64,7 +82,7 @@ class _WritePageState extends ConsumerState<WritePage> {
     );
   }
 
-  Widget _topArea() {
+  Widget _topArea(AsyncValue<Location> location) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -91,9 +109,16 @@ class _WritePageState extends ConsumerState<WritePage> {
                   color: AppColors.lineGray,
                 ),
               ),
-              Text(
-                dummyAdress,
-                style: const TextStyle(fontSize: 14, height: 1.2),
+              location.when(
+                data: (location) => Text(
+                  location.roadAddress,
+                  style: const TextStyle(fontSize: 14, height: 1.2),
+                ),
+                loading: () => const Text(
+                  '주소를 가져오고 있어요',
+                  style: TextStyle(fontSize: 14, height: 1.2),
+                ),
+                error: (error, stack) => Text('주소 오류: $error'),
               ),
             ],
           ),
