@@ -24,9 +24,9 @@ class BoardSearchBar extends ConsumerWidget {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
-            border: AppBorders.defaultBlueBorder,
-            focusedBorder: AppBorders.defaultBlueBorder,
-            enabledBorder: AppBorders.defaultBlueBorder,
+            border: AppBorders.thickBlueBorder,
+            focusedBorder: AppBorders.thickBlueBorder,
+            enabledBorder: AppBorders.thickBlueBorder,
             filled: true,
             fillColor: const Color(0xFFFFFFFF).withOpacity(0.7),
             suffixIcon: const Icon(Icons.search, size: 26),

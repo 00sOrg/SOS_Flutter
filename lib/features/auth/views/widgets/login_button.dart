@@ -30,7 +30,6 @@ class LoginButton extends StatelessWidget {
             color: AppColors.white,
             fontWeight: FontWeight.w700,
             fontSize: 20,
-            height: 1,
           ),
         ),
       ),

@@ -30,9 +30,9 @@ class LoginTextField extends StatelessWidget {
             color: AppColors.textGray,
             height: 1.25,
           ),
-          border: AppBorders.defaultBlueBorder,
-          enabledBorder: AppBorders.defaultBlueBorder,
-          focusedBorder: AppBorders.defaultBlueBorder,
+          border: AppBorders.thickBlueBorder,
+          enabledBorder: AppBorders.thickBlueBorder,
+          focusedBorder: AppBorders.thickBlueBorder,
           counterText: "",
         ),
         style: const TextStyle(

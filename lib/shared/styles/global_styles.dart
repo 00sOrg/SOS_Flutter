@@ -28,7 +28,7 @@ class AppTexts {
 }
 
 class AppBorders {
-  static final OutlineInputBorder defaultBlueBorder = OutlineInputBorder(
+  static final OutlineInputBorder thickBlueBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFF0066FF), width: 3),
     borderRadius: BorderRadius.circular(10),
   );
@@ -38,7 +38,7 @@ class AppBorders {
     borderRadius: BorderRadius.circular(10),
   );
 
-  static final OutlineInputBorder defaultLightBlueBorder = OutlineInputBorder(
+  static final OutlineInputBorder thickLightBlueBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFF6398E9), width: 3),
     borderRadius: BorderRadius.circular(10),
   );
@@ -53,7 +53,7 @@ class AppBorders {
     borderRadius: BorderRadius.circular(10),
   );
 
-  static final OutlineInputBorder errorBorder = OutlineInputBorder(
+  static final OutlineInputBorder thinErrorBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFFED4337), width: 1),
     borderRadius: BorderRadius.circular(10),
   );

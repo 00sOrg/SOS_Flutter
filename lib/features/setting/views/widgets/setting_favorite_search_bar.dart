@@ -23,8 +23,8 @@ class SettingFavoriteSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
-          border: AppBorders.defaultBlueBorder,
-          focusedBorder: AppBorders.defaultBlueBorder,
+          border: AppBorders.thickBlueBorder,
+          focusedBorder: AppBorders.thickBlueBorder,
           enabledBorder: AppBorders.thickGrayBorder,
           filled: true,
           fillColor: AppColors.white.withOpacity(0.7),
