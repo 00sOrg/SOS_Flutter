@@ -20,18 +20,17 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Post {
-  int get postId => throw _privateConstructorUsedError; // required user,
-  String? get type => throw _privateConstructorUsedError;
-  String? get media => throw _privateConstructorUsedError;
+  int get postId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String? get content =>
+  String? get content => throw _privateConstructorUsedError;
+  String? get mediaUrl => throw _privateConstructorUsedError;
+  User? get user => throw _privateConstructorUsedError;
+  String? get type =>
       throw _privateConstructorUsedError; //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
   DateTime get createdAt => throw _privateConstructorUsedError;
+  String? get roadAddress => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
-  String? get si => throw _privateConstructorUsedError;
-  String? get gu => throw _privateConstructorUsedError;
-  String? get dong => throw _privateConstructorUsedError;
   String? get disasterLevel => throw _privateConstructorUsedError;
   int get likesCount => throw _privateConstructorUsedError;
   int get commentsCount => throw _privateConstructorUsedError;
@@ -49,20 +48,21 @@ abstract class $PostCopyWith<$Res> {
   @useResult
   $Res call(
       {int postId,
-      String? type,
-      String? media,
       String title,
       String? content,
+      String? mediaUrl,
+      User? user,
+      String? type,
       DateTime createdAt,
+      String? roadAddress,
       double latitude,
       double longitude,
-      String? si,
-      String? gu,
-      String? dong,
       String? disasterLevel,
       int likesCount,
       int commentsCount,
       List<Comment>? comments});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -79,16 +79,15 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
   @override
   $Res call({
     Object? postId = null,
-    Object? type = freezed,
-    Object? media = freezed,
     Object? title = null,
     Object? content = freezed,
+    Object? mediaUrl = freezed,
+    Object? user = freezed,
+    Object? type = freezed,
     Object? createdAt = null,
+    Object? roadAddress = freezed,
     Object? latitude = null,
     Object? longitude = null,
-    Object? si = freezed,
-    Object? gu = freezed,
-    Object? dong = freezed,
     Object? disasterLevel = freezed,
     Object? likesCount = null,
     Object? commentsCount = null,
@@ -99,14 +98,6 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as int,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      media: freezed == media
-          ? _value.media
-          : media // ignore: cast_nullable_to_non_nullable
-              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -115,10 +106,26 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
+      mediaUrl: freezed == mediaUrl
+          ? _value.mediaUrl
+          : mediaUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      roadAddress: freezed == roadAddress
+          ? _value.roadAddress
+          : roadAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -127,18 +134,6 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
-      si: freezed == si
-          ? _value.si
-          : si // ignore: cast_nullable_to_non_nullable
-              as String?,
-      gu: freezed == gu
-          ? _value.gu
-          : gu // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dong: freezed == dong
-          ? _value.dong
-          : dong // ignore: cast_nullable_to_non_nullable
-              as String?,
       disasterLevel: freezed == disasterLevel
           ? _value.disasterLevel
           : disasterLevel // ignore: cast_nullable_to_non_nullable
@@ -157,6 +152,18 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
               as List<Comment>?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -168,20 +175,22 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
   @useResult
   $Res call(
       {int postId,
-      String? type,
-      String? media,
       String title,
       String? content,
+      String? mediaUrl,
+      User? user,
+      String? type,
       DateTime createdAt,
+      String? roadAddress,
       double latitude,
       double longitude,
-      String? si,
-      String? gu,
-      String? dong,
       String? disasterLevel,
       int likesCount,
       int commentsCount,
       List<Comment>? comments});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -195,16 +204,15 @@ class __$$PostImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? postId = null,
-    Object? type = freezed,
-    Object? media = freezed,
     Object? title = null,
     Object? content = freezed,
+    Object? mediaUrl = freezed,
+    Object? user = freezed,
+    Object? type = freezed,
     Object? createdAt = null,
+    Object? roadAddress = freezed,
     Object? latitude = null,
     Object? longitude = null,
-    Object? si = freezed,
-    Object? gu = freezed,
-    Object? dong = freezed,
     Object? disasterLevel = freezed,
     Object? likesCount = null,
     Object? commentsCount = null,
@@ -215,14 +223,6 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as int,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      media: freezed == media
-          ? _value.media
-          : media // ignore: cast_nullable_to_non_nullable
-              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -231,10 +231,26 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
+      mediaUrl: freezed == mediaUrl
+          ? _value.mediaUrl
+          : mediaUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      roadAddress: freezed == roadAddress
+          ? _value.roadAddress
+          : roadAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -243,18 +259,6 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
-      si: freezed == si
-          ? _value.si
-          : si // ignore: cast_nullable_to_non_nullable
-              as String?,
-      gu: freezed == gu
-          ? _value.gu
-          : gu // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dong: freezed == dong
-          ? _value.dong
-          : dong // ignore: cast_nullable_to_non_nullable
-              as String?,
       disasterLevel: freezed == disasterLevel
           ? _value.disasterLevel
           : disasterLevel // ignore: cast_nullable_to_non_nullable
@@ -280,16 +284,15 @@ class __$$PostImplCopyWithImpl<$Res>
 class _$PostImpl implements _Post {
   _$PostImpl(
       {required this.postId,
-      this.type,
-      this.media,
       required this.title,
       this.content,
+      this.mediaUrl,
+      this.user,
+      this.type,
       required this.createdAt,
+      this.roadAddress,
       required this.latitude,
       required this.longitude,
-      this.si,
-      this.gu,
-      this.dong,
       this.disasterLevel,
       this.likesCount = 0,
       this.commentsCount = 0,
@@ -301,28 +304,25 @@ class _$PostImpl implements _Post {
 
   @override
   final int postId;
-// required user,
-  @override
-  final String? type;
-  @override
-  final String? media;
   @override
   final String title;
   @override
   final String? content;
+  @override
+  final String? mediaUrl;
+  @override
+  final User? user;
+  @override
+  final String? type;
 //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
   @override
   final DateTime createdAt;
   @override
+  final String? roadAddress;
+  @override
   final double latitude;
   @override
   final double longitude;
-  @override
-  final String? si;
-  @override
-  final String? gu;
-  @override
-  final String? dong;
   @override
   final String? disasterLevel;
   @override
@@ -343,7 +343,7 @@ class _$PostImpl implements _Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, type: $type, media: $media, title: $title, content: $content, createdAt: $createdAt, latitude: $latitude, longitude: $longitude, si: $si, gu: $gu, dong: $dong, disasterLevel: $disasterLevel, likesCount: $likesCount, commentsCount: $commentsCount, comments: $comments)';
+    return 'Post(postId: $postId, title: $title, content: $content, mediaUrl: $mediaUrl, user: $user, type: $type, createdAt: $createdAt, roadAddress: $roadAddress, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, likesCount: $likesCount, commentsCount: $commentsCount, comments: $comments)';
   }
 
   @override
@@ -352,19 +352,20 @@ class _$PostImpl implements _Post {
         (other.runtimeType == runtimeType &&
             other is _$PostImpl &&
             (identical(other.postId, postId) || other.postId == postId) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.media, media) || other.media == media) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
+            (identical(other.mediaUrl, mediaUrl) ||
+                other.mediaUrl == mediaUrl) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.roadAddress, roadAddress) ||
+                other.roadAddress == roadAddress) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
-            (identical(other.si, si) || other.si == si) &&
-            (identical(other.gu, gu) || other.gu == gu) &&
-            (identical(other.dong, dong) || other.dong == dong) &&
             (identical(other.disasterLevel, disasterLevel) ||
                 other.disasterLevel == disasterLevel) &&
             (identical(other.likesCount, likesCount) ||
@@ -379,16 +380,15 @@ class _$PostImpl implements _Post {
   int get hashCode => Object.hash(
       runtimeType,
       postId,
-      type,
-      media,
       title,
       content,
+      mediaUrl,
+      user,
+      type,
       createdAt,
+      roadAddress,
       latitude,
       longitude,
-      si,
-      gu,
-      dong,
       disasterLevel,
       likesCount,
       commentsCount,
@@ -411,16 +411,15 @@ class _$PostImpl implements _Post {
 abstract class _Post implements Post {
   factory _Post(
       {required final int postId,
-      final String? type,
-      final String? media,
       required final String title,
       final String? content,
+      final String? mediaUrl,
+      final User? user,
+      final String? type,
       required final DateTime createdAt,
+      final String? roadAddress,
       required final double latitude,
       required final double longitude,
-      final String? si,
-      final String? gu,
-      final String? dong,
       final String? disasterLevel,
       final int likesCount,
       final int commentsCount,
@@ -430,26 +429,24 @@ abstract class _Post implements Post {
 
   @override
   int get postId;
-  @override // required user,
-  String? get type;
-  @override
-  String? get media;
   @override
   String get title;
   @override
   String? get content;
+  @override
+  String? get mediaUrl;
+  @override
+  User? get user;
+  @override
+  String? get type;
   @override //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
   DateTime get createdAt;
+  @override
+  String? get roadAddress;
   @override
   double get latitude;
   @override
   double get longitude;
-  @override
-  String? get si;
-  @override
-  String? get gu;
-  @override
-  String? get dong;
   @override
   String? get disasterLevel;
   @override

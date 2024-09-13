@@ -8,16 +8,17 @@ part of 'post.dart';
 
 _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       postId: (json['postId'] as num).toInt(),
-      type: json['type'] as String?,
-      media: json['media'] as String?,
       title: json['title'] as String,
       content: json['content'] as String?,
+      mediaUrl: json['mediaUrl'] as String?,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      type: json['type'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      roadAddress: json['roadAddress'] as String?,
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
-      si: json['si'] as String?,
-      gu: json['gu'] as String?,
-      dong: json['dong'] as String?,
       disasterLevel: json['disasterLevel'] as String?,
       likesCount: (json['likesCount'] as num?)?.toInt() ?? 0,
       commentsCount: (json['commentsCount'] as num?)?.toInt() ?? 0,
@@ -29,16 +30,15 @@ _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
 Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
     <String, dynamic>{
       'postId': instance.postId,
-      'type': instance.type,
-      'media': instance.media,
       'title': instance.title,
       'content': instance.content,
+      'mediaUrl': instance.mediaUrl,
+      'user': instance.user,
+      'type': instance.type,
       'createdAt': instance.createdAt.toIso8601String(),
+      'roadAddress': instance.roadAddress,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
-      'si': instance.si,
-      'gu': instance.gu,
-      'dong': instance.dong,
       'disasterLevel': instance.disasterLevel,
       'likesCount': instance.likesCount,
       'commentsCount': instance.commentsCount,

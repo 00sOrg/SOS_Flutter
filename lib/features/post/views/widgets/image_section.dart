@@ -8,13 +8,13 @@ class ImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return post.media != null && post.media!.isNotEmpty
+    return post.mediaUrl != null && post.mediaUrl!.isNotEmpty
         ? Container(
             height: 234.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
-                image: NetworkImage(post.media!),
+                image: NetworkImage(post.mediaUrl!),
                 fit: BoxFit.contain,
               ),
             ),
