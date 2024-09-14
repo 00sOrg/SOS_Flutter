@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sos/features/x_archive/deprecated_board/views/widgets/post_item.dart';
-import 'package:sos/shared/models/x_post.dart';
+import 'package:sos/shared/models/x_archive/x_post.dart';
 
 class PostGridArea extends StatelessWidget {
   final List<XPost> posts;

@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/shared/models/x_post.dart';
+import 'package:sos/shared/models/x_archive/x_post.dart';
 
-class PostRepository {
+class XPostRepository {
   final Dio _dio = Dio(
     BaseOptions(baseUrl: dotenv.env['BASE_URL']!),
   );
@@ -61,4 +61,4 @@ class PostRepository {
   }
 }
 
-final postRepositoryProvider = Provider((ref) => PostRepository());
+final postRepositoryProvider = Provider((ref) => XPostRepository());
