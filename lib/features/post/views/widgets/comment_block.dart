@@ -20,9 +20,9 @@ class CommentBlock extends StatelessWidget {
               // 댓글 작성자의 프로필 사진을 원형으로 표시
               ClipRRect(
                 borderRadius: BorderRadius.circular(99),
-                child: comment.profilePic != null
+                child: comment.userProfilePictureURL != null
                     ? Image.network(
-                        comment.profilePic!,
+                        comment.userProfilePictureURL!,
                         width: 32,
                       )
                     : SvgPicture.asset(
@@ -36,7 +36,7 @@ class CommentBlock extends StatelessWidget {
                 children: [
                   // 댓글 작성자의 이름 표시
                   Text(
-                    comment.userName,
+                    comment.userNickname,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,

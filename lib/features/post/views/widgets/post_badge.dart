@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sos/shared/models/post.dart';
-import 'package:sos/shared/styles/global_styles.dart';
 
 class PostBadge extends StatelessWidget {
   final Post post;
@@ -9,40 +10,30 @@ class PostBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Determine the text and color based on the post's data
-    String? text;
-    Color? color;
+    // Determine the svg asset based on the post's data
+    String? svgAsset;
 
     // Condition for Hot! badge
     if (post.likesCount > 100) {
-      // Adjust the threshold as needed
-      text = 'Hot!';
-      color = Colors.red;
+      svgAsset = 'assets/icons/post/HOT.svg';
     }
     // Condition for 실시간!! badge
     else if (_isRecentPost(post.createdAt)) {
-      text = '실시간!!';
-      color = Colors.blue;
+      svgAsset = 'assets/icons/post/LIVE.svg';
     }
 
     // If neither condition is met, return an empty container
-    if (text == null || color == null) {
-      return SizedBox
+    if (svgAsset == null) {
+      return const SizedBox
           .shrink(); // Empty space, won't take up any space in the layout
     }
 
     return Align(
       alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(color: Colors.white, fontSize: 12),
-        ),
+      child: SvgPicture.asset(
+        svgAsset,
+        height: 22.38.h, // Adjust the size as needed
+        width: 57.w,
       ),
     );
   }

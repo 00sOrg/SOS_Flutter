@@ -22,7 +22,7 @@ class PostPage extends ConsumerWidget {
     return Scaffold(
       appBar: CustomAppBar(title: post.title),
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
         children: [
           // "실시간!!" Badge
           PostBadge(post: post),
@@ -51,7 +51,6 @@ class PostPage extends ConsumerWidget {
 
           // Comments List (댓글 리스트)
           CommentSection(comments: post.comments),
-          //CommentList(comments: post.comments), // 댓글 목록 전달
         ],
       ),
     );

@@ -29,7 +29,7 @@ class EventPreview extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center, // Row 내부 요소들을 중앙에 정렬
             children: [
-              if (event.media != null) ...[
+              if (event.mediaURL != null) ...[
                 Container(
                   width: 85,
                   height: 85,
@@ -37,7 +37,7 @@ class EventPreview extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: NetworkImage(event.media!),
+                      image: NetworkImage(event.mediaURL!),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -75,8 +75,9 @@ class EventPreview extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       event.content ?? '',
-                      maxLines:
-                          event.media != null ? 2 : 3, // 미디어가 있는 경우 더 적은 줄을 사용
+                      maxLines: event.mediaURL != null
+                          ? 2
+                          : 3, // 미디어가 있는 경우 더 적은 줄을 사용
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],

@@ -8,13 +8,12 @@ class Comment with _$Comment {
   factory Comment({
     // required int commentId,
     required int postId,
-    // required String title,
-    // String? image,
-    // required String address,
-    String? profilePic,
-    required String userName,
     required String content,
+    required int userId,
+    required String userNickname,
+    String? userProfilePictureURL,
     required DateTime createdAt,
+    DateTime? updatedAt,
   }) = _Comment;
 
   factory Comment.fromJson(Map<String, dynamic> json) =>

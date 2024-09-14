@@ -9,20 +9,21 @@ part 'post.g.dart';
 @freezed
 class Post with _$Post {
   factory Post({
+    required DateTime createdAt,
     required int postId,
     required String title,
+    String? userNickname,
+    String? userProfilePictureURL,
     String? content,
-    String? media,
-    User? user,
-    String? type,
-    //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
-    required DateTime createdAt,
+    String? mediaURL,
     String? roadAddress,
     required double latitude,
     required double longitude,
     String? disasterLevel,
+    String? disasterType,
     @Default(0) int likesCount,
     @Default(0) int commentsCount,
+    @Default(false) bool isLiked,
     List<Comment>? comments,
   }) = _Post;
 
