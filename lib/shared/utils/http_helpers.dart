@@ -1,4 +1,4 @@
-// auth 기준으로 만들어서 다른 데 쓰려면 수정 필요할수도 있음,, 매우높은확률로
+// 파싱 에러나 토큰 관련 에러는 여기서 처리 안해줌
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -9,41 +9,66 @@ bool handleResponse(http.Response response, String methodName) {
   final resBody = jsonDecode(response.body);
 
   if (resBody['statusCode'] == 200) {
-    LogUtil.d(resBody.toString());
+    LogUtil.d('$methodName 성공: ${resBody.toString()}');
     return true;
   } else if (resBody['statusCode'] == 400) {
-    LogUtil.e('$methodName 에러: ${resBody.toString()}');
+    LogUtil.e('$methodName handleResponse 에러: ${resBody.toString()}');
     return false;
   } else {
     LogUtil.e(
-        '$methodName 에려: ${response.statusCode}, body: ${resBody.toString()}');
-    throw Exception('$methodName: Unexpected response from server');
+        '$methodName handleResponse 에려: ${response.statusCode}, body: ${resBody.toString()}');
+    return false;
   }
 }
 
 // GET 요청과 응답 처리용 헬퍼메소드
-Future<bool> makeGetRequest(Uri url, String methodName) async {
-  try {
-    final response = await http.get(url);
-    return handleResponse(response, methodName);
-  } catch (e) {
-    LogUtil.e('GET $methodName 에러: $e');
-    return false;
+Future<http.Response> makeGetRequest(Uri url, String methodName) async {
+  final response = await http.get(url);
+
+  if (!handleResponse(response, methodName)) {
+    throw Exception('$methodName: Bad Response');
   }
+
+  return response;
 }
 
 // POST 요청과 응답 처리용 헬퍼메소드
-Future<bool> makePostRequest(
+Future<http.Response> makePostRequest(
     Uri url, Map<String, dynamic> body, String methodName) async {
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode(body),
+  );
+
+  if (!handleResponse(response, methodName)) {
+    throw Exception('$methodName: Bad Response');
+  }
+
+  return response;
+}
+
+// Multipart 헬퍼메소드
+Future<http.Response> makeMultipartRequest(Uri url, Map<String, String> fields,
+    String methodName, String? filePath) async {
   try {
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(body),
-    );
-    return handleResponse(response, methodName);
+    var request = http.MultipartRequest('POST', url);
+    request.fields.addAll(fields);
+
+    if (filePath != null && filePath.isNotEmpty) {
+      request.files.add(await http.MultipartFile.fromPath('media', filePath));
+    }
+
+    final response = await request.send();
+    final resData = await http.Response.fromStream(response);
+
+    if (!handleResponse(resData, methodName)) {
+      throw Exception('$methodName: Bad Response');
+    }
+
+    return resData;
   } catch (e) {
     LogUtil.e('$methodName 에러: $e');
-    return false;
+    throw Exception('$methodName: Multipart request 실패');
   }
 }
