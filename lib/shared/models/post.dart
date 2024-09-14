@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sos/shared/models/user.dart';
+// import 'package:sos/shared/models/user.dart'; // 여건 되면
 import 'comment.dart';
-// import 'user.dart'
 
 part 'post.freezed.dart';
 part 'post.g.dart';
