@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/rescue/viewmodels/rescue_viewmodel.dart';
 import 'package:sos/features/rescue/views/widgets/friend_add_btn.dart';
 import 'package:sos/features/rescue/views/widgets/friend_help_btn.dart';
@@ -14,11 +13,12 @@ class RescuePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final friends = ref.watch(rescueViewModelProvider);
+    final viewModel = ref.read(rescueViewModelProvider.notifier);
 
     return Scaffold(
       appBar: const CustomAppBar(title: 'SOS'),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 33),
+        padding: const EdgeInsets.fromLTRB(30, 33, 30, 0),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -30,18 +30,23 @@ class RescuePage extends ConsumerWidget {
                   mainAxisSpacing: 15,
                   crossAxisSpacing: 19,
                   childAspectRatio: 157 / 145,
+                  // childAspectRatio: 157 / 140,
                 ),
-                itemCount: (friends.length < 4) ? friends.length + 1 : 4,
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   if (index < friends.length) {
                     final friend = friends[index];
                     return FriendHelpBtn(
-                      id: friend.id,
-                      name: friend.name,
-                      profilePicture: friend.profilePicture,
+                      friend: friend,
+                      onTap: () => viewModel.handleFriendHelp(
+                          id: friend.id, name: friend.name),
+                    );
+                  } else if (index == friends.length && friends.length < 4) {
+                    return FriendAddBtn(
+                      onTap: () => viewModel.handleFriendAdd(context),
                     );
                   } else {
-                    return const FriendAddBtn();
+                    return const SizedBox(); 
                   }
                 },
               ),
@@ -56,21 +61,18 @@ class RescuePage extends ConsumerWidget {
                 ),
               ),
               // const SizedBox(height: 15),
-              const SizedBox(height: 50),
+              const SizedBox(height: 40),
               RescueBtn(
+                onTap: () => viewModel.handleNearbyAlert(),
                 text: '내 주변에 도움 요청',
-                color: Colors.blue.shade200,
-                onTap: () => ref
-                    .read(rescueViewModelProvider.notifier)
-                    .handleNearbyAlert(),
+                // color: AppColors.lightBlue,
+                color: const Color(0xFF8FBCFF),
               ),
               const SizedBox(height: 15),
               RescueBtn(
+                onTap: () => viewModel.handleEmergencyAlert(),
                 text: '112 / 119에 신고하기',
-                color: Colors.blue.shade600,
-                onTap: () => ref
-                    .read(rescueViewModelProvider.notifier)
-                    .handleEmergencyAlert(),
+                color: AppColors.blue,
               ),
             ],
           ),

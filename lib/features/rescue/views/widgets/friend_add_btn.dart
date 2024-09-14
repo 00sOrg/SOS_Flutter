@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class FriendAddBtn extends StatelessWidget {
-  const FriendAddBtn({super.key});
+  final VoidCallback onTap;
+
+  const FriendAddBtn({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
           // height: 145.h,
           // width: 157.w,
