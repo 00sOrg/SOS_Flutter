@@ -21,14 +21,13 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Comment {
 // required int commentId,
-  int get postId =>
-      throw _privateConstructorUsedError; // required String title,
-// String? image,
-// required String address,
-  String? get profilePic => throw _privateConstructorUsedError;
-  String get userName => throw _privateConstructorUsedError;
+  int get postId => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
+  int get userId => throw _privateConstructorUsedError;
+  String get userNickname => throw _privateConstructorUsedError;
+  String? get userProfilePictureURL => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,10 +41,12 @@ abstract class $CommentCopyWith<$Res> {
   @useResult
   $Res call(
       {int postId,
-      String? profilePic,
-      String userName,
       String content,
-      DateTime createdAt});
+      int userId,
+      String userNickname,
+      String? userProfilePictureURL,
+      DateTime createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -62,32 +63,42 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
   @override
   $Res call({
     Object? postId = null,
-    Object? profilePic = freezed,
-    Object? userName = null,
     Object? content = null,
+    Object? userId = null,
+    Object? userNickname = null,
+    Object? userProfilePictureURL = freezed,
     Object? createdAt = null,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as int,
-      profilePic: freezed == profilePic
-          ? _value.profilePic
-          : profilePic // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+      userNickname: null == userNickname
+          ? _value.userNickname
+          : userNickname // ignore: cast_nullable_to_non_nullable
+              as String,
+      userProfilePictureURL: freezed == userProfilePictureURL
+          ? _value.userProfilePictureURL
+          : userProfilePictureURL // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -101,10 +112,12 @@ abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
   @useResult
   $Res call(
       {int postId,
-      String? profilePic,
-      String userName,
       String content,
-      DateTime createdAt});
+      int userId,
+      String userNickname,
+      String? userProfilePictureURL,
+      DateTime createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -119,32 +132,42 @@ class __$$CommentImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? postId = null,
-    Object? profilePic = freezed,
-    Object? userName = null,
     Object? content = null,
+    Object? userId = null,
+    Object? userNickname = null,
+    Object? userProfilePictureURL = freezed,
     Object? createdAt = null,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$CommentImpl(
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as int,
-      profilePic: freezed == profilePic
-          ? _value.profilePic
-          : profilePic // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+      userNickname: null == userNickname
+          ? _value.userNickname
+          : userNickname // ignore: cast_nullable_to_non_nullable
+              as String,
+      userProfilePictureURL: freezed == userProfilePictureURL
+          ? _value.userProfilePictureURL
+          : userProfilePictureURL // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -154,10 +177,12 @@ class __$$CommentImplCopyWithImpl<$Res>
 class _$CommentImpl implements _Comment {
   _$CommentImpl(
       {required this.postId,
-      this.profilePic,
-      required this.userName,
       required this.content,
-      required this.createdAt});
+      required this.userId,
+      required this.userNickname,
+      this.userProfilePictureURL,
+      required this.createdAt,
+      this.updatedAt});
 
   factory _$CommentImpl.fromJson(Map<String, dynamic> json) =>
       _$$CommentImplFromJson(json);
@@ -165,21 +190,22 @@ class _$CommentImpl implements _Comment {
 // required int commentId,
   @override
   final int postId;
-// required String title,
-// String? image,
-// required String address,
-  @override
-  final String? profilePic;
-  @override
-  final String userName;
   @override
   final String content;
   @override
+  final int userId;
+  @override
+  final String userNickname;
+  @override
+  final String? userProfilePictureURL;
+  @override
   final DateTime createdAt;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'Comment(postId: $postId, profilePic: $profilePic, userName: $userName, content: $content, createdAt: $createdAt)';
+    return 'Comment(postId: $postId, content: $content, userId: $userId, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -188,19 +214,22 @@ class _$CommentImpl implements _Comment {
         (other.runtimeType == runtimeType &&
             other is _$CommentImpl &&
             (identical(other.postId, postId) || other.postId == postId) &&
-            (identical(other.profilePic, profilePic) ||
-                other.profilePic == profilePic) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
             (identical(other.content, content) || other.content == content) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.userNickname, userNickname) ||
+                other.userNickname == userNickname) &&
+            (identical(other.userProfilePictureURL, userProfilePictureURL) ||
+                other.userProfilePictureURL == userProfilePictureURL) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, postId, profilePic, userName, content, createdAt);
+  int get hashCode => Object.hash(runtimeType, postId, content, userId,
+      userNickname, userProfilePictureURL, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -219,25 +248,29 @@ class _$CommentImpl implements _Comment {
 abstract class _Comment implements Comment {
   factory _Comment(
       {required final int postId,
-      final String? profilePic,
-      required final String userName,
       required final String content,
-      required final DateTime createdAt}) = _$CommentImpl;
+      required final int userId,
+      required final String userNickname,
+      final String? userProfilePictureURL,
+      required final DateTime createdAt,
+      final DateTime? updatedAt}) = _$CommentImpl;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$CommentImpl.fromJson;
 
   @override // required int commentId,
   int get postId;
-  @override // required String title,
-// String? image,
-// required String address,
-  String? get profilePic;
-  @override
-  String get userName;
   @override
   String get content;
   @override
+  int get userId;
+  @override
+  String get userNickname;
+  @override
+  String? get userProfilePictureURL;
+  @override
   DateTime get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$CommentImplCopyWith<_$CommentImpl> get copyWith =>

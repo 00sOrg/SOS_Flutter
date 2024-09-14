@@ -20,20 +20,21 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Post {
+  DateTime get createdAt => throw _privateConstructorUsedError;
   int get postId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String? get userNickname => throw _privateConstructorUsedError;
+  String? get userProfilePictureURL => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
-  String? get media => throw _privateConstructorUsedError;
-  User? get user => throw _privateConstructorUsedError;
-  String? get type =>
-      throw _privateConstructorUsedError; //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  String? get mediaURL => throw _privateConstructorUsedError;
   String? get roadAddress => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
   String? get disasterLevel => throw _privateConstructorUsedError;
+  String? get disasterType => throw _privateConstructorUsedError;
   int get likesCount => throw _privateConstructorUsedError;
   int get commentsCount => throw _privateConstructorUsedError;
+  bool get isLiked => throw _privateConstructorUsedError;
   List<Comment>? get comments => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,22 +48,22 @@ abstract class $PostCopyWith<$Res> {
       _$PostCopyWithImpl<$Res, Post>;
   @useResult
   $Res call(
-      {int postId,
+      {DateTime createdAt,
+      int postId,
       String title,
+      String? userNickname,
+      String? userProfilePictureURL,
       String? content,
-      String? media,
-      User? user,
-      String? type,
-      DateTime createdAt,
+      String? mediaURL,
       String? roadAddress,
       double latitude,
       double longitude,
       String? disasterLevel,
+      String? disasterType,
       int likesCount,
       int commentsCount,
+      bool isLiked,
       List<Comment>? comments});
-
-  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -78,22 +79,28 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? createdAt = null,
     Object? postId = null,
     Object? title = null,
+    Object? userNickname = freezed,
+    Object? userProfilePictureURL = freezed,
     Object? content = freezed,
-    Object? media = freezed,
-    Object? user = freezed,
-    Object? type = freezed,
-    Object? createdAt = null,
+    Object? mediaURL = freezed,
     Object? roadAddress = freezed,
     Object? latitude = null,
     Object? longitude = null,
     Object? disasterLevel = freezed,
+    Object? disasterType = freezed,
     Object? likesCount = null,
     Object? commentsCount = null,
+    Object? isLiked = null,
     Object? comments = freezed,
   }) {
     return _then(_value.copyWith(
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -102,26 +109,22 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      userNickname: freezed == userNickname
+          ? _value.userNickname
+          : userNickname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userProfilePictureURL: freezed == userProfilePictureURL
+          ? _value.userProfilePictureURL
+          : userProfilePictureURL // ignore: cast_nullable_to_non_nullable
+              as String?,
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
-      media: freezed == media
-          ? _value.media
-          : media // ignore: cast_nullable_to_non_nullable
+      mediaURL: freezed == mediaURL
+          ? _value.mediaURL
+          : mediaURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      user: freezed == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       roadAddress: freezed == roadAddress
           ? _value.roadAddress
           : roadAddress // ignore: cast_nullable_to_non_nullable
@@ -138,6 +141,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.disasterLevel
           : disasterLevel // ignore: cast_nullable_to_non_nullable
               as String?,
+      disasterType: freezed == disasterType
+          ? _value.disasterType
+          : disasterType // ignore: cast_nullable_to_non_nullable
+              as String?,
       likesCount: null == likesCount
           ? _value.likesCount
           : likesCount // ignore: cast_nullable_to_non_nullable
@@ -146,23 +153,15 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.commentsCount
           : commentsCount // ignore: cast_nullable_to_non_nullable
               as int,
+      isLiked: null == isLiked
+          ? _value.isLiked
+          : isLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
       comments: freezed == comments
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<Comment>?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get user {
-    if (_value.user == null) {
-      return null;
-    }
-
-    return $UserCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -174,23 +173,22 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int postId,
+      {DateTime createdAt,
+      int postId,
       String title,
+      String? userNickname,
+      String? userProfilePictureURL,
       String? content,
-      String? media,
-      User? user,
-      String? type,
-      DateTime createdAt,
+      String? mediaURL,
       String? roadAddress,
       double latitude,
       double longitude,
       String? disasterLevel,
+      String? disasterType,
       int likesCount,
       int commentsCount,
+      bool isLiked,
       List<Comment>? comments});
-
-  @override
-  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -203,22 +201,28 @@ class __$$PostImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? createdAt = null,
     Object? postId = null,
     Object? title = null,
+    Object? userNickname = freezed,
+    Object? userProfilePictureURL = freezed,
     Object? content = freezed,
-    Object? media = freezed,
-    Object? user = freezed,
-    Object? type = freezed,
-    Object? createdAt = null,
+    Object? mediaURL = freezed,
     Object? roadAddress = freezed,
     Object? latitude = null,
     Object? longitude = null,
     Object? disasterLevel = freezed,
+    Object? disasterType = freezed,
     Object? likesCount = null,
     Object? commentsCount = null,
+    Object? isLiked = null,
     Object? comments = freezed,
   }) {
     return _then(_$PostImpl(
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -227,26 +231,22 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      userNickname: freezed == userNickname
+          ? _value.userNickname
+          : userNickname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userProfilePictureURL: freezed == userProfilePictureURL
+          ? _value.userProfilePictureURL
+          : userProfilePictureURL // ignore: cast_nullable_to_non_nullable
+              as String?,
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
-      media: freezed == media
-          ? _value.media
-          : media // ignore: cast_nullable_to_non_nullable
+      mediaURL: freezed == mediaURL
+          ? _value.mediaURL
+          : mediaURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      user: freezed == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       roadAddress: freezed == roadAddress
           ? _value.roadAddress
           : roadAddress // ignore: cast_nullable_to_non_nullable
@@ -263,6 +263,10 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.disasterLevel
           : disasterLevel // ignore: cast_nullable_to_non_nullable
               as String?,
+      disasterType: freezed == disasterType
+          ? _value.disasterType
+          : disasterType // ignore: cast_nullable_to_non_nullable
+              as String?,
       likesCount: null == likesCount
           ? _value.likesCount
           : likesCount // ignore: cast_nullable_to_non_nullable
@@ -271,6 +275,10 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.commentsCount
           : commentsCount // ignore: cast_nullable_to_non_nullable
               as int,
+      isLiked: null == isLiked
+          ? _value.isLiked
+          : isLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
       comments: freezed == comments
           ? _value._comments
           : comments // ignore: cast_nullable_to_non_nullable
@@ -283,19 +291,21 @@ class __$$PostImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PostImpl implements _Post {
   _$PostImpl(
-      {required this.postId,
+      {required this.createdAt,
+      required this.postId,
       required this.title,
+      this.userNickname,
+      this.userProfilePictureURL,
       this.content,
-      this.media,
-      this.user,
-      this.type,
-      required this.createdAt,
+      this.mediaURL,
       this.roadAddress,
       required this.latitude,
       required this.longitude,
       this.disasterLevel,
+      this.disasterType,
       this.likesCount = 0,
       this.commentsCount = 0,
+      this.isLiked = false,
       final List<Comment>? comments})
       : _comments = comments;
 
@@ -303,20 +313,19 @@ class _$PostImpl implements _Post {
       _$$PostImplFromJson(json);
 
   @override
+  final DateTime createdAt;
+  @override
   final int postId;
   @override
   final String title;
   @override
+  final String? userNickname;
+  @override
+  final String? userProfilePictureURL;
+  @override
   final String? content;
   @override
-  final String? media;
-  @override
-  final User? user;
-  @override
-  final String? type;
-//location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
-  @override
-  final DateTime createdAt;
+  final String? mediaURL;
   @override
   final String? roadAddress;
   @override
@@ -326,11 +335,16 @@ class _$PostImpl implements _Post {
   @override
   final String? disasterLevel;
   @override
+  final String? disasterType;
+  @override
   @JsonKey()
   final int likesCount;
   @override
   @JsonKey()
   final int commentsCount;
+  @override
+  @JsonKey()
+  final bool isLiked;
   final List<Comment>? _comments;
   @override
   List<Comment>? get comments {
@@ -343,7 +357,7 @@ class _$PostImpl implements _Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, title: $title, content: $content, media: $media, user: $user, type: $type, createdAt: $createdAt, roadAddress: $roadAddress, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, likesCount: $likesCount, commentsCount: $commentsCount, comments: $comments)';
+    return 'Post(createdAt: $createdAt, postId: $postId, title: $title, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, content: $content, mediaURL: $mediaURL, roadAddress: $roadAddress, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, disasterType: $disasterType, likesCount: $likesCount, commentsCount: $commentsCount, isLiked: $isLiked, comments: $comments)';
   }
 
   @override
@@ -351,14 +365,17 @@ class _$PostImpl implements _Post {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PostImpl &&
-            (identical(other.postId, postId) || other.postId == postId) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.content, content) || other.content == content) &&
-            (identical(other.media, media) || other.media == media) &&
-            (identical(other.user, user) || other.user == user) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.postId, postId) || other.postId == postId) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.userNickname, userNickname) ||
+                other.userNickname == userNickname) &&
+            (identical(other.userProfilePictureURL, userProfilePictureURL) ||
+                other.userProfilePictureURL == userProfilePictureURL) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.mediaURL, mediaURL) ||
+                other.mediaURL == mediaURL) &&
             (identical(other.roadAddress, roadAddress) ||
                 other.roadAddress == roadAddress) &&
             (identical(other.latitude, latitude) ||
@@ -367,10 +384,13 @@ class _$PostImpl implements _Post {
                 other.longitude == longitude) &&
             (identical(other.disasterLevel, disasterLevel) ||
                 other.disasterLevel == disasterLevel) &&
+            (identical(other.disasterType, disasterType) ||
+                other.disasterType == disasterType) &&
             (identical(other.likesCount, likesCount) ||
                 other.likesCount == likesCount) &&
             (identical(other.commentsCount, commentsCount) ||
                 other.commentsCount == commentsCount) &&
+            (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
             const DeepCollectionEquality().equals(other._comments, _comments));
   }
 
@@ -378,19 +398,21 @@ class _$PostImpl implements _Post {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      createdAt,
       postId,
       title,
+      userNickname,
+      userProfilePictureURL,
       content,
-      media,
-      user,
-      type,
-      createdAt,
+      mediaURL,
       roadAddress,
       latitude,
       longitude,
       disasterLevel,
+      disasterType,
       likesCount,
       commentsCount,
+      isLiked,
       const DeepCollectionEquality().hash(_comments));
 
   @JsonKey(ignore: true)
@@ -409,37 +431,39 @@ class _$PostImpl implements _Post {
 
 abstract class _Post implements Post {
   factory _Post(
-      {required final int postId,
+      {required final DateTime createdAt,
+      required final int postId,
       required final String title,
+      final String? userNickname,
+      final String? userProfilePictureURL,
       final String? content,
-      final String? media,
-      final User? user,
-      final String? type,
-      required final DateTime createdAt,
+      final String? mediaURL,
       final String? roadAddress,
       required final double latitude,
       required final double longitude,
       final String? disasterLevel,
+      final String? disasterType,
       final int likesCount,
       final int commentsCount,
+      final bool isLiked,
       final List<Comment>? comments}) = _$PostImpl;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
 
   @override
+  DateTime get createdAt;
+  @override
   int get postId;
   @override
   String get title;
   @override
+  String? get userNickname;
+  @override
+  String? get userProfilePictureURL;
+  @override
   String? get content;
   @override
-  String? get media;
-  @override
-  User? get user;
-  @override
-  String? get type;
-  @override //location 클래스랑 겹치는데 -> 여기에 location을 같이둘까 따로둘까
-  DateTime get createdAt;
+  String? get mediaURL;
   @override
   String? get roadAddress;
   @override
@@ -449,9 +473,13 @@ abstract class _Post implements Post {
   @override
   String? get disasterLevel;
   @override
+  String? get disasterType;
+  @override
   int get likesCount;
   @override
   int get commentsCount;
+  @override
+  bool get isLiked;
   @override
   List<Comment>? get comments;
   @override
