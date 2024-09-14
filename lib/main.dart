@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sos/shared/navigation/app_router.dart';
-import 'package:sos/shared/providers/location_provider.dart';
 import 'package:sos/shared/utils/log_util.dart';
+import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 
 Future<void> main() async {
   await _initialize();

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/utils/format_date_time.dart';
 import 'package:sos/shared/utils/format_time_ago.dart';
-import 'package:sos/shared/styles/global_styles.dart';
 
 class HeaderSection extends StatelessWidget {
   final Post post;
@@ -37,7 +36,7 @@ class HeaderSection extends StatelessWidget {
             ),
             const SizedBox(height: 4.0),
             Text(
-              '${post.si} ${post.gu} ${post.dong}', // Adjust this to match your actual data
+              post.roadAddress ?? '',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14,

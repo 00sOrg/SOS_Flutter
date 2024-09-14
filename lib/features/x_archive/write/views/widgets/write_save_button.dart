@@ -6,10 +6,10 @@ import 'package:sos/features/x_archive/write/viewmodels/write_viewmodel.dart';
 import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/services/location_service.dart';
 
-final tempLocationProvider = FutureProvider<Location>((ref) async {
-  final locationService = LocationService();
-  return await locationService.getCurrentLocation();
-});
+// final tempLocationProvider = FutureProvider<Location>((ref) async {
+//   final locationService = LocationService();
+//   return await locationService.getCurrentLocation();
+// });
 
 class WriteSaveButton extends ConsumerWidget {
   final WriteViewModel viewModel;
@@ -21,9 +21,8 @@ class WriteSaveButton extends ConsumerWidget {
     return InkWell(
       onTap: () async {
         try {
-          final locationData = await ref.refresh(tempLocationProvider.future);
-
-          await viewModel.createPost(locationData.roadAddress);
+          // final locationData = await ref.refresh(tempLocationProvider.future);
+          // await viewModel.createPost(locationData.roadAddress);
 
           ref.invalidate(boardViewModelProvider);
           context.go('/board');

@@ -9,8 +9,8 @@ import 'package:sos/features/home/views/widgets/home_search_bar.dart';
 import 'package:sos/features/home/views/widgets/map_area.dart';
 import 'package:sos/features/home/views/widgets/map_toggle_switch.dart';
 import 'package:sos/features/home/views/side_sheet/notification_side_sheet.dart';
-import 'package:sos/shared/providers/location_provider.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
+import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
