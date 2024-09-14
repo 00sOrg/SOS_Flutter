@@ -13,11 +13,14 @@ class CustomNavBar extends StatelessWidget {
   });
 
   void _onItemTap(BuildContext context, int idx) {
+    final route = AppRoutes.values[idx];
+
     if (idx == 0) {
       onHomePressed(); // 홈 버튼을 눌렀을 때 바텀시트를 열고 닫는 동작
+      GoRouter.of(context).go(route.path);
+    } else {
+      GoRouter.of(context).push(route.path);
     }
-    final route = AppRoutes.values[idx];
-    context.go(route.path);
   }
 
   @override
