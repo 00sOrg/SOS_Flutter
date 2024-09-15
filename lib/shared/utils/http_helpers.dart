@@ -22,8 +22,14 @@ bool handleResponse(http.Response response, String methodName) {
 }
 
 // GET 요청과 응답 처리용 헬퍼메소드
-Future<http.Response> makeGetRequest(Uri url, String methodName) async {
-  final response = await http.get(url);
+Future<http.Response> makeGetRequest(Uri url, String methodName,
+    {String? accessToken}) async {
+  final headers = {
+    'Content-Type': 'application/json',
+    if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+  };
+
+  final response = await http.get(url, headers: headers);
 
   if (!handleResponse(response, methodName)) {
     throw Exception('$methodName: Bad Response');

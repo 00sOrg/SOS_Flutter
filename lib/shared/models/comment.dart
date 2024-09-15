@@ -6,14 +6,13 @@ part 'comment.g.dart';
 @freezed
 class Comment with _$Comment {
   factory Comment({
-    // required int commentId,
-    required int postId,
-    required String content,
-    required int userId,
-    required String userNickname,
-    String? userProfilePictureURL,
-    required DateTime createdAt,
-    DateTime? updatedAt,
+    @JsonKey(name: 'id') required int commentId,
+    @JsonKey(name: 'content') required String content,
+    @JsonKey(name: 'memberId') required int userId,
+    @JsonKey(name: 'memberNickname') required String userNickname,
+    @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
+    @JsonKey(name: 'createdAt') required DateTime createdAt,
+    @JsonKey(name: 'updatedAt') DateTime? updatedAt,
   }) = _Comment;
 
   factory Comment.fromJson(Map<String, dynamic> json) =>
