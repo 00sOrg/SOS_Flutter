@@ -169,7 +169,7 @@ class SignupViewmodel extends StateNotifier<User> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          customSnackBar(text: '이미 등록된 회원입니다.'),
+          customSnackBar(text: '회원가입에 실패했습니다.'),
         );
       }
     } else {
@@ -197,5 +197,5 @@ class SignupViewmodel extends StateNotifier<User> {
 }
 
 final signupViewModelProvider = StateNotifierProvider<SignupViewmodel, User>(
-  (ref) => SignupViewmodel(AuthRepository()),
+  (ref) => SignupViewmodel(ref.read(authRepositoryProvider)),
 );
