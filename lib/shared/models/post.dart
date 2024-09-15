@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 // import 'package:sos/shared/models/user.dart'; // 여건 되면
 import 'comment.dart';
@@ -8,21 +10,21 @@ part 'post.g.dart';
 @freezed
 class Post with _$Post {
   factory Post({
+    @JsonKey(name: 'id') required int postId,
+    @JsonKey(name: 'title') required String title,
+    @JsonKey(name: 'memberNickname') String? userNickname,
+    @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
+    @JsonKey(name: 'content') String? content,
+    @JsonKey(name: 'media') String? mediaURL,
+    @JsonKey(name: 'address') String? roadAddress,
+    @Default(0) @JsonKey(name: 'likeCount') int likesCount,
+    @Default(0) @JsonKey(name: 'commentCount') int commentsCount,
+    @Default(false) @JsonKey(name: 'liked') bool isLiked,
     required DateTime createdAt,
-    required int postId,
-    required String title,
-    String? userNickname,
-    String? userProfilePictureURL,
-    String? content,
-    String? mediaURL,
-    String? roadAddress,
-    required double latitude,
-    required double longitude,
+    double? latitude,
+    double? longitude,
     String? disasterLevel,
     String? disasterType,
-    @Default(0) int likesCount,
-    @Default(0) int commentsCount,
-    @Default(false) bool isLiked,
     List<Comment>? comments,
   }) = _Post;
 

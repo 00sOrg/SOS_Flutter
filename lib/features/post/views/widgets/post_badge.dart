@@ -10,30 +10,37 @@ class PostBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Determine the svg asset based on the post's data
-    String? svgAsset;
+    // List to hold the badges that need to be displayed
+    List<String> badges = [];
 
     // Condition for Hot! badge
     if (post.likesCount > 100) {
-      svgAsset = 'assets/icons/post/HOT.svg';
+      badges.add('assets/icons/post/HOT.svg');
     }
     // Condition for 실시간!! badge
-    else if (_isRecentPost(post.createdAt)) {
-      svgAsset = 'assets/icons/post/LIVE.svg';
+    if (_isRecentPost(post.createdAt)) {
+      badges.add('assets/icons/post/LIVE.svg');
     }
 
-    // If neither condition is met, return an empty container
-    if (svgAsset == null) {
-      return const SizedBox
-          .shrink(); // Empty space, won't take up any space in the layout
+    // If no badges, return an empty container
+    if (badges.isEmpty) {
+      return const SizedBox.shrink();
     }
 
+    // Display all badges in a row
     return Align(
       alignment: Alignment.centerLeft,
-      child: SvgPicture.asset(
-        svgAsset,
-        height: 22.38.h, // Adjust the size as needed
-        width: 57.w,
+      child: Row(
+        children: badges
+            .map((badge) => Padding(
+                  padding: EdgeInsets.only(right: 8.w), // Space between badges
+                  child: SvgPicture.asset(
+                    badge,
+                    height: 22.38.h,
+                    width: 57.w,
+                  ),
+                ))
+            .toList(),
       ),
     );
   }

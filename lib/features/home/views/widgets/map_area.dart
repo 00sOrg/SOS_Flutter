@@ -40,7 +40,7 @@ class MapWidget extends ConsumerWidget {
     for (var post in posts) {
       final marker = CustomMarker(
         id: post.postId.toString(),
-        position: NLatLng(post.latitude, post.longitude),
+        position: NLatLng(post.latitude!, post.longitude!),
         caption: NOverlayCaption(text: post.title),
         onTap: () {
           _onMarkerTap(post, ref); // 마커 탭 시 호출할 메서드
@@ -58,7 +58,7 @@ class MapWidget extends ConsumerWidget {
     // 카메라를 마커의 좌표로 이동시키는 로직 추가
     _controller.updateCamera(
       NCameraUpdate.scrollAndZoomTo(
-        target: NLatLng(post.latitude, post.longitude),
+        target: NLatLng(post.latitude!, post.longitude!),
         zoom: 15,
       ),
     );
