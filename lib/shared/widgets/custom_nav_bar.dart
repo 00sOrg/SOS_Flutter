@@ -17,7 +17,7 @@ class CustomNavBar extends StatelessWidget {
       onHomePressed(); // 홈 버튼을 눌렀을 때 바텀시트를 열고 닫는 동작
     }
     final route = AppRoutes.values[idx];
-    context.go(route.path);
+    GoRouter.of(context).go(route.path);
   }
 
   @override

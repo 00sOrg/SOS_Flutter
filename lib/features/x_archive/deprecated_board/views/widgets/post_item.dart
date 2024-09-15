@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sos/shared/models/category.dart';
-import 'package:sos/shared/models/x_post.dart';
+import 'package:sos/shared/models/x_archive/category.dart';
+import 'package:sos/shared/models/x_archive/x_post.dart';
 
 class PostItem extends StatelessWidget {
   final XPost post;
