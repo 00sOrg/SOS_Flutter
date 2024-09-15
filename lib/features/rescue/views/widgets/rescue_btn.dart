@@ -1,5 +1,5 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class RescueBtn extends StatelessWidget {
   final String text;
@@ -15,23 +15,28 @@ class RescueBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double rad = 10;
-
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(rad),
       child: Container(
         width: double.infinity,
-        height: 110,
+        height: 117,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(rad),
+          borderRadius: BorderRadius.circular(10),
           color: color,
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(3, 3),
+              color: AppColors.black.withOpacity(0.25),
+              blurRadius: 4,
+            ),
+          ],
         ),
         alignment: Alignment.center,
         child: Text(
           text,
           style: const TextStyle(
-            fontSize: 22,
+            fontSize: 24,
+            height: 1.2,
             fontWeight: FontWeight.bold,
             color: Color(0xFFFFFFFF),
           ),

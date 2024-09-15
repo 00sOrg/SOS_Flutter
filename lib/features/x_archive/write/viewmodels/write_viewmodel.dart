@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sos/shared/models/x_post.dart';
-import 'package:sos/shared/repositories/post_repository.dart';
+import 'package:sos/shared/models/x_archive/x_post.dart';
+import 'package:sos/shared/repositories/x_post_repository.dart';
 
 class WriteViewModel extends StateNotifier<XPost> {
-  final PostRepository _repository;
+  final XPostRepository _repository;
 
   WriteViewModel(this._repository)
       : super(

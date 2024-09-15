@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/x_archive/deprecated_board/views/widgets/post_text_row.dart';
-import 'package:sos/shared/models/category.dart';
+import 'package:sos/shared/models/x_archive/category.dart';
 import 'package:sos/shared/utils/format_date_time.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 import '../viewmodels/post_viewmodel.dart';

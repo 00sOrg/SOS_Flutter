@@ -1,51 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sos/shared/models/friend.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class FriendHelpBtn extends StatelessWidget {
-  final int id;
-  final String name;
-  final String? profilePicture;
+  final Friend friend;
+  final VoidCallback onTap;
 
   const FriendHelpBtn({
     super.key,
-    required this.id,
-    required this.name,
-    this.profilePicture,
+    required this.friend,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: id == -1
-          ? () {
-              // 친구 추가 버튼 눌렸을 때 실행될 로직
-              debugPrint('친구 추가 버튼 클릭');
-            }
-          : null,
+      onTap: onTap,
       child: Container(
-        height: 145.h,
-        width: 157.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: id == -1 ? Colors.green.shade200 : Colors.amber.shade200,
+          color: AppColors.finalGray,
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(3, 3),
+              color: AppColors.black.withOpacity(0.20), // .25
+              blurRadius: 4,
+            ),
+          ],
         ),
+        padding: const EdgeInsets.fromLTRB(24, 10, 24, 13), // 24,9,24,13
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            id == -1
-                ? Icon(Icons.add, size: 50.w) // 친구 추가 버튼 UI
-                : (profilePicture != null
-                    ? Image.network(profilePicture!, height: 50.w) // 친구 프로필 이미지
-                    : SvgPicture.asset('assets/icons/default_profile_icon.svg',
-                        height: 50.w)), // 기본 아이콘
-            if (id != -1) // 친구가 있을 때만 텍스트 표시
-              SizedBox(height: 6.h),
-            if (id != -1) // 친구가 있을 때만 텍스트 표시
-              Text(
-                '$name 주변 도움 요청',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+            CircleAvatar(
+              backgroundColor: Colors.grey[300],
+              radius: 32.w,
+              child: (friend.profilePicture != null &&
+                      friend.profilePicture!.isNotEmpty)
+                  ? ClipOval(
+                      child: Image.network(
+                        friend.profilePicture!,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Image.asset(
+                      'assets/images/default_profile.png',
+                      width: 76,
+                    ),
+            ),
+            Text(
+              '''${friend.name}\n 주변 도움 요청''',
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                // fontSize: 14,
+                fontSize: 15,
+                height: 1.2,
               ),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
