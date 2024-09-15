@@ -12,7 +12,6 @@ class ImageSection extends StatelessWidget {
         ? Container(
             height: 234.0,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
                 image: NetworkImage(post.mediaURL!),
                 fit: BoxFit.contain,
