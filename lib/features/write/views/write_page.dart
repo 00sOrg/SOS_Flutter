@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +7,7 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
 import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
 import 'package:sos/features/write/views/widgets/write_submit_btn.dart';
+import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/viewmodels/location_viewmodel.dart';
@@ -31,8 +34,8 @@ class _WritePageState extends ConsumerState<WritePage> {
   @override
   void dispose() {
     _contentTEC.removeListener(_handleContentChange);
-    _contentTEC.dispose();
     _titleTEC.dispose();
+    _contentTEC.dispose();
     super.dispose();
   }
 
@@ -61,19 +64,24 @@ class _WritePageState extends ConsumerState<WritePage> {
               Expanded(child: _contentField()),
               if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
               const SizedBox(height: 16),
-              WriteSubmitBtn(onTap: () async {
-                location.whenData((loc) {
-                  viewModel.submitPost(
-                    context,
-                    _titleTEC.text,
-                    _contentTEC.text,
-                    // loc.roadAddress,
-                    loc.latitude,
-                    loc.longitude,
-                    null,
+              WriteSubmitBtn(
+                onTap: () async {
+                  location.whenData(
+                    (loc) {
+                      viewModel.submitPost(
+                        context: context,
+                        title: _titleTEC.text,
+                        content: _contentTEC.text,
+                        latitude: loc.latitude,
+                        longitude: loc.longitude,
+                        address: loc.roadAddress,
+                        type: PostType.other, // TODO: UI 구현 후 api 붙이기
+                        mediaFile: null, // TODO: 미디어 파일 전달
+                      );
+                    },
                   );
-                });
-              }),
+                },
+              ),
               const SizedBox(height: 20),
             ],
           ),
@@ -129,6 +137,7 @@ class _WritePageState extends ConsumerState<WritePage> {
 
   Widget _titleField() {
     return TextField(
+      controller: _titleTEC,
       keyboardType: TextInputType.text,
       autocorrect: false,
       maxLines: 1,

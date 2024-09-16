@@ -40,10 +40,16 @@ Future<http.Response> makeGetRequest(Uri url, String methodName,
 
 // POST 요청과 응답 처리용 헬퍼메소드
 Future<http.Response> makePostRequest(
-    Uri url, Map<String, dynamic> body, String methodName) async {
+    Uri url, Map<String, dynamic> body, String methodName,
+    {String? accessToken}) async {
+  final headers = {
+    'Content-Type': 'application/json',
+    if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+  };
+
   final response = await http.post(
     url,
-    headers: {'Content-Type': 'application/json'},
+    headers: headers,
     body: jsonEncode(body),
   );
 
@@ -55,11 +61,16 @@ Future<http.Response> makePostRequest(
 }
 
 // Multipart 헬퍼메소드
-Future<http.Response> makeMultipartRequest(Uri url, Map<String, String> fields,
-    String methodName, String? filePath) async {
+Future<http.Response> makeMultipartRequest(
+    Uri url, Map<String, String> fields, String methodName, String? filePath,
+    {String? accessToken}) async {
   try {
     var request = http.MultipartRequest('POST', url);
     request.fields.addAll(fields);
+
+    if (accessToken != null) {
+      request.headers['Authorization'] = 'Bearer $accessToken';
+    }
 
     if (filePath != null && filePath.isNotEmpty) {
       request.files.add(await http.MultipartFile.fromPath('media', filePath));
