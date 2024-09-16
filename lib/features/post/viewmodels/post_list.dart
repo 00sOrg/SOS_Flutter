@@ -22,14 +22,14 @@ final List<Post> dummyPosts = [
     commentsCount: 10,
     comments: [
       Comment(
-        postId: 1,
+        commentId: 1,
         userId: 1,
         userNickname: 'User1',
         content: '정말 무섭네요... 다들 조심하세요!',
         createdAt: DateTime.now().subtract(Duration(hours: 1)),
       ),
       Comment(
-        postId: 1,
+        commentId: 2,
         userId: 2,
         userNickname: 'User2',
         content: '안전 조심하세요!',
@@ -52,14 +52,14 @@ final List<Post> dummyPosts = [
     commentsCount: 20,
     comments: [
       Comment(
-        postId: 2,
+        commentId: 3,
         userId: 3,
         userNickname: 'User3',
         content: '이쪽으로 가는 길은 피해야겠네요.',
         createdAt: DateTime.now().subtract(Duration(hours: 3)),
       ),
       Comment(
-        postId: 2,
+        commentId: 4,
         userId: 4,
         userNickname: 'User4',
         content: '운전자들 안전에 유의하세요!',
@@ -81,14 +81,14 @@ final List<Post> dummyPosts = [
     commentsCount: 15,
     comments: [
       Comment(
-        postId: 3,
+        commentId: 5,
         userId: 5,
         userNickname: 'User5',
         content: '대피하신 분들 무사히 돌아오시길 바랍니다.',
         createdAt: DateTime.now().subtract(Duration(hours: 5)),
       ),
       Comment(
-        postId: 3,
+        commentId: 6,
         userId: 6,
         userNickname: 'User6',
         content: '상황이 심각하네요. 조심하세요.',
@@ -112,14 +112,14 @@ final List<Post> dummyPosts = [
     commentsCount: 30,
     comments: [
       Comment(
-        postId: 4,
+        commentId: 7,
         userNickname: 'User7',
         userId: 7,
         content: '너무 무서워요. 다들 무사하시길.',
         createdAt: DateTime.now().subtract(Duration(hours: 7)),
       ),
       Comment(
-        postId: 4,
+        commentId: 8,
         userId: 8,
         userNickname: 'User8',
         content: '대피소 위치를 알고 있어야겠어요.',
@@ -142,14 +142,14 @@ final List<Post> dummyPosts = [
     commentsCount: 50,
     comments: [
       Comment(
-        postId: 5,
+        commentId: 9,
         userId: 9,
         userNickname: 'User9',
         content: '너무 충격적입니다. 희생자들이 없길 바랍니다.',
         createdAt: DateTime.now().subtract(Duration(hours: 9)),
       ),
       Comment(
-        postId: 5,
+        commentId: 10,
         userId: 10,
         userNickname: 'User10',
         content: '이 지역에 있는 분들 안전하시길.',
@@ -172,14 +172,14 @@ final List<Post> dummyPosts = [
     commentsCount: 20,
     comments: [
       Comment(
-        postId: 6,
+        commentId: 11,
         userId: 11,
         userNickname: 'User11',
         content: '제주도에 있는 가족들이 걱정되네요.',
         createdAt: DateTime.now().subtract(Duration(hours: 11)),
       ),
       Comment(
-        postId: 6,
+        commentId: 12,
         userId: 12,
         userNickname: 'User12',
         content: '모두 안전하게 대피하세요.',
@@ -202,14 +202,14 @@ final List<Post> dummyPosts = [
     commentsCount: 25,
     comments: [
       Comment(
-        postId: 7,
+        commentId: 7,
         userId: 13,
         userNickname: 'User13',
         content: '이런 상황이 너무 안타깝네요. 구조 작업이 잘 되길.',
         createdAt: DateTime.now().subtract(Duration(hours: 13)),
       ),
       Comment(
-        postId: 7,
+        commentId: 13,
         userId: 14,
         userNickname: 'User14',
         content: '모두들 안전하게 대피하시길 바랍니다.',
@@ -235,14 +235,14 @@ final List<Post> dummyPosts = [
     commentsCount: 15,
     comments: [
       Comment(
-        postId: 8,
+        commentId: 14,
         userId: 11,
         userNickname: 'User11',
         content: '이런 상황이 너무 안타깝네요. 구조 작업이 잘 되길.',
         createdAt: DateTime.now().subtract(Duration(hours: 13)),
       ),
       Comment(
-        postId: 8,
+        commentId: 15,
         userId: 1,
         userNickname: 'User1',
         content: '모두들 안전하게 대피하시길 바랍니다.',

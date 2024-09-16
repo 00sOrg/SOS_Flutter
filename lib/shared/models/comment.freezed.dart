@@ -20,13 +20,19 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Comment {
-// required int commentId,
-  int get postId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'id')
+  int get commentId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'content')
   String get content => throw _privateConstructorUsedError;
+  @JsonKey(name: 'memberId')
   int get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'memberNickname')
   String get userNickname => throw _privateConstructorUsedError;
+  @JsonKey(name: 'memberProfile')
   String? get userProfilePictureURL => throw _privateConstructorUsedError;
+  @JsonKey(name: 'createdAt')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updatedAt')
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,13 +46,13 @@ abstract class $CommentCopyWith<$Res> {
       _$CommentCopyWithImpl<$Res, Comment>;
   @useResult
   $Res call(
-      {int postId,
-      String content,
-      int userId,
-      String userNickname,
-      String? userProfilePictureURL,
-      DateTime createdAt,
-      DateTime? updatedAt});
+      {@JsonKey(name: 'id') int commentId,
+      @JsonKey(name: 'content') String content,
+      @JsonKey(name: 'memberId') int userId,
+      @JsonKey(name: 'memberNickname') String userNickname,
+      @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
+      @JsonKey(name: 'createdAt') DateTime createdAt,
+      @JsonKey(name: 'updatedAt') DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -62,7 +68,7 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? postId = null,
+    Object? commentId = null,
     Object? content = null,
     Object? userId = null,
     Object? userNickname = null,
@@ -71,9 +77,9 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      postId: null == postId
-          ? _value.postId
-          : postId // ignore: cast_nullable_to_non_nullable
+      commentId: null == commentId
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
               as int,
       content: null == content
           ? _value.content
@@ -111,13 +117,13 @@ abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int postId,
-      String content,
-      int userId,
-      String userNickname,
-      String? userProfilePictureURL,
-      DateTime createdAt,
-      DateTime? updatedAt});
+      {@JsonKey(name: 'id') int commentId,
+      @JsonKey(name: 'content') String content,
+      @JsonKey(name: 'memberId') int userId,
+      @JsonKey(name: 'memberNickname') String userNickname,
+      @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
+      @JsonKey(name: 'createdAt') DateTime createdAt,
+      @JsonKey(name: 'updatedAt') DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -131,7 +137,7 @@ class __$$CommentImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? postId = null,
+    Object? commentId = null,
     Object? content = null,
     Object? userId = null,
     Object? userNickname = null,
@@ -140,9 +146,9 @@ class __$$CommentImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
   }) {
     return _then(_$CommentImpl(
-      postId: null == postId
-          ? _value.postId
-          : postId // ignore: cast_nullable_to_non_nullable
+      commentId: null == commentId
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
               as int,
       content: null == content
           ? _value.content
@@ -176,36 +182,42 @@ class __$$CommentImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CommentImpl implements _Comment {
   _$CommentImpl(
-      {required this.postId,
-      required this.content,
-      required this.userId,
-      required this.userNickname,
-      this.userProfilePictureURL,
-      required this.createdAt,
-      this.updatedAt});
+      {@JsonKey(name: 'id') required this.commentId,
+      @JsonKey(name: 'content') required this.content,
+      @JsonKey(name: 'memberId') required this.userId,
+      @JsonKey(name: 'memberNickname') required this.userNickname,
+      @JsonKey(name: 'memberProfile') this.userProfilePictureURL,
+      @JsonKey(name: 'createdAt') required this.createdAt,
+      @JsonKey(name: 'updatedAt') this.updatedAt});
 
   factory _$CommentImpl.fromJson(Map<String, dynamic> json) =>
       _$$CommentImplFromJson(json);
 
-// required int commentId,
   @override
-  final int postId;
+  @JsonKey(name: 'id')
+  final int commentId;
   @override
+  @JsonKey(name: 'content')
   final String content;
   @override
+  @JsonKey(name: 'memberId')
   final int userId;
   @override
+  @JsonKey(name: 'memberNickname')
   final String userNickname;
   @override
+  @JsonKey(name: 'memberProfile')
   final String? userProfilePictureURL;
   @override
+  @JsonKey(name: 'createdAt')
   final DateTime createdAt;
   @override
+  @JsonKey(name: 'updatedAt')
   final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'Comment(postId: $postId, content: $content, userId: $userId, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Comment(commentId: $commentId, content: $content, userId: $userId, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -213,7 +225,8 @@ class _$CommentImpl implements _Comment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CommentImpl &&
-            (identical(other.postId, postId) || other.postId == postId) &&
+            (identical(other.commentId, commentId) ||
+                other.commentId == commentId) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userNickname, userNickname) ||
@@ -228,7 +241,7 @@ class _$CommentImpl implements _Comment {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, postId, content, userId,
+  int get hashCode => Object.hash(runtimeType, commentId, content, userId,
       userNickname, userProfilePictureURL, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
@@ -247,29 +260,36 @@ class _$CommentImpl implements _Comment {
 
 abstract class _Comment implements Comment {
   factory _Comment(
-      {required final int postId,
-      required final String content,
-      required final int userId,
-      required final String userNickname,
-      final String? userProfilePictureURL,
-      required final DateTime createdAt,
-      final DateTime? updatedAt}) = _$CommentImpl;
+      {@JsonKey(name: 'id') required final int commentId,
+      @JsonKey(name: 'content') required final String content,
+      @JsonKey(name: 'memberId') required final int userId,
+      @JsonKey(name: 'memberNickname') required final String userNickname,
+      @JsonKey(name: 'memberProfile') final String? userProfilePictureURL,
+      @JsonKey(name: 'createdAt') required final DateTime createdAt,
+      @JsonKey(name: 'updatedAt') final DateTime? updatedAt}) = _$CommentImpl;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$CommentImpl.fromJson;
 
-  @override // required int commentId,
-  int get postId;
   @override
+  @JsonKey(name: 'id')
+  int get commentId;
+  @override
+  @JsonKey(name: 'content')
   String get content;
   @override
+  @JsonKey(name: 'memberId')
   int get userId;
   @override
+  @JsonKey(name: 'memberNickname')
   String get userNickname;
   @override
+  @JsonKey(name: 'memberProfile')
   String? get userProfilePictureURL;
   @override
+  @JsonKey(name: 'createdAt')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'updatedAt')
   DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
