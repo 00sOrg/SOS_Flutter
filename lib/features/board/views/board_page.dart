@@ -40,27 +40,35 @@ class _BoardPageState extends ConsumerState<BoardPage> {
                 onRefresh: () async {
                   await ref.read(boardViewModelProvider.notifier).refreshBoard();
                 },
-                child: boardItems.isEmpty
-                    ? const Center(
-                        child: Text('게시글이 없어요'),
-                      )
-                    : GridView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        controller: _scrollController,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 1,
-                          mainAxisSpacing: 1,
-                          childAspectRatio: 1,
-                        ),
-                        itemCount: boardItems.length,
-                        itemBuilder: (context, idx) {
-                          return BoardItem(post: boardItems[idx]);
-                        },
-                        physics: const PageScrollPhysics(),
-                      ),
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height,
+                    ),
+                    child: boardItems.isEmpty
+                        ? const Center(
+                            child: Text('게시글이 없어요'),
+                          )
+                        : GridView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            controller: _scrollController,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 1,
+                              mainAxisSpacing: 1,
+                              childAspectRatio: 1,
+                            ),
+                            itemCount: boardItems.length,
+                            itemBuilder: (context, idx) {
+                              return BoardItem(post: boardItems[idx]);
+                            },
+                            physics: const PageScrollPhysics(),
+                          ),
+                  ),
+                ),
               ),
             )
           ],
