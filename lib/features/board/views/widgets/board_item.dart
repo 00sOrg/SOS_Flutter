@@ -1,12 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sos/features/board/models/board_model.dart';
+import 'package:sos/shared/models/board.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class BoardItem extends StatelessWidget {
-  final BoardModel post;
+  final Board post;
 
   const BoardItem({super.key, required this.post});
 
@@ -27,9 +26,9 @@ class BoardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push('/post/${post.id}');
+        context.push('/post/${post.eventId}');
       },
-      child: (post.image == null)
+      child: (post.media == null || post.media == '')
           ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 12),
               color: _getRandomColor(),
@@ -50,7 +49,7 @@ class BoardItem extends StatelessWidget {
                   const SizedBox(height: 6),
                   Expanded(
                     child: Text(
-                      post.content,
+                      post.content ?? '',
                       style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.black,
@@ -65,7 +64,7 @@ class BoardItem extends StatelessWidget {
               ),
             )
           : Image.network(
-              post.image!,
+              post.media!,
               width: double.infinity,
               fit: BoxFit.cover,
             ),
