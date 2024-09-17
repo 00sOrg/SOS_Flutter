@@ -9,8 +9,8 @@ class PostRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
-  Future<Post?> getOnePostbyId(String id) async {
-    final url = Uri.parse('$baseUrl/events/$id');
+  Future<Post> getOnePostbyId(String postId) async {
+    final url = Uri.parse('$baseUrl/events/$postId');
 
     try {
       final accessToken = await secureStorage.read(key: 'access_token');
@@ -23,7 +23,39 @@ class PostRepository {
       return Post.fromJson(postData);
     } catch (e) {
       LogUtil.e('getOnePostbyId 에러: $e');
-      return null;
+      return Post(postId: 0, title: '', createdAt: DateTime.now());
+    }
+  }
+
+  Future<bool> addCommentToPost(int postId, String comment) async {
+    final url = Uri.parse('$baseUrl/events/comment');
+    final body = {'eventId': postId, 'content': comment};
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+      final response = await makePostRequest(url, body, 'addCommentToPost',
+          accessToken: accessToken);
+      return response.statusCode == 200;
+    } catch (e) {
+      LogUtil.e('Error adding comment: $e');
+      return false;
+    }
+  }
+
+  Future<bool> likePost(int postId) async {
+    final url = Uri.parse('$baseUrl/events/like/$postId');
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+      final response = await makePostRequest(url, null, 'likePost',
+          accessToken: accessToken); // No body required
+      final jsonResponse = jsonDecode(response.body);
+      final postData = jsonResponse['data'];
+
+      return postData['isLiked'] ?? false;
+    } catch (e) {
+      LogUtil.e('Error liking post: $e');
+      return false;
     }
   }
 }
