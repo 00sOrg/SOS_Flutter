@@ -14,11 +14,9 @@ final List<Post> dummyPosts = [
     latitude: 37.496467,
     longitude: 127.029327,
     roadAddress: '서울특별시 서초구 서초2동',
-    // si: '서울특별시',
-    // gu: '서초구',
-    // dong: '서초2동',
+    userNickname: 'User1',
     disasterLevel: 'High',
-    likesCount: 50,
+    likesCount: 150,
     commentsCount: 10,
     comments: [
       Comment(
@@ -79,22 +77,7 @@ final List<Post> dummyPosts = [
     disasterLevel: 'High',
     likesCount: 60,
     commentsCount: 15,
-    comments: [
-      Comment(
-        commentId: 5,
-        userId: 5,
-        userNickname: 'User5',
-        content: '대피하신 분들 무사히 돌아오시길 바랍니다.',
-        createdAt: DateTime.now().subtract(Duration(hours: 5)),
-      ),
-      Comment(
-        commentId: 6,
-        userId: 6,
-        userNickname: 'User6',
-        content: '상황이 심각하네요. 조심하세요.',
-        createdAt: DateTime.now().subtract(Duration(hours: 6)),
-      ),
-    ],
+    comments: [],
   ),
   Post(
     postId: 4,

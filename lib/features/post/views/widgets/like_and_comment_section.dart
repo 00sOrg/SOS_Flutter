@@ -14,16 +14,20 @@ class LikeAndCommentSection extends ConsumerWidget {
 
     return Row(
       children: [
-        IconButton(
-          icon: Icon(Icons.favorite, color: isLiked ? Colors.red : Colors.grey),
-          onPressed: () =>
+        GestureDetector(
+          onTap: () =>
               ref.read(postViewModelProvider.notifier).toggleLike(post.postId),
+          child: Row(
+            children: [
+              Icon(Icons.favorite, color: isLiked ? Colors.red : Colors.grey),
+              const SizedBox(width: 4.0),
+              Text('${post.likesCount}'), // Show the likes count
+            ],
+          ),
         ),
-        const SizedBox(width: 8.0),
-        Text('${post.likesCount}'), // Show the likes count
         const SizedBox(width: 16.0),
         const Icon(Icons.comment),
-        const SizedBox(width: 8.0),
+        const SizedBox(width: 4.0),
         Text('${post.commentsCount}'), // Show the comments count
       ],
     );

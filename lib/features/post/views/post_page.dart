@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
+import 'package:sos/features/post/views/widgets/comment_write_section.dart';
+import 'package:sos/features/post/views/widgets/user_profile_section.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 import 'widgets/header_section.dart';
 import 'widgets/image_section.dart';
@@ -21,36 +23,35 @@ class PostPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: CustomAppBar(title: post.title),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+      body: Stack(
         children: [
-          // "실시간!!" Badge
-          PostBadge(post: post),
+          // Content scrollable area
+          ListView(
+            padding: const EdgeInsets.fromLTRB(31.0, 18.0, 31.0, 80.0),
+            children: [
+              PostBadge(post: post),
+              const SizedBox(height: 2),
+              HeaderSection(post: post),
+              const SizedBox(height: 14),
+              UserProfileSection(post: post),
+              const SizedBox(height: 8),
+              ImageSection(post: post),
+              const SizedBox(height: 16),
+              ContentSection(post: post),
+              const SizedBox(height: 19),
+              LikeAndCommentSection(post: post),
+              CommentSection(comments: post.comments),
+            ],
+          ),
 
-          const SizedBox(height: 8),
-
-          // Profile Section (사용자 정보 및 날짜)
-          HeaderSection(post: post), // Post 객체 전달
-
-          const SizedBox(height: 16),
-
-          // Image Section (게시글에 포함된 이미지)
-          ImageSection(post: post), // Post 객체 전달
-
-          const SizedBox(height: 16),
-
-          // Content Section (게시글 내용)
-          ContentSection(post: post), // Post 객체 전달
-
-          const SizedBox(height: 16),
-
-          // Likes and Comments Section (좋아요 및 댓글 수)
-          LikeAndCommentSection(post: post), // Post 객체 전달
-
-          const SizedBox(height: 16),
-
-          // Comments List (댓글 리스트)
-          CommentSection(comments: post.comments),
+          // Fixed comment bar at the bottom
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child:
+                const CommentWriteSection(), // Use the CommentWriteSection here
+          ),
         ],
       ),
     );
