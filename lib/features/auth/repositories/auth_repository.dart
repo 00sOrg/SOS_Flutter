@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,15 +15,36 @@ class AuthRepository {
   AuthRepository(this.secureStorage);
 
   Future<String?> getAccessToken() async {
-    return await secureStorage.read(key: 'access_token');
+    try {
+      final token = await secureStorage.read(key: 'access_token');
+      if (token != null) {
+        debugPrint('AccessToken Retrieved: $token');
+      } else {
+        debugPrint('No AccessToken Found');
+      }
+      return token;
+    } catch (e) {
+      debugPrint('Error retrieving access token: $e');
+      return null;
+    }
   }
 
   Future<void> setAccessToken(String token) async {
-    await secureStorage.write(key: 'access_token', value: token);
+    try {
+      await secureStorage.write(key: 'access_token', value: token);
+      debugPrint('AccessToken Set: $token');
+    } catch (e) {
+      debugPrint('Error setting access token: $e');
+    }
   }
 
   Future<void> removeAccessToken() async {
-    await secureStorage.delete(key: 'access_token');
+    try {
+      await secureStorage.delete(key: 'access_token');
+      debugPrint('AccessToken Removed');
+    } catch (e) {
+      debugPrint('Error removing access token: $e');
+    }
   }
 
   Future<bool> loginUser(String email, String password) async {
