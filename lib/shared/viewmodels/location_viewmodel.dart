@@ -18,8 +18,8 @@ class LocationViewModel extends StateNotifier<AsyncValue<Location>> {
 
       final jsonData = await _locationService.fetchLocationData(lat, lon);
 
-      final adminAddress = _extractAdminAddress(jsonData);
-      final roadAddress = _extractRoadAddress(jsonData);
+      final adminAddress = _extractAdminAddress(jsonData); // "시, 구"
+      final roadAddress = _extractRoadAddress(jsonData); // "시, 구, 동"
 
       if (adminAddress.isEmpty || roadAddress.isEmpty) {
         throw RangeError("주소를 찾을 수 없습니다");
@@ -41,6 +41,25 @@ class LocationViewModel extends StateNotifier<AsyncValue<Location>> {
   Future<void> refreshLocation() async {
     state = const AsyncValue.loading();
     await _fetchLocation();
+  }
+
+  // "member 마지막 위치는 lat, lng 값만 주면 되지?" 에 해당하는 함수임요
+  Future<String> getRoadAddressFromCoords(double lat, double lon) async {
+    try {
+      final jsonData = await _locationService.fetchLocationData(lat, lon);
+
+      final roadAddress = _extractRoadAddress(jsonData);
+
+      if (roadAddress.isEmpty) {
+        throw RangeError(
+          "getRoadAddressFromCoords: 해당 좌표에 대한 도로명 주소를 찾을 수 없습니다",
+        );
+      }
+
+      return roadAddress;
+    } catch (error) {
+      throw Exception("getRoadAddressFromCoords 에러: $error");
+    }
   }
 
   // "시, 구, 동"

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
 import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
 import 'package:sos/features/write/views/widgets/write_submit_btn.dart';
+import 'package:sos/features/write/views/widgets/write_image_picker.dart';
+import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/viewmodels/location_viewmodel.dart';
@@ -20,7 +21,6 @@ class WritePage extends ConsumerStatefulWidget {
 class _WritePageState extends ConsumerState<WritePage> {
   final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _contentTEC = TextEditingController();
-  final dummyImg = 'https://picsum.photos/180/300'; // TODO: 실제 카메라 이미지로 교체
 
   @override
   void initState() {
@@ -31,8 +31,8 @@ class _WritePageState extends ConsumerState<WritePage> {
   @override
   void dispose() {
     _contentTEC.removeListener(_handleContentChange);
-    _contentTEC.dispose();
     _titleTEC.dispose();
+    _contentTEC.dispose();
     super.dispose();
   }
 
@@ -53,27 +53,29 @@ class _WritePageState extends ConsumerState<WritePage> {
           title: '사건/사고 게시물 작성',
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
           child: Column(
             children: [
               _topArea(location),
-              const SizedBox(height: 13),
+              const SizedBox(height: 14),
               Expanded(child: _contentField()),
               if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
               const SizedBox(height: 16),
-              WriteSubmitBtn(onTap: () async {
-                location.whenData((loc) {
-                  viewModel.submitPost(
-                    context,
-                    _titleTEC.text,
-                    _contentTEC.text,
-                    // loc.roadAddress,
-                    loc.latitude,
-                    loc.longitude,
-                    null,
+              WriteSubmitBtn(
+                onTap: () async {
+                  location.whenData(
+                    (loc) {
+                      viewModel.submitPost(
+                        context: context,
+                        title: _titleTEC.text,
+                        content: _contentTEC.text,
+                        location: loc,
+                        type: PostType.other, // TODO: UI 구현 후 api 붙이기
+                      );
+                    },
                   );
-                });
-              }),
+                },
+              ),
               const SizedBox(height: 20),
             ],
           ),
@@ -86,17 +88,8 @@ class _WritePageState extends ConsumerState<WritePage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(dummyImg),
-              fit: BoxFit.cover,
-            ),
-          ),
-          width: 87.w,
-          height: 87.w,
-        ),
-        const SizedBox(width: 14),
+        const WriteImagePicker(),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,6 +122,7 @@ class _WritePageState extends ConsumerState<WritePage> {
 
   Widget _titleField() {
     return TextField(
+      controller: _titleTEC,
       keyboardType: TextInputType.text,
       autocorrect: false,
       maxLines: 1,

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/x_archive/write/views/widgets/write_custom_text_field.dart';
 import 'package:sos/features/x_archive/write/views/widgets/write_dropdown_field.dart';
-import 'package:sos/features/x_archive/write/views/widgets/write_image_picker.dart';
+// import 'package:sos/features/x_archive/write/views/widgets/write_image_picker.dart';
 import 'package:sos/features/x_archive/write/views/widgets/write_labeled_input.dart';
 import 'package:sos/features/x_archive/write/views/widgets/write_refresh_field.dart';
 import 'package:sos/features/x_archive/write/views/widgets/write_save_button.dart';
@@ -32,7 +32,7 @@ class WritePage extends ConsumerWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const WriteImagePicker(),
+                // const WriteImagePicker(),
                 const SizedBox(height: 24),
                 WriteLabeledInput(
                   label: '제목',

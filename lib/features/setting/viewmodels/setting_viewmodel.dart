@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sos/features/auth/viewmodels/login_viewmodel.dart';
 import 'package:sos/features/setting/views/widgets/setting_modal.dart';
 
 class SettingState {
@@ -41,7 +42,7 @@ class SettingViewModel extends StateNotifier<SettingState> {
     GoRouter.of(context).push('/setting-favorite');
   }
 
-  void showLogoutModal(BuildContext context) {
+  void showLogoutModal(BuildContext context, WidgetRef ref) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext modalContext) {
@@ -52,11 +53,17 @@ class SettingViewModel extends StateNotifier<SettingState> {
           rightBtn: '로그아웃',
           onRightBtnPressed: () {
             Navigator.of(modalContext).pop();
-            logout(context);
+            logout(context, ref);
           },
         );
       },
     );
+  }
+
+  void logout(BuildContext context, WidgetRef ref) {
+    final loginViewmodel = ref.read(loginViewModelProvider.notifier);
+    loginViewmodel.handleLogout(context);
+    GoRouter.of(context).go('/login');
   }
 
   void showDeleteAccountModal(BuildContext context) {
@@ -75,12 +82,6 @@ class SettingViewModel extends StateNotifier<SettingState> {
         );
       },
     );
-  }
-
-  void logout(BuildContext context) {
-    // ref.read(authViewModelProvider).logout();
-    debugPrint('TODO:: LOGOUT ACTION');
-    GoRouter.of(context).go('/login');
   }
 
   void deleteAccount(BuildContext context) {

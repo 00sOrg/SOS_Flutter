@@ -40,7 +40,7 @@ class SettingPage extends ConsumerWidget {
                 onTap: () => settingViewModel.showDeleteAccountModal(context)),
             settingTile(
                 title: '로그아웃',
-                onTap: () => settingViewModel.showLogoutModal(context)),
+                onTap: () => settingViewModel.showLogoutModal(context, ref)),
           ],
         ),
       ),
