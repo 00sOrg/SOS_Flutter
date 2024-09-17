@@ -1,60 +1,69 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/post/repositories/post_repository.dart';
 import 'package:sos/shared/models/post.dart';
-import 'package:sos/features/post/viewmodels/post_list.dart';
 
-class PostViewModelNotifier extends StateNotifier<List<Post>> {
-  PostViewModelNotifier() : super(dummyPosts);
+class PostViewModelNotifier extends StateNotifier<Post?> {
+  final PostRepository _postRepository;
 
-  // Get a post by ID
-  Post getPostById(int postId) {
-    return state.firstWhere((post) => post.postId == postId);
+  PostViewModelNotifier(this._postRepository) : super(null);
+
+  // 게시글 불러오기
+  Future<Post?> getOnePostById(String id) async {
+    final post = await _postRepository.getOnePostbyId(id);
+    if (post != null) {
+      state = post; // Update the single post state
+    }
+    return post;
   }
 
-  // Toggle like for the given post
-  void toggleLike(int postId) {
-    state = [
-      for (final post in state)
-        if (post.postId == postId)
-          post.copyWith(
-            likesCount:
-                post.isLiked ? post.likesCount - 1 : post.likesCount + 1,
-            isLiked: !post.isLiked, // Toggle the like status
-          )
-        else
-          post,
-    ];
+  // 좋아요 기능
+  Future<void> toggleLike(int postId) async {
+    if (state == null) return;
+
+    // Optimistically update the state
+    state = state!.copyWith(
+      likesCount:
+          state!.isLiked ? state!.likesCount - 1 : state!.likesCount + 1,
+      isLiked: !state!.isLiked,
+    );
+
+    // Call the likePost function to notify the backend
+    final success = await _postRepository.likePost(postId);
+
+    // If the backend response does not match, revert the state
+    if (state!.isLiked != success) {
+      state = state!.copyWith(
+        likesCount: success ? state!.likesCount + 1 : state!.likesCount - 1,
+        isLiked: success,
+      );
+    }
   }
 
-  // Add a comment for the given post
-  void addComment(int postId) {
-    state = [
-      for (final post in state)
-        if (post.postId == postId)
-          post.copyWith(commentsCount: post.commentsCount + 1)
-        else
-          post,
-    ];
+  // 댓글 추가 기능
+  Future<void> addCommentToPost(int postId, String comment) async {
+    final success = await _postRepository.addCommentToPost(postId, comment);
+    if (success && state != null) {
+      state = state!.copyWith(commentsCount: state!.commentsCount + 1);
+    }
+  }
+
+  // 게시글 새로고침
+  Future<void> refreshPost(int postId) async {
+    await getOnePostById(postId.toString());
   }
 }
 
-// Define the postViewModelProvider
+// Provider for PostViewModelNotifier managing a single Post
 final postViewModelProvider =
-    StateNotifierProvider<PostViewModelNotifier, List<Post>>((ref) {
-  return PostViewModelNotifier();
+    StateNotifierProvider.family<PostViewModelNotifier, Post?, int>(
+        (ref, postId) {
+  final postRepository = PostRepository();
+  return PostViewModelNotifier(postRepository)
+    ..getOnePostById(postId.toString());
 });
 
-// Provider for accessing a post by ID
-final postByIdProvider = Provider.family<Post, int>((ref, postId) {
-  final posts = ref.watch(postViewModelProvider);
-  return posts.firstWhere(
-    (post) => post.postId == postId,
-    orElse: () => Post(
-      postId: 0,
-      createdAt: DateTime(0),
-      title: 'Unknown Post No.$postId',
-      latitude: 0.0,
-      longitude: 0.0,
-      comments: [],
-    ),
-  );
+// Provider for accessing a single post by ID using FutureProvider
+final postByIdProvider = FutureProvider.family<Post?, int>((ref, postId) async {
+  final postViewModel = ref.read(postViewModelProvider(postId).notifier);
+  return postViewModel.getOnePostById(postId.toString());
 });

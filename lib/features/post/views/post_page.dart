@@ -18,41 +18,51 @@ class PostPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 특정 ID로 Post를 불러오는 코드 (Provider에서 가져옴)
-    final post = ref.watch(postByIdProvider(postId));
+    final postAsync = ref.watch(postByIdProvider(postId));
+    final postViewModel = ref.watch(postViewModelProvider(postId).notifier);
 
     return Scaffold(
-      appBar: CustomAppBar(title: post.title),
-      body: Stack(
-        children: [
-          // Content scrollable area
-          ListView(
-            padding: const EdgeInsets.fromLTRB(31.0, 18.0, 31.0, 80.0),
+      appBar: CustomAppBar(title: '${postAsync.value?.title ?? ''}'),
+      body: postAsync.when(
+        data: (post) {
+          if (post == null) {
+            return const Center(child: Text('No post found'));
+          }
+          return Stack(
             children: [
-              PostBadge(post: post),
-              const SizedBox(height: 2),
-              HeaderSection(post: post),
-              const SizedBox(height: 14),
-              UserProfileSection(post: post),
-              const SizedBox(height: 8),
-              ImageSection(post: post),
-              const SizedBox(height: 16),
-              ContentSection(post: post),
-              const SizedBox(height: 19),
-              LikeAndCommentSection(post: post),
-              CommentSection(comments: post.comments),
+              RefreshIndicator.adaptive(
+                onRefresh: () async {
+                  await postViewModel.refreshPost(postId);
+                },
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(31.0, 18.0, 31.0, 80.0),
+                  children: [
+                    PostBadge(post: post),
+                    const SizedBox(height: 2),
+                    HeaderSection(post: post),
+                    const SizedBox(height: 14),
+                    UserProfileSection(post: post),
+                    const SizedBox(height: 8),
+                    ImageSection(post: post),
+                    const SizedBox(height: 16),
+                    ContentSection(post: post),
+                    const SizedBox(height: 19),
+                    LikeAndCommentSection(post: post),
+                    CommentSection(comments: post.comments),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: CommentWriteSection(postId: post.postId),
+              ),
             ],
-          ),
-
-          // Fixed comment bar at the bottom
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child:
-                const CommentWriteSection(), // Use the CommentWriteSection here
-          ),
-        ],
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error: $err')),
       ),
     );
   }

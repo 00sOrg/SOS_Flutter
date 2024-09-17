@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class LikeAndCommentSection extends ConsumerWidget {
   final Post post;
@@ -10,18 +11,22 @@ class LikeAndCommentSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLiked = post.isLiked; // Track if the post is liked or not
-
     return Row(
       children: [
         GestureDetector(
-          onTap: () =>
-              ref.read(postViewModelProvider.notifier).toggleLike(post.postId),
+          onTap: () async {
+            await ref
+                .read(postViewModelProvider(post.postId).notifier)
+                .toggleLike(post.postId);
+
+            ref.refresh(postByIdProvider(post.postId));
+          },
           child: Row(
             children: [
-              Icon(Icons.favorite, color: isLiked ? Colors.red : Colors.grey),
+              Icon(Icons.favorite,
+                  color: post.isLiked ? AppColors.red : AppColors.textGray),
               const SizedBox(width: 4.0),
-              Text('${post.likesCount}'), // Show the likes count
+              Text('${post.likesCount}'),
             ],
           ),
         ),

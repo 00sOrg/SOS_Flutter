@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
-class CommentWriteSection extends StatelessWidget {
-  const CommentWriteSection({super.key});
+class CommentWriteSection extends ConsumerStatefulWidget {
+  final int postId; // Accept postId as a parameter
+
+  const CommentWriteSection({super.key, required this.postId});
+
+  @override
+  _CommentWriteSectionState createState() => _CommentWriteSectionState();
+}
+
+class _CommentWriteSectionState extends ConsumerState<CommentWriteSection> {
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +24,7 @@ class CommentWriteSection extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
+              controller: _controller,
               decoration: InputDecoration(
                 hintText: 'Add a comment...',
                 border: OutlineInputBorder(
@@ -38,12 +50,23 @@ class CommentWriteSection extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: const Icon(Icons.send, color: Colors.white),
-              onPressed: () {
-                // Implement your send comment logic
-                debugPrint('Send comment');
-              },
-            ),
+                icon: const Icon(Icons.send, color: AppColors.white),
+                onPressed: () {
+                  final comment = _controller.text;
+                  if (comment.isNotEmpty) {
+                    ref
+                        .read(postViewModelProvider(widget.postId).notifier)
+                        .addCommentToPost(widget.postId, comment)
+                        .then((_) {
+                      // Clear the comment field
+                      _controller.clear();
+                      // Refresh the post to show the new comment
+                      ref.refresh(postByIdProvider(widget.postId));
+                    });
+                  } else {
+                    debugPrint('Comment is empty');
+                  }
+                }),
           ),
         ],
       ),
