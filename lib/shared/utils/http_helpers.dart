@@ -66,6 +66,8 @@ Future<http.Response> makeMultipartRequest(
     {String? accessToken}) async {
   try {
     var request = http.MultipartRequest('POST', url);
+
+    // request.headers['Content-Type'] = 'multipart/form-data';
     request.fields.addAll(fields);
 
     if (accessToken != null) {

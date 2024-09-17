@@ -5,7 +5,7 @@ import 'package:sos/features/board/views/widgets/board_item.dart';
 import 'package:sos/features/board/views/widgets/board_search_bar.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
-  BoardPage({super.key});
+  const BoardPage({super.key});
 
   @override
   ConsumerState<BoardPage> createState() => _BoardPageState();

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sos/features/write/repositories/write_repository.dart';
 import 'package:sos/shared/enums/type_enum.dart';
-import 'dart:io';
+import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/utils/log_util.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
@@ -20,28 +21,39 @@ class WriteViewModel extends StateNotifier<Post> {
             latitude: 0,
             longitude: 0,
             createdAt: DateTime.now(),
+            mediaURL: null,
           ),
         );
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      state = state.copyWith(mediaURL: image.path);
+    }
+  }
+
+  void clearImagePicker() {
+    state = state.copyWith(mediaURL: null);
+  }
 
   Future<void> submitPost({
     required BuildContext context,
     required String title,
     String? content,
-    required double latitude,
-    required double longitude,
-    required String address,
+    required Location location,
     required PostType type,
-    File? mediaFile,
   }) async {
     try {
       bool success = await writeRepository.submitPost(
         title: title,
         content: content ?? '',
-        latitude: latitude,
-        longitude: longitude,
-        address: address,
+        latitude: location.latitude,
+        longitude: location.longitude,
+        address: location.roadAddress,
         type: type,
-        mediaFile: mediaFile,
+        mediaFilePath: state.mediaURL,
       );
 
       if (success) {
@@ -60,6 +72,12 @@ class WriteViewModel extends StateNotifier<Post> {
         customSnackBar(text: '게시물 작성 중 문제가 발생했습니다'),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    clearImagePicker();
+    super.dispose();
   }
 }
 

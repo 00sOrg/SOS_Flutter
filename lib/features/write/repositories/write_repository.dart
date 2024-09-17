@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/auth/repositories/auth_repository.dart';
@@ -14,17 +13,17 @@ class WriteRepository {
 
   Future<bool> submitPost({
     required String title,
-    required String content,
+    String? content,
     required double latitude,
     required double longitude,
     required String address,
     required PostType type,
-    File? mediaFile,
+    String? mediaFilePath,
   }) async {
     final url = Uri.parse('$baseUrl/events');
     final fields = {
       'title': title,
-      'content': content,
+      'content': content ?? '',
       'latitude': latitude.toString(),
       'longitude': longitude.toString(),
       'address': address,
@@ -36,11 +35,12 @@ class WriteRepository {
       if (accessToken == null) {
         throw Exception('Unauthorized: Access token 없음');
       }
+
       await makeMultipartRequest(
         url,
         fields,
         'submitPost',
-        mediaFile?.path,
+        mediaFilePath,
         accessToken: accessToken,
       );
       return true;
