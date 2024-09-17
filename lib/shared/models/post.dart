@@ -23,8 +23,8 @@ class Post with _$Post {
     required DateTime createdAt,
     double? latitude,
     double? longitude,
-    String? disasterLevel,
-    String? disasterType,
+    @JsonKey(name: 'eventLevel') String? disasterLevel,
+    @JsonKey(name: 'eventType') String? disasterType,
     List<Comment>? comments,
   }) = _Post;
 
