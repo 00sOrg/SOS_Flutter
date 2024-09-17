@@ -71,7 +71,7 @@ class AuthRepository {
     }
   }
 
-  Future<bool> signupUser(User user, String profilePicturePath) async {
+  Future<bool> signupUser(User user, String? profilePicturePath) async {
     final fields = {
       'email': user.email,
       'password': user.password,

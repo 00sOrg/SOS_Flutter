@@ -44,6 +44,7 @@ class SignupViewmodel extends StateNotifier<User> {
   void updateProfilePicture(String? imagePath) {
     if (imagePath != null && imagePath.isNotEmpty) {
       localImagePath = imagePath;
+      state = state.copyWith(profilePicture: '');
     } else {
       state = state.copyWith(profilePicture: '');
       localImagePath = null;
@@ -144,7 +145,8 @@ class SignupViewmodel extends StateNotifier<User> {
 
   Future<void> submit(BuildContext context) async {
     if (areFieldsValid()) {
-      debugPrint('유저정보: ${state.nickname}, ${state.email}');
+      debugPrint(
+          '유저정보: ${state.nickname}, ${state.email}, ${state.profilePicture ?? 'no profile pic'}');
       final birthDate = DateTime(
         int.parse(yearTEC.text),
         int.parse(monthTEC.text),
@@ -161,7 +163,8 @@ class SignupViewmodel extends StateNotifier<User> {
       );
 
       final success =
-          await authRepository.signupUser(updatedUser, localImagePath ?? '');
+          // await authRepository.signupUser(updatedUser, localImagePath ?? '');
+          await authRepository.signupUser(updatedUser, localImagePath);
 
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
