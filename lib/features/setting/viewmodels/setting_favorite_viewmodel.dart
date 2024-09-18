@@ -2,42 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/features/setting/views/widgets/setting_modal.dart';
-import 'package:sos/shared/enums/status_enum.dart';
 import 'package:sos/shared/models/friend.dart';
+import 'package:sos/shared/providers/friend_repository_provider.dart';
+import 'package:sos/shared/repositories/friends_repository.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
-  SettingFavoriteViewModel() : super([]) {
+  final FriendsRepository friendsRepository;
+
+  SettingFavoriteViewModel(this.friendsRepository) : super([]) {
     _loadFavorites();
   }
 
   Future<void> _loadFavorites() async {
-    final List<Friend> dummyFriends = [
-      Friend(
-        id: 1,
-        name: '어마마마',
-        address: '서울시 강남구',
-        status: FriendStatus.friend,
-      ),
-      Friend(
-        id: 2,
-        name: '채리김',
-        nickName: '세상에서 제일 좋아하는 내사랑',
-        address: '경기도 수원시 영통구',
-        profilePicture: 'https://picsum.photos/201',
-        status: FriendStatus.friend,
-      ),
-      Friend(
-        id: 3,
-        name: '펜딩친구',
-        nickName: '펜딩친구임',
-        address: '경기도 수원시 영통구',
-        profilePicture: 'https://picsum.photos/202',
-        status: FriendStatus.pending,
-      ),
-    ];
-
-    state = dummyFriends;
+    try {
+      final friends = await friendsRepository.getFriendsList();
+      state = friends; // Update the state with the fetched friends
+    } catch (e) {
+      debugPrint('Error fetching friends: $e');
+    }
   }
 
   final Map<int, TextEditingController> _nicknameTECs = {};
@@ -48,8 +31,10 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
   TextEditingController getNicknameTEC(int friendId) {
     if (!_nicknameTECs.containsKey(friendId)) {
       _nicknameTECs[friendId] = TextEditingController(
-        text:
-            state.firstWhere((friend) => friend.id == friendId).nickName ?? '',
+        text: state
+                .firstWhere((friend) => friend.favoriteMemberId == friendId)
+                .modifiedNickname ??
+            '',
       );
       _nicknameTECs[friendId]!.addListener(() {
         state = [...state]; // trigger
@@ -91,20 +76,24 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
   }
 
   void deleteFavorite(int friendId) {
-    state = state.where((friend) => friend.id != friendId).toList();
+    // TODO: Implement deleteFavorite API call
+    state =
+        state.where((friend) => friend.favoriteMemberId != friendId).toList();
     _nicknameTECs.remove(friendId);
     _editModeStates.remove(friendId);
   }
 
   void saveFavorite(int friendId, String name) {
+    // TODO: Update favorites API call
     final nickname = _nicknameTECs[friendId]?.text.trim();
     final updatedFriend = state
-        .firstWhere((friend) => friend.id == friendId)
+        .firstWhere((friend) => friend.favoriteMemberId == friendId)
         .copyWith(
-            nickName: (nickname == null || nickname.isEmpty) ? name : nickname);
+            modifiedNickname:
+                (nickname == null || nickname.isEmpty) ? name : nickname);
     state = [
       for (final friend in state)
-        if (friend.id == friendId) updatedFriend else friend,
+        if (friend.favoriteMemberId == friendId) updatedFriend else friend,
     ];
     toggleEditMode(friendId, false);
   }
@@ -135,11 +124,11 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
   }
 
   Friend dummySearchResultFriend = Friend(
-    id: 30,
-    name: '이름임',
-    nickName: '닉네임임',
-    address: '주소 주소임',
-    status: FriendStatus.stranger,
+    favoriteMemberId: 30,
+    nickname: '이름임',
+    modifiedNickname: '닉네임임',
+    lastLocation: '주소 주소임',
+    isAccepted: false,
   );
 
   @override
@@ -153,5 +142,8 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
 
 final settingFavoriteViewModelProvider =
     StateNotifierProvider<SettingFavoriteViewModel, List<Friend>>(
-  (ref) => SettingFavoriteViewModel(),
+  (ref) {
+    final friendsRepository = ref.read(friendsRepositoryProvider);
+    return SettingFavoriteViewModel(friendsRepository);
+  },
 );

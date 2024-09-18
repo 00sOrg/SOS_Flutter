@@ -39,14 +39,16 @@ class RescuePage extends ConsumerWidget {
                     return FriendHelpBtn(
                       friend: friend,
                       onTap: () => viewModel.handleFriendHelp(
-                          id: friend.id, name: friend.name),
+                          id: friend.favoriteMemberId,
+                          name: friend.modifiedNickname),
+                      // 여기서 친구의 이름을 수정된 닉네임으로 전달
                     );
                   } else if (index == friends.length && friends.length < 4) {
                     return FriendAddBtn(
                       onTap: () => viewModel.handleFriendAdd(context),
                     );
                   } else {
-                    return const SizedBox(); 
+                    return const SizedBox();
                   }
                 },
               ),

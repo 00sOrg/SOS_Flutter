@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/views/side_sheet/favorite_alert_modal.dart';
+import 'package:sos/shared/providers/friend_repository_provider.dart';
+import 'package:sos/shared/repositories/friends_repository.dart';
 
 enum AlarmType { friendRequest, nearbyEvent, userActivity }
 
@@ -19,7 +21,9 @@ class Alarm {
 }
 
 class AlarmViewModel extends StateNotifier<List<Alarm>> {
-  AlarmViewModel() : super([]) {
+  final FriendsRepository friendsRepository;
+
+  AlarmViewModel(this.friendsRepository) : super([]) {
     _loadInitialAlarms();
   }
 
@@ -60,16 +64,17 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
       context: context,
       builder: (context) {
         return SettingModal(
-          title: '친구 요청',
-          content: '사용자를 관심 사용자로 추가하시겠습니까?',
+          title: '관심 사용자 요청',
+          content: '{사용자 닉네임}의 관심 사용자 추가를 수락하시겠습니까?',
           leftBtn: '거절',
           rightBtn: '수락',
-          onLeftBtnPressed: () {
-            // 거절 로직 구현
+          onLeftBtnPressed: () async {
+            // await friendsRepository.rejectFriendRequest(/*requesterId*/);
             Navigator.of(context).pop();
             markAsRead(index); // 알림을 읽음으로 처리하고 목록에서 제거
           },
-          onRightBtnPressed: () {
+          onRightBtnPressed: () async {
+            // await friendsRepository.acceptFriendRequest(/*requesterId*/);
             Navigator.of(context).pop();
             // 수락 로직 구현
             markAsRead(index); // 알림을 읽음으로 처리하고 목록에서 제거
@@ -82,5 +87,6 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
 
 final alarmViewModelProvider =
     StateNotifierProvider<AlarmViewModel, List<Alarm>>((ref) {
-  return AlarmViewModel();
+  final friendsRepository = ref.read(friendsRepositoryProvider);
+  return AlarmViewModel(friendsRepository);
 });
