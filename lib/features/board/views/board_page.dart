@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_item.dart';
 import 'package:sos/features/board/views/widgets/board_search_bar.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
@@ -33,12 +34,37 @@ class _BoardPageState extends ConsumerState<BoardPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const BoardSearchBar(),
+            Row(
+              children: [
+                const SizedBox(width: 20),
+                const Expanded(
+                  child: BoardSearchBar(),
+                ),
+                const SizedBox(width: 15),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: const BoxDecoration(
+                      color: AppColors.lightBlue,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.alarm),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+              ],
+            ),
             Expanded(
               child: RefreshIndicator.adaptive(
                 displacement: 20,
                 onRefresh: () async {
-                  await ref.read(boardViewModelProvider.notifier).refreshBoard();
+                  await ref
+                      .read(boardViewModelProvider.notifier)
+                      .refreshBoard();
                 },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
