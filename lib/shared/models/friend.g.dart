@@ -7,27 +7,20 @@ part of 'friend.dart';
 // **************************************************************************
 
 _$FriendImpl _$$FriendImplFromJson(Map<String, dynamic> json) => _$FriendImpl(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      address: json['address'] as String?,
-      status: $enumDecodeNullable(_$FriendStatusEnumMap, json['status']) ??
-          FriendStatus.stranger,
+      favoriteMemberId: (json['favoriteMemberId'] as num).toInt(),
+      isAccepted: json['isAccepted'] as bool,
+      lastLocation: json['lastLocation'] as String?,
+      modifiedNickname: json['modifiedNickname'] as String,
+      nickname: json['nickname'] as String,
       profilePicture: json['profilePicture'] as String?,
-      nickName: json['nickName'] as String?,
     );
 
 Map<String, dynamic> _$$FriendImplToJson(_$FriendImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'address': instance.address,
-      'status': _$FriendStatusEnumMap[instance.status]!,
+      'favoriteMemberId': instance.favoriteMemberId,
+      'isAccepted': instance.isAccepted,
+      'lastLocation': instance.lastLocation,
+      'modifiedNickname': instance.modifiedNickname,
+      'nickname': instance.nickname,
       'profilePicture': instance.profilePicture,
-      'nickName': instance.nickName,
     };
-
-const _$FriendStatusEnumMap = {
-  FriendStatus.pending: 'pending',
-  FriendStatus.friend: 'friend',
-  FriendStatus.stranger: 'stranger',
-};

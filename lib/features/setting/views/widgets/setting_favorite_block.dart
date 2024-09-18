@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
 import 'package:sos/features/setting/views/widgets/setting_favorite_add_button.dart';
-import 'package:sos/shared/enums/status_enum.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/small_text_button.dart';
@@ -58,7 +57,9 @@ class SettingFavoriteBlock extends StatelessWidget {
                       ),
               ),
               const SizedBox(width: 24),
-              viewModel.isEditMode(friend.id) ? _inEditMode() : _inStaticMode(),
+              viewModel.isEditMode(friend.favoriteMemberId)
+                  ? _inEditMode()
+                  : _inStaticMode(),
               const SizedBox(width: 6),
             ],
           ),
@@ -69,8 +70,8 @@ class SettingFavoriteBlock extends StatelessWidget {
           child: InkWell(
             onTap: () => viewModel.showDeleteModal(
               context: context,
-              id: friend.id,
-              name: friend.name,
+              id: friend.favoriteMemberId,
+              name: friend.modifiedNickname,
             ),
             child: const Icon(
               Icons.close,
@@ -89,7 +90,7 @@ class SettingFavoriteBlock extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            friend.nickName ?? friend.name,
+            friend.modifiedNickname ?? friend.nickname,
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
@@ -100,7 +101,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           ),
           const SizedBox(height: 4, width: double.maxFinite),
           Text(
-            friend.address!,
+            friend.lastLocation!,
             style: const TextStyle(
               fontSize: 14,
               color: AppColors.textGray,
@@ -113,7 +114,7 @@ class SettingFavoriteBlock extends StatelessWidget {
           const Spacer(),
           SmallTextButton(
             text: '수정',
-            onTap: () => viewModel.editFavorite(friend.id),
+            onTap: () => viewModel.editFavorite(friend.favoriteMemberId),
             buttonColor: const Color(0xFFFFFFFF),
             textColor: AppColors.blue,
           ),
@@ -138,13 +139,14 @@ class SettingFavoriteBlock extends StatelessWidget {
                   TextField(
                     autofocus: true,
                     textAlign: TextAlign.end,
-                    controller: viewModel.getNicknameTEC(friend.id),
+                    controller:
+                        viewModel.getNicknameTEC(friend.favoriteMemberId),
                     autocorrect: false,
                     maxLength: 16,
                     maxLines: 2,
                     decoration: InputDecoration(
                       isDense: true,
-                      hintText: friend.name,
+                      hintText: friend.nickname,
                       hintStyle: const TextStyle(
                         color: AppColors.textGray,
                         fontSize: 18,
@@ -171,7 +173,7 @@ class SettingFavoriteBlock extends StatelessWidget {
                     right: 10,
                     bottom: 6,
                     child: Text(
-                      '${viewModel.getNicknameTEC(friend.id).text.length}/16',
+                      '${viewModel.getNicknameTEC(friend.favoriteMemberId).text.length}/16',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -189,14 +191,16 @@ class SettingFavoriteBlock extends StatelessWidget {
             children: [
               SmallTextButton(
                 text: '취소',
-                onTap: () => viewModel.cancelEditFavorite(friend.id),
+                onTap: () =>
+                    viewModel.cancelEditFavorite(friend.favoriteMemberId),
                 buttonColor: const Color(0xFFFFFFFF),
                 textColor: AppColors.black,
               ),
               const SizedBox(width: 16),
               SmallTextButton(
                 text: '완료',
-                onTap: () => viewModel.saveFavorite(friend.id, friend.name),
+                onTap: () => viewModel.saveFavorite(
+                    friend.favoriteMemberId, friend.modifiedNickname),
               ),
             ],
           ),
@@ -220,7 +224,7 @@ class SettingNotFavoriteBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // !isPending 은 검색 결과인 경우임
-    bool isPending = friend.status == FriendStatus.pending;
+    bool isPending = friend.isAccepted == false;
 
     return Stack(
       children: [
@@ -265,7 +269,7 @@ class SettingNotFavoriteBlock extends StatelessWidget {
               ),
               const SizedBox(width: 24),
               Text(
-                friend.name,
+                friend.modifiedNickname,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,

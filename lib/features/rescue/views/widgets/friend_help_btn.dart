@@ -50,7 +50,7 @@ class FriendHelpBtn extends StatelessWidget {
                     ),
             ),
             Text(
-              '''${friend.name}\n 주변 도움 요청''',
+              '''${friend.modifiedNickname}\n 주변 도움 요청''',
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 // fontSize: 14,

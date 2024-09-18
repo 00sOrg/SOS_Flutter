@@ -43,7 +43,9 @@ mixin _$Post {
   DateTime get createdAt => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'eventLevel')
   String? get disasterLevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'eventType')
   String? get disasterType => throw _privateConstructorUsedError;
   List<Comment>? get comments => throw _privateConstructorUsedError;
 
@@ -71,8 +73,8 @@ abstract class $PostCopyWith<$Res> {
       DateTime createdAt,
       double? latitude,
       double? longitude,
-      String? disasterLevel,
-      String? disasterType,
+      @JsonKey(name: 'eventLevel') String? disasterLevel,
+      @JsonKey(name: 'eventType') String? disasterType,
       List<Comment>? comments});
 }
 
@@ -196,8 +198,8 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       DateTime createdAt,
       double? latitude,
       double? longitude,
-      String? disasterLevel,
-      String? disasterType,
+      @JsonKey(name: 'eventLevel') String? disasterLevel,
+      @JsonKey(name: 'eventType') String? disasterType,
       List<Comment>? comments});
 }
 
@@ -314,8 +316,8 @@ class _$PostImpl implements _Post {
       required this.createdAt,
       this.latitude,
       this.longitude,
-      this.disasterLevel,
-      this.disasterType,
+      @JsonKey(name: 'eventLevel') this.disasterLevel,
+      @JsonKey(name: 'eventType') this.disasterType,
       final List<Comment>? comments})
       : _comments = comments;
 
@@ -359,8 +361,10 @@ class _$PostImpl implements _Post {
   @override
   final double? longitude;
   @override
+  @JsonKey(name: 'eventLevel')
   final String? disasterLevel;
   @override
+  @JsonKey(name: 'eventType')
   final String? disasterType;
   final List<Comment>? _comments;
   @override
@@ -461,8 +465,8 @@ abstract class _Post implements Post {
       required final DateTime createdAt,
       final double? latitude,
       final double? longitude,
-      final String? disasterLevel,
-      final String? disasterType,
+      @JsonKey(name: 'eventLevel') final String? disasterLevel,
+      @JsonKey(name: 'eventType') final String? disasterType,
       final List<Comment>? comments}) = _$PostImpl;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
@@ -504,8 +508,10 @@ abstract class _Post implements Post {
   @override
   double? get longitude;
   @override
+  @JsonKey(name: 'eventLevel')
   String? get disasterLevel;
   @override
+  @JsonKey(name: 'eventType')
   String? get disasterType;
   @override
   List<Comment>? get comments;
