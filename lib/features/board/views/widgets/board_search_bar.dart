@@ -8,7 +8,7 @@ class BoardSearchBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric( vertical: 14),
       decoration: const BoxDecoration(
         color: AppColors.white,
         border: Border(
@@ -24,9 +24,9 @@ class BoardSearchBar extends ConsumerWidget {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
-            border: AppBorders.thickBlueBorder,
-            focusedBorder: AppBorders.thickBlueBorder,
-            enabledBorder: AppBorders.thickBlueBorder,
+            border: AppBorders.thickLightBlueBorder,
+            focusedBorder: AppBorders.thickLightBlueBorder,
+            enabledBorder: AppBorders.thickLightBlueBorder,
             filled: true,
             fillColor: const Color(0xFFFFFFFF).withOpacity(0.7),
             suffixIcon: const Icon(Icons.search, size: 26),

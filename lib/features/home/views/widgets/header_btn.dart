@@ -18,7 +18,7 @@ class HeaderBtn extends StatelessWidget {
       child: Container(
         width: 42,
         height: 42,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.lightBlue,
           shape: BoxShape.circle,
         ),
