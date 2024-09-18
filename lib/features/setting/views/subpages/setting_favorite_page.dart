@@ -32,7 +32,7 @@ class SettingFavoritePage extends ConsumerWidget {
                 ] else ...[
                   ...friends.map(
                     (friend) {
-                      if (friend.status == FriendStatus.friend) {
+                      if (friend.isAccepted == true) {
                         return SettingFavoriteBlock(
                           friend: friend,
                           viewModel: viewModel,

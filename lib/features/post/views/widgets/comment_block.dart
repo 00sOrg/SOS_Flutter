@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sos/shared/models/comment.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/format_date_time.dart';

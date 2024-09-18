@@ -14,9 +14,7 @@ class SettingFavoriteSearchResultPage extends ConsumerWidget {
     final viewModel = ref.watch(settingFavoriteViewModelProvider.notifier);
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: "즐겨찾는 지인 관리"
-      ),
+      appBar: const CustomAppBar(title: "즐겨찾는 지인 관리"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 33),
         child: Column(
@@ -27,8 +25,8 @@ class SettingFavoriteSearchResultPage extends ConsumerWidget {
             ),
             const SizedBox(height: 59),
             GestureDetector(
-              onTap: () => viewModel
-                  .requestFavorite(context, viewModel.dummySearchResultFriend.id),
+              onTap: () => viewModel.requestFavorite(
+                  context, viewModel.dummySearchResultFriend.favoriteMemberId),
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.blue,

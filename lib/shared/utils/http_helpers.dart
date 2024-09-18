@@ -40,7 +40,7 @@ Future<http.Response> makeGetRequest(Uri url, String methodName,
 
 // POST 요청과 응답 처리용 헬퍼메소드
 Future<http.Response> makePostRequest(
-    Uri url, Map<String, dynamic> body, String methodName,
+    Uri url, Map<String, dynamic>? body, String methodName,
     {String? accessToken}) async {
   final headers = {
     'Content-Type': 'application/json',
@@ -50,7 +50,9 @@ Future<http.Response> makePostRequest(
   final response = await http.post(
     url,
     headers: headers,
-    body: jsonEncode(body),
+    body: body != null
+        ? jsonEncode(body)
+        : null, // Only encode if body is not null
   );
 
   if (!handleResponse(response, methodName)) {

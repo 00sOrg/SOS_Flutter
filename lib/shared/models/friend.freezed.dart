@@ -20,12 +20,12 @@ Friend _$FriendFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Friend {
-  int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String? get address => throw _privateConstructorUsedError;
-  FriendStatus get status => throw _privateConstructorUsedError;
+  int get favoriteMemberId => throw _privateConstructorUsedError;
+  bool get isAccepted => throw _privateConstructorUsedError;
+  String? get lastLocation => throw _privateConstructorUsedError;
+  String get modifiedNickname => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
   String? get profilePicture => throw _privateConstructorUsedError;
-  String? get nickName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,12 +38,12 @@ abstract class $FriendCopyWith<$Res> {
       _$FriendCopyWithImpl<$Res, Friend>;
   @useResult
   $Res call(
-      {int id,
-      String name,
-      String? address,
-      FriendStatus status,
-      String? profilePicture,
-      String? nickName});
+      {int favoriteMemberId,
+      bool isAccepted,
+      String? lastLocation,
+      String modifiedNickname,
+      String nickname,
+      String? profilePicture});
 }
 
 /// @nodoc
@@ -59,37 +59,37 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? address = freezed,
-    Object? status = null,
+    Object? favoriteMemberId = null,
+    Object? isAccepted = null,
+    Object? lastLocation = freezed,
+    Object? modifiedNickname = null,
+    Object? nickname = null,
     Object? profilePicture = freezed,
-    Object? nickName = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      favoriteMemberId: null == favoriteMemberId
+          ? _value.favoriteMemberId
+          : favoriteMemberId // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      isAccepted: null == isAccepted
+          ? _value.isAccepted
+          : isAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastLocation: freezed == lastLocation
+          ? _value.lastLocation
+          : lastLocation // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as FriendStatus,
+      modifiedNickname: null == modifiedNickname
+          ? _value.modifiedNickname
+          : modifiedNickname // ignore: cast_nullable_to_non_nullable
+              as String,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
       profilePicture: freezed == profilePicture
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nickName: freezed == nickName
-          ? _value.nickName
-          : nickName // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -103,12 +103,12 @@ abstract class _$$FriendImplCopyWith<$Res> implements $FriendCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String name,
-      String? address,
-      FriendStatus status,
-      String? profilePicture,
-      String? nickName});
+      {int favoriteMemberId,
+      bool isAccepted,
+      String? lastLocation,
+      String modifiedNickname,
+      String nickname,
+      String? profilePicture});
 }
 
 /// @nodoc
@@ -122,37 +122,37 @@ class __$$FriendImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? address = freezed,
-    Object? status = null,
+    Object? favoriteMemberId = null,
+    Object? isAccepted = null,
+    Object? lastLocation = freezed,
+    Object? modifiedNickname = null,
+    Object? nickname = null,
     Object? profilePicture = freezed,
-    Object? nickName = freezed,
   }) {
     return _then(_$FriendImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      favoriteMemberId: null == favoriteMemberId
+          ? _value.favoriteMemberId
+          : favoriteMemberId // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      isAccepted: null == isAccepted
+          ? _value.isAccepted
+          : isAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastLocation: freezed == lastLocation
+          ? _value.lastLocation
+          : lastLocation // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as FriendStatus,
+      modifiedNickname: null == modifiedNickname
+          ? _value.modifiedNickname
+          : modifiedNickname // ignore: cast_nullable_to_non_nullable
+              as String,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
       profilePicture: freezed == profilePicture
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nickName: freezed == nickName
-          ? _value.nickName
-          : nickName // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -162,33 +162,32 @@ class __$$FriendImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FriendImpl implements _Friend {
   _$FriendImpl(
-      {required this.id,
-      required this.name,
-      this.address,
-      this.status = FriendStatus.stranger,
-      this.profilePicture,
-      this.nickName});
+      {required this.favoriteMemberId,
+      required this.isAccepted,
+      this.lastLocation,
+      required this.modifiedNickname,
+      required this.nickname,
+      this.profilePicture});
 
   factory _$FriendImpl.fromJson(Map<String, dynamic> json) =>
       _$$FriendImplFromJson(json);
 
   @override
-  final int id;
+  final int favoriteMemberId;
   @override
-  final String name;
+  final bool isAccepted;
   @override
-  final String? address;
+  final String? lastLocation;
   @override
-  @JsonKey()
-  final FriendStatus status;
+  final String modifiedNickname;
+  @override
+  final String nickname;
   @override
   final String? profilePicture;
-  @override
-  final String? nickName;
 
   @override
   String toString() {
-    return 'Friend(id: $id, name: $name, address: $address, status: $status, profilePicture: $profilePicture, nickName: $nickName)';
+    return 'Friend(favoriteMemberId: $favoriteMemberId, isAccepted: $isAccepted, lastLocation: $lastLocation, modifiedNickname: $modifiedNickname, nickname: $nickname, profilePicture: $profilePicture)';
   }
 
   @override
@@ -196,20 +195,24 @@ class _$FriendImpl implements _Friend {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FriendImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.address, address) || other.address == address) &&
-            (identical(other.status, status) || other.status == status) &&
+            (identical(other.favoriteMemberId, favoriteMemberId) ||
+                other.favoriteMemberId == favoriteMemberId) &&
+            (identical(other.isAccepted, isAccepted) ||
+                other.isAccepted == isAccepted) &&
+            (identical(other.lastLocation, lastLocation) ||
+                other.lastLocation == lastLocation) &&
+            (identical(other.modifiedNickname, modifiedNickname) ||
+                other.modifiedNickname == modifiedNickname) &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname) &&
             (identical(other.profilePicture, profilePicture) ||
-                other.profilePicture == profilePicture) &&
-            (identical(other.nickName, nickName) ||
-                other.nickName == nickName));
+                other.profilePicture == profilePicture));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, address, status, profilePicture, nickName);
+  int get hashCode => Object.hash(runtimeType, favoriteMemberId, isAccepted,
+      lastLocation, modifiedNickname, nickname, profilePicture);
 
   @JsonKey(ignore: true)
   @override
@@ -227,27 +230,27 @@ class _$FriendImpl implements _Friend {
 
 abstract class _Friend implements Friend {
   factory _Friend(
-      {required final int id,
-      required final String name,
-      final String? address,
-      final FriendStatus status,
-      final String? profilePicture,
-      final String? nickName}) = _$FriendImpl;
+      {required final int favoriteMemberId,
+      required final bool isAccepted,
+      final String? lastLocation,
+      required final String modifiedNickname,
+      required final String nickname,
+      final String? profilePicture}) = _$FriendImpl;
 
   factory _Friend.fromJson(Map<String, dynamic> json) = _$FriendImpl.fromJson;
 
   @override
-  int get id;
+  int get favoriteMemberId;
   @override
-  String get name;
+  bool get isAccepted;
   @override
-  String? get address;
+  String? get lastLocation;
   @override
-  FriendStatus get status;
+  String get modifiedNickname;
+  @override
+  String get nickname;
   @override
   String? get profilePicture;
-  @override
-  String? get nickName;
   @override
   @JsonKey(ignore: true)
   _$$FriendImplCopyWith<_$FriendImpl> get copyWith =>

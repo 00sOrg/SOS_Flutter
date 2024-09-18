@@ -20,8 +20,8 @@ _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       createdAt: DateTime.parse(json['createdAt'] as String),
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      disasterLevel: json['disasterLevel'] as String?,
-      disasterType: json['disasterType'] as String?,
+      disasterLevel: json['eventLevel'] as String?,
+      disasterType: json['eventType'] as String?,
       comments: (json['comments'] as List<dynamic>?)
           ?.map((e) => Comment.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -42,7 +42,7 @@ Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
       'createdAt': instance.createdAt.toIso8601String(),
       'latitude': instance.latitude,
       'longitude': instance.longitude,
-      'disasterLevel': instance.disasterLevel,
-      'disasterType': instance.disasterType,
+      'eventLevel': instance.disasterLevel,
+      'eventType': instance.disasterType,
       'comments': instance.comments,
     };
