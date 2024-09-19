@@ -45,7 +45,10 @@ class ProfileImagePicker extends StatelessWidget {
             backgroundColor: Colors.grey[300],
             radius: 48,
             child: ClipOval(
-              child: imageWidget,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: imageWidget,
+              ),
             ),
           ),
           const Positioned(

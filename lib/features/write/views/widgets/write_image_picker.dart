@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +16,11 @@ class WriteImagePicker extends ConsumerWidget {
 
     return InkWell(
       onTap: () async {
-        await viewModel.pickImage();
+        if (post.mediaURL == null) {
+          await viewModel.pickImage();
+        } else {
+          _showBottomSheet(context, viewModel);
+        }
       },
       child: (post.mediaURL == null)
           ? Container(
@@ -33,10 +38,42 @@ class WriteImagePicker extends ConsumerWidget {
             )
           : Image.file(
               File(post.mediaURL!),
-              width: 87,
-              height: 87,
+              width: 87.w,
+              height: 87.w,
               fit: BoxFit.contain,
             ),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context, WriteViewModel viewModel) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+          actions: <CupertinoActionSheetAction>[
+            CupertinoActionSheetAction(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await viewModel.pickImage();
+              },
+              child: const Text('이미지 수정'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () {
+                viewModel.clearImagePicker();
+                Navigator.of(context).pop();
+              },
+              child: const Text('이미지 삭제'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('취소'),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sos/features/auth/repositories/auth_repository.dart';
 import 'package:sos/shared/models/user.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
@@ -170,6 +171,7 @@ class SignupViewmodel extends StateNotifier<User> {
         ScaffoldMessenger.of(context).showSnackBar(
           customSnackBar(text: '회원가입에 성공했습니다'),
         );
+        GoRouter.of(context).go('/login');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           customSnackBar(text: '회원가입에 실패했습니다.'),
