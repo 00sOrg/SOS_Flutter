@@ -32,7 +32,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading: hasLeading!
             ? IconButton(
                 onPressed: () {
-                  GoRouter.of(context).pop();
+                  // GoRouter.of(context).pop();
+                  GoRouter.of(context).go('/home');
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
