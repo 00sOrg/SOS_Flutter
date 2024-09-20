@@ -33,7 +33,7 @@ class WriteImagePicker extends ConsumerWidget {
               child: const Icon(
                 Icons.add_photo_alternate_outlined,
                 color: AppColors.textGray,
-                size: 50,
+                size: 46,
               ),
             )
           : Image.file(
