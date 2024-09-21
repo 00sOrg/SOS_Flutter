@@ -11,7 +11,7 @@ part 'post.g.dart';
 class Post with _$Post {
   factory Post({
     @JsonKey(name: 'id') required int postId,
-    @JsonKey(name: 'title') required String title,
+    @JsonKey(name: 'title') String? title,
     @JsonKey(name: 'memberNickname') String? userNickname,
     @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
     @JsonKey(name: 'content') String? content,
@@ -20,7 +20,7 @@ class Post with _$Post {
     @Default(0) @JsonKey(name: 'likeCount') int likesCount,
     @Default(0) @JsonKey(name: 'commentCount') int commentsCount,
     @Default(false) @JsonKey(name: 'liked') bool isLiked,
-    required DateTime createdAt,
+    DateTime? createdAt,
     double? latitude,
     double? longitude,
     @JsonKey(name: 'eventLevel') String? disasterLevel,
