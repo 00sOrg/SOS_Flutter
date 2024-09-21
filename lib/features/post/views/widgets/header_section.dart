@@ -18,7 +18,7 @@ class HeaderSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              post.title,
+              post.title!,
               style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 20,
@@ -40,7 +40,7 @@ class HeaderSection extends StatelessWidget {
             ),
             const SizedBox(height: 2.0),
             Text(
-              '${formatDateTime(post.createdAt)} (${formatTimeAgo(post.createdAt)})',
+              '${formatDateTime(post.createdAt!)} (${formatTimeAgo(post.createdAt!)})',
               style: const TextStyle(
                 color: AppColors.textGray,
                 fontSize: 11,

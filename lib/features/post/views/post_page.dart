@@ -35,7 +35,7 @@ class PostPage extends ConsumerWidget {
                   await postViewModel.refreshPost(postId);
                 },
                 child: ListView(
-                  padding: const EdgeInsets.fromLTRB(31.0, 18.0, 31.0, 80.0),
+                  padding: const EdgeInsets.fromLTRB(25, 18.0, 25, 80.0),
                   children: [
                     PostBadge(post: post),
                     const SizedBox(height: 2),
@@ -46,7 +46,7 @@ class PostPage extends ConsumerWidget {
                     ImageSection(post: post),
                     const SizedBox(height: 16),
                     ContentSection(post: post),
-                    const SizedBox(height: 19),
+                    const SizedBox(height: 40),
                     LikeAndCommentSection(post: post),
                     CommentSection(comments: post.comments),
                   ],

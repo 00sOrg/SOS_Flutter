@@ -18,7 +18,7 @@ class PostBadge extends StatelessWidget {
       badges.add('assets/icons/post/HOT.svg');
     }
     // Condition for 실시간!! badge
-    if (_isRecentPost(post.createdAt)) {
+    if (_isRecentPost(post.createdAt!)) {
       badges.add('assets/icons/post/LIVE.svg');
     }
 

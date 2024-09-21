@@ -59,6 +59,13 @@ class AppRouter {
           path: '/setting-deleted-account',
           builder: (context, state) => const SettingDeletedAccountPage(),
         ),
+        GoRoute(
+          path: '/post/:id',
+          builder: (context, state) {
+            final postId = int.parse(state.pathParameters['id']!);
+            return PostPage(postId: postId);
+          },
+        ),
         ShellRoute(
           builder: (context, state, child) {
             return Scaffold(
@@ -103,14 +110,14 @@ class AppRouter {
           path: '/setting',
           builder: (context, state) => const SettingPage(),
         ),
-        GoRoute(
-          path: '/post/:id',
-          builder: (context, state) {
-            final postId = int.parse(
-                state.pathParameters['id']!); // Convert the string to an int
-            return PostPage(postId: postId);
-          },
-        ),
+        // GoRoute(
+        //   path: '/post/:id',
+        //   builder: (context, state) {
+        //     final postId = int.parse(
+        //         state.pathParameters['id']!); // Convert the string to an int
+        //     return PostPage(postId: postId);
+        //   },
+        // ),
         GoRoute(
           path: '/setting-profile',
           builder: (context, state) => const SettingProfilePage(),
