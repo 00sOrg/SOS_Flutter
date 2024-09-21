@@ -36,40 +36,53 @@ class NearbyEvents extends ConsumerWidget {
               } else if (index == 1) {
                 return Container(
                   color: AppColors.white,
-                  height: 43,
-                  margin: const EdgeInsets.fromLTRB(0, 14, 0, 24),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 24),
                   alignment: Alignment.center,
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: const ShapeDecoration(
-                          color: Color(0xFF00FF0A),
-                          shape: OvalBorder(),
-                        ),
-                      ),
-                      const SizedBox(width: 22),
+                      // Container(
+                      //   width: 12,
+                      //   height: 12,
+                      //   decoration: const ShapeDecoration(
+                      //     color: Color(0xFF00FF0A),
+                      //     shape: OvalBorder(),
+                      //   ),
+                      // ),
+
                       Text(
                         '$currentLocation',
                         style: const TextStyle(
                           color: AppColors.black,
-                          fontSize: 32,
+                          fontSize: 24,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w700,
                           height: 1.2,
                         ),
                       ),
-                      const SizedBox(width: 35),
-                      Text(
-                        '오늘\n사건/사고:${events.length}건',
-                        style: const TextStyle(
-                          color: AppColors.black,
-                          fontSize: 14,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
+                      const SizedBox(height: 5),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                        height: 27,
+                        constraints: BoxConstraints(
+                            minWidth: 155), // Set a minimum width
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1, color: AppColors.blue),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                        child: IntrinsicWidth(
+                          child: Center(
+                            child: Text(
+                              '오늘의 사건/사고:${events.length}건', // Your text here
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
