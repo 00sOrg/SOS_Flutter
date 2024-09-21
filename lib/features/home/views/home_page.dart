@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
+import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
@@ -37,8 +37,10 @@ class HomePageState extends ConsumerState<HomePage> {
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
     final isSideSheetOpen = ref.watch(homeViewModelProvider
         .select((state) => state.isNotificationSideSheetOpen));
-    final homeState = ref.watch(homeViewModelProvider);
+    final isSwitchLeft =
+        ref.watch(homeViewModelProvider.select((state) => state.isSwitchLeft));
 
+    debugPrint('isSwitchLeft: $isSwitchLeft');
     return Scaffold(
       body: Stack(
         children: [
@@ -47,7 +49,12 @@ class HomePageState extends ConsumerState<HomePage> {
               return Stack(
                 children: [
                   // MapWidget에 위치와 Post 리스트를 전달합니다.
-                  MapWidget(location: location, posts: homeState.posts),
+                  MapWidget(
+                    currentLocation: location,
+                    level: isSwitchLeft
+                        ? 'all'
+                        : 'primary', // Handle the switch here
+                  ),
                   _homeTopArea(context, ref),
                   if (isFavoritesOpen)
                     Positioned(
@@ -68,7 +75,7 @@ class HomePageState extends ConsumerState<HomePage> {
           if (isSideSheetOpen) const NotificationSideSheet(),
         ],
       ),
-      bottomSheet: HomePageBottomSheet(), // 여기에 바텀시트를 추가하여 항상 하단에 위치하게 합니다.
+      bottomSheet: const HomePageBottomSheet(),
     );
   }
 
@@ -94,7 +101,7 @@ class HomePageState extends ConsumerState<HomePage> {
                   ),
                 ),
                 const SizedBox(width: 15),
-                HomeSearchBar(),
+                const HomeSearchBar(),
                 const SizedBox(width: 15),
                 HeaderBtn(
                   onTap: () => showNotificationSideSheet(context, ref),
@@ -108,7 +115,7 @@ class HomePageState extends ConsumerState<HomePage> {
             ),
           ),
           const SizedBox(height: 10),
-          MapToggleSwitch(),
+          const MapToggleSwitch(),
         ],
       ),
     );

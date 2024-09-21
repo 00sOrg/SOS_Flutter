@@ -7,7 +7,7 @@ import 'package:sos/features/home/views/bottom_sheet/tapped_event.dart';
 class BottomSheetContent extends ConsumerWidget {
   final ScrollController scrollController;
 
-  BottomSheetContent({super.key, required this.scrollController});
+  const BottomSheetContent({super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
