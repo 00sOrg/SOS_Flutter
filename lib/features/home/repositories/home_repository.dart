@@ -32,14 +32,14 @@ class HomeRepository {
   }
 
   Future<List<Post>?> getPostsForMap(
-      String level, double latitude, double longitude) async {
+      String level, double latitude, double longitude, int zoom) async {
     if (!['primary', 'secondary', 'all'].contains(level)) {
       LogUtil.e('Invalid level: $level');
       return []; // Return null if the level is invalid
     }
 
     final url = Uri.parse(
-        '$baseUrl/events/map?level=$level&lat=$latitude&lng=$longitude');
+        '$baseUrl/events/map?level=$level&lat=$latitude&lng=$longitude&zoom=$zoom');
 
     try {
       final accessToken = await secureStorage.read(key: 'access_token');

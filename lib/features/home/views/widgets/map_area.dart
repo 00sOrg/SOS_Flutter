@@ -35,13 +35,15 @@ class MapWidget extends ConsumerWidget {
       onMapReady: (NaverMapController controller) {
         _controller = controller;
         mapViewModel.fetchPostsForMap(level, currentLocation.latitude,
-            currentLocation.longitude); // Use level here
+            currentLocation.longitude, 15); // Use level here
         _addMarkers(controller, ref);
       },
       onCameraIdle: () async {
         final cameraPosition = await _controller.getCameraPosition();
+        final zoomLevel = cameraPosition.zoom.round();
+        debugPrint('Camera position: $cameraPosition');
         mapViewModel.fetchPostsForMap(level, cameraPosition.target.latitude,
-            cameraPosition.target.longitude); // Use level here
+            cameraPosition.target.longitude, zoomLevel); // Use level here
         _addMarkers(_controller, ref);
       },
     );

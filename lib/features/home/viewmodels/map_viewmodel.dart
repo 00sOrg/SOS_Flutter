@@ -9,9 +9,9 @@ class MapViewModel extends StateNotifier<List<Post>> {
   MapViewModel(this.homeRepository) : super([]);
 
   Future<void> fetchPostsForMap(
-      String level, double latitude, double longitude) async {
+      String level, double latitude, double longitude, int zoom) async {
     final posts =
-        await homeRepository.getPostsForMap(level, latitude, longitude);
+        await homeRepository.getPostsForMap(level, latitude, longitude, zoom);
     if (posts != null) {
       state = posts;
     }
