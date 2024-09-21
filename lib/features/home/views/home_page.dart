@@ -8,7 +8,7 @@ import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
 import 'package:sos/features/home/views/widgets/map_area.dart';
 import 'package:sos/features/home/views/widgets/map_toggle_switch.dart';
-import 'package:sos/features/home/views/side_sheet/notification_side_sheet.dart';
+import 'package:sos/features/home/views/side_sheet/alarm_side_sheet.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 
@@ -72,7 +72,7 @@ class HomePageState extends ConsumerState<HomePage> {
               child: CircularProgressIndicator(),
             ),
           ),
-          if (isSideSheetOpen) const NotificationSideSheet(),
+          if (isSideSheetOpen) const AlarmSideSheet(),
         ],
       ),
       bottomSheet: const HomePageBottomSheet(),
@@ -104,7 +104,7 @@ class HomePageState extends ConsumerState<HomePage> {
                 const HomeSearchBar(),
                 const SizedBox(width: 15),
                 HeaderBtn(
-                  onTap: () => showNotificationSideSheet(context, ref),
+                  onTap: () => showAlarmSideSheet(context, ref),
                   icon: SvgPicture.asset(
                     'assets/icons/home/notification.svg',
                     width: 24,

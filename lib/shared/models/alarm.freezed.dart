@@ -22,7 +22,7 @@ Alarm _$AlarmFromJson(Map<String, dynamic> json) {
 mixin _$Alarm {
   int get notificationId => throw _privateConstructorUsedError;
   String get notificationType => throw _privateConstructorUsedError;
-  String get isRead => throw _privateConstructorUsedError;
+  bool get isRead => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   int get referenceId => throw _privateConstructorUsedError;
   String get notificationMessage => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $AlarmCopyWith<$Res> {
   $Res call(
       {int notificationId,
       String notificationType,
-      String isRead,
+      bool isRead,
       DateTime createdAt,
       int referenceId,
       String notificationMessage,
@@ -81,7 +81,7 @@ class _$AlarmCopyWithImpl<$Res, $Val extends Alarm>
       isRead: null == isRead
           ? _value.isRead
           : isRead // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -112,7 +112,7 @@ abstract class _$$AlarmImplCopyWith<$Res> implements $AlarmCopyWith<$Res> {
   $Res call(
       {int notificationId,
       String notificationType,
-      String isRead,
+      bool isRead,
       DateTime createdAt,
       int referenceId,
       String notificationMessage,
@@ -150,7 +150,7 @@ class __$$AlarmImplCopyWithImpl<$Res>
       isRead: null == isRead
           ? _value.isRead
           : isRead // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -191,7 +191,7 @@ class _$AlarmImpl implements _Alarm {
   @override
   final String notificationType;
   @override
-  final String isRead;
+  final bool isRead;
   @override
   final DateTime createdAt;
   @override
@@ -248,7 +248,7 @@ abstract class _Alarm implements Alarm {
   const factory _Alarm(
       {required final int notificationId,
       required final String notificationType,
-      required final String isRead,
+      required final bool isRead,
       required final DateTime createdAt,
       required final int referenceId,
       required final String notificationMessage,
@@ -261,7 +261,7 @@ abstract class _Alarm implements Alarm {
   @override
   String get notificationType;
   @override
-  String get isRead;
+  bool get isRead;
   @override
   DateTime get createdAt;
   @override

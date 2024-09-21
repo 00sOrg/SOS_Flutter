@@ -7,14 +7,14 @@ import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/side_sheet/alarm_list.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
-class NotificationSideSheet extends ConsumerStatefulWidget {
-  const NotificationSideSheet({super.key});
+class AlarmSideSheet extends ConsumerStatefulWidget {
+  const AlarmSideSheet({super.key});
 
   @override
-  _NotificationSideSheetState createState() => _NotificationSideSheetState();
+  _AlarmSideSheetState createState() => _AlarmSideSheetState();
 }
 
-class _NotificationSideSheetState extends ConsumerState<NotificationSideSheet> {
+class _AlarmSideSheetState extends ConsumerState<AlarmSideSheet> {
   bool _isVisible = false;
 
   @override
@@ -97,7 +97,7 @@ class _NotificationSideSheetState extends ConsumerState<NotificationSideSheet> {
                   ),
                   const SizedBox(height: 5),
                   // 알림 리스트
-                  AlarmList(alarms: alarms, ref: ref), // 알림 리스트 표시
+                  AlarmList(alarms: alarms),
                 ],
               ),
             ),
@@ -108,7 +108,7 @@ class _NotificationSideSheetState extends ConsumerState<NotificationSideSheet> {
   }
 }
 
-void showNotificationSideSheet(BuildContext context, WidgetRef ref) {
+void showAlarmSideSheet(BuildContext context, WidgetRef ref) {
   ref.read(userViewModelProvider.notifier).loadUserInfo();
 
   showDialog(
@@ -120,7 +120,7 @@ void showNotificationSideSheet(BuildContext context, WidgetRef ref) {
         insetPadding: EdgeInsets.zero,
         child: Container(
           height: MediaQuery.of(context).size.height,
-          child: NotificationSideSheet(),
+          child: AlarmSideSheet(),
         ),
       );
     },

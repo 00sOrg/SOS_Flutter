@@ -9,7 +9,7 @@ part of 'alarm.dart';
 _$AlarmImpl _$$AlarmImplFromJson(Map<String, dynamic> json) => _$AlarmImpl(
       notificationId: (json['notificationId'] as num).toInt(),
       notificationType: json['notificationType'] as String,
-      isRead: json['isRead'] as String,
+      isRead: json['isRead'] as bool,
       createdAt: DateTime.parse(json['createdAt'] as String),
       referenceId: (json['referenceId'] as num).toInt(),
       notificationMessage: json['notificationMessage'] as String,

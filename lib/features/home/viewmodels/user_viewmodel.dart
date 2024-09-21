@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/shared/models/user.dart';
 
+//TODO: USER VIEWMODEL SHARED로 옮겨야함 -> user viewmodel 삭제 예정
+// JWT token을 이용하여 payload를 decode하여 사용자 정보를 가져오는 방식으로 변경
 class UserViewModel extends StateNotifier<User?> {
   UserViewModel() : super(null);
 
@@ -24,5 +26,3 @@ final userViewModelProvider =
     StateNotifierProvider<UserViewModel, User?>((ref) {
   return UserViewModel();
 });
-
-//TODO: USER VIEWMODEL SHARED로 옮겨야함

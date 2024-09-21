@@ -9,7 +9,7 @@ class HomeRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
-  Future<List<Post>?> getAllNearbyPosts(
+  Future<List<Post>> getAllNearbyPosts(
       double latitude, double longitude) async {
     final url =
         Uri.parse('$baseUrl/events/nearby/all?lat=$latitude&lng=$longitude');
@@ -31,7 +31,7 @@ class HomeRepository {
     }
   }
 
-  Future<List<Post>?> getPostsForMap(
+  Future<List<Post>> getPostsForMap(
       String level, double latitude, double longitude, int zoom) async {
     if (!['primary', 'secondary', 'all'].contains(level)) {
       LogUtil.e('Invalid level: $level');
