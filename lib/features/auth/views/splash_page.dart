@@ -10,13 +10,9 @@ class SplashPage extends StatelessWidget {
       backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
         child: Image.asset(
-          'assets/icons/logo_lean.png',
-          width: 181.w,
+          'assets/images/new_logo.png',
+          width: 284.w,
         ),
-        // SvgPicture.asset(
-        //   'assets/icons/logo.svg', 
-        //   width: 181.w,
-        // ),
       ),
     );
   }

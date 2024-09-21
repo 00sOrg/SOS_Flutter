@@ -37,15 +37,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // TODO: svg 파일 확인 필요ㄴ
-              // SvgPicture.asset(
-              //   'assets/icons/logo_lean.svg',
-              //   width: 96,
-              //   height: 45,
-              // ),
               Image.asset(
-                'assets/icons/logo_lean.png',
-                width: 96.w,
+                'assets/images/new_logo.png',
+                width: 213.w,
               ),
               const SizedBox(height: 60),
               LoginTextField(

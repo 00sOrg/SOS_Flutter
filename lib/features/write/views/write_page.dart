@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
 import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
+import 'package:sos/features/write/views/widgets/write_choice_chip.dart';
 import 'package:sos/features/write/views/widgets/write_submit_btn.dart';
 import 'package:sos/features/write/views/widgets/write_image_picker.dart';
 import 'package:sos/shared/enums/type_enum.dart';
@@ -21,6 +22,7 @@ class WritePage extends ConsumerStatefulWidget {
 class _WritePageState extends ConsumerState<WritePage> {
   final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _contentTEC = TextEditingController();
+  PostType _selectedPostType = PostType.none;
 
   @override
   void initState() {
@@ -39,6 +41,16 @@ class _WritePageState extends ConsumerState<WritePage> {
   void _handleContentChange() {
     setState(() {
       // 텍스트필드 내용 변하면 리빌드 트리거함
+    });
+  }
+
+  void _onPostTypeSelected(PostType postType) {
+    setState(() {
+      if (_selectedPostType == postType) {
+        _selectedPostType = PostType.none;
+      } else {
+        _selectedPostType = postType;
+      }
     });
   }
 
@@ -61,6 +73,8 @@ class _WritePageState extends ConsumerState<WritePage> {
               Expanded(child: _contentField()),
               if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
               const SizedBox(height: 16),
+              if (_contentTEC.text.isNotEmpty) _buildPostTypeButtons(),
+              const SizedBox(height: 25),
               WriteSubmitBtn(
                 onTap: () async {
                   location.whenData(
@@ -70,13 +84,13 @@ class _WritePageState extends ConsumerState<WritePage> {
                         title: _titleTEC.text,
                         content: _contentTEC.text,
                         location: loc,
-                        type: PostType.other, // TODO: UI 구현 후 api 붙이기
+                        type: _selectedPostType,
                       );
                     },
                   );
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -153,6 +167,46 @@ class _WritePageState extends ConsumerState<WritePage> {
       ),
       style: AppTexts.bodyStyle.copyWith(height: 1.3125),
       onTap: () {},
+    );
+  }
+
+  Widget _buildPostTypeButtons() {
+    const List<String> postTypeTexts = [
+      '사고',
+      '화재',
+      '태풍',
+      '지진',
+      '전쟁',
+      '홍수',
+      '기타'
+    ];
+    const List<PostType> postTypes = [
+      PostType.accident,
+      PostType.fire,
+      PostType.typhoon,
+      PostType.earthquake,
+      PostType.war,
+      PostType.flood,
+      PostType.other,
+    ];
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(postTypes.length, (idx) {
+          final isSelected = _selectedPostType == postTypes[idx];
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: WriteChoiceChip(
+              label: postTypeTexts[idx],
+              isSelected: isSelected,
+              onSelected: (bool selected) {
+                _onPostTypeSelected(postTypes[idx]);
+              },
+            ),
+          );
+        }),
+      ),
     );
   }
 }

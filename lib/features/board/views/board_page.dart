@@ -70,7 +70,7 @@ class _BoardPageState extends ConsumerState<BoardPage> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height,
+                      minHeight: MediaQuery.of(context).size.height - 59 - 71 - 94,
                     ),
                     child: boardItems.isEmpty
                         ? const Center(
