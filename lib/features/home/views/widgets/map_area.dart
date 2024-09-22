@@ -23,29 +23,46 @@ class MapWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mapViewModel = ref.read(mapViewModelProvider.notifier);
 
-    return NaverMap(
-      options: NaverMapViewOptions(
-        initialCameraPosition: NCameraPosition(
-          target: NLatLng(currentLocation.latitude, currentLocation.longitude),
-          zoom: 15,
-          bearing: 0,
-          tilt: 0,
+    return Stack(
+      children: [
+        NaverMap(
+          options: NaverMapViewOptions(
+            initialCameraPosition: NCameraPosition(
+              target:
+                  NLatLng(currentLocation.latitude, currentLocation.longitude),
+              zoom: 15,
+              bearing: 0,
+              tilt: 0,
+            ),
+          ),
+          onMapReady: (NaverMapController controller) {
+            _controller = controller;
+            mapViewModel.fetchPostsForMap(level, currentLocation.latitude,
+                currentLocation.longitude, 15); // Use level here
+            _addMarkers(controller, ref);
+          },
+          onCameraIdle: () async {
+            final cameraPosition = await _controller.getCameraPosition();
+            final zoomLevel = cameraPosition.zoom.round();
+            debugPrint('Camera position: $cameraPosition');
+            mapViewModel.fetchPostsForMap(level, cameraPosition.target.latitude,
+                cameraPosition.target.longitude, zoomLevel); // Use level here
+            _addMarkers(_controller, ref);
+          },
         ),
-      ),
-      onMapReady: (NaverMapController controller) {
-        _controller = controller;
-        mapViewModel.fetchPostsForMap(level, currentLocation.latitude,
-            currentLocation.longitude, 15); // Use level here
-        _addMarkers(controller, ref);
-      },
-      onCameraIdle: () async {
-        final cameraPosition = await _controller.getCameraPosition();
-        final zoomLevel = cameraPosition.zoom.round();
-        debugPrint('Camera position: $cameraPosition');
-        mapViewModel.fetchPostsForMap(level, cameraPosition.target.latitude,
-            cameraPosition.target.longitude, zoomLevel); // Use level here
-        _addMarkers(_controller, ref);
-      },
+        GestureDetector(
+          onTap: () {
+            // Dismiss the keyboard when map is tapped
+            FocusScope.of(context).unfocus();
+            print('Tapped on the map, keyboard dismissed');
+          },
+          child: Container(
+            color: Colors.transparent, // Invisible widget to capture taps
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+        ),
+      ],
     );
   }
 
