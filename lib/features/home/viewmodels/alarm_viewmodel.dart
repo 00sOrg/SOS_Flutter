@@ -36,6 +36,22 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
     }
   }
 
+  // 친구 거절하면 친구 테이블 및 알림 테이블에서 삭제 됨 (markAsRead 안해도 됨)
+  Future<void> acceptFriendRequest(int friendId) async {
+    await friendsRepository.acceptFriendRequest(friendId);
+
+    final updatedAlarms = await alarmRepository.getAlarms();
+    state = updatedAlarms;
+  }
+
+  // 친구 수락하면 알림 테이블에서 삭제 됨 (markAsRead 안해도 됨)
+  Future<void> rejectFriendRequest(int friendId) async {
+    await friendsRepository.rejectFriendRequest(friendId);
+
+    final updatedAlarms = await alarmRepository.getAlarms();
+    state = updatedAlarms;
+  }
+
   void handleFriendRequest(BuildContext context, Alarm alarm) {
     showDialog(
       context: context,
@@ -46,14 +62,12 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
           leftBtn: '거절',
           rightBtn: '수락',
           onLeftBtnPressed: () async {
+            await rejectFriendRequest(alarm.referenceId);
             Navigator.of(context).pop();
-            markAsRead(alarm.notificationId); // Pass alarm to mark it as read
-            await friendsRepository.rejectFriendRequest(alarm.referenceId);
           },
           onRightBtnPressed: () async {
+            await acceptFriendRequest(alarm.referenceId);
             Navigator.of(context).pop();
-            markAsRead(alarm.notificationId); // Pass alarm to mark it as read
-            await friendsRepository.acceptFriendRequest(alarm.referenceId);
           },
         );
       },
