@@ -21,13 +21,14 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   String? get profilePicture => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  String get nickname => throw _privateConstructorUsedError;
-  String get phoneNumber => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  DateTime get birthDay => throw _privateConstructorUsedError;
+  String? get password => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get nickname => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
+  DateTime? get birthDay => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,13 +42,14 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String? profilePicture,
+      int? id,
       String name,
-      String email,
-      String password,
-      String nickname,
-      String phoneNumber,
-      String gender,
-      DateTime birthDay});
+      String? password,
+      String? email,
+      String? nickname,
+      String? phoneNumber,
+      String? gender,
+      DateTime? birthDay});
 }
 
 /// @nodoc
@@ -64,47 +66,52 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? profilePicture = freezed,
+    Object? id = freezed,
     Object? name = null,
-    Object? email = null,
-    Object? password = null,
-    Object? nickname = null,
-    Object? phoneNumber = null,
-    Object? gender = null,
-    Object? birthDay = null,
+    Object? password = freezed,
+    Object? email = freezed,
+    Object? nickname = freezed,
+    Object? phoneNumber = freezed,
+    Object? gender = freezed,
+    Object? birthDay = freezed,
   }) {
     return _then(_value.copyWith(
       profilePicture: freezed == profilePicture
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      nickname: null == nickname
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nickname: freezed == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumber: null == phoneNumber
+              as String?,
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      gender: null == gender
+              as String?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthDay: null == birthDay
+              as String?,
+      birthDay: freezed == birthDay
           ? _value.birthDay
           : birthDay // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -118,13 +125,14 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String? profilePicture,
+      int? id,
       String name,
-      String email,
-      String password,
-      String nickname,
-      String phoneNumber,
-      String gender,
-      DateTime birthDay});
+      String? password,
+      String? email,
+      String? nickname,
+      String? phoneNumber,
+      String? gender,
+      DateTime? birthDay});
 }
 
 /// @nodoc
@@ -138,47 +146,52 @@ class __$$UserImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? profilePicture = freezed,
+    Object? id = freezed,
     Object? name = null,
-    Object? email = null,
-    Object? password = null,
-    Object? nickname = null,
-    Object? phoneNumber = null,
-    Object? gender = null,
-    Object? birthDay = null,
+    Object? password = freezed,
+    Object? email = freezed,
+    Object? nickname = freezed,
+    Object? phoneNumber = freezed,
+    Object? gender = freezed,
+    Object? birthDay = freezed,
   }) {
     return _then(_$UserImpl(
       profilePicture: freezed == profilePicture
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      nickname: null == nickname
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nickname: freezed == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumber: null == phoneNumber
+              as String?,
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      gender: null == gender
+              as String?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthDay: null == birthDay
+              as String?,
+      birthDay: freezed == birthDay
           ? _value.birthDay
           : birthDay // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -188,13 +201,14 @@ class __$$UserImplCopyWithImpl<$Res>
 class _$UserImpl implements _User {
   _$UserImpl(
       {this.profilePicture,
+      this.id,
       required this.name,
-      required this.email,
-      required this.password,
-      required this.nickname,
-      required this.phoneNumber,
-      required this.gender,
-      required this.birthDay});
+      this.password,
+      this.email,
+      this.nickname,
+      this.phoneNumber,
+      this.gender,
+      this.birthDay});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -202,23 +216,25 @@ class _$UserImpl implements _User {
   @override
   final String? profilePicture;
   @override
+  final int? id;
+  @override
   final String name;
   @override
-  final String email;
+  final String? password;
   @override
-  final String password;
+  final String? email;
   @override
-  final String nickname;
+  final String? nickname;
   @override
-  final String phoneNumber;
+  final String? phoneNumber;
   @override
-  final String gender;
+  final String? gender;
   @override
-  final DateTime birthDay;
+  final DateTime? birthDay;
 
   @override
   String toString() {
-    return 'User(profilePicture: $profilePicture, name: $name, email: $email, password: $password, nickname: $nickname, phoneNumber: $phoneNumber, gender: $gender, birthDay: $birthDay)';
+    return 'User(profilePicture: $profilePicture, id: $id, name: $name, password: $password, email: $email, nickname: $nickname, phoneNumber: $phoneNumber, gender: $gender, birthDay: $birthDay)';
   }
 
   @override
@@ -228,10 +244,11 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.profilePicture, profilePicture) ||
                 other.profilePicture == profilePicture) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
             (identical(other.phoneNumber, phoneNumber) ||
@@ -243,8 +260,8 @@ class _$UserImpl implements _User {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, profilePicture, name, email,
-      password, nickname, phoneNumber, gender, birthDay);
+  int get hashCode => Object.hash(runtimeType, profilePicture, id, name,
+      password, email, nickname, phoneNumber, gender, birthDay);
 
   @JsonKey(ignore: true)
   @override
@@ -263,32 +280,35 @@ class _$UserImpl implements _User {
 abstract class _User implements User {
   factory _User(
       {final String? profilePicture,
+      final int? id,
       required final String name,
-      required final String email,
-      required final String password,
-      required final String nickname,
-      required final String phoneNumber,
-      required final String gender,
-      required final DateTime birthDay}) = _$UserImpl;
+      final String? password,
+      final String? email,
+      final String? nickname,
+      final String? phoneNumber,
+      final String? gender,
+      final DateTime? birthDay}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
   @override
   String? get profilePicture;
   @override
+  int? get id;
+  @override
   String get name;
   @override
-  String get email;
+  String? get password;
   @override
-  String get password;
+  String? get email;
   @override
-  String get nickname;
+  String? get nickname;
   @override
-  String get phoneNumber;
+  String? get phoneNumber;
   @override
-  String get gender;
+  String? get gender;
   @override
-  DateTime get birthDay;
+  DateTime? get birthDay;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

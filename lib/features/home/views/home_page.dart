@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
+import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';
 import 'package:sos/features/home/views/widgets/home_search_bar.dart';
 import 'package:sos/features/home/views/widgets/map_area.dart';
 import 'package:sos/features/home/views/widgets/map_toggle_switch.dart';
-import 'package:sos/features/home/views/side_sheet/notification_side_sheet.dart';
+import 'package:sos/features/home/views/side_sheet/alarm_side_sheet.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 
@@ -125,7 +125,7 @@ class HomePageState extends ConsumerState<HomePage> {
                 const HomeSearchBar(),
                 const SizedBox(width: 15),
                 HeaderBtn(
-                  onTap: () => showNotificationSideSheet(context, ref),
+                  onTap: () => showAlarmSideSheet(context, ref),
                   icon: SvgPicture.asset(
                     'assets/icons/home/notification.svg',
                     width: 24,

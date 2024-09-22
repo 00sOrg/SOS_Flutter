@@ -23,11 +23,11 @@ class SettingProfileViewModel extends StateNotifier<User> {
     nameTEC = TextEditingController(text: state.name);
     nicknameTEC = TextEditingController(text: state.nickname);
     numberTEC = TextEditingController(text: state.phoneNumber);
-    yearTEC = TextEditingController(text: state.birthDay.year.toString());
+    yearTEC = TextEditingController(text: state.birthDay!.year.toString());
     monthTEC = TextEditingController(
-        text: state.birthDay.month.toString().padLeft(2, '0'));
+        text: state.birthDay!.month.toString().padLeft(2, '0'));
     dayTEC = TextEditingController(
-        text: state.birthDay.day.toString().padLeft(2, '0'));
+        text: state.birthDay!.day.toString().padLeft(2, '0'));
   }
 
   late TextEditingController emailTEC;
@@ -57,13 +57,13 @@ class SettingProfileViewModel extends StateNotifier<User> {
   }
 
   void updateControllers() {
-    emailTEC.text = state.email;
+    emailTEC.text = state.email!;
     nameTEC.text = state.name;
-    nicknameTEC.text = state.nickname;
-    numberTEC.text = state.phoneNumber;
-    yearTEC.text = state.birthDay.year.toString();
-    monthTEC.text = state.birthDay.month.toString().padLeft(2, '0');
-    dayTEC.text = state.birthDay.day.toString().padLeft(2, '0');
+    nicknameTEC.text = state.nickname!;
+    numberTEC.text = state.phoneNumber!;
+    yearTEC.text = state.birthDay!.year.toString();
+    monthTEC.text = state.birthDay!.month.toString().padLeft(2, '0');
+    dayTEC.text = state.birthDay!.day.toString().padLeft(2, '0');
   }
 
   String? localImagePath;
