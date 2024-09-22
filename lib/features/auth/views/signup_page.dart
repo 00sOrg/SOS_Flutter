@@ -127,14 +127,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       _customRadioListTile(
                         title: '남자',
                         value: '남자',
-                        groupValue: user.gender,
+                        groupValue: user.gender!,
                         onChanged: viewModel.updateGender,
                       ),
                       const SizedBox(height: 10),
                       _customRadioListTile(
                         title: '여자',
                         value: '여자',
-                        groupValue: user.gender,
+                        groupValue: user.gender!,
                         onChanged: viewModel.updateGender,
                       ),
                     ],
@@ -155,8 +155,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             viewModel.updateBirthDate(
                               DateTime(
                                 year,
-                                user.birthDay.month,
-                                user.birthDay.day,
+                                user.birthDay!.month,
+                                user.birthDay!.day,
                               ),
                             );
                           },
@@ -173,9 +173,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             final month = int.tryParse(value) ?? 1;
                             viewModel.updateBirthDate(
                               DateTime(
-                                user.birthDay.year,
+                                user.birthDay!.year,
                                 month,
-                                user.birthDay.day,
+                                user.birthDay!.day,
                               ),
                             );
                           },
@@ -191,8 +191,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             final day = int.tryParse(value) ?? 1;
                             viewModel.updateBirthDate(
                               DateTime(
-                                user.birthDay.year,
-                                user.birthDay.month,
+                                user.birthDay!.year,
+                                user.birthDay!.month,
                                 day,
                               ),
                             );
