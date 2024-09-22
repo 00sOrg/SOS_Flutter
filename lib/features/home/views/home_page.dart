@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
+import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/features/home/views/widgets/favorites_dropdown.dart';

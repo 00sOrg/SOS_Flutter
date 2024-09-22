@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/home/viewmodels/alarm_viewmodel.dart';
-import 'package:sos/features/home/viewmodels/user_viewmodel.dart';
+import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/side_sheet/alarm_list.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
