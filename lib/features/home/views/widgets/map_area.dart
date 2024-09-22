@@ -52,12 +52,10 @@ class MapWidget extends ConsumerWidget {
         ),
         GestureDetector(
           onTap: () {
-            // Dismiss the keyboard when map is tapped
             FocusScope.of(context).unfocus();
-            print('Tapped on the map, keyboard dismissed');
           },
           child: Container(
-            color: Colors.transparent, // Invisible widget to capture taps
+            color: Colors.transparent,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
           ),

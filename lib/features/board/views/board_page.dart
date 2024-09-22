@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_item.dart';
 import 'package:sos/features/board/views/widgets/board_search_bar.dart';
@@ -27,77 +28,78 @@ class _BoardPageState extends ConsumerState<BoardPage> {
   @override
   Widget build(BuildContext context) {
     final boardItems = ref.watch(boardViewModelProvider);
-
     return SafeArea(
       bottom: false,
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const SizedBox(width: 20),
-                const Expanded(
-                  child: BoardSearchBar(),
-                ),
-                const SizedBox(width: 15),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: const BoxDecoration(
-                      color: AppColors.lightBlue,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Center(
-                      child: Icon(Icons.alarm),
+      child: KeyboardDismisser(
+        child: Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 20),
+                  const Expanded(
+                    child: BoardSearchBar(),
+                  ),
+                  const SizedBox(width: 15),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: const BoxDecoration(
+                        color: AppColors.lightBlue,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.alarm),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 20),
-              ],
-            ),
-            Expanded(
-              child: RefreshIndicator.adaptive(
-                displacement: 20,
-                onRefresh: () async {
-                  await ref
-                      .read(boardViewModelProvider.notifier)
-                      .refreshBoard();
-                },
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height - 59 - 71 - 94,
-                    ),
-                    child: boardItems.isEmpty
-                        ? const Center(
-                            child: Text('게시글이 없어요'),
-                          )
-                        : GridView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            controller: _scrollController,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 1,
-                              mainAxisSpacing: 1,
-                              childAspectRatio: 1,
-                            ),
-                            itemCount: boardItems.length,
-                            itemBuilder: (context, idx) {
-                              return BoardItem(post: boardItems[idx]);
-                            },
-                            physics: const PageScrollPhysics(),
-                          ),
-                  ),
-                ),
+                  const SizedBox(width: 20),
+                ],
               ),
-            )
-          ],
+              Expanded(
+                child: RefreshIndicator.adaptive(
+                  displacement: 20,
+                  onRefresh: () async {
+                    await ref
+                        .read(boardViewModelProvider.notifier)
+                        .refreshBoard();
+                  },
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height - 59 - 71 - 94,
+                      ),
+                      child: boardItems.isEmpty
+                          ? const Center(
+                              child: Text('게시글이 없어요'),
+                            )
+                          : GridView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              controller: _scrollController,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 1,
+                                mainAxisSpacing: 1,
+                                childAspectRatio: 1,
+                              ),
+                              itemCount: boardItems.length,
+                              itemBuilder: (context, idx) {
+                                return BoardItem(post: boardItems[idx]);
+                              },
+                              physics: const PageScrollPhysics(),
+                            ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

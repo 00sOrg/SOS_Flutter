@@ -82,7 +82,7 @@ class HomePageState extends ConsumerState<HomePage> {
                 child: CircularProgressIndicator(),
               ),
             ),
-            if (isSideSheetOpen) const NotificationSideSheet(),
+            if (isSideSheetOpen) const AlarmSideSheet(),
             // if (_isOverlayVisible)
             //   GestureDetector(
             //     onTap: () => _toggleOverlay(false),

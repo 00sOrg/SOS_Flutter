@@ -29,9 +29,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final loginState = ref.watch(loginViewModelProvider);
     final loginViewModel = ref.read(loginViewModelProvider.notifier);
 
-    return Scaffold(
-      body: KeyboardDismisser(
-        child: Padding(
+    return KeyboardDismisser(
+      child: Scaffold(
+        body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 71.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
