@@ -41,7 +41,6 @@ class MapWidget extends ConsumerWidget {
       onCameraIdle: () async {
         final cameraPosition = await _controller.getCameraPosition();
         final zoomLevel = cameraPosition.zoom.round();
-        debugPrint('Camera position: $cameraPosition');
         mapViewModel.fetchPostsForMap(level, cameraPosition.target.latitude,
             cameraPosition.target.longitude, zoomLevel); // Use level here
         _addMarkers(_controller, ref);

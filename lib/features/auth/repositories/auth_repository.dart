@@ -95,13 +95,13 @@ class AuthRepository {
 
   Future<bool> signupUser(User user, String? profilePicturePath) async {
     final fields = {
-      'email': user.email,
-      'password': user.password,
+      'email': user.email!,
+      'password': user.password!,
       'name': user.name,
-      'nickname': user.nickname,
-      'phoneNumber': user.phoneNumber,
-      'sex': user.gender,
-      'birthDate': user.birthDay.toIso8601String(),
+      'nickname': user.nickname!,
+      'phoneNumber': user.phoneNumber!,
+      'sex': user.gender!,
+      'birthDate': user.birthDay!.toIso8601String(),
     };
 
     final url = Uri.parse('$baseUrl/auth/register');

@@ -8,7 +8,7 @@ class Alarm with _$Alarm {
   const factory Alarm({
     required int notificationId,
     required String notificationType,
-    required String isRead,
+    required bool isRead,
     required DateTime createdAt,
     required int referenceId,
     required String notificationMessage,
