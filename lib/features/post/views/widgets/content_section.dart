@@ -18,11 +18,11 @@ class ContentSection extends StatelessWidget {
       alignment: Alignment.topLeft,
       child: SizedBox(
         child: Text(
+          textAlign: TextAlign.justify,
           post.content!,
           style: const TextStyle(
             color: AppColors.black,
             fontSize: 16,
-            fontFamily: 'Apple SD Gothic Neo',
             fontWeight: FontWeight.w400,
             height: 1.2,
           ),

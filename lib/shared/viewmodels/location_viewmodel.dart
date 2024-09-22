@@ -76,13 +76,13 @@ class LocationViewModel extends StateNotifier<AsyncValue<Location>> {
     return '';
   }
 
-  // "시, 구"
+  // "구, 동"
   String _extractAdminAddress(Map<String, dynamic> jsonData) {
     for (var result in jsonData["results"]) {
       if (result["name"] == "addr") {
-        return result["region"]["area1"]["name"] +
+        return result["region"]["area2"]["name"] +
             ' ' +
-            result["region"]["area2"]["name"];
+            result["region"]["area3"]["name"];
       }
     }
     return '';

@@ -24,3 +24,5 @@ final userViewModelProvider =
     StateNotifierProvider<UserViewModel, User?>((ref) {
   return UserViewModel();
 });
+
+//TODO: USER VIEWMODEL SHARED로 옮겨야함

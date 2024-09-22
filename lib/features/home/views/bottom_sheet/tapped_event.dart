@@ -21,7 +21,7 @@ class TappedEvent extends ConsumerWidget {
       children: [
         // 게시글 제목
         Text(
-          post.title,
+          post.title!,
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class TappedEvent extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              formatTimeAgo(post.createdAt),
+              formatTimeAgo(post.createdAt!),
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,

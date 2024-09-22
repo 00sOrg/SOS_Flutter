@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommentWriteSection extends ConsumerStatefulWidget {
   final int postId; // Accept postId as a parameter
@@ -18,8 +19,8 @@ class _CommentWriteSectionState extends ConsumerState<CommentWriteSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.lineGray,
-      padding: const EdgeInsets.fromLTRB(16, 11, 13, 8),
+      color: AppColors.white,
+      padding: const EdgeInsets.fromLTRB(16, 11, 13, 25),
       child: Row(
         children: [
           Expanded(
@@ -32,7 +33,7 @@ class _CommentWriteSectionState extends ConsumerState<CommentWriteSection> {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: AppColors.white,
+                fillColor: AppColors.lineGray,
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               ),

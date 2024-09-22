@@ -8,7 +8,7 @@ part of 'post.dart';
 
 _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       postId: (json['id'] as num).toInt(),
-      title: json['title'] as String,
+      title: json['title'] as String?,
       userNickname: json['memberNickname'] as String?,
       userProfilePictureURL: json['memberProfile'] as String?,
       content: json['content'] as String?,
@@ -17,7 +17,9 @@ _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       likesCount: (json['likeCount'] as num?)?.toInt() ?? 0,
       commentsCount: (json['commentCount'] as num?)?.toInt() ?? 0,
       isLiked: json['liked'] as bool? ?? false,
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       disasterLevel: json['eventLevel'] as String?,
@@ -39,7 +41,7 @@ Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
       'likeCount': instance.likesCount,
       'commentCount': instance.commentsCount,
       'liked': instance.isLiked,
-      'createdAt': instance.createdAt.toIso8601String(),
+      'createdAt': instance.createdAt?.toIso8601String(),
       'latitude': instance.latitude,
       'longitude': instance.longitude,
       'eventLevel': instance.disasterLevel,

@@ -23,7 +23,7 @@ mixin _$Post {
   @JsonKey(name: 'id')
   int get postId => throw _privateConstructorUsedError;
   @JsonKey(name: 'title')
-  String get title => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @JsonKey(name: 'memberNickname')
   String? get userNickname => throw _privateConstructorUsedError;
   @JsonKey(name: 'memberProfile')
@@ -40,7 +40,7 @@ mixin _$Post {
   int get commentsCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'liked')
   bool get isLiked => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'eventLevel')
@@ -61,7 +61,7 @@ abstract class $PostCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int postId,
-      @JsonKey(name: 'title') String title,
+      @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'memberNickname') String? userNickname,
       @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
       @JsonKey(name: 'content') String? content,
@@ -70,7 +70,7 @@ abstract class $PostCopyWith<$Res> {
       @JsonKey(name: 'likeCount') int likesCount,
       @JsonKey(name: 'commentCount') int commentsCount,
       @JsonKey(name: 'liked') bool isLiked,
-      DateTime createdAt,
+      DateTime? createdAt,
       double? latitude,
       double? longitude,
       @JsonKey(name: 'eventLevel') String? disasterLevel,
@@ -92,7 +92,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
   @override
   $Res call({
     Object? postId = null,
-    Object? title = null,
+    Object? title = freezed,
     Object? userNickname = freezed,
     Object? userProfilePictureURL = freezed,
     Object? content = freezed,
@@ -101,7 +101,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? likesCount = null,
     Object? commentsCount = null,
     Object? isLiked = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? disasterLevel = freezed,
@@ -113,10 +113,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       userNickname: freezed == userNickname
           ? _value.userNickname
           : userNickname // ignore: cast_nullable_to_non_nullable
@@ -149,10 +149,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.isLiked
           : isLiked // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       latitude: freezed == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -186,7 +186,7 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int postId,
-      @JsonKey(name: 'title') String title,
+      @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'memberNickname') String? userNickname,
       @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
       @JsonKey(name: 'content') String? content,
@@ -195,7 +195,7 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       @JsonKey(name: 'likeCount') int likesCount,
       @JsonKey(name: 'commentCount') int commentsCount,
       @JsonKey(name: 'liked') bool isLiked,
-      DateTime createdAt,
+      DateTime? createdAt,
       double? latitude,
       double? longitude,
       @JsonKey(name: 'eventLevel') String? disasterLevel,
@@ -214,7 +214,7 @@ class __$$PostImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? postId = null,
-    Object? title = null,
+    Object? title = freezed,
     Object? userNickname = freezed,
     Object? userProfilePictureURL = freezed,
     Object? content = freezed,
@@ -223,7 +223,7 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? likesCount = null,
     Object? commentsCount = null,
     Object? isLiked = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? disasterLevel = freezed,
@@ -235,10 +235,10 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       userNickname: freezed == userNickname
           ? _value.userNickname
           : userNickname // ignore: cast_nullable_to_non_nullable
@@ -271,10 +271,10 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.isLiked
           : isLiked // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       latitude: freezed == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -304,7 +304,7 @@ class __$$PostImplCopyWithImpl<$Res>
 class _$PostImpl implements _Post {
   _$PostImpl(
       {@JsonKey(name: 'id') required this.postId,
-      @JsonKey(name: 'title') required this.title,
+      @JsonKey(name: 'title') this.title,
       @JsonKey(name: 'memberNickname') this.userNickname,
       @JsonKey(name: 'memberProfile') this.userProfilePictureURL,
       @JsonKey(name: 'content') this.content,
@@ -313,7 +313,7 @@ class _$PostImpl implements _Post {
       @JsonKey(name: 'likeCount') this.likesCount = 0,
       @JsonKey(name: 'commentCount') this.commentsCount = 0,
       @JsonKey(name: 'liked') this.isLiked = false,
-      required this.createdAt,
+      this.createdAt,
       this.latitude,
       this.longitude,
       @JsonKey(name: 'eventLevel') this.disasterLevel,
@@ -329,7 +329,7 @@ class _$PostImpl implements _Post {
   final int postId;
   @override
   @JsonKey(name: 'title')
-  final String title;
+  final String? title;
   @override
   @JsonKey(name: 'memberNickname')
   final String? userNickname;
@@ -355,7 +355,7 @@ class _$PostImpl implements _Post {
   @JsonKey(name: 'liked')
   final bool isLiked;
   @override
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   final double? latitude;
   @override
@@ -453,7 +453,7 @@ class _$PostImpl implements _Post {
 abstract class _Post implements Post {
   factory _Post(
       {@JsonKey(name: 'id') required final int postId,
-      @JsonKey(name: 'title') required final String title,
+      @JsonKey(name: 'title') final String? title,
       @JsonKey(name: 'memberNickname') final String? userNickname,
       @JsonKey(name: 'memberProfile') final String? userProfilePictureURL,
       @JsonKey(name: 'content') final String? content,
@@ -462,7 +462,7 @@ abstract class _Post implements Post {
       @JsonKey(name: 'likeCount') final int likesCount,
       @JsonKey(name: 'commentCount') final int commentsCount,
       @JsonKey(name: 'liked') final bool isLiked,
-      required final DateTime createdAt,
+      final DateTime? createdAt,
       final double? latitude,
       final double? longitude,
       @JsonKey(name: 'eventLevel') final String? disasterLevel,
@@ -476,7 +476,7 @@ abstract class _Post implements Post {
   int get postId;
   @override
   @JsonKey(name: 'title')
-  String get title;
+  String? get title;
   @override
   @JsonKey(name: 'memberNickname')
   String? get userNickname;
@@ -502,7 +502,7 @@ abstract class _Post implements Post {
   @JsonKey(name: 'liked')
   bool get isLiked;
   @override
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   double? get latitude;
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sos/features/home/views/bottom_sheet/bottom_sheet_wrapper.dart';
+import 'package:sos/features/home/repositories/home_repository.dart';
 import 'package:sos/shared/models/post.dart';
-import 'package:sos/features/post/viewmodels/post_list.dart'; // Import the dummy data
+import 'package:sos/shared/services/geolocator_service.dart';
 
 class BottomSheetState {
   final Post? tappedPost;
@@ -30,63 +30,73 @@ class BottomSheetState {
 }
 
 class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
-  BottomSheetViewModel()
+  final HomeRepository _homeRepository;
+
+  BottomSheetViewModel(this._homeRepository)
       : super(BottomSheetState(nearbyEvents: [], sheetHeight: 0.15)) {
     _fetchNearbyEvents();
   }
 
-  final DraggableScrollableController _scrollableController =
+  DraggableScrollableController _scrollableController =
       DraggableScrollableController();
 
   bool _wasExpanded = false;
 
-  void _fetchNearbyEvents() {
-    state = state.copyWith(nearbyEvents: dummyPosts);
+  @override
+  void dispose() {
+    _scrollableController =
+        DraggableScrollableController(); // Reset the controller
+    super.dispose();
   }
 
-  void tapPost(Post post) {
-    state = state.copyWith(tappedPost: post);
-  }
+  Future<void> _fetchNearbyEvents() async {
+    final position = await GeolocatorService.getCurrentPosition();
+    final lat = position.latitude;
+    final lon = position.longitude;
 
-  void clearTappedPost() {
-    state = state.copyWith(tappedPost: null);
+    final nearbyEvents = await _homeRepository.getAllNearbyPosts(lat, lon);
+    if (nearbyEvents != null) {
+      state = state.copyWith(nearbyEvents: nearbyEvents);
+    }
   }
 
   void toggleBottomSheet() {
-    if (_scrollableController.isAttached) {
-      if (state.sheetHeight == 0.0) {
-        _scrollableController.animateTo(
-          0.15,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-        state = state.copyWith(sheetHeight: 0.15);
-        _wasExpanded = false;
-      } else if (state.sheetHeight == 0.15 && !_wasExpanded) {
-        _scrollableController.animateTo(
-          0.75,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-        state = state.copyWith(sheetHeight: 0.75);
-        _wasExpanded = true;
-      } else if (state.sheetHeight == 0.75) {
-        _scrollableController.animateTo(
-          0.15,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-        state = state.copyWith(sheetHeight: 0.15);
-        _wasExpanded = true;
-      } else if (state.sheetHeight == 0.15 && _wasExpanded) {
-        _scrollableController.animateTo(
-          0.0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-        state = state.copyWith(sheetHeight: 0.0);
-        _wasExpanded = false;
-      }
+    // Ensure the controller is attached before calling animateTo
+    if (!_scrollableController.isAttached) {
+      return;
+    }
+    if (state.sheetHeight == 0.0) {
+      _scrollableController.animateTo(
+        0.15,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      state = state.copyWith(sheetHeight: 0.15);
+      _wasExpanded = false;
+    } else if (state.sheetHeight == 0.15 && !_wasExpanded) {
+      _scrollableController.animateTo(
+        0.75,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      state = state.copyWith(sheetHeight: 0.75);
+      _wasExpanded = true;
+    } else if (state.sheetHeight == 0.75) {
+      _scrollableController.animateTo(
+        0.15,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      state = state.copyWith(sheetHeight: 0.15);
+      _wasExpanded = true;
+    } else if (state.sheetHeight == 0.15 && _wasExpanded) {
+      _scrollableController.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      state = state.copyWith(sheetHeight: 0.0);
+      _wasExpanded = false;
     }
   }
 
@@ -106,26 +116,22 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
     closeBottomSheet();
     context.push('/post/$postId'); // 포스트 페이지로 이동
   }
-}
 
-final bottomSheetViewModelProvider =
-    StateNotifierProvider<BottomSheetViewModel, BottomSheetState>(
-        (ref) => BottomSheetViewModel());
+  void tapPost(Post post) {
+    state = state.copyWith(tappedPost: post);
+  }
 
-class HomePageBottomSheet extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(bottomSheetViewModelProvider.notifier);
-
-    return DraggableScrollableSheet(
-      controller: viewModel.scrollableController,
-      initialChildSize: 0.15, // 처음에 20%로 열리도록 설정
-      minChildSize: 0.0, // 바텀시트가 최소로 줄어들 때
-      maxChildSize: 0.75, // 최대 75%까지 열리도록 설정
-      expand: false,
-      builder: (BuildContext context, ScrollController scrollController) {
-        return BottomSheetWrapper(scrollController: scrollController);
-      },
-    );
+  void clearTappedPost() {
+    state = state.copyWith(tappedPost: null);
   }
 }
+
+final homeRepositoryProvider = Provider<HomeRepository>((ref) {
+  return HomeRepository();
+});
+
+final bottomSheetViewModelProvider =
+    StateNotifierProvider<BottomSheetViewModel, BottomSheetState>((ref) {
+  final homeRepository = ref.watch(homeRepositoryProvider);
+  return BottomSheetViewModel(homeRepository);
+});

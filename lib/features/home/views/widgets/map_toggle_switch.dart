@@ -3,32 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
-class MapToggleSwitch extends ConsumerStatefulWidget {
+class MapToggleSwitch extends ConsumerWidget {
   const MapToggleSwitch({super.key});
 
   @override
-  ConsumerState<MapToggleSwitch> createState() => _MapToggleSwitchState();
-}
-
-class _MapToggleSwitchState extends ConsumerState<MapToggleSwitch>
-    with SingleTickerProviderStateMixin {
-  late bool isOn;
-
-  @override
-  void initState() {
-    super.initState();
-    isOn = !ref.read(homeViewModelProvider).isSwitchLeft;
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final homeViewModel = ref.read(homeViewModelProvider.notifier);
+    final isOn = !ref.watch(homeViewModelProvider).isSwitchLeft;
 
     return GestureDetector(
       onTap: () {
-        setState(() {
-          isOn = !isOn;
-        });
         homeViewModel.toggleSwitch();
       },
       child: AnimatedContainer(
@@ -52,7 +36,6 @@ class _MapToggleSwitchState extends ConsumerState<MapToggleSwitch>
         padding: const EdgeInsets.symmetric(horizontal: 2),
         child: Stack(
           children: [
-            // Switch Head
             AnimatedAlign(
               alignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
               duration: const Duration(milliseconds: 300),
@@ -71,7 +54,7 @@ class _MapToggleSwitchState extends ConsumerState<MapToggleSwitch>
                     BoxShadow(
                       color: Colors.black26,
                       blurRadius: 4,
-                      offset: const Offset(0, 2), // Head shadow
+                      offset: Offset(0, 2), // Head shadow
                     ),
                   ],
                 ),

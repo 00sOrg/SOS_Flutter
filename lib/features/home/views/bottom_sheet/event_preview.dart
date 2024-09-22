@@ -17,7 +17,7 @@ class EventPreview extends StatelessWidget {
     double paddingRatio = 0.0763; // 30px을 393px로 나눈 비율
     double paddingValue = MediaQuery.of(context).size.width * paddingRatio;
 
-    final timeText = formatTimeAgo(event.createdAt);
+    final timeText = formatTimeAgo(event.createdAt!);
 
     return GestureDetector(
       onTap: onTap,
@@ -53,7 +53,7 @@ class EventPreview extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            event.title,
+                            event.title!,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
