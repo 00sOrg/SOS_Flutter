@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
 import 'package:sos/features/setting/views/widgets/setting_favorite_search_bar.dart';
@@ -14,8 +15,9 @@ class SettingFavoriteSearchPage extends ConsumerWidget {
     final viewModel = ref.watch(settingFavoriteViewModelProvider.notifier);
 
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: '즐겨찾는 지인 관리',
+        onTapLeading: () => GoRouter.of(context).pop(),
       ),
       body: KeyboardDismisser(
         child: Column(

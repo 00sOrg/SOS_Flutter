@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/setting/viewmodels/setting_health_viewmodel.dart';
 import 'package:sos/features/setting/views/widgets/setting_labled_field.dart';
@@ -31,7 +32,10 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
     final userhealthInfo = ref.watch(settingHealthViewModelProvider);
 
     return Scaffold(
-      appBar: const CustomAppBar(title: '건강 정보 등록 및 수정'),
+      appBar: CustomAppBar(
+        title: '건강 정보 등록 및 수정',
+        onTapLeading: () => GoRouter.of(context).pop(),
+      ),
       body: KeyboardDismisser(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 33, 20, 0),

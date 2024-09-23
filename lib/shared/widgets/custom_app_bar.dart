@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         leading: hasLeading!
             ? IconButton(
-                onPressed: onTapLeading ?? () => GoRouter.of(context).pop(),
+                onPressed: onTapLeading ?? () => GoRouter.of(context).go('/home'),
                 icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   size: 26,
