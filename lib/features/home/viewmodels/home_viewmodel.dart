@@ -7,12 +7,14 @@ class HomeState {
   final bool isFavoritesOpen;
   final bool isNotificationSideSheetOpen;
   final List<Post> posts;
+  final bool isSearchFocused;
 
   HomeState({
     this.isSwitchLeft = true,
     this.isFavoritesOpen = false,
     this.isNotificationSideSheetOpen = false,
     this.posts = const [], // 초기값은 빈 리스트
+    this.isSearchFocused = false,
   });
 
   HomeState copyWith({
@@ -20,6 +22,7 @@ class HomeState {
     bool? isFavoritesOpen,
     bool? isNotificationSideSheetOpen,
     List<Post>? posts,
+    bool? isSearchFocused,
   }) {
     return HomeState(
       isSwitchLeft: isSwitchLeft ?? this.isSwitchLeft,
@@ -27,6 +30,7 @@ class HomeState {
       isNotificationSideSheetOpen:
           isNotificationSideSheetOpen ?? this.isNotificationSideSheetOpen,
       posts: posts ?? this.posts, // posts 복사
+      isSearchFocused: isSearchFocused ?? this.isSearchFocused,
     );
   }
 }
@@ -50,6 +54,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
   void toggleNotificationSideSheet() {
     state = state.copyWith(
         isNotificationSideSheetOpen: !state.isNotificationSideSheetOpen);
+  }
+
+  void toggleSearchFocus(bool isFocused){
+    state = state.copyWith(isSearchFocused: isFocused);
   }
 
   void navigateToUser(BuildContext context, String user) {
