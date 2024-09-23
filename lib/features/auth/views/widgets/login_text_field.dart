@@ -19,6 +19,8 @@ class LoginTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextField(
+        autocorrect: false,
+        autofocus: false,
         controller: controller,
         maxLength: maxLength,
         obscureText: obscureText,
