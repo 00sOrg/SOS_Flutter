@@ -6,11 +6,13 @@ import 'package:sos/shared/styles/global_styles.dart';
 class CustomNavBar extends StatelessWidget {
   final int selectedIdx;
   final VoidCallback onHomePressed;
+  final VoidCallback onOtherPressed;
 
   const CustomNavBar({
     super.key,
     required this.selectedIdx,
     required this.onHomePressed,
+    required this.onOtherPressed,
   });
 
   void _onItemTap(BuildContext context, int idx) {
@@ -20,6 +22,7 @@ class CustomNavBar extends StatelessWidget {
       onHomePressed(); // 홈 버튼을 눌렀을 때 바텀시트를 열고 닫는 동작
       GoRouter.of(context).go(route.path);
     } else {
+      onOtherPressed(); // 다른 버튼을 눌렀을 때 바텀시트를 닫는 동작
       GoRouter.of(context).push(route.path);
     }
 //    GoRouter.of(context).go(route.path);
