@@ -4,7 +4,6 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart';
 import 'package:sos/features/setting/views/widgets/setting_favorite_add_button.dart';
 import 'package:sos/features/setting/views/widgets/setting_favorite_block.dart';
-import 'package:sos/shared/enums/status_enum.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 
 class SettingFavoritePage extends ConsumerWidget {

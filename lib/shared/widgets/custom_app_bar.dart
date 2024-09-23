@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool? hasLeading;
+  final VoidCallback? onTapLeading;
   final Widget? trailingAction;
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.hasLeading = true,
+    this.onTapLeading,
     this.trailingAction,
   });
 
@@ -31,10 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         leading: hasLeading!
             ? IconButton(
-                onPressed: () {
-                  // GoRouter.of(context).pop();
-                  GoRouter.of(context).go('/home');
-                },
+                onPressed: onTapLeading ?? () => GoRouter.of(context).pop(),
                 icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   size: 26,

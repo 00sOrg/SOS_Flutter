@@ -22,17 +22,20 @@ class WritePage extends ConsumerStatefulWidget {
 class _WritePageState extends ConsumerState<WritePage> {
   final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _contentTEC = TextEditingController();
+  final FocusNode _contentFocusNode = FocusNode();
   PostType _selectedPostType = PostType.none;
 
   @override
   void initState() {
     super.initState();
     _contentTEC.addListener(_handleContentChange);
+    _contentFocusNode.addListener(_handleContentChange);
   }
 
   @override
   void dispose() {
     _contentTEC.removeListener(_handleContentChange);
+    _contentFocusNode.removeListener(_handleFocusChange);
     _titleTEC.dispose();
     _contentTEC.dispose();
     super.dispose();
@@ -41,6 +44,12 @@ class _WritePageState extends ConsumerState<WritePage> {
   void _handleContentChange() {
     setState(() {
       // 텍스트필드 내용 변하면 리빌드 트리거함
+    });
+  }
+
+  void _handleFocusChange() {
+    setState(() {
+      // 리빌드 트리거
     });
   }
 
@@ -70,10 +79,13 @@ class _WritePageState extends ConsumerState<WritePage> {
             children: [
               _topArea(location),
               const SizedBox(height: 14),
-              Expanded(child: _contentField()),
-              if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
+              if (_contentFocusNode.hasFocus) _buildPostTypeButtons(),
               const SizedBox(height: 16),
-              if (_contentTEC.text.isNotEmpty) _buildPostTypeButtons(),
+              Expanded(child: _contentField()),
+              // if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
+              if (!_contentFocusNode.hasFocus) const WriteCautionsBlock(),
+              // const SizedBox(height: 16),
+              // if (_contentTEC.text.isNotEmpty) _buildPostTypeButtons(),
               const SizedBox(height: 25),
               WriteSubmitBtn(
                 onTap: () async {
@@ -155,6 +167,7 @@ class _WritePageState extends ConsumerState<WritePage> {
   Widget _contentField() {
     return TextField(
       controller: _contentTEC,
+      focusNode: _contentFocusNode,
       keyboardType: TextInputType.multiline,
       autocorrect: false,
       minLines: 2,

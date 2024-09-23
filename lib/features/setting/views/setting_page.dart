@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/setting/viewmodels/setting_viewmodel.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
+import 'package:sos/shared/widgets/custom_switch.dart';
 
 class SettingPage extends ConsumerWidget {
   const SettingPage({super.key});
@@ -76,12 +77,9 @@ class SettingPage extends ConsumerWidget {
                 height: 1.2,
               ),
             ),
-            SizedBox(
-              height: 10,
-              child: CupertinoSwitch(
-                value: value,
-                onChanged: onChanged,
-              ),
+            CustomSwitch(
+              isOn: value,
+              onTap: () => onChanged(!value),
             ),
           ],
         ),

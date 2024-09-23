@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
@@ -20,6 +21,14 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class HomePageState extends ConsumerState<HomePage> {
+  // bool _isOverlayVisible = false;
+
+  // void _toggleOverlay(bool isVisible) {
+  //   setState(() {
+  //     _isOverlayVisible = isVisible;
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -41,41 +50,52 @@ class HomePageState extends ConsumerState<HomePage> {
         ref.watch(homeViewModelProvider.select((state) => state.isSwitchLeft));
 
     debugPrint('isSwitchLeft: $isSwitchLeft');
-    return Scaffold(
-      body: Stack(
-        children: [
-          locationAsyncValue.when(
-            data: (location) {
-              return Stack(
-                children: [
-                  // MapWidget에 위치와 Post 리스트를 전달합니다.
-                  MapWidget(
-                    currentLocation: location,
-                    level: isSwitchLeft
-                        ? 'all'
-                        : 'primary', // Handle the switch here
-                  ),
-                  _homeTopArea(context, ref),
-                  if (isFavoritesOpen)
-                    Positioned(
-                      top: 70 + 42 + 7,
-                      left: 20,
-                      child: FavoritesDropdown(),
+    return KeyboardDismisser(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            locationAsyncValue.when(
+              data: (location) {
+                return Stack(
+                  children: [
+                    // MapWidget에 위치와 Post 리스트를 전달합니다.
+                    MapWidget(
+                      currentLocation: location,
+                      level: isSwitchLeft
+                          ? 'all'
+                          : 'primary', // Handle the switch here
                     ),
-                ],
-              );
-            },
-            error: (error, stack) => Center(
-              child: Text('Error: $error'),
+                    _homeTopArea(context, ref),
+                    if (isFavoritesOpen)
+                      Positioned(
+                        top: 70 + 42 + 7,
+                        left: 20,
+                        child: FavoritesDropdown(),
+                      ),
+                  ],
+                );
+              },
+              error: (error, stack) => Center(
+                child: Text('Error: $error'),
+              ),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-          if (isSideSheetOpen) const AlarmSideSheet(),
-        ],
+            if (isSideSheetOpen) const AlarmSideSheet(),
+            // if (_isOverlayVisible)
+            //   GestureDetector(
+            //     onTap: () => _toggleOverlay(false),
+            //     child: Container(
+            //       color: Colors.black.withOpacity(0.2),
+            //       width: MediaQuery.of(context).size.width,
+            //       height: MediaQuery.of(context).size.height,
+            //     ),
+            //   ),
+          ],
+        ),
+        bottomSheet: const HomePageBottomSheet(),
       ),
-      bottomSheet: const HomePageBottomSheet(),
     );
   }
 
@@ -101,6 +121,7 @@ class HomePageState extends ConsumerState<HomePage> {
                   ),
                 ),
                 const SizedBox(width: 15),
+                // HomeSearchBar(toggleOverlay: _toggleOverlay),
                 const HomeSearchBar(),
                 const SizedBox(width: 15),
                 HeaderBtn(
