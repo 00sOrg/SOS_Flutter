@@ -1,61 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class HomeSearchBar extends ConsumerWidget {
-  
+
   const HomeSearchBar({super.key});
-
-// class HomeSearchBar extends ConsumerStatefulWidget {
-//   final Function(bool) toggleOverlay;
-
-//   const HomeSearchBar({super.key, required this.toggleOverlay});
-
-//   @override
-//   ConsumerState<HomeSearchBar> createState() => _HomeSearchBarState();
-// }
-
-// class _HomeSearchBarState extends ConsumerState<HomeSearchBar> {
-//   late FocusNode _focusNode;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _focusNode = FocusNode();
-
-//     _focusNode.addListener(() {
-//       if (_focusNode.hasFocus) {
-//         widget.toggleOverlay(true); // Show overlay
-//       } else {
-//         widget.toggleOverlay(false); // Hide overlay
-//       }
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     _focusNode.dispose();
-//     super.dispose();
-//   }
-
-  // void _dismissKeyboard() {
-  //   _focusNode
-  //       .unfocus(); // Remove focus from the text field, hides the keyboard
-  //   setState(() {
-  //     _isOverlayVisible = false;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final searchFocusNode = FocusNode();
+
+    searchFocusNode.addListener((){
+      final isFocused = searchFocusNode.hasFocus;
+      ref.read(homeViewModelProvider.notifier).toggleSearchFocus(isFocused);
+    });
+    
     // Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox(
         height: 42,
         child: TextField(
           autofocus: false,
-          // focusNode: _focusNode,
+          focusNode: searchFocusNode,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 2, horizontal: 14),

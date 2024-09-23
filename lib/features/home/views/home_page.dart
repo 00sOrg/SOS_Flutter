@@ -21,14 +21,6 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class HomePageState extends ConsumerState<HomePage> {
-  // bool _isOverlayVisible = false;
-
-  // void _toggleOverlay(bool isVisible) {
-  //   setState(() {
-  //     _isOverlayVisible = isVisible;
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -83,15 +75,6 @@ class HomePageState extends ConsumerState<HomePage> {
               ),
             ),
             if (isSideSheetOpen) const AlarmSideSheet(),
-            // if (_isOverlayVisible)
-            //   GestureDetector(
-            //     onTap: () => _toggleOverlay(false),
-            //     child: Container(
-            //       color: Colors.black.withOpacity(0.2),
-            //       width: MediaQuery.of(context).size.width,
-            //       height: MediaQuery.of(context).size.height,
-            //     ),
-            //   ),
           ],
         ),
         bottomSheet: const HomePageBottomSheet(),
