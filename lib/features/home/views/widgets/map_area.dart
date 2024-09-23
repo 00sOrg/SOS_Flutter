@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/custom_marker.dart';
 import 'package:sos/shared/models/location.dart';
@@ -21,6 +22,8 @@ class MapWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isSearchFocused = ref
+        .watch(homeViewModelProvider.select((state) => state.isSearchFocused));
     final mapViewModel = ref.read(mapViewModelProvider.notifier);
 
     return Stack(
@@ -50,16 +53,18 @@ class MapWidget extends ConsumerWidget {
             _addMarkers(_controller, ref);
           },
         ),
-        GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: Container(
-            color: Colors.transparent,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+        if (isSearchFocused)
+          GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              debugPrint('지도 터치 감지, 키보드 dismiss');
+            },
+            child: Container(
+              color: Colors.transparent,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            ),
           ),
-        ),
       ],
     );
   }
