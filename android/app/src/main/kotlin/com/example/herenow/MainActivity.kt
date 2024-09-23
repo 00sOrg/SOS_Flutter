@@ -1,4 +1,4 @@
-package com.example.sos
+package com.sos.khu
 
 import io.flutter.embedding.android.FlutterActivity
 
