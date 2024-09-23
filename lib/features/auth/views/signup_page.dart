@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/auth/viewmodels/signup_viewmodel.dart';
 import 'package:sos/features/auth/views/widgets/signup_textfield.dart';
@@ -24,7 +25,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     final user = ref.watch(signupViewModelProvider);
 
     return Scaffold(
-      appBar: const CustomAppBar(title: '회원가입'),
+      appBar: CustomAppBar(
+        title: '회원가입',
+        onTapLeading: () => GoRouter.of(context).pop(),
+      ),
       body: KeyboardDismisser(
         child: Padding(
           padding: const EdgeInsets.all(20),

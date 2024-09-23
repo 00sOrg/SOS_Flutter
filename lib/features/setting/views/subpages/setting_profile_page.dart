@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/setting/viewmodels/setting_profile_viewmodel.dart';
 import 'package:sos/features/setting/views/widgets/setting_labled_field.dart';
@@ -33,7 +34,10 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
     final user = ref.watch(settingProfileViewModelProvider);
 
     return Scaffold(
-      appBar: const CustomAppBar(title: '내 정보 수정'),
+      appBar: CustomAppBar(
+        title: '내 정보 수정',
+        onTapLeading: () => GoRouter.of(context).pop(),
+      ),
       body: KeyboardDismisser(
         child: Padding(
           padding: const EdgeInsets.all(20),

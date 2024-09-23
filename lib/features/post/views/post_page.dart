@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/features/post/views/widgets/comment_write_section.dart';
 import 'package:sos/features/post/views/widgets/user_profile_section.dart';
@@ -21,48 +23,53 @@ class PostPage extends ConsumerWidget {
     final postAsync = ref.watch(postByIdProvider(postId));
     final postViewModel = ref.watch(postViewModelProvider(postId).notifier);
 
-    return Scaffold(
-      appBar: CustomAppBar(title: '${postAsync.value?.title ?? ''}'),
-      body: postAsync.when(
-        data: (post) {
-          if (post == null) {
-            return const Center(child: Text('No post found'));
-          }
-          return Stack(
-            children: [
-              RefreshIndicator.adaptive(
-                onRefresh: () async {
-                  await postViewModel.refreshPost(postId);
-                },
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(25, 18.0, 25, 80.0),
-                  children: [
-                    PostBadge(post: post),
-                    const SizedBox(height: 2),
-                    HeaderSection(post: post),
-                    const SizedBox(height: 14),
-                    UserProfileSection(post: post),
-                    const SizedBox(height: 8),
-                    ImageSection(post: post),
-                    const SizedBox(height: 16),
-                    ContentSection(post: post),
-                    const SizedBox(height: 40),
-                    LikeAndCommentSection(post: post),
-                    CommentSection(comments: post.comments),
-                  ],
+    return KeyboardDismisser(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: postAsync.value?.title ?? '',
+          onTapLeading: () => GoRouter.of(context).pop(),
+        ),
+        body: postAsync.when(
+          data: (post) {
+            if (post == null) {
+              return const Center(child: Text('No post found'));
+            }
+            return Stack(
+              children: [
+                RefreshIndicator.adaptive(
+                  onRefresh: () async {
+                    await postViewModel.refreshPost(postId);
+                  },
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(25, 18.0, 25, 80.0),
+                    children: [
+                      PostBadge(post: post),
+                      const SizedBox(height: 2),
+                      HeaderSection(post: post),
+                      const SizedBox(height: 14),
+                      UserProfileSection(post: post),
+                      const SizedBox(height: 8),
+                      ImageSection(post: post),
+                      const SizedBox(height: 16),
+                      ContentSection(post: post),
+                      const SizedBox(height: 40),
+                      LikeAndCommentSection(post: post),
+                      CommentSection(comments: post.comments),
+                    ],
+                  ),
                 ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: CommentWriteSection(postId: post.postId),
-              ),
-            ],
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: CommentWriteSection(postId: post.postId),
+                ),
+              ],
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, stack) => Center(child: Text('Error: $err')),
+        ),
       ),
     );
   }
