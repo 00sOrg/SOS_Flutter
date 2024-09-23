@@ -96,7 +96,18 @@ class _AlarmSideSheetState extends ConsumerState<AlarmSideSheet> {
                   ),
                   const SizedBox(height: 5),
                   // 알림 리스트
-                  AlarmList(alarms: alarms),
+                  alarms.isEmpty
+                      ? const Center(
+                          heightFactor: 27,
+                          child: Text(
+                            '알림이 없습니다.',
+                            style: TextStyle(
+                              color: AppColors.textGray,
+                              fontSize: 14,
+                            ),
+                          ),
+                        )
+                      : AlarmList(alarms: alarms),
                 ],
               ),
             ),

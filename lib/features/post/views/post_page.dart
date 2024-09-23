@@ -22,7 +22,8 @@ class PostPage extends ConsumerWidget {
     final postViewModel = ref.watch(postViewModelProvider(postId).notifier);
 
     return Scaffold(
-      appBar: CustomAppBar(title: '${postAsync.value?.title ?? ''}'),
+      // appBar: CustomAppBar(title: '${postAsync.value?.title ?? ''}'),
+      appBar: CustomAppBar(title: '사건/사고'),
       body: postAsync.when(
         data: (post) {
           if (post == null) {
