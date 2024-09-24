@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sos/features/board/views/widgets/board_tag_grid.dart';
 import 'package:sos/shared/models/board.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
@@ -9,13 +10,13 @@ class BoardCarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dummyTags = ['홍수', '지진', '대박티비', '어쩔'];
+
     return GestureDetector(
       onTap: () => context.push('/post/${post.eventId}'),
       child: Stack(
         children: [
           Container(
-            // width: 297.w,
-            // height: 480.w,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: post.media != null && post.media!.isNotEmpty
@@ -28,8 +29,6 @@ class BoardCarouselItem extends StatelessWidget {
             ),
           ),
           Container(
-            // width: 297.w,
-            // height: 480.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               gradient: const LinearGradient(
@@ -39,7 +38,7 @@ class BoardCarouselItem extends StatelessWidget {
                   Colors.transparent,
                   Colors.black,
                 ],
-                stops: [0.2, 1],
+                stops: [0.1, 1],
               ),
             ),
           ),
@@ -54,11 +53,13 @@ class BoardCarouselItem extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.white,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(height: 50), // TODO: 재난 아이콘들 넣기
+                const SizedBox(height: 12),
+                BoardTagGrid(items: dummyTags),
+                const SizedBox(height: 12),
                 Text(
                   post.content ?? '',
                   style: const TextStyle(

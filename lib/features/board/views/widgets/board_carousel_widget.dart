@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_carousel_item.dart';
 
@@ -55,7 +56,7 @@ class _CarouselWidgetState extends ConsumerState<BoardCarouselWidget> {
     }
 
     return SizedBox(
-      height: 480,
+      height: 480.w,
       child: PageView.builder(
         controller: _pageController,
         itemCount: _infiniteScrollOffset, // 무한스크롤
@@ -82,13 +83,13 @@ class _CarouselWidgetState extends ConsumerState<BoardCarouselWidget> {
                   // Transform.translate(
                   //   offset: Offset(value * 7.5, 0),
                   Padding(
-                padding: EdgeInsets.symmetric(horizontal: 7.5),
+                padding: const EdgeInsets.symmetric(horizontal: 7.5),
                 child: Opacity(
                   opacity: value,
                   child: SizedBox(
                     // height: Curves.easeOut.transform(value) * 300,
                     // width: Curves.easeOut.transform(value) * 200,
-                    height: 480,
+                    height: 480.w,
                     width: 297,
                     child: BoardCarouselItem(post: boardItems[actualIndex]),
                   ),

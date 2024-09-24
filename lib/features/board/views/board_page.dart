@@ -65,13 +65,13 @@ class _BoardPageState extends ConsumerState<BoardPage> {
                   const SizedBox(width: 20),
                 ],
               ),
-              Spacer(),
-              BoardCarouselWidget(),
+              const Spacer(),
+              const BoardCarouselWidget(),
               const SizedBox(height: 70),
               const Text(
                 '좌우로 스와이프해서 사건 사고를 확인해보세요!',
                 style: TextStyle(
-                  color: AppColors.lineGray,
+                  color: AppColors.textGray,
                   fontSize: 14,
                   height: 1.2,
                 ),
