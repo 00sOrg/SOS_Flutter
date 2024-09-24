@@ -5,6 +5,7 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/features/post/views/widgets/comment_write_section.dart';
 import 'package:sos/features/post/views/widgets/user_profile_section.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 import 'widgets/header_section.dart';
 import 'widgets/image_section.dart';
@@ -41,20 +42,34 @@ class PostPage extends ConsumerWidget {
                     await postViewModel.refreshPost(postId);
                   },
                   child: ListView(
-                    padding: const EdgeInsets.fromLTRB(25, 18.0, 25, 80.0),
+                    // padding: const EdgeInsets.fromLTRB(20, 18, 20, 80),
                     children: [
-                      PostBadge(post: post),
-                      const SizedBox(height: 2),
-                      HeaderSection(post: post),
-                      const SizedBox(height: 14),
-                      UserProfileSection(post: post),
-                      const SizedBox(height: 8),
-                      ImageSection(post: post),
-                      const SizedBox(height: 16),
-                      ContentSection(post: post),
-                      const SizedBox(height: 40),
-                      LikeAndCommentSection(post: post),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                        child: Column(
+                          children: [
+                            PostBadge(post: post),
+                            const SizedBox(height: 2),
+                            HeaderSection(post: post),
+                            const SizedBox(height: 14),
+                            UserProfileSection(post: post),
+                            const SizedBox(height: 8),
+                            ImageSection(post: post),
+                            const SizedBox(height: 16),
+                            ContentSection(post: post),
+                            const SizedBox(height: 19),
+                            LikeAndCommentSection(post: post),
+                            const SizedBox(height: 13),
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: AppColors.lineGray,
+                      ),
                       CommentSection(comments: post.comments),
+                      const SizedBox(height: 80),
                     ],
                   ),
                 ),

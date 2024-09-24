@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
-import 'package:sos/features/board/views/widgets/board_item.dart';
+import 'package:sos/features/board/views/widgets/board_carousel_widget.dart';
 import 'package:sos/features/board/views/widgets/board_search_bar.dart';
+import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
@@ -14,7 +16,7 @@ class BoardPage extends ConsumerStatefulWidget {
 }
 
 class _BoardPageState extends ConsumerState<BoardPage> {
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -27,13 +29,12 @@ class _BoardPageState extends ConsumerState<BoardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final boardItems = ref.watch(boardViewModelProvider);
+    // final boardItems = ref.watch(boardViewModelProvider);
     return SafeArea(
       bottom: false,
       child: KeyboardDismisser(
         child: Scaffold(
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -51,53 +52,31 @@ class _BoardPageState extends ConsumerState<BoardPage> {
                         color: AppColors.lightBlue,
                         shape: BoxShape.circle,
                       ),
-                      child: const Center(
-                        child: Icon(Icons.alarm),
+                      child: HeaderBtn(
+                        onTap: () {},
+                        icon: SvgPicture.asset(
+                          'assets/icons/home/notification.svg',
+                          width: 24,
+                          height: 24,
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(width: 20),
                 ],
               ),
-              Expanded(
-                child: RefreshIndicator.adaptive(
-                  displacement: 20,
-                  onRefresh: () async {
-                    await ref
-                        .read(boardViewModelProvider.notifier)
-                        .refreshBoard();
-                  },
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.height - 59 - 71 - 94,
-                      ),
-                      child: boardItems.isEmpty
-                          ? const Center(
-                              child: Text('게시글이 없어요'),
-                            )
-                          : GridView.builder(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              controller: _scrollController,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 1,
-                                mainAxisSpacing: 1,
-                                childAspectRatio: 1,
-                              ),
-                              itemCount: boardItems.length,
-                              itemBuilder: (context, idx) {
-                                return BoardItem(post: boardItems[idx]);
-                              },
-                              physics: const PageScrollPhysics(),
-                            ),
-                    ),
-                  ),
+              const Spacer(),
+              const BoardCarouselWidget(),
+              const SizedBox(height: 70),
+              const Text(
+                '좌우로 스와이프해서 사건 사고를 확인해보세요!',
+                style: TextStyle(
+                  color: AppColors.textGray,
+                  fontSize: 14,
+                  height: 1.2,
                 ),
-              )
+              ),
+              const SizedBox(height: 23),
             ],
           ),
         ),
@@ -105,3 +84,44 @@ class _BoardPageState extends ConsumerState<BoardPage> {
     );
   }
 }
+
+
+              // Expanded(
+              //   child: RefreshIndicator.adaptive(
+              //     displacement: 20,
+              //     onRefresh: () async {
+              //       await ref
+              //           .read(boardViewModelProvider.notifier)
+              //           .refreshBoard();
+              //     },
+              //     child: SingleChildScrollView(
+              //       physics: const AlwaysScrollableScrollPhysics(),
+              //       child: ConstrainedBox(
+              //         constraints: BoxConstraints(
+              //           minHeight: MediaQuery.of(context).size.height - 59 - 71 - 94,
+              //         ),
+              //         child: boardItems.isEmpty
+              //             ? const Center(
+              //                 child: Text('게시글이 없어요'),
+              //               )
+              //             : GridView.builder(
+              //                 shrinkWrap: true,
+              //                 padding: EdgeInsets.zero,
+              //                 controller: _scrollController,
+              //                 gridDelegate:
+              //                     const SliverGridDelegateWithFixedCrossAxisCount(
+              //                   crossAxisCount: 3,
+              //                   crossAxisSpacing: 1,
+              //                   mainAxisSpacing: 1,
+              //                   childAspectRatio: 1,
+              //                 ),
+              //                 itemCount: boardItems.length,
+              //                 itemBuilder: (context, idx) {
+              //                   return BoardItem(post: boardItems[idx]);
+              //                 },
+              //                 physics: const PageScrollPhysics(),
+              //               ),
+              //       ),
+              //     ),
+              //   ),
+              // )

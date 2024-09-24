@@ -74,7 +74,7 @@ class CommentBlock extends StatelessWidget {
             height: 1.2,
           ),
         ),
-        const SizedBox(height: 11),
+        const SizedBox(height: 16),
       ],
     );
   }
