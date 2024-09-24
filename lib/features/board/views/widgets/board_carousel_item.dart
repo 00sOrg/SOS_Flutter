@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/shared/models/board.dart';
 import 'package:sos/shared/styles/global_styles.dart';
@@ -15,8 +14,8 @@ class BoardCarouselItem extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: 297.w,
-            height: 480.w,
+            // width: 297.w,
+            // height: 480.w,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: post.media != null && post.media!.isNotEmpty
@@ -29,25 +28,23 @@ class BoardCarouselItem extends StatelessWidget {
             ),
           ),
           Container(
-            width: 297.w,
-            height: 480.w,
+            // width: 297.w,
+            // height: 480.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               gradient: const LinearGradient(
-                  begin: Alignment.center,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black,
-                  ],
-                  stops: [
-                    0.25,
-                    1
-                  ]),
+                begin: Alignment.center,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Colors.black,
+                ],
+                stops: [0.2, 1],
+              ),
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 36),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
