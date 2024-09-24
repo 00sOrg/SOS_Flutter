@@ -19,7 +19,6 @@ class HomePageBottomSheet extends ConsumerWidget {
       expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
-          padding: const EdgeInsets.only(top: 15),
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),

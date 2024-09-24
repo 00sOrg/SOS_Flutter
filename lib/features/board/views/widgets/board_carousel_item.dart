@@ -22,7 +22,8 @@ class BoardCarouselItem extends StatelessWidget {
                 image: post.media != null && post.media!.isNotEmpty
                     ? NetworkImage(post.media!)
                     : const NetworkImage(
-                        'https://cafe24.poxo.com/ec01/khsdadmin/mSaNeAoTdVWKy3i/vGUYzGAb8qcB+ueHqM6QPLIb837hUhuuj0OAIeyQbF7bGCQg/_/web/product/big/202011/93ac3a43b738dcb5ab37a7e071f70323.jpg'), //쿠옹이
+                        'https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg?w=2000&t=st=1727165735~exp=1727166335~hmac=525ace82c185c8f8a960f551e210f30b22cb51feea0357ded46b41aba1bf6721',
+                      ), //쿠옹이
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -52,7 +53,7 @@ class BoardCarouselItem extends StatelessWidget {
                   post.title,
                   style: const TextStyle(
                     color: AppColors.white,
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.w700,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -66,6 +67,7 @@ class BoardCarouselItem extends StatelessWidget {
                     color: AppColors.white,
                     fontSize: 16,
                     overflow: TextOverflow.ellipsis,
+                    height: 1.2
                   ),
                   maxLines: 3,
                 ),

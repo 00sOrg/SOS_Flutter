@@ -16,6 +16,7 @@ class SettingPage extends ConsumerWidget {
     return Scaffold(
       appBar: const CustomAppBar(
         title: '설정',
+        hasLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),

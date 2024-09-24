@@ -11,12 +11,12 @@ class BoardSearchBar extends ConsumerWidget {
       padding: const EdgeInsets.symmetric( vertical: 14),
       decoration: const BoxDecoration(
         color: AppColors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: AppColors.lineGray,
-            width: 1,
-          ),
-        ),
+        // border: Border(
+        //   bottom: BorderSide(
+        //     color: AppColors.lineGray,
+        //     width: 1,
+        //   ),
+        // ),
       ),
       child: SizedBox(
         height: 42,
