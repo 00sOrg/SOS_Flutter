@@ -15,38 +15,66 @@ class EventPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double paddingRatio = 0.0763; // 30px을 393px로 나눈 비율
-    double paddingValue = MediaQuery.of(context).size.width * paddingRatio;
+    double paddingValue = 20;
 
     final timeText = formatTimeAgo(event.createdAt!);
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 120,
-        padding: EdgeInsets.symmetric(horizontal: paddingValue),
+        // height: 120,
+        padding: EdgeInsets.symmetric(horizontal: paddingValue, vertical: 16),
         child: Center(
           // Center 위젯을 사용하여 내부 내용을 중간에 위치하게 설정
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center, // Row 내부 요소들을 중앙에 정렬
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (event.mediaURL != null) ...[
-                Container(
-                  width: 85,
-                  height: 85,
-                  margin: const EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    image: DecorationImage(
-                      image: NetworkImage(event.mediaURL!),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ],
+              // if (event.mediaURL != null) ...[
+              //   Container(
+              //     width: 85,
+              //     height: 85,
+              //     margin: const EdgeInsets.only(right: 13),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(4),
+              //       image: DecorationImage(
+              //         image: NetworkImage(event.mediaURL!),
+              //         fit: BoxFit.cover,
+              //       ),
+              //     ),
+              //   ),
+              // ],
+              // if (event.mediaURL != null) ...[
+              //   Container(
+              //     width: 85,
+              //     height: 85,
+              //     margin: const EdgeInsets.only(right: 13),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(4),
+              //       image: DecorationImage(
+              //         image: NetworkImage(event.mediaURL!),
+              //         fit: BoxFit.cover,
+              //       ),
+              //     ),
+              //   ),
+              // ],
+              (event.mediaURL != null)
+                  ? Container(
+                      width: 85,
+                      height: 85,
+                      margin: const EdgeInsets.only(right: 13),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        image: DecorationImage(
+                          image: NetworkImage(event.mediaURL!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(height: 85),
+
               Expanded(
                 child: Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Column의 내용이 중앙에 오도록 설정
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
@@ -55,30 +83,28 @@ class EventPreview extends StatelessWidget {
                           child: Text(
                             event.title!,
                             style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow:
-                                TextOverflow.ellipsis, // 한 줄 이상 넘어가면 ...으로 표시
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                height: 1),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const SizedBox(width: 8), // 제목과 시간 사이의 간격 조정
+                        const SizedBox(width: 8),
                         Text(
                           timeText,
                           style: const TextStyle(
-                            fontSize: 12,
+                            fontSize: 13,
                             color: Colors.grey,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 3),
                     Text(
                       event.content ?? '',
-                      maxLines: event.mediaURL != null
-                          ? 2
-                          : 3, // 미디어가 있는 경우 더 적은 줄을 사용
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 16, height: 1.2),
                     ),
                   ],
                 ),

@@ -137,7 +137,8 @@ class CustomNavBar extends StatelessWidget {
       ),
       NavigationDestination(
         icon: Icon(
-          Icons.star,
+          // Icons.star,
+          Icons.grid_view,
           color: selectedIdx == 3 ? AppColors.blue : AppColors.textGray,
           size: size,
         ),

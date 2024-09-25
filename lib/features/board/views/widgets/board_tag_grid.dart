@@ -51,13 +51,14 @@ class BoardTagGrid extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0017a7),
-              AppColors.blue,
-            ]),
+        // gradient: const LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [
+        //       Color(0xFF0017a7),
+        //       AppColors.blue,
+        //     ]),
+        color: AppColors.blue,
         borderRadius: BorderRadius.circular(50),
       ),
       child: Row(
@@ -74,6 +75,7 @@ class BoardTagGrid extends StatelessWidget {
             text,
             style: const TextStyle(
               color: AppColors.white,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],

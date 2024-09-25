@@ -180,7 +180,7 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
           padding: const EdgeInsets.fromLTRB(30, 15, 30, 25),
           child: BottomWideButton(
             text: '저장하기',
-            onTap: () => viewModel.submit(),
+            onTap: () => viewModel.submit(context),
           )),
     );
   }

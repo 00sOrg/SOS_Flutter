@@ -16,7 +16,10 @@ class RescuePage extends ConsumerWidget {
     final viewModel = ref.read(rescueViewModelProvider.notifier);
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'SOS'),
+      appBar: const CustomAppBar(
+        title: 'SOS',
+        hasLeading: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(30, 33, 30, 0),
         child: SingleChildScrollView(
@@ -62,8 +65,8 @@ class RescuePage extends ConsumerWidget {
                   height: 1.2,
                 ),
               ),
-              // const SizedBox(height: 15),
-              const SizedBox(height: 40),
+              const SizedBox(height: 25),
+              // const SizedBox(height: 40),
               RescueBtn(
                 onTap: () => viewModel.handleNearbyAlert(),
                 text: '내 주변에 도움 요청',
@@ -76,6 +79,7 @@ class RescuePage extends ConsumerWidget {
                 text: '112 / 119에 신고하기',
                 color: AppColors.blue,
               ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

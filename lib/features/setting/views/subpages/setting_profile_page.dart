@@ -183,6 +183,7 @@ class _SettingProfilePageState extends ConsumerState<SettingProfilePage> {
                         child: SettingTextfield(
                           hintText: 'DD',
                           maxLength: 2,
+                          keyboardType: TextInputType.number,
                           controller: viewModel.dayTEC,
                           onChanged: (value) {
                             final day = int.tryParse(value) ?? 1;

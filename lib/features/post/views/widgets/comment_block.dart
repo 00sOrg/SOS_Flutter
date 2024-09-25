@@ -32,7 +32,7 @@ class CommentBlock extends StatelessWidget {
                       width: 30,
                     ),
                   ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
