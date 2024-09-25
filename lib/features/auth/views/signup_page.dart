@@ -190,6 +190,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         child: SignupTextfield(
                           hintText: 'DD',
                           maxLength: 2,
+                          keyboardType: TextInputType.number,
                           controller: viewModel.dayTEC,
                           onChanged: (value) {
                             final day = int.tryParse(value) ?? 1;

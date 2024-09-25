@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:path/path.dart';
 
 class UserHealthInfo {
   final double height;
@@ -100,7 +102,8 @@ class SettingHealthViewModel extends StateNotifier<UserHealthInfo> {
     state = state.copyWith(medication: medication);
   }
 
-  Future<void> submit() async {
+  Future<void> submit(BuildContext context) async {
+    GoRouter.of(context).pop();
     debugPrint(
         '건강 정보: ${state.height}cm, ${state.weight}kg, 혈액형: ${state.bloodType}, 질병: ${state.disease}, 약물: ${state.medication}');
     // 이곳에 실제 제출 로직을 구현할 수 있습니다.

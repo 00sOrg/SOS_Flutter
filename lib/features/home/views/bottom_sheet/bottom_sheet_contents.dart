@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
-import 'package:sos/features/home/views/bottom_sheet/nearbyEvents.dart';
+import 'package:sos/features/home/views/bottom_sheet/handle_bar.dart';
+import 'package:sos/features/home/views/bottom_sheet/nearby_events.dart';
 import 'package:sos/features/home/views/bottom_sheet/tapped_event.dart';
 
 class BottomSheetContent extends ConsumerWidget {
@@ -23,6 +24,7 @@ class BottomSheetContent extends ConsumerWidget {
         //     scrollController: scrollController,
         //   ) // Display tapped event
         // else
+        const HandleBar(),
         NearbyEvents(
           events: nearbyEvents,
           scrollController: scrollController,

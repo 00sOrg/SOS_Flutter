@@ -11,18 +11,15 @@ class FriendAddBtn extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          // height: 145.h,
-          // width: 157.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: const Color(0xFFF9F9F9),
-            // color: const Color(0xFFFAFAFA),
+            color: const Color(0xFFFAFAFA),
           ),
           child: const Center(
             child: Icon(
               Icons.add,
               size: 36,
-              color: AppColors.lineGray,
+              color: AppColors.textGray,
             ),
           )),
     );

@@ -65,9 +65,18 @@ class _BoardPageState extends ConsumerState<BoardPage> {
                   const SizedBox(width: 20),
                 ],
               ),
+              const Divider(
+                color: AppColors.finalGray,
+                height: 1,
+                thickness: 1,
+              ),
               const Spacer(),
               const BoardCarouselWidget(),
-              const SizedBox(height: 70),
+              const SizedBox(height: 34),
+              SvgPicture.asset(
+                'assets/icons/side_arrow.svg',
+              ),
+              const SizedBox(height: 16),
               const Text(
                 '좌우로 스와이프해서 사건 사고를 확인해보세요!',
                 style: TextStyle(

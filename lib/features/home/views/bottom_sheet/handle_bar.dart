@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class HandleBar extends StatelessWidget {
   const HandleBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 18, 0, 18),
       child: Container(
         height: 4,
         width: 94,
-        margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
-          color: Colors.grey[400],
+          color: AppColors.textGray,
           borderRadius: BorderRadius.circular(10),
         ),
       ),
