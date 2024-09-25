@@ -62,7 +62,9 @@ class _CommentWriteSectionState extends ConsumerState<CommentWriteSection> {
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                  icon: const Icon(Icons.send, color: AppColors.white),
+                  icon: Image.asset(
+                    'assets/icons/post/Send.png',
+                  ),
                   onPressed: () {
                     final comment = _controller.text;
                     if (comment.isNotEmpty) {

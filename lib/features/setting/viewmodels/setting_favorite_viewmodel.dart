@@ -4,13 +4,20 @@ import 'package:go_router/go_router.dart';
 import 'package:sos/features/setting/views/widgets/setting_modal.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/providers/friend_repository_provider.dart';
+import 'package:sos/shared/providers/user_repository_provider.dart';
 import 'package:sos/shared/repositories/friends_repository.dart';
+import 'package:sos/shared/repositories/user_repository.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
   final FriendsRepository friendsRepository;
+  final UserRepository userRepository;
 
-  SettingFavoriteViewModel(this.friendsRepository) : super([]) {
+  Friend? _searchedUser;
+  Friend? get searchedUser => _searchedUser;
+
+  SettingFavoriteViewModel(this.friendsRepository, this.userRepository)
+      : super([]) {
     _loadFavorites();
   }
 
@@ -110,15 +117,38 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
     GoRouter.of(context).push('/setting-favorite-search');
   }
 
-  void searchFriend(BuildContext context, String text) {
+  Future<void> searchFriend(BuildContext context, String text) async {
     debugPrint('검색: $text');
-    // 사실 search 결과 실패시 어케할지 처리 하는게 정석이지만,, 시간이 없으니 패스함
-    // 무조건 올바른 검색 결과가 있다고 가정
+    final user = await userRepository.getUserByNickname(text);
+
+    // 검색했는데 사용자가 없는 경우
+    if (user.id == -1) {
+      debugPrint('검색 결과 없음');
+      _searchedUser = Friend(
+        favoriteMemberId: -1,
+        nickname: 'Unknown',
+        modifiedNickname: 'Unknown',
+        lastLocation: '',
+      );
+    } else {
+      // 현재는 isAccepted를 false로 가정하고 있음 -> 항상 요청 대기 중인 상태로 뜸
+      // TODO: 검색했는데 이미 친구인 경우, 요청 대기 중인 경우, 아무것도 아닌 경우를 처리해야함
+      _searchedUser = Friend(
+        favoriteMemberId: user.id!,
+        nickname: user.nickname!,
+        modifiedNickname: user.nickname!,
+        lastLocation: user.address!,
+        isAccepted: true,
+      );
+    }
+    debugPrint(_searchedUser.toString());
+    state = [...state];
     GoRouter.of(context).push('/setting-favorite-search-result');
   }
 
-  void requestFavorite(BuildContext context, int id) {
-    debugPrint('친친요청 리퀘 보냄 - id: $id');
+  void requestFavorite(BuildContext context, String nickname) {
+    debugPrint('친친요청 리퀘 보냄 - nickname: $nickname');
+    friendsRepository.addFriend(context, nickname);
     GoRouter.of(context).pop();
     GoRouter.of(context).pop();
   }
@@ -144,6 +174,7 @@ final settingFavoriteViewModelProvider =
     StateNotifierProvider<SettingFavoriteViewModel, List<Friend>>(
   (ref) {
     final friendsRepository = ref.read(friendsRepositoryProvider);
-    return SettingFavoriteViewModel(friendsRepository);
+    final userRepository = ref.read(userRepositoryProvider);
+    return SettingFavoriteViewModel(friendsRepository, userRepository);
   },
 );

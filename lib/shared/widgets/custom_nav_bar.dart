@@ -112,22 +112,31 @@ class CustomNavBar extends StatelessWidget {
   }
 
   List<NavigationDestination> _navDestinations(int selectedIdx) {
-    double size = 36;
+    double size = 32;
     return [
       NavigationDestination(
-        icon: Icon(
-          // Icons.home,
-          Icons.location_on_outlined,
-          color: selectedIdx == 0 ? AppColors.blue : AppColors.textGray,
-          size: size,
+        icon: Transform.scale(
+          scale: 1.2,
+          child: Image.asset(
+            selectedIdx == 0
+                ? 'assets/icons/home/Location1.png'
+                : 'assets/icons/home/Location2.png',
+            width: size,
+            height: size,
+          ),
         ),
         label: '홈화면',
       ),
       NavigationDestination(
-        icon: Icon(
-          Icons.sos,
-          color: selectedIdx == 1 ? AppColors.blue : AppColors.textGray,
-          size: size,
+        icon: Transform.scale(
+          scale: 1.2,
+          child: Image.asset(
+            selectedIdx == 1
+                ? 'assets/icons/home/Warning1.png'
+                : 'assets/icons/home/Warning2.png',
+            width: size,
+            height: size,
+          ),
         ),
         label: '구조요청',
       ),
@@ -138,22 +147,76 @@ class CustomNavBar extends StatelessWidget {
         label: '',
       ),
       NavigationDestination(
-        icon: Icon(
-          // Icons.star,
-          Icons.grid_view,
-          color: selectedIdx == 3 ? AppColors.blue : AppColors.textGray,
-          size: size,
+        icon: Transform.scale(
+          scale: 1.1,
+          child: Image.asset(
+            selectedIdx == 3
+                ? 'assets/icons/home/Category1.png'
+                : 'assets/icons/home/Category2.png',
+            width: size,
+            height: size,
+          ),
         ),
         label: '사건/사고 목록',
       ),
       NavigationDestination(
-        icon: Icon(
-          Icons.menu,
-          color: selectedIdx == 4 ? AppColors.blue : AppColors.textGray,
-          size: size,
+        icon: Transform.scale(
+          scale: 1.2,
+          child: Image.asset(
+            selectedIdx == 4
+                ? 'assets/icons/home/Setting1.png'
+                : 'assets/icons/home/Setting2.png',
+            width: size,
+            height: size,
+          ),
         ),
         label: '내 정보',
       ),
     ];
   }
+
+  // List<NavigationDestination> _navDestinations(int selectedIdx) {
+  //   double size = 36;
+  //   return [
+  //     NavigationDestination(
+  //       icon: Icon(
+  //         // Icons.home,
+  //         Icons.location_on_outlined,
+  //         color: selectedIdx == 0 ? AppColors.blue : AppColors.textGray,
+  //         size: size,
+  //       ),
+  //       label: '홈화면',
+  //     ),
+  //     NavigationDestination(
+  //       icon: Icon(
+  //         Icons.sos,
+  //         color: selectedIdx == 1 ? AppColors.blue : AppColors.textGray,
+  //         size: size,
+  //       ),
+  //       label: '구조요청',
+  //     ),
+  //     const NavigationDestination(
+  //       enabled: false,
+  //       icon: SizedBox(width: 36, height: 36),
+  //       // label: '사건/사고 추가',
+  //       label: '',
+  //     ),
+  //     NavigationDestination(
+  //       icon: Icon(
+  //         Icons.star,
+  //         color: selectedIdx == 3 ? AppColors.blue : AppColors.textGray,
+  //         size: size,
+  //       ),
+  //       label: '사건/사고 목록',
+  //     ),
+  //     NavigationDestination(
+  //       icon: Icon(
+  //         Icons.menu,
+  //         color: selectedIdx == 4 ? AppColors.blue : AppColors.textGray,
+  //         size: size,
+  //       ),
+  //       label: '내 정보',
+  //     ),
+  //   ];
+  // }
 }

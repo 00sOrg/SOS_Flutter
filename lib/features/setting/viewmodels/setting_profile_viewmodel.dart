@@ -58,7 +58,7 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   void updateControllers() {
     emailTEC.text = state.email!;
-    nameTEC.text = state.name;
+    nameTEC.text = state.name!;
     nicknameTEC.text = state.nickname!;
     numberTEC.text = state.phoneNumber!;
     yearTEC.text = state.birthDay!.year.toString();

@@ -18,15 +18,18 @@ class LikeAndCommentSection extends ConsumerWidget {
             await ref
                 .read(postViewModelProvider(post.postId).notifier)
                 .toggleLike(post.postId);
-        
+
             ref.refresh(postByIdProvider(post.postId));
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
-                Icons.favorite,
-                color: post.isLiked ? AppColors.red : AppColors.textGray,
+              Image.asset(
+                post.isLiked
+                    ? 'assets/icons/post/Heart1.png'
+                    : 'assets/icons/post/Heart2.png',
+                width: 25,
+                height: 25,
               ),
               const SizedBox(width: 4),
               Text(
@@ -36,11 +39,12 @@ class LikeAndCommentSection extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: 12),
         // const Icon(Icons.comment),
-        const Text(
-          '💬',
-          style: TextStyle(fontSize: 19),
+        Image.asset(
+          'assets/icons/post/Chat.png',
+          width: 27,
+          height: 27,
         ),
         const SizedBox(width: 4),
         Text(
