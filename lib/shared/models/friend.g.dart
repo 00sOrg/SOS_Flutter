@@ -8,7 +8,7 @@ part of 'friend.dart';
 
 _$FriendImpl _$$FriendImplFromJson(Map<String, dynamic> json) => _$FriendImpl(
       favoriteMemberId: (json['favoriteMemberId'] as num).toInt(),
-      isAccepted: json['isAccepted'] as bool,
+      isAccepted: json['isAccepted'] as bool?,
       lastLocation: json['lastLocation'] as String?,
       modifiedNickname: json['modifiedNickname'] as String,
       nickname: json['nickname'] as String,

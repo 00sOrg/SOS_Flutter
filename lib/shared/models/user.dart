@@ -8,13 +8,14 @@ class User with _$User {
   factory User({
     String? profilePicture,
     int? id,
-    required String name,
+    String? name,
     String? password,
     String? email,
     String? nickname,
     String? phoneNumber,
     String? gender,
     DateTime? birthDay,
+    String? address,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

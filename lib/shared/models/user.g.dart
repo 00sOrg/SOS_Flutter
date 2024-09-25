@@ -9,7 +9,7 @@ part of 'user.dart';
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       profilePicture: json['profilePicture'] as String?,
       id: (json['id'] as num?)?.toInt(),
-      name: json['name'] as String,
+      name: json['name'] as String?,
       password: json['password'] as String?,
       email: json['email'] as String?,
       nickname: json['nickname'] as String?,
@@ -18,6 +18,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       birthDay: json['birthDay'] == null
           ? null
           : DateTime.parse(json['birthDay'] as String),
+      address: json['address'] as String?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -31,4 +32,5 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'phoneNumber': instance.phoneNumber,
       'gender': instance.gender,
       'birthDay': instance.birthDay?.toIso8601String(),
+      'address': instance.address,
     };

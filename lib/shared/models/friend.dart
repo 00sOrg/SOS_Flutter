@@ -7,7 +7,7 @@ part 'friend.g.dart';
 class Friend with _$Friend {
   factory Friend({
     required int favoriteMemberId,
-    required bool isAccepted,
+    bool? isAccepted,
     String? lastLocation,
     required String modifiedNickname,
     required String nickname,
