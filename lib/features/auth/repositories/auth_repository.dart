@@ -97,7 +97,7 @@ class AuthRepository {
     final fields = {
       'email': user.email!,
       'password': user.password!,
-      'name': user.name,
+      'name': user.name!,
       'nickname': user.nickname!,
       'phoneNumber': user.phoneNumber!,
       'sex': user.gender!,

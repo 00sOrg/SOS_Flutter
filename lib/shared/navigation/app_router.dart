@@ -73,12 +73,18 @@ class AppRouter {
               bottomNavigationBar: Builder(
                 builder: (context) {
                   return CustomNavBar(
-                      selectedIdx: calculateSelectedIdx(state.uri.path),
-                      onHomePressed: () {
-                        ref
-                            .read(bottomSheetViewModelProvider.notifier)
-                            .toggleBottomSheet();
-                      });
+                    selectedIdx: calculateSelectedIdx(state.uri.path),
+                    onHomePressed: () {
+                      ref
+                          .read(bottomSheetViewModelProvider.notifier)
+                          .toggleBottomSheet();
+                    },
+                    onOtherPressed: () {
+                      ref
+                          .read(bottomSheetViewModelProvider.notifier)
+                          .closeBottomSheet();
+                    },
+                  );
                 },
               ),
             );

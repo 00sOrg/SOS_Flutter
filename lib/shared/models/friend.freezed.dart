@@ -21,7 +21,7 @@ Friend _$FriendFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Friend {
   int get favoriteMemberId => throw _privateConstructorUsedError;
-  bool get isAccepted => throw _privateConstructorUsedError;
+  bool? get isAccepted => throw _privateConstructorUsedError;
   String? get lastLocation => throw _privateConstructorUsedError;
   String get modifiedNickname => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $FriendCopyWith<$Res> {
   @useResult
   $Res call(
       {int favoriteMemberId,
-      bool isAccepted,
+      bool? isAccepted,
       String? lastLocation,
       String modifiedNickname,
       String nickname,
@@ -60,7 +60,7 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
   @override
   $Res call({
     Object? favoriteMemberId = null,
-    Object? isAccepted = null,
+    Object? isAccepted = freezed,
     Object? lastLocation = freezed,
     Object? modifiedNickname = null,
     Object? nickname = null,
@@ -71,10 +71,10 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
           ? _value.favoriteMemberId
           : favoriteMemberId // ignore: cast_nullable_to_non_nullable
               as int,
-      isAccepted: null == isAccepted
+      isAccepted: freezed == isAccepted
           ? _value.isAccepted
           : isAccepted // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       lastLocation: freezed == lastLocation
           ? _value.lastLocation
           : lastLocation // ignore: cast_nullable_to_non_nullable
@@ -104,7 +104,7 @@ abstract class _$$FriendImplCopyWith<$Res> implements $FriendCopyWith<$Res> {
   @useResult
   $Res call(
       {int favoriteMemberId,
-      bool isAccepted,
+      bool? isAccepted,
       String? lastLocation,
       String modifiedNickname,
       String nickname,
@@ -123,7 +123,7 @@ class __$$FriendImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? favoriteMemberId = null,
-    Object? isAccepted = null,
+    Object? isAccepted = freezed,
     Object? lastLocation = freezed,
     Object? modifiedNickname = null,
     Object? nickname = null,
@@ -134,10 +134,10 @@ class __$$FriendImplCopyWithImpl<$Res>
           ? _value.favoriteMemberId
           : favoriteMemberId // ignore: cast_nullable_to_non_nullable
               as int,
-      isAccepted: null == isAccepted
+      isAccepted: freezed == isAccepted
           ? _value.isAccepted
           : isAccepted // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       lastLocation: freezed == lastLocation
           ? _value.lastLocation
           : lastLocation // ignore: cast_nullable_to_non_nullable
@@ -163,7 +163,7 @@ class __$$FriendImplCopyWithImpl<$Res>
 class _$FriendImpl implements _Friend {
   _$FriendImpl(
       {required this.favoriteMemberId,
-      required this.isAccepted,
+      this.isAccepted,
       this.lastLocation,
       required this.modifiedNickname,
       required this.nickname,
@@ -175,7 +175,7 @@ class _$FriendImpl implements _Friend {
   @override
   final int favoriteMemberId;
   @override
-  final bool isAccepted;
+  final bool? isAccepted;
   @override
   final String? lastLocation;
   @override
@@ -231,7 +231,7 @@ class _$FriendImpl implements _Friend {
 abstract class _Friend implements Friend {
   factory _Friend(
       {required final int favoriteMemberId,
-      required final bool isAccepted,
+      final bool? isAccepted,
       final String? lastLocation,
       required final String modifiedNickname,
       required final String nickname,
@@ -242,7 +242,7 @@ abstract class _Friend implements Friend {
   @override
   int get favoriteMemberId;
   @override
-  bool get isAccepted;
+  bool? get isAccepted;
   @override
   String? get lastLocation;
   @override

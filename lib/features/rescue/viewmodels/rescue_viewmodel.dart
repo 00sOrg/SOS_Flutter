@@ -18,7 +18,7 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
   Future<void> fetchFriends() async {
     final friends = await friendsRepository.getFriendsList();
     // isAccepted == true인 사용자만
-    state = friends.where((friend) => friend.isAccepted).toList();
+    state = friends.where((friend) => friend.isAccepted!).toList();
   }
 
   void handleFriendHelp({

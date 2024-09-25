@@ -25,33 +25,48 @@ class SettingFavoriteSearchResultPage extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 33),
           child: Column(
             children: [
-              SettingNotFavoriteBlock(
-                viewModel: viewModel,
-                friend: viewModel.dummySearchResultFriend,
-              ),
-              const SizedBox(height: 59),
-              GestureDetector(
-                onTap: () => viewModel.requestFavorite(context,
-                    viewModel.dummySearchResultFriend.favoriteMemberId),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15.w,
-                    vertical: 12,
-                  ),
-                  child: const Text(
-                    '즐겨찾기 추가 요청 보내기',
+              if (viewModel.searchedUser != null &&
+                  viewModel.searchedUser!.favoriteMemberId != -1)
+                SettingNotFavoriteBlock(
+                  viewModel: viewModel,
+                  friend: viewModel.searchedUser!,
+                )
+              else
+                const Center(
+                  heightFactor: 15,
+                  child: Text(
+                    "검색 결과 없음",
                     style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
-              ),
+              const SizedBox(height: 59),
+              if (viewModel.searchedUser != null &&
+                  viewModel.searchedUser!.favoriteMemberId != -1)
+                GestureDetector(
+                  onTap: () => viewModel.requestFavorite(
+                      context, viewModel.searchedUser!.nickname),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15.w,
+                      vertical: 12,
+                    ),
+                    child: const Text(
+                      '즐겨찾기 추가 요청 보내기',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

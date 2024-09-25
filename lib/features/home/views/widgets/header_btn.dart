@@ -18,11 +18,17 @@ class HeaderBtn extends StatelessWidget {
       child: Container(
         width: 42,
         height: 42,
-        decoration: const BoxDecoration(
-          color: AppColors.blue,
-          shape: BoxShape.circle,
+        decoration: ShapeDecoration(
+          gradient: RadialGradient(
+            center: Alignment(0, 0), // 중앙에서 시작
+            radius: 1, // 그라데이션 반경 설정
+            colors: [AppColors.white, AppColors.blue],
+          ),
+          shape: OvalBorder(),
         ),
-        child: Center(child: icon),
+        child: Center(
+          child: icon,
+        ),
       ),
     );
   }

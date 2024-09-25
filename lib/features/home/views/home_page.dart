@@ -97,10 +97,10 @@ class HomePageState extends ConsumerState<HomePage> {
                 HeaderBtn(
                   onTap: () =>
                       ref.read(homeViewModelProvider.notifier).toggleDropdown(),
-                  icon: SvgPicture.asset(
-                    'assets/icons/home/favorites.svg',
-                    width: 24,
-                    height: 24,
+                  icon: Image.asset(
+                    'assets/icons/home/favorites.png',
+                    width: 36,
+                    height: 36,
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -109,10 +109,13 @@ class HomePageState extends ConsumerState<HomePage> {
                 const SizedBox(width: 15),
                 HeaderBtn(
                   onTap: () => showAlarmSideSheet(context, ref),
-                  icon: SvgPicture.asset(
-                    'assets/icons/home/notification.svg',
-                    width: 24,
-                    height: 24,
+                  icon: Align(
+                    alignment: Alignment(0, 0.5), // 세로로 조금 아래로 이동
+                    child: Image.asset(
+                      'assets/icons/home/notifications.png',
+                      width: 36,
+                      height: 36,
+                    ),
                   ),
                 ),
               ],

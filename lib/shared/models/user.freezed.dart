@@ -22,13 +22,14 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   String? get profilePicture => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get nickname => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   DateTime? get birthDay => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,13 +44,14 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {String? profilePicture,
       int? id,
-      String name,
+      String? name,
       String? password,
       String? email,
       String? nickname,
       String? phoneNumber,
       String? gender,
-      DateTime? birthDay});
+      DateTime? birthDay,
+      String? address});
 }
 
 /// @nodoc
@@ -67,13 +69,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? profilePicture = freezed,
     Object? id = freezed,
-    Object? name = null,
+    Object? name = freezed,
     Object? password = freezed,
     Object? email = freezed,
     Object? nickname = freezed,
     Object? phoneNumber = freezed,
     Object? gender = freezed,
     Object? birthDay = freezed,
+    Object? address = freezed,
   }) {
     return _then(_value.copyWith(
       profilePicture: freezed == profilePicture
@@ -84,10 +87,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
@@ -112,6 +115,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.birthDay
           : birthDay // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -126,13 +133,14 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {String? profilePicture,
       int? id,
-      String name,
+      String? name,
       String? password,
       String? email,
       String? nickname,
       String? phoneNumber,
       String? gender,
-      DateTime? birthDay});
+      DateTime? birthDay,
+      String? address});
 }
 
 /// @nodoc
@@ -147,13 +155,14 @@ class __$$UserImplCopyWithImpl<$Res>
   $Res call({
     Object? profilePicture = freezed,
     Object? id = freezed,
-    Object? name = null,
+    Object? name = freezed,
     Object? password = freezed,
     Object? email = freezed,
     Object? nickname = freezed,
     Object? phoneNumber = freezed,
     Object? gender = freezed,
     Object? birthDay = freezed,
+    Object? address = freezed,
   }) {
     return _then(_$UserImpl(
       profilePicture: freezed == profilePicture
@@ -164,10 +173,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
@@ -192,6 +201,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.birthDay
           : birthDay // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -202,13 +215,14 @@ class _$UserImpl implements _User {
   _$UserImpl(
       {this.profilePicture,
       this.id,
-      required this.name,
+      this.name,
       this.password,
       this.email,
       this.nickname,
       this.phoneNumber,
       this.gender,
-      this.birthDay});
+      this.birthDay,
+      this.address});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -218,7 +232,7 @@ class _$UserImpl implements _User {
   @override
   final int? id;
   @override
-  final String name;
+  final String? name;
   @override
   final String? password;
   @override
@@ -231,10 +245,12 @@ class _$UserImpl implements _User {
   final String? gender;
   @override
   final DateTime? birthDay;
+  @override
+  final String? address;
 
   @override
   String toString() {
-    return 'User(profilePicture: $profilePicture, id: $id, name: $name, password: $password, email: $email, nickname: $nickname, phoneNumber: $phoneNumber, gender: $gender, birthDay: $birthDay)';
+    return 'User(profilePicture: $profilePicture, id: $id, name: $name, password: $password, email: $email, nickname: $nickname, phoneNumber: $phoneNumber, gender: $gender, birthDay: $birthDay, address: $address)';
   }
 
   @override
@@ -255,13 +271,14 @@ class _$UserImpl implements _User {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.birthDay, birthDay) ||
-                other.birthDay == birthDay));
+                other.birthDay == birthDay) &&
+            (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, profilePicture, id, name,
-      password, email, nickname, phoneNumber, gender, birthDay);
+      password, email, nickname, phoneNumber, gender, birthDay, address);
 
   @JsonKey(ignore: true)
   @override
@@ -281,13 +298,14 @@ abstract class _User implements User {
   factory _User(
       {final String? profilePicture,
       final int? id,
-      required final String name,
+      final String? name,
       final String? password,
       final String? email,
       final String? nickname,
       final String? phoneNumber,
       final String? gender,
-      final DateTime? birthDay}) = _$UserImpl;
+      final DateTime? birthDay,
+      final String? address}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -296,7 +314,7 @@ abstract class _User implements User {
   @override
   int? get id;
   @override
-  String get name;
+  String? get name;
   @override
   String? get password;
   @override
@@ -309,6 +327,8 @@ abstract class _User implements User {
   String? get gender;
   @override
   DateTime? get birthDay;
+  @override
+  String? get address;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/utils/http_helpers.dart';
 import 'package:sos/shared/utils/log_util.dart';
+import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class FriendsRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
@@ -27,16 +29,21 @@ class FriendsRepository {
     }
   }
 
-  Future<bool> addFriend(String nickname) async {
+  Future<bool> addFriend(BuildContext context, String nickname) async {
     final url = Uri.parse('$baseUrl/members/favorite/$nickname');
 
     try {
       final accessToken = await secureStorage.read(key: 'access_token');
-      final response = await makePostRequest(url, null, 'addFriend',
-          accessToken: accessToken);
-      return response.statusCode == 200;
+      await makePostRequest(url, null, 'addFriend', accessToken: accessToken);
+      return true;
     } catch (e) {
-      LogUtil.e('Error adding friend: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(
+          text: e.toString().replaceFirst('Exception: ', ''),
+          backgroundColor: Colors.red,
+          duration: 1000,
+        ),
+      );
       return false;
     }
   }

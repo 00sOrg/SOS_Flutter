@@ -38,6 +38,19 @@ Future<http.Response> makeGetRequest(Uri url, String methodName,
   return response;
 }
 
+// 검색용 GET 요청 (false인 경우 에러 처리 안함)
+Future<http.Response> makeGetRequestForSearch(Uri url, String methodName,
+    {String? accessToken}) async {
+  final headers = {
+    'Content-Type': 'application/json',
+    if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+  };
+
+  final response = await http.get(url, headers: headers);
+
+  return response;
+}
+
 // POST 요청과 응답 처리용 헬퍼메소드
 Future<http.Response> makePostRequest(
     Uri url, Map<String, dynamic>? body, String methodName,
@@ -56,6 +69,10 @@ Future<http.Response> makePostRequest(
   );
 
   if (!handleResponse(response, methodName)) {
+    final resBody = jsonDecode(response.body);
+    if (resBody["statusCode"] == 400) {
+      throw Exception('${resBody["message"]}');
+    }
     throw Exception('$methodName: Bad Response');
   }
 
