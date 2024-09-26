@@ -73,7 +73,7 @@ class LocationViewModel extends StateNotifier<AsyncValue<Location>> {
             result["region"]["area3"]["name"];
       }
     }
-    return '';
+    return _extractAdminAddress(jsonData);
   }
 
   // "시, 구"
