@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
@@ -16,13 +15,8 @@ class CustomNavBar extends StatelessWidget {
     required this.onOtherPressed,
   });
 
-  Future<void> _openCam(BuildContext context) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
-
-    if (image != null) {
-      GoRouter.of(context).go('/write', extra: image);
-    }
+  Future<void> _openCustomCamera(BuildContext context) async {
+    GoRouter.of(context).push('/custom-camera');
   }
 
   void _onItemTap(BuildContext context, int idx) {
@@ -82,11 +76,11 @@ class CustomNavBar extends StatelessWidget {
           ),
           Positioned(
             // bottom: 70,
-            bottom: 50,
+            bottom: 30,
             child: GestureDetector(
               onTap: () {
                 //  _onItemTap(context, 2);
-                _openCam(context);
+                _openCustomCamera(context);
               },
               child: Container(
                 width: 60,
