@@ -54,6 +54,13 @@ class WriteImagePicker extends ConsumerWidget {
             CupertinoActionSheetAction(
               onPressed: () async {
                 Navigator.of(context).pop();
+                await viewModel.takeImg();
+              },
+              child: const Text('이미지 촬영'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () async {
+                Navigator.of(context).pop();
                 await viewModel.pickImage();
               },
               child: const Text('이미지 수정'),

@@ -34,6 +34,17 @@ class WriteViewModel extends StateNotifier<Post> {
     }
   }
 
+  void setCamImg(XFile image) {
+    state = state.copyWith(mediaURL: image.path);
+  }
+
+  Future<void> takeImg() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      state = state.copyWith(mediaURL: image.path);
+    }
+  }
+
   void clearImagePicker() {
     state = state.copyWith(mediaURL: null);
   }
