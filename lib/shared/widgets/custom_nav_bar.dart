@@ -76,7 +76,7 @@ class CustomNavBar extends StatelessWidget {
           ),
           Positioned(
             // bottom: 70,
-            bottom: 30,
+            bottom: 50,
             child: GestureDetector(
               onTap: () {
                 //  _onItemTap(context, 2);
