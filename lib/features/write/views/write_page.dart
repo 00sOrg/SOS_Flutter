@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/write/viewmodels/write_viewmodel.dart';
 import 'package:sos/features/write/views/widgets/write_cautions_block.dart';
@@ -13,7 +14,8 @@ import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 
 class WritePage extends ConsumerStatefulWidget {
-  const WritePage({super.key});
+  final XFile? camImg;
+  const WritePage({this.camImg, super.key});
 
   @override
   ConsumerState<WritePage> createState() => _WritePageState();
@@ -30,6 +32,10 @@ class _WritePageState extends ConsumerState<WritePage> {
     super.initState();
     _contentTEC.addListener(_handleContentChange);
     _contentFocusNode.addListener(_handleContentChange);
+
+    if(widget.camImg != null) {
+      ref.read(writeViewModelProvider.notifier).setCamImg(widget.camImg!);
+    }
   }
 
   @override
@@ -114,7 +120,7 @@ class _WritePageState extends ConsumerState<WritePage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const WriteImagePicker(),
+        WriteImagePicker(),
         const SizedBox(width: 16),
         Expanded(
           child: Column(

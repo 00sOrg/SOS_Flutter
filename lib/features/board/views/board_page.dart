@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,7 +6,6 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_carousel_widget.dart';
 import 'package:sos/features/board/views/widgets/board_search_bar.dart';
-import 'package:sos/features/home/views/widgets/header_btn.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
@@ -17,6 +17,8 @@ class BoardPage extends ConsumerStatefulWidget {
 
 class _BoardPageState extends ConsumerState<BoardPage> {
   // final ScrollController _scrollController = ScrollController();
+  bool _showDesc = true;
+  Timer? _hideDescTimer;
 
   @override
   void initState() {
@@ -25,6 +27,20 @@ class _BoardPageState extends ConsumerState<BoardPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(boardViewModelProvider.notifier).refreshBoard();
     });
+
+    _hideDescTimer = Timer(const Duration(seconds: 5), () {
+      if (mounted) {
+        setState(() {
+          _showDesc = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _hideDescTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -36,34 +52,9 @@ class _BoardPageState extends ConsumerState<BoardPage> {
         child: Scaffold(
           body: Column(
             children: [
-              Row(
-                children: [
-                  const SizedBox(width: 20),
-                  const Expanded(
-                    child: BoardSearchBar(),
-                  ),
-                  const SizedBox(width: 15),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: 42,
-                      height: 42,
-                      decoration: const BoxDecoration(
-                        color: AppColors.lightBlue,
-                        shape: BoxShape.circle,
-                      ),
-                      child: HeaderBtn(
-                        onTap: () {},
-                        icon: SvgPicture.asset(
-                          'assets/icons/home/notification.svg',
-                          width: 24,
-                          height: 24,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                ],
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: BoardSearchBar(),
               ),
               const Divider(
                 color: AppColors.finalGray,
@@ -72,20 +63,28 @@ class _BoardPageState extends ConsumerState<BoardPage> {
               ),
               const Spacer(),
               const BoardCarouselWidget(),
-              const SizedBox(height: 34),
-              SvgPicture.asset(
-                'assets/icons/side_arrow.svg',
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                '좌우로 스와이프해서 사건 사고를 확인해보세요!',
-                style: TextStyle(
-                  color: AppColors.textGray,
-                  fontSize: 14,
-                  height: 1.2,
+              const SizedBox(height: 33),
+              if (_showDesc) ...[
+                SvgPicture.asset(
+                  'assets/icons/side_arrow.svg',
+                  height: 22,
                 ),
-              ),
-              const SizedBox(height: 23),
+                const SizedBox(height: 14),
+                const SizedBox(
+                  height: 20,
+                  child: Text(
+                    '좌우로 스와이프해서 사건 사고를 확인해보세요!',
+                    style: TextStyle(
+                      color: AppColors.textGray,
+                      fontSize: 14,
+                      height: 1.2,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25),
+              ] else ...[
+                const SizedBox(height: 81),
+              ]
             ],
           ),
         ),
