@@ -33,15 +33,20 @@ class _WritePageState extends ConsumerState<WritePage> {
     _contentTEC.addListener(_handleContentChange);
     _contentFocusNode.addListener(_handleContentChange);
 
-    if(widget.camImg != null) {
-      ref.read(writeViewModelProvider.notifier).setCamImg(widget.camImg!);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.camImg != null) {
+        ref.read(writeViewModelProvider.notifier).setCamImg(widget.camImg!);
+      } else {
+        debugPrint('No image from custom camera');
+      }
+    });
   }
 
   @override
   void dispose() {
     _contentTEC.removeListener(_handleContentChange);
     _contentFocusNode.removeListener(_handleFocusChange);
+    _contentFocusNode.dispose();
     _titleTEC.dispose();
     _contentTEC.dispose();
     super.dispose();
@@ -85,11 +90,12 @@ class _WritePageState extends ConsumerState<WritePage> {
             children: [
               _topArea(location),
               const SizedBox(height: 14),
-              if (_contentFocusNode.hasFocus) _buildPostTypeButtons(),
+              _buildPostTypeButtons(),
               const SizedBox(height: 16),
               Expanded(child: _contentField()),
               // if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
-              if (!_contentFocusNode.hasFocus) const WriteCautionsBlock(),
+              if (!_contentFocusNode.hasFocus && !_contentTEC.text.isNotEmpty)
+                const WriteCautionsBlock(),
               // const SizedBox(height: 16),
               // if (_contentTEC.text.isNotEmpty) _buildPostTypeButtons(),
               const SizedBox(height: 25),

@@ -38,7 +38,8 @@ class WriteViewModel extends StateNotifier<Post> {
     state = state.copyWith(mediaURL: image.path);
   }
 
-  Future<void> takeImg() async {
+  Future<void> takeImg(BuildContext context) async {
+    // GoRouter.of(context).push('/custom-camera');
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     if (image != null) {
       state = state.copyWith(mediaURL: image.path);
@@ -66,10 +67,10 @@ class WriteViewModel extends StateNotifier<Post> {
         type: type,
         mediaFilePath: state.mediaURL,
       );
-
       if (success) {
         debugPrint('게시물 작성 성공');
         debugPrint('TODO: 작성 후 지도로 가서 작성한 게시물 보이게? 해야됨');
+        clearImagePicker();
         GoRouter.of(context).go('/home');
       } else {
         debugPrint('게시물 작성 실패');
