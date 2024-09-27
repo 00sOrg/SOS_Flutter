@@ -15,6 +15,10 @@ class CustomNavBar extends StatelessWidget {
     required this.onOtherPressed,
   });
 
+  Future<void> _openCustomCamera(BuildContext context) async {
+    GoRouter.of(context).push('/custom-camera');
+  }
+
   void _onItemTap(BuildContext context, int idx) {
     final route = AppRoutes.values[idx];
 
@@ -75,7 +79,8 @@ class CustomNavBar extends StatelessWidget {
             bottom: 50,
             child: GestureDetector(
               onTap: () {
-                _onItemTap(context, 2);
+                //  _onItemTap(context, 2);
+                _openCustomCamera(context);
               },
               child: Container(
                 width: 60,
@@ -99,7 +104,7 @@ class CustomNavBar extends StatelessWidget {
                 child: const Center(
                   child: Icon(
                     Icons.add,
-                    size: 30, // Larger icon size
+                    size: 30,
                     color: AppColors.blue,
                   ),
                 ),

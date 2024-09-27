@@ -10,7 +10,7 @@ class BoardCarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dummyTags = ['홍수', '지진', '대박티비', '어쩔'];
+    final dummyTags = ['홍수', '지진', '대박티비', '어쩔ㅎ'];
 
     return GestureDetector(
       onTap: () => context.push('/post/${post.eventId}'),

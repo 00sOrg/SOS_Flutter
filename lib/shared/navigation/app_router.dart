@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sos/features/auth/viewmodels/login_viewmodel.dart';
 import 'package:sos/features/auth/views/login_page.dart';
 import 'package:sos/features/auth/views/signup_page.dart';
@@ -15,6 +16,9 @@ import 'package:sos/features/setting/views/subpages/setting_favorite_search_page
 import 'package:sos/features/setting/views/subpages/setting_favorite_search_result_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_health_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_profile_page.dart';
+import 'package:sos/features/write/viewmodels/camera_viewmodel.dart';
+import 'package:sos/features/write/views/custom_camera_screen.dart';
+import 'package:sos/features/write/views/image_check_page.dart';
 import 'package:sos/features/write/views/write_page.dart';
 import 'package:sos/features/rescue/views/rescue_page.dart';
 import 'package:sos/features/x_archive/geolocator_test_page.dart';
@@ -66,6 +70,25 @@ class AppRouter {
             return PostPage(postId: postId);
           },
         ),
+        GoRoute(
+          path: '/custom-camera',
+          builder: (context, state) => const CustomCameraScreen(),
+        ),
+        GoRoute(
+          path: '/image-check',
+          builder: (context, state) {
+            final ImageCheckArguments? args =
+                state.extra as ImageCheckArguments?;
+            if (args != null) {
+              return ImageCheckPage(
+                imagePath: args.imagePath,
+                viewOnly: args.viewOnly,
+              );
+            } else {
+              return const NoImageCheckPage();
+            }
+          },
+        ),
         ShellRoute(
           builder: (context, state, child) {
             return Scaffold(
@@ -105,9 +128,11 @@ class AppRouter {
           builder: (context, state) => const RescuePage(),
         ),
         GoRoute(
-          path: '/write',
-          builder: (context, state) => const WritePage(),
-        ),
+            path: '/write',
+            builder: (context, state) {
+              final XFile? camImg = state.extra as XFile?;
+              return WritePage(camImg: camImg);
+            }),
         GoRoute(
           path: '/board',
           builder: (context, state) => BoardPage(),

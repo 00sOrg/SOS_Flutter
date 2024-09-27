@@ -7,43 +7,71 @@ class BoardTagGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> oddItems = [];
-    final List<String> evenItems = [];
+    // final List<String> oddItems = [];
+    // final List<String> evenItems = [];
 
-    for (int i = 0; i < items.length; i++) {
-      if (i % 2 == 0) {
-        oddItems.add(items[i]);
-      } else {
-        evenItems.add(items[i]);
-      }
+    // for (int i = 0; i < items.length; i++) {
+    //   if (i % 2 == 0) {
+    //     oddItems.add(items[i]);
+    //   } else {
+    //     evenItems.add(items[i]);
+    //   }
+    // }
+
+    // return Column(
+    //   children: [
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       children: oddItems
+    //           .map(
+    //             (item) => Padding(
+    //               padding: const EdgeInsets.symmetric(horizontal: 5),
+    //               child: tagBlock(text: item),
+    //             ),
+    //           )
+    //           .toList(),
+    //     ),
+    //     const SizedBox(height: 6),
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       children: evenItems
+    //           .map(
+    //             (item) => Padding(
+    //               padding: const EdgeInsets.symmetric(horizontal: 5),
+    //               child: tagBlock(text: item),
+    //             ),
+    //           )
+    //           .toList(),
+    //     ),
+    //   ],
+    // );
+
+    List<Widget> rows = [];
+
+    for (int i = 0; i < items.length; i += 3) {
+      List<String> rowItems = items.sublist(
+        i,
+        i + 3 > items.length ? items.length : i + 3,
+      );
+
+      rows.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: rowItems
+              .map(
+                (item) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: tagBlock(text: item),
+                ),
+              )
+              .toList(),
+        ),
+      );
+      rows.add(const SizedBox(height: 6));
     }
 
     return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: oddItems
-              .map(
-                (item) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: tagBlock(text: item),
-                ),
-              )
-              .toList(),
-        ),
-        const SizedBox(height: 6),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: evenItems
-              .map(
-                (item) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: tagBlock(text: item),
-                ),
-              )
-              .toList(),
-        ),
-      ],
+      children: rows,
     );
   }
 
