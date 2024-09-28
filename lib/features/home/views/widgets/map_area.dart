@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/custom_marker.dart';
 import 'package:sos/shared/models/location.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class MapWidget extends ConsumerWidget {
   final Location currentLocation;
@@ -40,10 +42,13 @@ class MapWidget extends ConsumerWidget {
                 .read(mapControllerProvider.notifier)
                 .initializeController(controller);
             controller.setLocationTrackingMode(NLocationTrackingMode.face);
+            controller
+                .getLocationOverlay()
+                .setCircleColor(AppColors.lightBlue.withOpacity(0.3));
             mapViewModel.fetchPostsForMap(
                 level, currentLocation.latitude, currentLocation.longitude, 15);
 
-            _addMarkers(controller, ref);
+            _addMarkers(controller, context, ref);
           },
           onCameraIdle: () async {
             final naverMapController = ref.read(mapControllerProvider);
@@ -57,7 +62,7 @@ class MapWidget extends ConsumerWidget {
                   cameraPosition.target.longitude,
                   zoomLevel);
 
-              _addMarkers(naverMapController, ref);
+              _addMarkers(naverMapController, context, ref);
             }
           },
         ),
@@ -77,26 +82,77 @@ class MapWidget extends ConsumerWidget {
     );
   }
 
-  void _addMarkers(NaverMapController controller, WidgetRef ref) {
+  final Set<String> currentMarkerIds = {};
+
+  void debugPrintMarkers() {
+    debugPrint('Current Markers:');
+    for (var markerId in currentMarkerIds) {
+      debugPrint(markerId);
+    }
+  }
+
+  Future<void> _addMarkers(
+    NaverMapController controller,
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     final mapViewModel = ref.watch(mapViewModelProvider);
     final posts = mapViewModel;
 
-    // Clear existing markers
-    controller.clearOverlays();
+    debugPrintMarkers();
+    final Set<String> newMarkerIds =
+        posts.map((post) => post.postId.toString()).toSet();
 
-    // Add markers for each post
     for (var post in posts) {
-      final marker = CustomMarker(
-        id: post.postId.toString(),
-        eventType: post.disasterType!,
-        position: NLatLng(post.latitude!, post.longitude!),
-        onTap: () {
-          ref
-              .read(mapViewModelProvider.notifier)
-              .onMarkerTap(post, ref, controller);
-        },
-      );
-      controller.addOverlay(marker);
+      final markerId = post.postId.toString();
+
+      if (!currentMarkerIds.contains(markerId)) {
+        // Add new markers
+        NMarker marker;
+        if (post.mediaURL != null && post.mediaURL!.isNotEmpty) {
+          final nOverlayImage = await buildImageMarkerWidget(
+            post.mediaURL!,
+            post.disasterType!,
+            context,
+          );
+          marker = CustomImageMarker(
+            id: markerId,
+            nOverlayImage: nOverlayImage,
+            position: NLatLng(post.latitude!, post.longitude!),
+            onTap: () {
+              ref
+                  .read(mapViewModelProvider.notifier)
+                  .onMarkerTap(post, ref, controller);
+            },
+          );
+        } else {
+          marker = CustomMarker(
+            id: markerId,
+            eventType: post.disasterType!,
+            position: NLatLng(post.latitude!, post.longitude!),
+            onTap: () {
+              ref
+                  .read(mapViewModelProvider.notifier)
+                  .onMarkerTap(post, ref, controller);
+            },
+          );
+        }
+
+        controller.addOverlay(marker);
+        debugPrint('마커 추가: ${post.postId}');
+        currentMarkerIds.add(markerId); // Track the added marker
+      }
     }
+
+    // Remove old markers
+    // final markersToRemove = currentMarkerIds.difference(newMarkerIds);
+    // for (final markerId in markersToRemove) {
+    //   await controller.deleteOverlay(
+    //     NOverlayInfo(
+    //       type: NOverlayType.marker,
+    //       id: markerId,
+    //     ),
+    //   );
+    // }
   }
 }

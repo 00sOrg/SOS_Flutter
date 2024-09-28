@@ -24,6 +24,9 @@ _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       longitude: (json['longitude'] as num?)?.toDouble(),
       disasterLevel: json['eventLevel'] as String?,
       disasterType: json['eventType'] as String?,
+      keywords: (json['keywords'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       comments: (json['comments'] as List<dynamic>?)
           ?.map((e) => Comment.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -46,5 +49,6 @@ Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
       'longitude': instance.longitude,
       'eventLevel': instance.disasterLevel,
       'eventType': instance.disasterType,
+      'keywords': instance.keywords,
       'comments': instance.comments,
     };
