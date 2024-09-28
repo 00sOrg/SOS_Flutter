@@ -1,7 +1,7 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class CustomMarker extends NMarker {
   final String id;
@@ -79,39 +79,84 @@ class CustomImageMarker extends NMarker {
 }
 
 Future<NOverlayImage> buildImageMarkerWidget(
-    String imageUrl, String eventType, BuildContext context) async {
+  String imageUrl,
+  String eventType,
+  BuildContext context,
+) async {
+  const dummyImgUrl =
+      'https://godomall.speedycdn.net/ec5d2a1c8483712efb957784c858b320/goods/1000000463/image/detail/1000000463_detail_020.jpg';
+  final Color widgetColor = _getImageMarkerColor(eventType);
   final nOverlayImage = await NOverlayImage.fromWidget(
     widget: Stack(
-      alignment: Alignment.center,
+      alignment: Alignment.bottomCenter,
       children: [
-        Image.asset(
-          getImageMarkerIcon(eventType), // Custom marker background asset
-          width: 86,
-          height: 94,
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            width: 70,
+            height: 70,
+            padding: const EdgeInsets.all(3.5),
+            decoration: BoxDecoration(
+              color: widgetColor,
+              borderRadius:
+                  BorderRadius.circular(6.5), // 내부 radius + 패딩값으로 계산해야 예쁘게 나옴
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              clipBehavior: Clip.antiAlias,
+              child: Image.network(
+                dummyImgUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(Icons.error, size: 48);
+                },
+              ),
+            ),
+          ),
         ),
         Positioned(
-          top: 5,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(3.0),
-            child: Image.network(
-              imageUrl,
-              width: 72,
-              height: 72,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.error, size: 72);
-              },
-              // loadingBuilder: (context, child, loadingProgress) {
-              //   if (loadingProgress == null) return child;
-              //   return const CircularProgressIndicator();
-              // },
-            ),
+          bottom: 0,
+          // 삼각형 핀
+          child: CustomPaint(
+            size: const Size(16, 13),
+            painter: _TrianglePainter(widgetColor),
           ),
         ),
       ],
     ),
-    size: const Size(85.34, 93), // Size of the widget
+    size: const Size(70, 70 + 10), // 원래 13이어야하지만..
     context: context,
+    // Stack(
+    //   alignment: Alignment.center,
+    //   children: [
+    //     Image.asset(
+    //       getImageMarkerIcon(eventType), // Custom marker background asset
+    //       width: 86,
+    //       height: 94,
+    //     ),
+    //     Positioned(
+    //       top: 5,
+    //       child: ClipRRect(
+    //         borderRadius: BorderRadius.circular(3.0),
+    //         child: Image.network(
+    //           imageUrl,
+    //           width: 72,
+    //           height: 72,
+    //           fit: BoxFit.cover,
+    //           errorBuilder: (context, error, stackTrace) {
+    //             return const Icon(Icons.error, size: 72);
+    //           },
+    //           // loadingBuilder: (context, child, loadingProgress) {
+    //           //   if (loadingProgress == null) return child;
+    //           //   return const CircularProgressIndicator();
+    //           // },
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // ),
   );
   debugPrint(nOverlayImage.toString());
   return nOverlayImage;
@@ -134,4 +179,78 @@ String getImageMarkerIcon(String? eventType) {
     default:
       return 'assets/icons/home/marker/Accident_image_marker.png';
   }
+}
+
+Color _getImageMarkerColor(String? eventType) {
+  switch (eventType) {
+    case 'FIRE':
+      return const Color(0xFFFF3535);
+    case 'TYPHOON':
+      return const Color(0xFFAA3DC2);
+    case 'FLOOD':
+      return const Color(0xFF0066FF);
+    case 'WAR':
+      return const Color(0xFF16AE0B);
+    case 'OTHER':
+      return const Color(0xFFF28C2C);
+    case 'CAR_ACCIDENT':
+      return const Color(0xFF00A392);
+    default:
+      return const Color(0xFF8FBCFF);
+  }
+}
+
+class _TrianglePainter extends CustomPainter {
+  final Color color;
+
+  _TrianglePainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = color;
+
+    final path = Path();
+
+    const curveRadius = 1;
+
+    path.moveTo(size.width / 2, size.height - curveRadius); // 하단 꼭짓점
+
+    path.quadraticBezierTo(
+      size.width / 2, // Control point x
+      size.height, // Control point y (최하단)
+      size.width / 2 + curveRadius, // End point x
+      size.height - curveRadius, // End point y
+    );
+
+    path.lineTo(size.width, 0); // 삼각형 오른쪽으로 선 그음
+    path.lineTo(0, 0); // 왼쪽으로,,
+
+    // bottom left 라운딩
+    path.lineTo(size.width / 2 - curveRadius, size.height - curveRadius);
+
+    // 둥근 하단 모서리 되게,,
+    path.quadraticBezierTo(
+      size.width / 2, // Control point x
+      size.height, // Control point y
+      size.width / 2 - curveRadius, // End point x
+      size.height - curveRadius, // End point y
+    );
+
+    // final path = Path()
+    // ..moveTo(size.width / 2, size.height) // Bottom center of the triangle
+    // ..lineTo(offset, 0) // Top left corner
+    // ..lineTo(size.width - offset, 0) // Top right corner
+    // // ..quadraticBezierTo(
+    // //   size.width / 2,
+    // //   size.height - offset, // Control point for curve
+    // //   offset,
+    // //   0, // Curve back to the bottom center
+    // // )
+    // ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
