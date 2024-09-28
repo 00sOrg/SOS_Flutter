@@ -203,6 +203,7 @@ class _WritePageState extends ConsumerState<WritePage> {
       '지진',
       '전쟁',
       '홍수',
+      '교통사고',
       '기타'
     ];
     const List<PostType> postTypes = [
@@ -212,6 +213,7 @@ class _WritePageState extends ConsumerState<WritePage> {
       PostType.earthquake,
       PostType.war,
       PostType.flood,
+      PostType.carAccident,
       PostType.other,
     ];
 

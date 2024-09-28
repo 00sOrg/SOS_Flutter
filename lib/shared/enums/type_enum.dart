@@ -5,6 +5,7 @@ enum PostType {
   war,
   flood,
   accident,
+  carAccident,
   other,
   none,
 }
@@ -24,6 +25,8 @@ extension PostTypeExtension on PostType {
         return 'FLOOD';
       case PostType.accident:
         return 'ACCIDENT';
+      case PostType.carAccident:
+        return 'CAR_ACCIDENT';
       case PostType.other:
         return 'OTHER';
       case PostType.none:

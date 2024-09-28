@@ -27,7 +27,7 @@ class PostPage extends ConsumerWidget {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: CustomAppBar(
-          title: postAsync.value?.title ?? '',
+          title: '게시글',
           onTapLeading: () => GoRouter.of(context).pop(),
         ),
         body: postAsync.when(
