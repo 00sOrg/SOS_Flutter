@@ -34,6 +34,16 @@ class MapViewModel extends StateNotifier<List<Post>> {
         .read(bottomSheetViewModelProvider.notifier)
         .tapPost(post); // Notify bottom sheet
   }
+
+  Future<void> onLocationBtnTap(NaverMapController controller) async {
+    final trackingMode = await controller.getLocationTrackingMode();
+
+    if (trackingMode == NLocationTrackingMode.face) {
+      controller.setLocationTrackingMode(NLocationTrackingMode.none);
+    } else {
+      controller.setLocationTrackingMode(NLocationTrackingMode.face);
+    }
+  }
 }
 
 final mapViewModelProvider =

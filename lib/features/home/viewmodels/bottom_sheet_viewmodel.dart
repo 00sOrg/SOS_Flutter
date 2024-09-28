@@ -37,15 +37,17 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
     _fetchNearbyEvents();
   }
 
-  DraggableScrollableController _scrollableController =
-      DraggableScrollableController();
+  late DraggableScrollableController _scrollableController;
 
   bool _wasExpanded = false;
 
+  void initState() {
+    _scrollableController = DraggableScrollableController();
+  }
+
   @override
   void dispose() {
-    _scrollableController =
-        DraggableScrollableController(); // Reset the controller
+    _scrollableController.dispose();
     super.dispose();
   }
 

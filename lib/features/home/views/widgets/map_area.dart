@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
+import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/custom_marker.dart';
 import 'package:sos/shared/models/location.dart';
@@ -9,10 +10,6 @@ import 'package:sos/shared/models/location.dart';
 class MapWidget extends ConsumerWidget {
   final Location currentLocation;
   final String level;
-  late NaverMapController _controller;
-
-// TODO: 에러 고치기... 채리야 도와줘...
-// 예외가 발생했습니다. LateError (LateInitializationError: Field '_controller@99315947' has not been initialized.)
 
   MapWidget({
     Key? key,
@@ -39,18 +36,29 @@ class MapWidget extends ConsumerWidget {
             ),
           ),
           onMapReady: (NaverMapController controller) {
-            _controller = controller;
-            mapViewModel.fetchPostsForMap(level, currentLocation.latitude,
-                currentLocation.longitude, 15); // Use level here
+            ref
+                .read(mapControllerProvider.notifier)
+                .initializeController(controller);
+            controller.setLocationTrackingMode(NLocationTrackingMode.face);
+            mapViewModel.fetchPostsForMap(
+                level, currentLocation.latitude, currentLocation.longitude, 15);
+
             _addMarkers(controller, ref);
           },
           onCameraIdle: () async {
-            final cameraPosition = await _controller.getCameraPosition();
-            final zoomLevel = cameraPosition.zoom.round();
-            debugPrint('Camera position: $cameraPosition');
-            mapViewModel.fetchPostsForMap(level, cameraPosition.target.latitude,
-                cameraPosition.target.longitude, zoomLevel); // Use level here
-            _addMarkers(_controller, ref);
+            final naverMapController = ref.read(mapControllerProvider);
+            if (naverMapController != null) {
+              final cameraPosition =
+                  await naverMapController.getCameraPosition();
+              final zoomLevel = cameraPosition.zoom.round();
+              mapViewModel.fetchPostsForMap(
+                  level,
+                  cameraPosition.target.latitude,
+                  cameraPosition.target.longitude,
+                  zoomLevel);
+
+              _addMarkers(naverMapController, ref);
+            }
           },
         ),
         if (isSearchFocused)
@@ -80,6 +88,7 @@ class MapWidget extends ConsumerWidget {
     for (var post in posts) {
       final marker = CustomMarker(
         id: post.postId.toString(),
+        eventType: post.disasterType!,
         position: NLatLng(post.latitude!, post.longitude!),
         onTap: () {
           ref

@@ -23,7 +23,6 @@ class NearbyEvents extends ConsumerWidget {
     return locationState.when(
       data: (location) {
         final currentLocation = location.adminAddress;
-        // final currentLocation = location.roadAddress; // 구, 동 정보 사용
         return Flexible(
           child: ListView.separated(
             controller: scrollController,
@@ -33,19 +32,11 @@ class NearbyEvents extends ConsumerWidget {
               if (index == 0) {
                 return Container(
                   color: AppColors.white,
-                  margin: const EdgeInsets.fromLTRB(0, 1, 0, 30),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Container(
-                      //   width: 12,
-                      //   height: 12,
-                      //   decoration: const ShapeDecoration(
-                      //     color: Color(0xFF00FF0A),
-                      //     shape: OvalBorder(),
-                      //   ),
-                      // ),
                       Text(
                         '$currentLocation',
                         style: const TextStyle(
@@ -61,7 +52,7 @@ class NearbyEvents extends ConsumerWidget {
                         padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
                         height: 27,
                         constraints: BoxConstraints(
-                          minWidth: 155, 
+                          minWidth: 155,
                         ),
                         decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
