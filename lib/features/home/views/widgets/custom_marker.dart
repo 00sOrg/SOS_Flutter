@@ -83,8 +83,6 @@ Future<NOverlayImage> buildImageMarkerWidget(
   String eventType,
   BuildContext context,
 ) async {
-  const dummyImgUrl =
-      'https://godomall.speedycdn.net/ec5d2a1c8483712efb957784c858b320/goods/1000000463/image/detail/1000000463_detail_020.jpg';
   final Color widgetColor = _getImageMarkerColor(eventType);
   final nOverlayImage = await NOverlayImage.fromWidget(
     widget: Stack(
@@ -107,7 +105,7 @@ Future<NOverlayImage> buildImageMarkerWidget(
               borderRadius: BorderRadius.circular(3),
               clipBehavior: Clip.antiAlias,
               child: Image.network(
-                dummyImgUrl,
+                imageUrl,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return const Icon(Icons.error, size: 48);
