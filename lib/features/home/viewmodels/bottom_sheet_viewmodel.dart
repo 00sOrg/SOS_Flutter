@@ -69,25 +69,17 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
   }
 
   Future<void> toggleBottomSheet() async {
-    if (state.sheetHeight == 0.0) {
-      await setBottomSheetHeight(0.15);
-      _wasExpanded = false;
-    } else if (state.sheetHeight == 0.15 && !_wasExpanded) {
+    if (!_scrollableController.isAttached) {
+      return;
+    }
+    if (state.sheetHeight == 0.15) {
       await setBottomSheetHeight(0.75);
-      _wasExpanded = true;
     } else if (state.sheetHeight == 0.75) {
       await setBottomSheetHeight(0.15);
-      _wasExpanded = true;
-    } else if (state.sheetHeight == 0.15 && _wasExpanded) {
-      await setBottomSheetHeight(0.00);
-      _wasExpanded = false;
     }
   }
 
   Future<void> setBottomSheetHeight(double height) async {
-    if (!_scrollableController.isAttached) {
-      return;
-    }
     await _scrollableController.animateTo(
       height,
       duration: const Duration(milliseconds: 300),
@@ -96,20 +88,11 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
     state = state.copyWith(sheetHeight: height);
   }
 
-  void closeBottomSheet() {
-    _scrollableController.animateTo(
-      0.0,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-    state = state.copyWith(sheetHeight: 0.0);
-  }
-
   DraggableScrollableController get scrollableController =>
       _scrollableController;
 
   void navigateToPost(BuildContext context, int postId) {
-    closeBottomSheet();
+    setBottomSheetHeight(0.0);
     context.push('/post/$postId'); // 포스트 페이지로 이동
   }
 
@@ -121,12 +104,11 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
   }
 
   Future<void> clearTappedPost() async {
-    if (!mounted) return;
     state = state.copyWith(tappedPost: null, isViewingTappedPost: false);
     debugPrint('Cleared tapped post');
     debugPrint('Tapped post: ${state.tappedPost}');
     await fetchNearbyEvents();
-    await setBottomSheetHeight(0.15);
+    await setBottomSheetHeight(0.151);
   }
 }
 

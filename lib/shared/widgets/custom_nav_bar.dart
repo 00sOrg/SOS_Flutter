@@ -124,8 +124,8 @@ class CustomNavBar extends StatelessWidget {
           scale: 1.2,
           child: Image.asset(
             selectedIdx == 0
-                ? 'assets/icons/home/Location1.png'
-                : 'assets/icons/home/Location2.png',
+                ? 'assets/icons/home/Map1.png'
+                : 'assets/icons/home/Map2.png',
             width: size,
             height: size,
           ),

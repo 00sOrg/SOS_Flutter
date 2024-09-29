@@ -105,7 +105,7 @@ class AppRouter {
                     onOtherPressed: () {
                       ref
                           .read(bottomSheetViewModelProvider.notifier)
-                          .closeBottomSheet();
+                          .setBottomSheetHeight(0.0);
                     },
                   );
                 },

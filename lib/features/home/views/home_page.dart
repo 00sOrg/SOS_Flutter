@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
-import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
-import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
-import 'package:sos/features/home/views/widgets/user_location_btn.dart';
 import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
@@ -37,8 +34,6 @@ class HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final naverMapController = ref.watch(mapControllerProvider);
-
     final locationAsyncValue = ref.watch(locationProvider);
     final isFavoritesOpen = ref
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
@@ -81,23 +76,6 @@ class HomePageState extends ConsumerState<HomePage> {
               ),
             ),
             if (isSideSheetOpen) const AlarmSideSheet(),
-            Positioned(
-              left: 320,
-              bottom: 15,
-              child: UserLocationBtn(
-                onTap: () => ref
-                    .read(mapViewModelProvider.notifier)
-                    .onLocationBtnTap(naverMapController!),
-                icon: Align(
-                  alignment: Alignment(1, 1),
-                  child: Image.asset(
-                    'assets/icons/home/F-Location.png',
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
-              ),
-            )
           ],
         ),
         bottomSheet: const HomePageBottomSheet(),
