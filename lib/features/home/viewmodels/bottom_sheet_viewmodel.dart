@@ -9,40 +9,41 @@ class BottomSheetState {
   final Post? tappedPost;
   final List<Post> nearbyEvents;
   final double sheetHeight;
+  final bool isViewingTappedPost;
 
   BottomSheetState({
     this.tappedPost,
     required this.nearbyEvents,
     required this.sheetHeight,
+    this.isViewingTappedPost = false,
   });
 
   BottomSheetState copyWith({
     Post? tappedPost,
     List<Post>? nearbyEvents,
     double? sheetHeight,
+    bool? isViewingTappedPost,
   }) {
     return BottomSheetState(
       tappedPost: tappedPost ?? this.tappedPost,
       nearbyEvents: nearbyEvents ?? this.nearbyEvents,
       sheetHeight: sheetHeight ?? this.sheetHeight,
+      isViewingTappedPost: isViewingTappedPost ?? this.isViewingTappedPost,
     );
   }
 }
 
 class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
-  final HomeRepository _homeRepository;
-
   BottomSheetViewModel(this._homeRepository)
-      : super(BottomSheetState(nearbyEvents: [], sheetHeight: 0.15)) {
-    _fetchNearbyEvents();
-  }
+      : super(BottomSheetState(nearbyEvents: [], sheetHeight: 0.15));
 
+  final HomeRepository _homeRepository;
   late DraggableScrollableController _scrollableController;
-
   bool _wasExpanded = false;
 
   void initState() {
     _scrollableController = DraggableScrollableController();
+    fetchNearbyEvents();
   }
 
   @override
@@ -51,55 +52,48 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
     super.dispose();
   }
 
-  Future<void> _fetchNearbyEvents() async {
+  Future<void> fetchNearbyEvents() async {
     final position = await GeolocatorService.getCurrentPosition();
     final lat = position.latitude;
     final lon = position.longitude;
 
     final nearbyEvents = await _homeRepository.getAllNearbyPosts(lat, lon);
-    if (nearbyEvents != null) {
-      state = state.copyWith(nearbyEvents: nearbyEvents);
+    if (nearbyEvents != []) {
+      state = state.copyWith(
+          nearbyEvents: nearbyEvents,
+          tappedPost: null,
+          isViewingTappedPost: false);
+    } else {
+      state = state.copyWith(nearbyEvents: []);
     }
   }
 
-  void toggleBottomSheet() {
-    // Ensure the controller is attached before calling animateTo
+  Future<void> toggleBottomSheet() async {
+    if (state.sheetHeight == 0.0) {
+      await setBottomSheetHeight(0.15);
+      _wasExpanded = false;
+    } else if (state.sheetHeight == 0.15 && !_wasExpanded) {
+      await setBottomSheetHeight(0.75);
+      _wasExpanded = true;
+    } else if (state.sheetHeight == 0.75) {
+      await setBottomSheetHeight(0.15);
+      _wasExpanded = true;
+    } else if (state.sheetHeight == 0.15 && _wasExpanded) {
+      await setBottomSheetHeight(0.00);
+      _wasExpanded = false;
+    }
+  }
+
+  Future<void> setBottomSheetHeight(double height) async {
     if (!_scrollableController.isAttached) {
       return;
     }
-    if (state.sheetHeight == 0.0) {
-      _scrollableController.animateTo(
-        0.15,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.15);
-      _wasExpanded = false;
-    } else if (state.sheetHeight == 0.15 && !_wasExpanded) {
-      _scrollableController.animateTo(
-        0.75,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.75);
-      _wasExpanded = true;
-    } else if (state.sheetHeight == 0.75) {
-      _scrollableController.animateTo(
-        0.15,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.15);
-      _wasExpanded = true;
-    } else if (state.sheetHeight == 0.15 && _wasExpanded) {
-      _scrollableController.animateTo(
-        0.0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.0);
-      _wasExpanded = false;
-    }
+    await _scrollableController.animateTo(
+      height,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    state = state.copyWith(sheetHeight: height);
   }
 
   void closeBottomSheet() {
@@ -119,12 +113,20 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
     context.push('/post/$postId'); // 포스트 페이지로 이동
   }
 
-  void tapPost(Post post) {
-    state = state.copyWith(tappedPost: post);
+  Future<void> fetchTappedPost(int postId) async {
+    debugPrint('Tapped post: ${postId}');
+    await setBottomSheetHeight(0.35);
+    final postOverview = await _homeRepository.getPostOverviewById(postId);
+    state = state.copyWith(tappedPost: postOverview, isViewingTappedPost: true);
   }
 
-  void clearTappedPost() {
-    state = state.copyWith(tappedPost: null);
+  Future<void> clearTappedPost() async {
+    if (!mounted) return;
+    state = state.copyWith(tappedPost: null, isViewingTappedPost: false);
+    debugPrint('Cleared tapped post');
+    debugPrint('Tapped post: ${state.tappedPost}');
+    await fetchNearbyEvents();
+    await setBottomSheetHeight(0.15);
   }
 }
 

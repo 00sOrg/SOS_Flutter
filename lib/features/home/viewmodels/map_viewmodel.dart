@@ -12,16 +12,20 @@ class MapViewModel extends StateNotifier<List<Post>> {
       String level, double latitude, double longitude, int zoom) async {
     final posts =
         await homeRepository.getPostsForMap(level, latitude, longitude, zoom);
-    if (posts != null) {
+    if (posts != []) {
       state = posts;
     }
   }
 
   // Method to center map on a specific post
-  void centerMapOnPost(Post post, NaverMapController controller) {
+  void centerMapOnPost(
+    double latitude,
+    double longitude,
+    NaverMapController controller,
+  ) {
     controller.updateCamera(
       NCameraUpdate.scrollAndZoomTo(
-        target: NLatLng(post.latitude!, post.longitude!),
+        target: NLatLng(latitude, longitude),
         zoom: 15,
       ),
     );
@@ -29,10 +33,10 @@ class MapViewModel extends StateNotifier<List<Post>> {
 
   // Method to handle marker tap
   void onMarkerTap(Post post, WidgetRef ref, NaverMapController controller) {
-    centerMapOnPost(post, controller);
+    centerMapOnPost(post.latitude!, post.longitude!, controller);
     ref
         .read(bottomSheetViewModelProvider.notifier)
-        .tapPost(post); // Notify bottom sheet
+        .fetchTappedPost(post.postId); // Notify bottom sheet
   }
 
   Future<void> onLocationBtnTap(NaverMapController controller) async {

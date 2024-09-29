@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:sos/shared/styles/global_styles.dart';
 
 class CustomMarker extends NMarker {
   final String id;
@@ -18,7 +17,7 @@ class CustomMarker extends NMarker {
           id: id,
           position: position,
           icon: NOverlayImage.fromAssetImage(_getMarkerIcon(eventType)),
-          size: Size(53.62, 73.99),
+          size: const Size(53.62, 73.99),
         ) {
     // 마커 탭 리스너 설정
     setOnTapListener((NMarker marker) {
@@ -156,7 +155,7 @@ Future<NOverlayImage> buildImageMarkerWidget(
     //   ],
     // ),
   );
-  debugPrint(nOverlayImage.toString());
+
   return nOverlayImage;
 }
 

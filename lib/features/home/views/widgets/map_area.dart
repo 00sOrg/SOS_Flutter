@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart';
+import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
@@ -24,6 +24,8 @@ class MapWidget extends ConsumerWidget {
     final isSearchFocused = ref
         .watch(homeViewModelProvider.select((state) => state.isSearchFocused));
     final mapViewModel = ref.read(mapViewModelProvider.notifier);
+    final bottomSheetViewModel =
+        ref.read(bottomSheetViewModelProvider.notifier);
 
     return Stack(
       children: [
@@ -65,6 +67,9 @@ class MapWidget extends ConsumerWidget {
               _addMarkers(naverMapController, context, ref);
             }
           },
+          onMapTapped: (point, latLng) {
+            bottomSheetViewModel.clearTappedPost();
+          },
         ),
         if (isSearchFocused)
           GestureDetector(
@@ -84,13 +89,6 @@ class MapWidget extends ConsumerWidget {
 
   final Set<String> currentMarkerIds = {};
 
-  void debugPrintMarkers() {
-    debugPrint('Current Markers:');
-    for (var markerId in currentMarkerIds) {
-      debugPrint(markerId);
-    }
-  }
-
   Future<void> _addMarkers(
     NaverMapController controller,
     BuildContext context,
@@ -99,7 +97,8 @@ class MapWidget extends ConsumerWidget {
     final mapViewModel = ref.watch(mapViewModelProvider);
     final posts = mapViewModel;
 
-    debugPrintMarkers();
+    //controller.clearOverlays();
+
     final Set<String> newMarkerIds =
         posts.map((post) => post.postId.toString()).toSet();
 
@@ -139,7 +138,6 @@ class MapWidget extends ConsumerWidget {
         }
 
         controller.addOverlay(marker);
-        debugPrint('마커 추가: ${post.postId}');
         currentMarkerIds.add(markerId); // Track the added marker
       }
     }
@@ -153,6 +151,7 @@ class MapWidget extends ConsumerWidget {
     //       id: markerId,
     //     ),
     //   );
+    //   currentMarkerIds.remove(markerId); // Remove from current tracking
     // }
   }
 }

@@ -27,6 +27,7 @@ class HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    debugPrint('HomePageState initState');
     // 페이지가 로드될 때 사용자 정보를 불러옵니다.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(userViewModelProvider.notifier).loadUserInfo();
