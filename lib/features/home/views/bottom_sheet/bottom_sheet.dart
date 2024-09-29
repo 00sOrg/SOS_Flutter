@@ -13,9 +13,9 @@ class HomePageBottomSheet extends ConsumerWidget {
 
     return DraggableScrollableSheet(
       controller: viewModel.scrollableController,
-      initialChildSize: 0.15, // 처음에 20%로 열리도록 설정
-      minChildSize: 0.0, // 바텀시트가 최소로 줄어들 때
-      maxChildSize: 0.75, // 최대 75%까지 열리도록 설정
+      initialChildSize: 0.15,
+      minChildSize: 0.15,
+      maxChildSize: 0.75,
       expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
