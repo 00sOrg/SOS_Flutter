@@ -14,7 +14,6 @@ class EventPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double paddingRatio = 0.0763; // 30px을 393px로 나눈 비율
     double paddingValue = 20;
 
     final timeText = formatTimeAgo(event.createdAt!);
@@ -104,7 +103,7 @@ class EventPreview extends StatelessWidget {
                       event.content ?? '',
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16, height: 1.2),
+                      style: const TextStyle(fontSize: 16, height: 1.2),
                     ),
                   ],
                 ),
