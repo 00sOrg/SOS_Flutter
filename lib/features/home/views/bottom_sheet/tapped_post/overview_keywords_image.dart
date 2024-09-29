@@ -46,30 +46,33 @@ class OverviewKeywordsandimage extends StatelessWidget {
               ),
             ],
           )
-        : GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10, // Vertical spacing
-              crossAxisSpacing: 29, // Horizontal spacing
-              childAspectRatio:
-                  5.2, // Aspect ratio based on width and height (162 / 26)
+        : Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 5, // Vertical spacing
+                crossAxisSpacing: 10, // Horizontal spacing
+                childAspectRatio:
+                    5, // Aspect ratio based on width and height (162 / 26)
+              ),
+              itemCount: keywords!.length + 1, // Include eventType
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: EventTypeBlock(eventType: eventType),
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: KeywordBlock(keyword: keywords![index - 1]),
+                  );
+                }
+              },
             ),
-            itemCount: keywords!.length + 1, // Include eventType
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: EventTypeBlock(eventType: eventType),
-                );
-              } else {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: KeywordBlock(keyword: keywords![index - 1]),
-                );
-              }
-            },
           );
   }
 }

@@ -20,6 +20,7 @@ class OverviewHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         profilePictureURL != null && profilePictureURL!.isNotEmpty
             ? CircleAvatar(
@@ -34,7 +35,7 @@ class OverviewHeader extends StatelessWidget {
                   width: 30,
                 ),
               ),
-        const SizedBox(width: 10.0),
+        const SizedBox(width: 12.0),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

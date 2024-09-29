@@ -31,7 +31,7 @@ class TappedPost extends ConsumerWidget {
               OverviewHeader(
                 profilePictureURL: post.userProfilePictureURL,
                 title: post.title!,
-                roadAddress: '수원시 영통구 매탄동',
+                roadAddress: post.roadAddress!,
                 createdAt: post.createdAt!,
               ),
               const SizedBox(height: 10),
