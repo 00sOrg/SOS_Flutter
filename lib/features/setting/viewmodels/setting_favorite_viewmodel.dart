@@ -131,8 +131,6 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
         lastLocation: '',
       );
     } else {
-      // 현재는 isAccepted를 false로 가정하고 있음 -> 항상 요청 대기 중인 상태로 뜸
-      // TODO: 검색했는데 이미 친구인 경우, 요청 대기 중인 경우, 아무것도 아닌 경우를 처리해야함
       _searchedUser = Friend(
         favoriteMemberId: user.id!,
         nickname: user.nickname!,

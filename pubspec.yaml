@@ -48,6 +48,7 @@ dependencies:
   mime: ^1.0.5
   path: ^1.9.0
   jwt_decoder: ^2.0.1
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,7 @@ flutter:
     - assets/icons/home/marker/
     - assets/icons/post/
     - assets/images/
+    - assets/lottie/
     - .env
 
   fonts:
