@@ -42,7 +42,7 @@ class MapWidget extends ConsumerWidget {
               tilt: 0,
             ),
           ),
-          onMapReady: (NaverMapController controller) {
+          onMapReady: (NaverMapController controller) async {
             // 지도 컨트롤러 초기화
             ref
                 .read(mapControllerProvider.notifier)
@@ -54,13 +54,13 @@ class MapWidget extends ConsumerWidget {
                 .setCircleColor(AppColors.lightBlue.withOpacity(0.3));
 
             // 지도에 post 마커 추가
-            mapViewModel.fetchPostsForMap(
+            await mapViewModel.fetchPostsForMap(
                 level, currentLocation.latitude, currentLocation.longitude, 15);
 
             _addMarkers(controller, context, ref);
 
             // 친구 마커 추가
-            friendViewModel.fetchFriendsLocation();
+            await friendViewModel.fetchFriendsLocation();
             _addFriendMarkers(controller, context, ref);
           },
           onCameraIdle: () async {
@@ -69,7 +69,7 @@ class MapWidget extends ConsumerWidget {
               final cameraPosition =
                   await naverMapController.getCameraPosition();
               final zoomLevel = cameraPosition.zoom.round();
-              mapViewModel.fetchPostsForMap(
+              await mapViewModel.fetchPostsForMap(
                   level,
                   cameraPosition.target.latitude,
                   cameraPosition.target.longitude,
@@ -78,6 +78,10 @@ class MapWidget extends ConsumerWidget {
               //     cameraPosition.target.latitude,
               //     cameraPosition.target.longitude);
               _addMarkers(naverMapController, context, ref);
+
+              // 친구 마커 추가
+              await friendViewModel.fetchFriendsLocation();
+              _addFriendMarkers(naverMapController, context, ref);
             }
           },
           onMapTapped: (point, latLng) {
@@ -186,15 +190,29 @@ class MapWidget extends ConsumerWidget {
           nickname: friend.nickname,
           position: NLatLng(friend.latitude!, friend.longitude!),
           onTap: () {
-            // ref
-            //     .read(mapViewModelProvider.notifier)
-            //     .onFriendMarkerTap(friend, ref, controller);
+            ref
+                .read(mapViewModelProvider.notifier)
+                .onFriendMarkerTap(friend, ref, controller);
           },
         );
 
         controller.addOverlay(marker);
         currentMarkerIds.add(markerId); // Track the added marker
       }
+    }
+  }
+
+  Future<void> _clearFriendMarkers(NaverMapController controller,
+      BuildContext context, WidgetRef ref) async {
+    final friendViewModel = ref.watch(friendViewModelProvider);
+    final friends = friendViewModel;
+    for (var friend in friends) {
+      await controller.deleteOverlay(
+        NOverlayInfo(
+          type: NOverlayType.marker,
+          id: 'friend' + friend.favoriteMemberId.toString(),
+        ),
+      );
     }
   }
 }
