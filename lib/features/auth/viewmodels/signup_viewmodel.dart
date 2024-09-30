@@ -25,8 +25,8 @@ class SignupViewmodel extends StateNotifier<User> {
             password: '',
             nickname: '',
             phoneNumber: '',
-            gender: '',
-            birthDay: DateTime(2000, 1, 1),
+            sex: '',
+            birthDate: DateTime(2000, 1, 1),
             profilePicture: '',
           ),
         );
@@ -75,12 +75,12 @@ class SignupViewmodel extends StateNotifier<User> {
 
   void updateGender(String? gender) {
     if (gender != null) {
-      state = state.copyWith(gender: gender);
+      state = state.copyWith(sex: gender);
     }
   }
 
   void updateBirthDate(DateTime birthDay) {
-    state = state.copyWith(birthDay: birthDay);
+    state = state.copyWith(birthDate: birthDay);
   }
 
   bool isEmailAvailable = false;
@@ -160,7 +160,7 @@ class SignupViewmodel extends StateNotifier<User> {
         name: nameTEC.text,
         nickname: nicknameTEC.text,
         phoneNumber: numberTEC.text,
-        birthDay: birthDate,
+        birthDate: birthDate,
       );
 
       final success =

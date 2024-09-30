@@ -3,18 +3,30 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.freezed.dart';
 part 'user.g.dart';
 
+//User id -1은 사용자가 없음을 의미합니다.
 @freezed
 class User with _$User {
   factory User({
-    String? profilePicture,
+    //member info
     int? id,
-    String? name,
-    String? password,
     String? email,
+    String? password, //Todo: 비밀번호는 필요한가?
+    String? name,
     String? nickname,
     String? phoneNumber,
-    String? gender,
-    DateTime? birthDay,
+    double? latitude,
+    double? longitude,
+    // String? device,
+
+    //member detail info
+    String? sex,
+    DateTime? birthDate,
+    String? profilePicture,
+    String? height,
+    String? weight,
+    String? bloodType,
+    String? disease,
+    String? medication,
     String? address,
   }) = _User;
 

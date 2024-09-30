@@ -7,30 +7,44 @@ part of 'user.dart';
 // **************************************************************************
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
-      profilePicture: json['profilePicture'] as String?,
       id: (json['id'] as num?)?.toInt(),
-      name: json['name'] as String?,
-      password: json['password'] as String?,
       email: json['email'] as String?,
+      password: json['password'] as String?,
+      name: json['name'] as String?,
       nickname: json['nickname'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
-      gender: json['gender'] as String?,
-      birthDay: json['birthDay'] == null
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
+      sex: json['sex'] as String?,
+      birthDate: json['birthDate'] == null
           ? null
-          : DateTime.parse(json['birthDay'] as String),
+          : DateTime.parse(json['birthDate'] as String),
+      profilePicture: json['profilePicture'] as String?,
+      height: json['height'] as String?,
+      weight: json['weight'] as String?,
+      bloodType: json['bloodType'] as String?,
+      disease: json['disease'] as String?,
+      medication: json['medication'] as String?,
       address: json['address'] as String?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     <String, dynamic>{
-      'profilePicture': instance.profilePicture,
       'id': instance.id,
-      'name': instance.name,
-      'password': instance.password,
       'email': instance.email,
+      'password': instance.password,
+      'name': instance.name,
       'nickname': instance.nickname,
       'phoneNumber': instance.phoneNumber,
-      'gender': instance.gender,
-      'birthDay': instance.birthDay?.toIso8601String(),
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'sex': instance.sex,
+      'birthDate': instance.birthDate?.toIso8601String(),
+      'profilePicture': instance.profilePicture,
+      'height': instance.height,
+      'weight': instance.weight,
+      'bloodType': instance.bloodType,
+      'disease': instance.disease,
+      'medication': instance.medication,
       'address': instance.address,
     };
