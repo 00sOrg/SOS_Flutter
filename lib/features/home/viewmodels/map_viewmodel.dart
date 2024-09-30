@@ -43,10 +43,20 @@ class MapViewModel extends StateNotifier<List<Post>> {
   Future<void> onLocationBtnTap(NaverMapController controller) async {
     final trackingMode = await controller.getLocationTrackingMode();
 
-    if (trackingMode == NLocationTrackingMode.face) {
-      controller.setLocationTrackingMode(NLocationTrackingMode.none);
-    } else {
-      controller.setLocationTrackingMode(NLocationTrackingMode.face);
+    // 다음 tracking 모드를 순차적으로 설정
+    switch (trackingMode) {
+      case NLocationTrackingMode.face:
+        controller.setLocationTrackingMode(NLocationTrackingMode.follow);
+        break;
+      case NLocationTrackingMode.follow:
+        controller.setLocationTrackingMode(NLocationTrackingMode.noFollow);
+        break;
+      case NLocationTrackingMode.noFollow:
+        controller.setLocationTrackingMode(NLocationTrackingMode.none);
+        break;
+      case NLocationTrackingMode.none:
+        controller.setLocationTrackingMode(NLocationTrackingMode.face);
+        break;
     }
   }
 }
