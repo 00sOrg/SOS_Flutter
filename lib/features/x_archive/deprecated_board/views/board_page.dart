@@ -13,7 +13,7 @@ class BoardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final posts = ref.watch(boardViewModelProvider);
-    final location = ref.watch(locationProvider);
+    final location = ref.watch(locationViewModelProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,

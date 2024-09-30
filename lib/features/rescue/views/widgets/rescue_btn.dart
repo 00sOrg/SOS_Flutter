@@ -19,7 +19,7 @@ class RescueBtn extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: 117,
+        height: 108,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: color,

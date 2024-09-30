@@ -12,7 +12,7 @@ class RefreshButton extends ConsumerWidget {
     return InkWell(
       splashColor: Colors.transparent,
       onTap: () {
-        ref.read(locationProvider.notifier).refreshLocation();
+        ref.read(locationViewModelProvider.notifier).refreshLocation();
       },
       child: Container(
         width: size ?? 36,

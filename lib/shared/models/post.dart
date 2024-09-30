@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 // import 'package:sos/shared/models/user.dart'; // 여건 되면
 import 'comment.dart';
@@ -25,6 +23,7 @@ class Post with _$Post {
     double? longitude,
     @JsonKey(name: 'eventLevel') String? disasterLevel,
     @JsonKey(name: 'eventType') String? disasterType,
+    List<String>? keywords,
     List<Comment>? comments,
   }) = _Post;
 

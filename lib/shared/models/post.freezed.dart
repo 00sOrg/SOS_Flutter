@@ -47,6 +47,7 @@ mixin _$Post {
   String? get disasterLevel => throw _privateConstructorUsedError;
   @JsonKey(name: 'eventType')
   String? get disasterType => throw _privateConstructorUsedError;
+  List<String>? get keywords => throw _privateConstructorUsedError;
   List<Comment>? get comments => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -75,6 +76,7 @@ abstract class $PostCopyWith<$Res> {
       double? longitude,
       @JsonKey(name: 'eventLevel') String? disasterLevel,
       @JsonKey(name: 'eventType') String? disasterType,
+      List<String>? keywords,
       List<Comment>? comments});
 }
 
@@ -106,6 +108,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? longitude = freezed,
     Object? disasterLevel = freezed,
     Object? disasterType = freezed,
+    Object? keywords = freezed,
     Object? comments = freezed,
   }) {
     return _then(_value.copyWith(
@@ -169,6 +172,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.disasterType
           : disasterType // ignore: cast_nullable_to_non_nullable
               as String?,
+      keywords: freezed == keywords
+          ? _value.keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       comments: freezed == comments
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
@@ -200,6 +207,7 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       double? longitude,
       @JsonKey(name: 'eventLevel') String? disasterLevel,
       @JsonKey(name: 'eventType') String? disasterType,
+      List<String>? keywords,
       List<Comment>? comments});
 }
 
@@ -228,6 +236,7 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? disasterLevel = freezed,
     Object? disasterType = freezed,
+    Object? keywords = freezed,
     Object? comments = freezed,
   }) {
     return _then(_$PostImpl(
@@ -291,6 +300,10 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.disasterType
           : disasterType // ignore: cast_nullable_to_non_nullable
               as String?,
+      keywords: freezed == keywords
+          ? _value._keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       comments: freezed == comments
           ? _value._comments
           : comments // ignore: cast_nullable_to_non_nullable
@@ -318,8 +331,10 @@ class _$PostImpl implements _Post {
       this.longitude,
       @JsonKey(name: 'eventLevel') this.disasterLevel,
       @JsonKey(name: 'eventType') this.disasterType,
+      final List<String>? keywords,
       final List<Comment>? comments})
-      : _comments = comments;
+      : _keywords = keywords,
+        _comments = comments;
 
   factory _$PostImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostImplFromJson(json);
@@ -366,6 +381,16 @@ class _$PostImpl implements _Post {
   @override
   @JsonKey(name: 'eventType')
   final String? disasterType;
+  final List<String>? _keywords;
+  @override
+  List<String>? get keywords {
+    final value = _keywords;
+    if (value == null) return null;
+    if (_keywords is EqualUnmodifiableListView) return _keywords;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   final List<Comment>? _comments;
   @override
   List<Comment>? get comments {
@@ -378,7 +403,7 @@ class _$PostImpl implements _Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, title: $title, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, content: $content, mediaURL: $mediaURL, roadAddress: $roadAddress, likesCount: $likesCount, commentsCount: $commentsCount, isLiked: $isLiked, createdAt: $createdAt, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, disasterType: $disasterType, comments: $comments)';
+    return 'Post(postId: $postId, title: $title, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, content: $content, mediaURL: $mediaURL, roadAddress: $roadAddress, likesCount: $likesCount, commentsCount: $commentsCount, isLiked: $isLiked, createdAt: $createdAt, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, disasterType: $disasterType, keywords: $keywords, comments: $comments)';
   }
 
   @override
@@ -412,6 +437,7 @@ class _$PostImpl implements _Post {
                 other.disasterLevel == disasterLevel) &&
             (identical(other.disasterType, disasterType) ||
                 other.disasterType == disasterType) &&
+            const DeepCollectionEquality().equals(other._keywords, _keywords) &&
             const DeepCollectionEquality().equals(other._comments, _comments));
   }
 
@@ -434,6 +460,7 @@ class _$PostImpl implements _Post {
       longitude,
       disasterLevel,
       disasterType,
+      const DeepCollectionEquality().hash(_keywords),
       const DeepCollectionEquality().hash(_comments));
 
   @JsonKey(ignore: true)
@@ -467,6 +494,7 @@ abstract class _Post implements Post {
       final double? longitude,
       @JsonKey(name: 'eventLevel') final String? disasterLevel,
       @JsonKey(name: 'eventType') final String? disasterType,
+      final List<String>? keywords,
       final List<Comment>? comments}) = _$PostImpl;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
@@ -513,6 +541,8 @@ abstract class _Post implements Post {
   @override
   @JsonKey(name: 'eventType')
   String? get disasterType;
+  @override
+  List<String>? get keywords;
   @override
   List<Comment>? get comments;
   @override

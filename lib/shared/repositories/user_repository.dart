@@ -7,7 +7,7 @@ import 'package:sos/shared/utils/http_helpers.dart';
 
 class UserRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
-  final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   Future<User> getUserByNickname(String nickname) async {
     final url = Uri.parse('$baseUrl/members/search?nickname=$nickname');

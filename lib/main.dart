@@ -43,7 +43,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.read(loginViewModelProvider.notifier).checkLoginStatus();
-    final locationAsyncValue = ref.watch(locationProvider);
+    final locationAsyncValue = ref.watch(locationViewModelProvider);
 
     return ScreenUtilInit(
         designSize: const Size(393, 852),

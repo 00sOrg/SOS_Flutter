@@ -9,13 +9,14 @@ class HomePageBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(bottomSheetViewModelProvider.notifier);
+    final viewModel = ref.read(bottomSheetViewModelProvider.notifier);
+    final bottomSheetState = ref.watch(bottomSheetViewModelProvider);
 
     return DraggableScrollableSheet(
-      controller: viewModel.scrollableController,
-      initialChildSize: 0.15, // 처음에 20%로 열리도록 설정
-      minChildSize: 0.0, // 바텀시트가 최소로 줄어들 때
-      maxChildSize: 0.75, // 최대 75%까지 열리도록 설정
+      controller: viewModel.scrollableController, // 뷰모델의 controller 사용
+      initialChildSize: bottomSheetState.sheetHeight, // 초기 높이는 상태에서 가져옴
+      minChildSize: 0.15,
+      maxChildSize: 0.75,
       expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(

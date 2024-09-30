@@ -7,6 +7,7 @@ import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_carousel_widget.dart';
 import 'package:sos/features/board/views/widgets/board_search_bar.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:lottie/lottie.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
@@ -65,11 +66,27 @@ class _BoardPageState extends ConsumerState<BoardPage> {
               const BoardCarouselWidget(),
               const SizedBox(height: 33),
               if (_showDesc) ...[
-                SvgPicture.asset(
-                  'assets/icons/side_arrow.svg',
-                  height: 22,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      'assets/lottie/Animation_swipe_left.json',
+                      width: 50,
+                      height: 50,
+                    ),
+                    const SizedBox(width: 20),
+                    Lottie.asset(
+                      'assets/lottie/Animation_swipe_right.json',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 14),
+                // SvgPicture.asset(
+                //   'assets/icons/side_arrow.svg',
+                //   height: 22,
+                // ),
+
                 const SizedBox(
                   height: 20,
                   child: Text(

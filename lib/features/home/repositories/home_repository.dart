@@ -58,20 +58,20 @@ class HomeRepository {
   }
 
 //Todo: 바텀시트 미리보기에 사용할 함수
-  Future<Post> getPostOverviewById(String postId) async {
+  Future<Post> getPostOverviewById(int postId) async {
     final url = Uri.parse('$baseUrl/events/$postId/overview');
 
     try {
       final accessToken = await secureStorage.read(key: 'access_token');
 
-      final response =
-          await makeGetRequest(url, "getOnePostbyId", accessToken: accessToken);
+      final response = await makeGetRequest(url, "getPostOverviewById",
+          accessToken: accessToken);
       final jsonResponse = jsonDecode(response.body);
       final postData = jsonResponse['data'];
 
       return Post.fromJson(postData);
     } catch (e) {
-      LogUtil.e('getOnePostbyId 에러: $e');
+      LogUtil.e('getPostOverviewById 에러: $e');
       return Post(postId: 0, title: '', createdAt: DateTime.now());
     }
   }

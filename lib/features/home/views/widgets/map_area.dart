@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
+import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/custom_marker.dart';
 import 'package:sos/shared/models/location.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class MapWidget extends ConsumerWidget {
   final Location currentLocation;
   final String level;
-  late NaverMapController _controller;
-
-// TODO: 에러 고치기... 채리야 도와줘...
-// 예외가 발생했습니다. LateError (LateInitializationError: Field '_controller@99315947' has not been initialized.)
 
   MapWidget({
     Key? key,
@@ -25,6 +24,8 @@ class MapWidget extends ConsumerWidget {
     final isSearchFocused = ref
         .watch(homeViewModelProvider.select((state) => state.isSearchFocused));
     final mapViewModel = ref.read(mapViewModelProvider.notifier);
+    final bottomSheetViewModel =
+        ref.read(bottomSheetViewModelProvider.notifier);
 
     return Stack(
       children: [
@@ -39,18 +40,38 @@ class MapWidget extends ConsumerWidget {
             ),
           ),
           onMapReady: (NaverMapController controller) {
-            _controller = controller;
-            mapViewModel.fetchPostsForMap(level, currentLocation.latitude,
-                currentLocation.longitude, 15); // Use level here
-            _addMarkers(controller, ref);
+            ref
+                .read(mapControllerProvider.notifier)
+                .initializeController(controller);
+            debugPrint('NaverMapController initialized');
+            controller.setLocationTrackingMode(NLocationTrackingMode.face);
+            controller
+                .getLocationOverlay()
+                .setCircleColor(AppColors.lightBlue.withOpacity(0.3));
+            mapViewModel.fetchPostsForMap(
+                level, currentLocation.latitude, currentLocation.longitude, 15);
+
+            _addMarkers(controller, context, ref);
           },
           onCameraIdle: () async {
-            final cameraPosition = await _controller.getCameraPosition();
-            final zoomLevel = cameraPosition.zoom.round();
-            debugPrint('Camera position: $cameraPosition');
-            mapViewModel.fetchPostsForMap(level, cameraPosition.target.latitude,
-                cameraPosition.target.longitude, zoomLevel); // Use level here
-            _addMarkers(_controller, ref);
+            final naverMapController = ref.read(mapControllerProvider);
+            if (naverMapController != null) {
+              final cameraPosition =
+                  await naverMapController.getCameraPosition();
+              final zoomLevel = cameraPosition.zoom.round();
+              mapViewModel.fetchPostsForMap(
+                  level,
+                  cameraPosition.target.latitude,
+                  cameraPosition.target.longitude,
+                  zoomLevel);
+              // bottomSheetViewModel.fetchNearbyEvents(
+              //     cameraPosition.target.latitude,
+              //     cameraPosition.target.longitude);
+              _addMarkers(naverMapController, context, ref);
+            }
+          },
+          onMapTapped: (point, latLng) {
+            bottomSheetViewModel.clearTappedPost();
           },
         ),
         if (isSearchFocused)
@@ -69,25 +90,71 @@ class MapWidget extends ConsumerWidget {
     );
   }
 
-  void _addMarkers(NaverMapController controller, WidgetRef ref) {
+  final Set<String> currentMarkerIds = {};
+
+  Future<void> _addMarkers(
+    NaverMapController controller,
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     final mapViewModel = ref.watch(mapViewModelProvider);
     final posts = mapViewModel;
 
-    // Clear existing markers
-    controller.clearOverlays();
+    //controller.clearOverlays();
 
-    // Add markers for each post
+    final Set<String> newMarkerIds =
+        posts.map((post) => post.postId.toString()).toSet();
+
     for (var post in posts) {
-      final marker = CustomMarker(
-        id: post.postId.toString(),
-        position: NLatLng(post.latitude!, post.longitude!),
-        onTap: () {
-          ref
-              .read(mapViewModelProvider.notifier)
-              .onMarkerTap(post, ref, controller);
-        },
-      );
-      controller.addOverlay(marker);
+      final markerId = post.postId.toString();
+
+      if (!currentMarkerIds.contains(markerId)) {
+        // Add new markers
+        NMarker marker;
+        if (post.mediaURL != null && post.mediaURL!.isNotEmpty) {
+          final nOverlayImage = await buildImageMarkerWidget(
+            post.mediaURL!,
+            post.disasterType!,
+            context,
+          );
+          marker = CustomImageMarker(
+            id: markerId,
+            nOverlayImage: nOverlayImage,
+            position: NLatLng(post.latitude!, post.longitude!),
+            onTap: () {
+              ref
+                  .read(mapViewModelProvider.notifier)
+                  .onMarkerTap(post, ref, controller);
+            },
+          );
+        } else {
+          marker = CustomMarker(
+            id: markerId,
+            eventType: post.disasterType!,
+            position: NLatLng(post.latitude!, post.longitude!),
+            onTap: () {
+              ref
+                  .read(mapViewModelProvider.notifier)
+                  .onMarkerTap(post, ref, controller);
+            },
+          );
+        }
+
+        controller.addOverlay(marker);
+        currentMarkerIds.add(markerId); // Track the added marker
+      }
     }
+
+    // Remove old markers
+    // final markersToRemove = currentMarkerIds.difference(newMarkerIds);
+    // for (final markerId in markersToRemove) {
+    //   await controller.deleteOverlay(
+    //     NOverlayInfo(
+    //       type: NOverlayType.marker,
+    //       id: markerId,
+    //     ),
+    //   );
+    //   currentMarkerIds.remove(markerId); // Remove from current tracking
+    // }
   }
 }

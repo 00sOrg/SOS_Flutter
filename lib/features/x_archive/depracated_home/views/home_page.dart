@@ -11,7 +11,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locationAsyncValue = ref.watch(locationProvider);
+    final locationAsyncValue = ref.watch(locationViewModelProvider);
 
     return Scaffold(
       body: SafeArea(
