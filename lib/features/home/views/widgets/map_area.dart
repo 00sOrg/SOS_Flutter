@@ -6,8 +6,10 @@ import 'package:sos/features/home/viewmodels/home_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
 import 'package:sos/features/home/views/widgets/custom_marker.dart';
+import 'package:sos/features/home/views/widgets/friend_marker.dart';
 import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/viewmodels/friend_viewmodel.dart';
 
 class MapWidget extends ConsumerWidget {
   final Location currentLocation;
@@ -26,6 +28,7 @@ class MapWidget extends ConsumerWidget {
     final mapViewModel = ref.read(mapViewModelProvider.notifier);
     final bottomSheetViewModel =
         ref.read(bottomSheetViewModelProvider.notifier);
+    final friendViewModel = ref.read(friendViewModelProvider.notifier);
 
     return Stack(
       children: [
@@ -40,18 +43,25 @@ class MapWidget extends ConsumerWidget {
             ),
           ),
           onMapReady: (NaverMapController controller) {
+            // 지도 컨트롤러 초기화
             ref
                 .read(mapControllerProvider.notifier)
                 .initializeController(controller);
-            debugPrint('NaverMapController initialized');
+            // NLocationTrackingMode 설정 (face, follow, noFollow, none)
             controller.setLocationTrackingMode(NLocationTrackingMode.face);
             controller
                 .getLocationOverlay()
                 .setCircleColor(AppColors.lightBlue.withOpacity(0.3));
+
+            // 지도에 post 마커 추가
             mapViewModel.fetchPostsForMap(
                 level, currentLocation.latitude, currentLocation.longitude, 15);
 
             _addMarkers(controller, context, ref);
+
+            // 친구 마커 추가
+            friendViewModel.fetchFriendsLocation();
+            _addFriendMarkers(controller, context, ref);
           },
           onCameraIdle: () async {
             final naverMapController = ref.read(mapControllerProvider);
@@ -156,5 +166,35 @@ class MapWidget extends ConsumerWidget {
     //   );
     //   currentMarkerIds.remove(markerId); // Remove from current tracking
     // }
+  }
+
+  Future<void> _addFriendMarkers(
+    //친구 마커 추가
+    NaverMapController controller,
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final friendViewModel = ref.watch(friendViewModelProvider);
+    final friends = friendViewModel;
+
+    for (var friend in friends) {
+      final markerId = friend.favoriteMemberId.toString();
+
+      if (!currentMarkerIds.contains(markerId)) {
+        final marker = FriendMarker(
+          id: markerId,
+          nickname: friend.nickname,
+          position: NLatLng(friend.latitude!, friend.longitude!),
+          onTap: () {
+            // ref
+            //     .read(mapViewModelProvider.notifier)
+            //     .onFriendMarkerTap(friend, ref, controller);
+          },
+        );
+
+        controller.addOverlay(marker);
+        currentMarkerIds.add(markerId); // Track the added marker
+      }
+    }
   }
 }

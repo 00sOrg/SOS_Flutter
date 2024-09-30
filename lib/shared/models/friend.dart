@@ -12,6 +12,8 @@ class Friend with _$Friend {
     required String modifiedNickname,
     required String nickname,
     String? profilePicture,
+    double? latitude,
+    double? longitude,
   }) = _Friend;
 
   factory Friend.fromJson(Map<String, dynamic> json) => _$FriendFromJson(json);

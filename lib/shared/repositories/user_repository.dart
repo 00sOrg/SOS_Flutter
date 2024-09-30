@@ -58,7 +58,7 @@ class UserRepository {
   }
 
   Future<User> getUserById(int id) async {
-    final url = Uri.parse('$baseUrl//members/$id');
+    final url = Uri.parse('$baseUrl/members/$id');
 
     try {
       final accessToken = await secureStorage.read(key: 'access_token');

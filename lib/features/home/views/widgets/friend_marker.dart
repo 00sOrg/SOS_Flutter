@@ -17,7 +17,8 @@ class FriendMarker extends NMarker {
           position: position,
           icon: NOverlayImage.fromAssetImage(
               'assets/icons/home/marker/Friend_marker.png'),
-          size: const Size(53.62, 73.99),
+          caption: NOverlayCaption(text: '$nickname'),
+          size: const Size(64, 64),
         ) {
     // 마커 탭 리스너 설정
     setOnTapListener((NMarker marker) {
