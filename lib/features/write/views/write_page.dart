@@ -77,7 +77,7 @@ class _WritePageState extends ConsumerState<WritePage> {
   @override
   Widget build(BuildContext context) {
     final viewModel = ref.watch(writeViewModelProvider.notifier);
-    final location = ref.watch(locationProvider);
+    final location = ref.watch(locationViewModelProvider);
 
     return KeyboardDismisser(
       child: Scaffold(

@@ -43,6 +43,7 @@ class MapWidget extends ConsumerWidget {
             ref
                 .read(mapControllerProvider.notifier)
                 .initializeController(controller);
+            debugPrint('NaverMapController initialized');
             controller.setLocationTrackingMode(NLocationTrackingMode.face);
             controller
                 .getLocationOverlay()
@@ -63,7 +64,9 @@ class MapWidget extends ConsumerWidget {
                   cameraPosition.target.latitude,
                   cameraPosition.target.longitude,
                   zoomLevel);
-
+              // bottomSheetViewModel.fetchNearbyEvents(
+              //     cameraPosition.target.latitude,
+              //     cameraPosition.target.longitude);
               _addMarkers(naverMapController, context, ref);
             }
           },

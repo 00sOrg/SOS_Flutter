@@ -24,8 +24,6 @@ class HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    debugPrint('HomePageState initState');
-    // 페이지가 로드될 때 사용자 정보를 불러옵니다.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(userViewModelProvider.notifier).loadUserInfo();
     });
@@ -33,8 +31,14 @@ class HomePageState extends ConsumerState<HomePage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    debugPrint('HomePageState dispose');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final locationAsyncValue = ref.watch(locationProvider);
+    final locationAsyncValue = ref.watch(locationViewModelProvider);
     final isFavoritesOpen = ref
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
     final isSideSheetOpen = ref.watch(homeViewModelProvider
@@ -78,7 +82,7 @@ class HomePageState extends ConsumerState<HomePage> {
             if (isSideSheetOpen) const AlarmSideSheet(),
           ],
         ),
-        bottomSheet: const HomePageBottomSheet(),
+        bottomSheet: HomePageBottomSheet(),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
@@ -21,7 +22,7 @@ class NearbyEvents extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locationState = ref.watch(locationProvider);
+    final locationState = ref.watch(locationViewModelProvider);
     final naverMapController = ref.watch(mapControllerProvider);
 
     return locationState.when(
