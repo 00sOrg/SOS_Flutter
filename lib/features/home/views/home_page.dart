@@ -28,6 +28,7 @@ class HomePageState extends ConsumerState<HomePage> {
       ref.read(userViewModelProvider.notifier).loadUserInfo();
     });
     ref.read(bottomSheetViewModelProvider.notifier).initState();
+    ref.read(userViewModelProvider.notifier).updateUserLocation();
   }
 
   @override
