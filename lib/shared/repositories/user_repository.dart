@@ -66,7 +66,7 @@ class UserRepository {
       final response =
           await makeGetRequest(url, "getUserById", accessToken: accessToken);
       final jsonResponse = jsonDecode(response.body);
-      final user = jsonResponse['data'] as User;
+      final user = User.fromJson(jsonResponse['data']);
 
       return user;
     } catch (e) {
@@ -76,7 +76,7 @@ class UserRepository {
   }
 
   Future<User> getUserDetail() async {
-    final url = Uri.parse('$baseUrl//members/detail');
+    final url = Uri.parse('$baseUrl/members/detail');
 
     try {
       final accessToken = await secureStorage.read(key: 'access_token');
@@ -84,7 +84,7 @@ class UserRepository {
       final response =
           await makeGetRequest(url, "getUserDetail", accessToken: accessToken);
       final jsonResponse = jsonDecode(response.body);
-      final user = jsonResponse['data'] as User;
+      final user = User.fromJson(jsonResponse['data']);
 
       return user;
     } catch (e) {
