@@ -24,11 +24,11 @@ class OverviewHeader extends StatelessWidget {
       children: [
         profilePictureURL != null && profilePictureURL!.isNotEmpty
             ? CircleAvatar(
-                radius: 20,
+                radius: 25,
                 backgroundImage: NetworkImage(profilePictureURL!),
               )
             : CircleAvatar(
-                radius: 20,
+                radius: 25,
                 backgroundColor: AppColors.lineGray,
                 child: Image.asset(
                   'assets/images/default_profile.png',

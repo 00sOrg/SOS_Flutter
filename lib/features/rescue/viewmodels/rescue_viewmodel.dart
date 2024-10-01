@@ -71,7 +71,7 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
   void showDeleteModal({
     required BuildContext context,
   }) {
-  showCupertinoModalPopup(
+    showCupertinoModalPopup(
       context: context,
       builder: (BuildContext modalContext) {
         return SettingModal(

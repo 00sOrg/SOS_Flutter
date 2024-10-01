@@ -5,14 +5,29 @@ import 'package:sos/features/rescue/views/widgets/friend_add_btn.dart';
 import 'package:sos/features/rescue/views/widgets/friend_help_btn.dart';
 import 'package:sos/features/rescue/views/widgets/rescue_btn.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/viewmodels/friend_viewmodel.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 
-class RescuePage extends ConsumerWidget {
+class RescuePage extends ConsumerStatefulWidget {
   const RescuePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final friends = ref.watch(rescueViewModelProvider);
+  _RescuePageState createState() => _RescuePageState();
+}
+
+class _RescuePageState extends ConsumerState<RescuePage> {
+  @override
+  void initState() {
+    super.initState();
+    // 페이지가 열릴 때 친구 목록을 다시 가져옴
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(friendViewModelProvider.notifier).fetchFriendList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final friends = ref.watch(friendViewModelProvider);
     final viewModel = ref.read(rescueViewModelProvider.notifier);
 
     return Scaffold(
@@ -33,18 +48,17 @@ class RescuePage extends ConsumerWidget {
                   mainAxisSpacing: 15,
                   crossAxisSpacing: 19,
                   childAspectRatio: 157 / 145,
-                  // childAspectRatio: 157 / 140,
                 ),
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   if (index < friends.length) {
+                    debugPrint(friends[index].modifiedNickname);
                     final friend = friends[index];
                     return FriendHelpBtn(
                       friend: friend,
                       onTap: () => viewModel.handleFriendHelp(
                           id: friend.favoriteMemberId,
                           name: friend.modifiedNickname),
-                      // 여기서 친구의 이름을 수정된 닉네임으로 전달
                     );
                   } else if (index == friends.length && friends.length < 4) {
                     return FriendAddBtn(
@@ -66,11 +80,9 @@ class RescuePage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 17),
-              // const SizedBox(height: 40),
               RescueBtn(
                 onTap: () => viewModel.handleNearbyAlert(),
                 text: '내 주변에 도움 요청',
-                // color: AppColors.lightBlue,
                 color: const Color(0xFF8FBCFF),
               ),
               const SizedBox(height: 15),
