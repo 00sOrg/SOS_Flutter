@@ -13,13 +13,19 @@ import 'package:sos/shared/repositories/friends_repository.dart';
 import 'package:sos/shared/services/geolocator_service.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/log_util.dart';
+import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class RescueViewModel extends StateNotifier<List<Friend>> {
   final RescueRepository rescueRepository;
   final FriendsRepository friendsRepository;
+  final UserViewModel userViewModel;
 
-  RescueViewModel(this.friendsRepository, this.rescueRepository) : super([]) {
+  RescueViewModel(
+    this.friendsRepository,
+    this.rescueRepository,
+    this.userViewModel,
+  ) : super([]) {
     fetchFriends();
   }
 
@@ -64,6 +70,7 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
     final lon = _currentPosition!.longitude;
 
     final success = await rescueRepository.requestHelp(lat, lon);
+
     if (success) {
       debugPrint('내 주변 도움 요청 성공');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -100,11 +107,16 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
     );
   }
 
-  final String dummyName = '더미네임F';
-  final String dummySex = '성별별~';
-
   void handleEmergencyAlert() async {
     await getCurrentPosition();
+    await userViewModel.loadUserInfo();
+    final user = userViewModel.state;
+
+    final height = user.height;
+    final weight = user.weight;
+    final bloodType = user.bloodType;
+    final disease = user.disease;
+    final medication = user.medication;
 
     if (_currentPosition == null) {
       debugPrint("위치 정보가 없음");
@@ -116,11 +128,26 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
 
     String message = '''
   [SOS] 긴급 상황입니다! 긴급 구조를 요청합니다.
-  구조 요청자 정보:
-  이름: $dummyName
-  성별: $dummySex
+  구조 요청자 정보: ${user.name} / ${user.sex} 
   위치: 위도 $lat, 경도 $lon
   ''';
+
+    if (height != null && height.isNotEmpty) {
+      message += '신장: $height\n';
+    }
+    if (weight != null && weight.isNotEmpty) {
+      message += '체중: $weight\n';
+    }
+    if (bloodType != null && bloodType.isNotEmpty) {
+      message += '혈액형: $bloodType\n';
+    }
+    if (disease != null && disease.isNotEmpty) {
+      message += '질병: $disease\n';
+    }
+    if (medication != null && medication.isNotEmpty) {
+      message += '복용 중인 약물: $medication\n';
+    }
+    debugPrint(message);
 
     List<String> recipents = ['119', '112'];
 
@@ -144,5 +171,6 @@ final rescueViewModelProvider =
     StateNotifierProvider<RescueViewModel, List<Friend>>((ref) {
   final friendsRepository = ref.read(friendsRepositoryProvider);
   final rescueRepository = ref.read(rescueRepositoryProvider);
-  return RescueViewModel(friendsRepository, rescueRepository);
+  final userViewModel = ref.read(userViewModelProvider.notifier);
+  return RescueViewModel(friendsRepository, rescueRepository, userViewModel);
 });

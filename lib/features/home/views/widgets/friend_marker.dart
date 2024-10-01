@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class FriendMarker extends NMarker {
   final String id;
@@ -17,10 +18,10 @@ class FriendMarker extends NMarker {
     required this.position,
     required this.onTap,
   }) : super(
-          id: 'friend' + id,
+          id: 'friend$id',
           position: position,
           icon: nOverlayImage,
-          caption: NOverlayCaption(text: '$nickname'),
+          caption: NOverlayCaption(text: nickname),
           size: const Size(64, 64),
         ) {
     // 마커 탭 리스너 설정
@@ -64,29 +65,18 @@ Future<NOverlayImage> buildFriendImageMarkerWidget(
 
   // 이미지가 로드되면 NOverlayImage 생성
   final nOverlayImage = await NOverlayImage.fromWidget(
-    widget: Stack(
-      alignment: Alignment.center,
-      children: [
-        Image.asset(
-          'assets/icons/home/marker/Friend_marker.png',
-          width: 62,
-          height: 62,
+    widget: friendMarkerContainer(
+      child: ClipOval(
+        child: Image.network(
+          imageUrl,
+          width: 50,
+          height: 50,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(Icons.error, size: 48);
+          },
         ),
-        Positioned(
-          top: 11,
-          child: ClipOval(
-            child: Image.network(
-              imageUrl,
-              width: 42,
-              height: 42,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.error, size: 48);
-              },
-            ),
-          ),
-        ),
-      ],
+      ),
     ),
     size: const Size(64, 64),
     context: context,
@@ -100,33 +90,56 @@ Future<NOverlayImage> buildFriendMarkerWidget(
   BuildContext context,
 ) async {
   // 프로필 이미지가 없는 경우 기본 이미지를 사용
-  final defaultImage = Image.asset(
-    'assets/images/default_profile.png',
-    width: 36,
-    height: 36,
+  final defaultImage = Center(
+    child: Image.asset(
+      'assets/images/default_profile.png',
+      width: 36,
+      height: 36,
+    ),
   );
 
   // 이미지 로드를 위한 Widget 생성
   final nOverlayImage = await NOverlayImage.fromWidget(
-    widget: Stack(
-      alignment: Alignment.center,
-      children: [
-        Image.asset(
-          'assets/icons/home/marker/Friend_marker.png',
-          width: 64,
-          height: 64,
+    widget: friendMarkerContainer(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: const Color(0xFFDEDEDE),
         ),
-        Positioned(
-          top: 14,
-          child: ClipOval(
-            child: defaultImage,
-          ),
-        ),
-      ],
+        width: 50,
+        height: 50,
+        child: defaultImage,
+      ),
     ),
     size: const Size(64, 64),
     context: context,
   );
 
   return nOverlayImage;
+}
+
+Widget friendMarkerContainer({required Widget child}) {
+  return Stack(
+    alignment: Alignment.center,
+    clipBehavior: Clip.none,
+    children: [
+      Container(
+        width: 60,
+        height: 60,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.lightBlue,
+        ),
+      ),
+      Container(
+        width: 54,
+        height: 54,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: AppColors.white,
+        ),
+        child: Center(child: child),
+      ),
+    ],
+  );
 }
