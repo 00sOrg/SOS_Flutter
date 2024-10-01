@@ -15,9 +15,9 @@ class PostSearchResultPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 검색어를 사용하여 게시글 검색
+    // PostSearchViewModel에서 검색 결과 가져오기
     final futureEvents =
-        ref.watch(postSearchViewModelProvider.notifier).searchPost(keyword);
+        ref.read(postSearchViewModelProvider.notifier).searchPosts(keyword);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -28,14 +28,12 @@ class PostSearchResultPage extends ConsumerWidget {
         children: [
           // BoardSearchBar 추가
           const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20,
-            ), // 패딩을 추가
+            padding: EdgeInsets.symmetric(horizontal: 20), // 패딩을 추가
             child: BoardSearchBar(), // 상단에 검색 바 배치
           ),
           Expanded(
             child: FutureBuilder<List<Post>>(
-              future: futureEvents, // 비동기 결과를 처리
+              future: futureEvents, // 검색 결과를 Future로 처리
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(

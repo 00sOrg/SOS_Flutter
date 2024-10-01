@@ -33,67 +33,12 @@ class UserViewModel extends StateNotifier<User> {
     state = user;
   }
 
-  // Future<User> loadUserInfoFromToken() async {
-  //   final accessToken = await secureStorage.read(key: 'access_token');
-  //   if (accessToken != null) {
-  //     Map<String, dynamic> decodedToken = JwtDecoder.decode(accessToken);
-
-  //     final user = User(
-  //       name: decodedToken['name'],
-  //       profilePicture: decodedToken['profilePicture'],
-  //       email: decodedToken['email'],
-  //       nickname: decodedToken['nickname'],
-  //     );
-  //     state = user;
-  //     return user;
-  //   } else {
-  //     LogUtil.e('No access token found');
-  //     return User(name: '사용자를 찾을 수 없습니다.');
-  //   }
-  // }
-
   Future<void> updateUserLocation() async {
     final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     await userRepository.postUserLocation(
         position.latitude, position.longitude);
   }
-
-  // Future<User> loadUserInfoDetail() async {
-  //   final accessToken = await secureStorage.read(key: 'access_token');
-  //   if (accessToken != null) {
-  //     try {
-  //       Map<String, dynamic> decodedToken = JwtDecoder.decode(accessToken);
-  //       DateTime? birthDay;
-
-  //       if (decodedToken['birthDay'] != null) {
-  //         birthDay = DateTime.tryParse(decodedToken['birthDay']);
-  //       }
-
-  //       final user = User(
-  //         id: decodedToken['id'],
-  //         name: decodedToken['name'],
-  //         profilePicture: decodedToken['profilePicture'],
-  //         email: decodedToken['email'],
-  //         nickname: decodedToken['nickname'],
-  //         phoneNumber: decodedToken['phoneNumber'], // TODO: 다 오는지 확인
-  //         sex: decodedToken['gender'],
-  //         address: decodedToken['address'],
-  //         birthDate: birthDay,
-  //       );
-
-  //       state = user;
-
-  //       return user;
-  //     } catch (e) {
-  //       LogUtil.e('loadUserInfoDetail 에러: $e');
-  //       return User(name: '사용자를 찾을 수 없습니다.');
-  //     }
-  //   } else {
-  //     LogUtil.e('No access token found');
-  //     return User(name: '사용자를 찾을 수 없습니다.');
-  //   }
-  // }
 
   Future<void> printDecodedToken() async {
     final accessToken = await secureStorage.read(key: 'access_token');
