@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/widgets/custom_animated_scale.dart';
+
 
 class FriendHelpBtn extends StatelessWidget {
   final double radius;
@@ -17,7 +19,7 @@ class FriendHelpBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return CustomAnimatedScaleDown(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
