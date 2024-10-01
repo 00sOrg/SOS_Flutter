@@ -58,7 +58,8 @@ class _RescuePageState extends ConsumerState<RescuePage> {
                     return FriendHelpBtn(
                       radius: radius,
                       friend: friend,
-                      onTap: () => viewModel.handleFriendHelp(
+                      onTap: () => viewModel.askFriendHelpModal(
+                        context: context,
                         id: friend.favoriteMemberId,
                         name: friend.modifiedNickname,
                       ),
