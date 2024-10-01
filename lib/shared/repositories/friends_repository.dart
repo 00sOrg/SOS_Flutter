@@ -94,4 +94,26 @@ class FriendsRepository {
       return false;
     }
   }
+
+  //update friend nickname
+  Future<bool> patchFriendNickname(
+      int favoritedMemberId, String nickname) async {
+    final url = Uri.parse(
+        '$baseUrl/members/favorite/update/$favoritedMemberId/$nickname');
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+      final response = await makePatchRequest(
+        url,
+        null,
+        'updateFriendNickname',
+        accessToken: accessToken,
+      );
+
+      return response.statusCode == 200;
+    } catch (e) {
+      LogUtil.e('updateFriendNickname 에러: $e');
+      return false;
+    }
+  }
 }

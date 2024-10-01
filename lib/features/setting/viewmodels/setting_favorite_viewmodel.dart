@@ -95,18 +95,27 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
     }
   }
 
-  void saveFavorite(int friendId, String name) {
-    // TODO: Update favorites API call
-    final nickname = _nicknameTECs[friendId]?.text.trim();
+  Future<void> saveFavorite(
+      int friendId, String modifiedName, String nickName) async {
+    String nickname;
+    if (_nicknameTECs[friendId]?.text.trim() == null ||
+        _nicknameTECs[friendId]?.text.trim().isEmpty == true) {
+      nickname = nickName;
+    } else {
+      nickname = _nicknameTECs[friendId]!.text.trim();
+    }
+    await friendsRepository.patchFriendNickname(friendId, nickname);
     final updatedFriend = state
         .firstWhere((friend) => friend.favoriteMemberId == friendId)
         .copyWith(
-            modifiedNickname:
-                (nickname == null || nickname.isEmpty) ? name : nickname);
+            modifiedNickname: (nickname == null || nickname.isEmpty)
+                ? modifiedName
+                : nickname);
     state = [
       for (final friend in state)
         if (friend.favoriteMemberId == friendId) updatedFriend else friend,
     ];
+
     toggleEditMode(friendId, false);
   }
 
@@ -154,14 +163,6 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
     GoRouter.of(context).pop();
     GoRouter.of(context).pop();
   }
-
-  Friend dummySearchResultFriend = Friend(
-    favoriteMemberId: 30,
-    nickname: '이름임',
-    modifiedNickname: '닉네임임',
-    lastLocation: '주소 주소임',
-    isAccepted: false,
-  );
 
   @override
   void dispose() {

@@ -34,12 +34,12 @@ class CustomMarker extends NMarker {
         return 'assets/icons/home/marker/Typhoon_marker.png';
       case 'FLOOD':
         return 'assets/icons/home/marker/Flood_marker.png';
+      case 'EARTHQUAKE':
+        return 'assets/icons/home/marker/Earthquake_marker.png';
       case 'WAR':
         return 'assets/icons/home/marker/War_marker.png';
       case 'CAR_ACCIDENT':
         return 'assets/icons/home/marker/CarAccident_marker.png';
-      case 'OTHER':
-        return 'assets/icons/home/marker/Others_marker.png';
       default:
         return 'assets/icons/home/marker/Accident_marker.png';
     }
@@ -150,25 +150,6 @@ Future<NOverlayImage> buildImageMarkerWidget(
   );
 
   return nOverlayImage;
-}
-
-String getImageMarkerIcon(String? eventType) {
-  switch (eventType) {
-    case 'FIRE':
-      return 'assets/icons/home/marker/Fire_image_marker.png';
-    case 'TYPHOON':
-      return 'assets/icons/home/marker/Typhoon_image_marker.png';
-    case 'FLOOD':
-      return 'assets/icons/home/marker/Flood_image_marker.png';
-    case 'WAR':
-      return 'assets/icons/home/marker/War_image_marker.png';
-    case 'OTHER':
-      return 'assets/icons/home/marker/Others_image_marker.png';
-    case 'CAR_ACCIDENT':
-      return 'assets/icons/home/marker/CarAccident_imgae_marker.png';
-    default:
-      return 'assets/icons/home/marker/Accident_image_marker.png';
-  }
 }
 
 Color _getImageMarkerColor(String? eventType) {
