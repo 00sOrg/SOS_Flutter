@@ -22,7 +22,7 @@ class BoardCarouselItem extends StatelessWidget {
                 image: post.media != null && post.media!.isNotEmpty
                     ? NetworkImage(post.media!)
                     : const NetworkImage(
-                        'https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg?w=2000&t=st=1727165735~exp=1727166335~hmac=525ace82c185c8f8a960f551e210f30b22cb51feea0357ded46b41aba1bf6721',
+                        'https://sos-khu-backend.s3.ap-northeast-2.amazonaws.com/sos-background.png',
                       ), //쿠옹이
                 fit: BoxFit.cover,
               ),
@@ -32,15 +32,17 @@ class BoardCarouselItem extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              gradient: const LinearGradient(
-                begin: Alignment.center,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.black,
-                ],
-                stops: [0.1, 1],
-              ),
+              gradient: post.media != null && post.media!.isNotEmpty
+                  ? const LinearGradient(
+                      begin: Alignment.center,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black,
+                      ],
+                      stops: [0.1, 1],
+                    )
+                  : null,
             ),
           ),
           Container(
@@ -64,11 +66,10 @@ class BoardCarouselItem extends StatelessWidget {
                 Text(
                   post.content ?? '',
                   style: const TextStyle(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    overflow: TextOverflow.ellipsis,
-                    height: 1.2
-                  ),
+                      color: AppColors.white,
+                      fontSize: 16,
+                      overflow: TextOverflow.ellipsis,
+                      height: 1.2),
                   maxLines: 3,
                 ),
               ],

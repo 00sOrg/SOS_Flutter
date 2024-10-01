@@ -38,19 +38,29 @@ class CameraViewModel extends StateNotifier<CameraState> {
   CameraViewModel() : super(CameraState());
 
   List<CameraDescription> _cameras = [];
+  int _selectedCameraIndex = 0;
 
   Future<void> initializeCamera() async {
     try {
       _cameras = await availableCameras();
       if (_cameras.isNotEmpty) {
-        final cameraController =
-            CameraController(_cameras[0], ResolutionPreset.high);
-        await cameraController.initialize();
-        state = state.copyWith(
-            cameraController: cameraController, isInitialized: true);
+        _selectedCameraIndex = 0;
+        await _initializeCameraController(_selectedCameraIndex);
       }
     } catch (e) {
       LogUtil.e('Camera initialization error: $e');
+    }
+  }
+
+  Future<void> _initializeCameraController(int cameraIndex) async {
+    try {
+      final cameraController =
+          CameraController(_cameras[cameraIndex], ResolutionPreset.high);
+      await cameraController.initialize();
+      state = state.copyWith(
+          cameraController: cameraController, isInitialized: true);
+    } catch (e) {
+      LogUtil.e('Camera controller initialization error: $e');
     }
   }
 
@@ -60,10 +70,20 @@ class CameraViewModel extends StateNotifier<CameraState> {
         final image = await state.cameraController?.takePicture();
         return image;
       } catch (e) {
-        print('Capture error: $e');
+        debugPrint('Capture error: $e');
       }
     }
     return null;
+  }
+
+  Future<void> flipCamera() async {
+    if (_cameras.isNotEmpty) {
+      _selectedCameraIndex = (_selectedCameraIndex + 1) % _cameras.length;
+
+      await state.cameraController?.dispose();
+
+      await _initializeCameraController(_selectedCameraIndex);
+    }
   }
 
   void skipTakingPicture(BuildContext context) {
