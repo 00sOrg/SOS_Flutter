@@ -99,7 +99,7 @@ Widget settingTile({
     onTap: onTap,
     child: Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 14),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(

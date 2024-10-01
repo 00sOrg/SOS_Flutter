@@ -7,6 +7,7 @@ import 'package:sos/features/setting/viewmodels/setting_favorite_viewmodel.dart'
 import 'package:sos/features/setting/views/widgets/setting_favorite_block.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
+import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class SettingFavoriteSearchResultPage extends ConsumerWidget {
   const SettingFavoriteSearchResultPage({super.key});
@@ -46,8 +47,16 @@ class SettingFavoriteSearchResultPage extends ConsumerWidget {
               if (viewModel.searchedUser != null &&
                   viewModel.searchedUser!.favoriteMemberId != -1)
                 GestureDetector(
-                  onTap: () => viewModel.requestFavorite(
-                      context, viewModel.searchedUser!.nickname),
+                  onTap: () => {
+                    viewModel.requestFavorite(
+                        context, viewModel.searchedUser!.nickname),
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      customSnackBar(
+                        text: '즐겨찾기 요청이 성공적으로 전송되었습니다!',
+                        backgroundColor: AppColors.blue,
+                      ),
+                    ),
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppColors.blue,
