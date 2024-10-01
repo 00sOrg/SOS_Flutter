@@ -12,7 +12,7 @@ class RescuePage extends ConsumerStatefulWidget {
   const RescuePage({super.key});
 
   @override
-  _RescuePageState createState() => _RescuePageState();
+  ConsumerState<RescuePage> createState() => _RescuePageState();
 }
 
 class _RescuePageState extends ConsumerState<RescuePage> {
@@ -29,6 +29,7 @@ class _RescuePageState extends ConsumerState<RescuePage> {
   Widget build(BuildContext context) {
     final friends = ref.watch(friendViewModelProvider);
     final viewModel = ref.read(rescueViewModelProvider.notifier);
+    const radius = 24.0;
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -55,13 +56,16 @@ class _RescuePageState extends ConsumerState<RescuePage> {
                     debugPrint(friends[index].modifiedNickname);
                     final friend = friends[index];
                     return FriendHelpBtn(
+                      radius: radius,
                       friend: friend,
                       onTap: () => viewModel.handleFriendHelp(
-                          id: friend.favoriteMemberId,
-                          name: friend.modifiedNickname),
+                        id: friend.favoriteMemberId,
+                        name: friend.modifiedNickname,
+                      ),
                     );
                   } else if (index == friends.length && friends.length < 4) {
                     return FriendAddBtn(
+                      radius: radius,
                       onTap: () => viewModel.handleFriendAdd(context),
                     );
                   } else {
@@ -69,9 +73,9 @@ class _RescuePageState extends ConsumerState<RescuePage> {
                   }
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               const Text(
-                '* 즐겨찾는 지인 수정은 설정에서 편집 가능합니다.',
+                '* 즐겨찾는 지인은 설정에서 편집 가능합니다.',
                 style: TextStyle(
                   color: AppColors.textGray,
                   fontWeight: FontWeight.w400,
@@ -79,14 +83,16 @@ class _RescuePageState extends ConsumerState<RescuePage> {
                   height: 1.2,
                 ),
               ),
-              const SizedBox(height: 17),
+              const SizedBox(height: 18),
               RescueBtn(
+                radius: 12,
                 onTap: () => viewModel.handleNearbyAlert(context),
                 text: '내 주변에 도움 요청',
                 color: const Color(0xFF8FBCFF),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 15.3),
               RescueBtn(
+                radius: 12,
                 onTap: () => viewModel.handleEmergencyAlert(),
                 text: '112 / 119에 신고하기',
                 color: AppColors.blue,

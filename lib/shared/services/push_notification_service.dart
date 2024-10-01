@@ -1,7 +1,6 @@
-import 'dart:io';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:sos/shared/utils/check_real_device.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
@@ -88,7 +87,7 @@ class PushNotificationService {
   // }
 
   static Future<String?> getDeviceToken() async {
-    bool isRealDevice = await _isRealDevice();
+    bool isRealDevice = await checkRealDevice();
 
     if (!isRealDevice) {
       debugPrint('Running on Simulator - FCM not supported');
@@ -107,19 +106,5 @@ class PushNotificationService {
       debugPrint('Error getting device token: $e');
       return null;
     }
-  }
-
-  static Future<bool> _isRealDevice() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      debugPrint('실기기 여부: ${iosInfo.isPhysicalDevice}');
-      return iosInfo.isPhysicalDevice; // 실기기면 true, 시뮬이면 false
-    } else if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      return androidInfo.isPhysicalDevice;
-    }
-    return true;
   }
 }

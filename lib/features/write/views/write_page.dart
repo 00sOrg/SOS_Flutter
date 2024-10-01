@@ -84,38 +84,40 @@ class _WritePageState extends ConsumerState<WritePage> {
         appBar: const CustomAppBar(
           title: '사건/사고 게시물 작성',
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-          child: Column(
-            children: [
-              _topArea(location),
-              const SizedBox(height: 14),
-              _buildPostTypeButtons(),
-              const SizedBox(height: 16),
-              Expanded(child: _contentField()),
-              // if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
-              if (!_contentFocusNode.hasFocus && !_contentTEC.text.isNotEmpty)
-                const WriteCautionsBlock(),
-              // const SizedBox(height: 16),
-              // if (_contentTEC.text.isNotEmpty) _buildPostTypeButtons(),
-              const SizedBox(height: 25),
-              WriteSubmitBtn(
-                onTap: () async {
-                  location.whenData(
-                    (loc) {
-                      viewModel.submitPost(
-                        context: context,
-                        title: _titleTEC.text,
-                        content: _contentTEC.text,
-                        location: loc,
-                        type: _selectedPostType,
-                      );
-                    },
-                  );
-                },
-              ),
-              const SizedBox(height: 16),
-            ],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            child: Column(
+              children: [
+                _topArea(location),
+                const SizedBox(height: 14),
+                _buildPostTypeButtons(),
+                const SizedBox(height: 16),
+                Expanded(child: _contentField()),
+                // if (_contentTEC.text.isEmpty) const WriteCautionsBlock(),
+                if (!_contentFocusNode.hasFocus && !_contentTEC.text.isNotEmpty)
+                  const WriteCautionsBlock(),
+                // const SizedBox(height: 16),
+                // if (_contentTEC.text.isNotEmpty) _buildPostTypeButtons(),
+                const SizedBox(height: 25),
+                WriteSubmitBtn(
+                  onTap: () async {
+                    location.whenData(
+                      (loc) {
+                        viewModel.submitPost(
+                          context: context,
+                          title: _titleTEC.text,
+                          content: _contentTEC.text,
+                          location: loc,
+                          type: _selectedPostType,
+                        );
+                      },
+                    );
+                  },
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
       ),
@@ -126,7 +128,7 @@ class _WritePageState extends ConsumerState<WritePage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WriteImagePicker(),
+        const WriteImagePicker(),
         const SizedBox(width: 16),
         Expanded(
           child: Column(

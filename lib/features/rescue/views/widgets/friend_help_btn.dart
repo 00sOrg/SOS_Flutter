@@ -4,6 +4,7 @@ import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class FriendHelpBtn extends StatelessWidget {
+  final double radius;
   final Friend friend;
   final VoidCallback onTap;
 
@@ -11,6 +12,7 @@ class FriendHelpBtn extends StatelessWidget {
     super.key,
     required this.friend,
     required this.onTap,
+    required this.radius,
   });
 
   @override
@@ -19,17 +21,17 @@ class FriendHelpBtn extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(radius),
           color: AppColors.finalGray,
           boxShadow: [
             BoxShadow(
-              offset: const Offset(3, 3),
-              color: AppColors.black.withOpacity(0.20), // .25
-              blurRadius: 4,
+              offset: const Offset(2.5, 2.5),
+              color: AppColors.textGray.withOpacity(0.5),
+              blurRadius: 3.8,
             ),
           ],
         ),
-        padding: const EdgeInsets.fromLTRB(24, 10, 24, 13), // 24,9,24,13
+        padding: const EdgeInsets.fromLTRB(24, 12, 24, 13), // 24,9,24,13
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -39,14 +41,14 @@ class FriendHelpBtn extends StatelessWidget {
               backgroundImage: (friend.profilePicture != null &&
                       friend.profilePicture!.isNotEmpty)
                   ? NetworkImage(friend.profilePicture!)
-                  : AssetImage('assets/images/default_profile.png')
+                  : const AssetImage('assets/images/default_profile.png')
                       as ImageProvider,
             ),
             Text(
               '''${friend.modifiedNickname}\n 주변 도움 요청''',
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
-                // fontSize: 14,
+                color: AppColors.black,
                 fontSize: 15,
                 height: 1.2,
               ),
