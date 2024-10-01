@@ -5,6 +5,30 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class PushNotificationService {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  Future<void> init() async {
+    NotificationSettings settings = await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      debugPrint('User granted permission');
+    } else {
+      debugPrint('User declined or has not accepted permission');
+    }
+
+    String? token = await _firebaseMessaging.getToken();
+    debugPrint("FCM Token: $token");
+
+    // Listen for incoming messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint("Received message: ${message.notification?.title}");
+    });
+  }
+
   static Future<String?> getDeviceToken() async {
     bool isRealDevice = await _isRealDevice();
 
