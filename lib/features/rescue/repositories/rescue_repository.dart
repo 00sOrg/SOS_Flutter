@@ -11,11 +11,7 @@ class RescueRepository {
   RescueRepository(this.secureStorage);
 
   Future<bool> requestHelp(double lat, double lng) async {
-    final url = Uri.parse('$baseUrl/alarm/help/request');
-    final body = {
-      'lat': lat.toString(),
-      'lng': lng.toString(),
-    };
+    final url = Uri.parse('$baseUrl/alarm/help/request?lat=$lat&lng=$lng');
 
     try {
       final accessToken = await secureStorage.read(key: 'access_token');
@@ -23,9 +19,9 @@ class RescueRepository {
         throw Exception('Access token is missing');
       }
 
-      final response = await makePostRequest(url, body, 'requestHelp',
+      final response = await makePostRequest(url, {}, 'requestHelp',
           accessToken: accessToken);
-      return response.statusCode == 200;
+      return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {
       LogUtil.e('Error requesting help: $e');
       return false;

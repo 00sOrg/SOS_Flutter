@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sms/flutter_sms.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,7 +11,9 @@ import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/providers/friend_repository_provider.dart';
 import 'package:sos/shared/repositories/friends_repository.dart';
 import 'package:sos/shared/services/geolocator_service.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/log_util.dart';
+import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class RescueViewModel extends StateNotifier<List<Friend>> {
   final RescueRepository rescueRepository;
@@ -49,7 +52,7 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
     GoRouter.of(context).push('/setting-favorite-search');
   }
 
-  void handleNearbyAlert() async {
+  void handleNearbyAlert(BuildContext context) async {
     await getCurrentPosition();
 
     if (_currentPosition == null) {
@@ -62,16 +65,25 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
 
     final success = await rescueRepository.requestHelp(lat, lon);
     if (success) {
-      debugPrint('Help request sent successfully');
+      debugPrint('내 주변 도움 요청 성공');
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(
+          text: '도움을 요청했습니다',
+          backgroundColor: AppColors.blue,
+        ),
+      );
     } else {
-      debugPrint('Failed to send help request');
+      debugPrint('내 주변 도움 요청 실패');
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(text: '도움 요청을 실패했습니다'),
+      );
     }
   }
 
-  void showDeleteModal({
+  void askFriendHelpModal({
     required BuildContext context,
   }) {
-  showCupertinoModalPopup(
+    showCupertinoModalPopup(
       context: context,
       builder: (BuildContext modalContext) {
         return SettingModal(
@@ -81,7 +93,7 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
           rightBtn: '삭제',
           onRightBtnPressed: () {
             Navigator.of(modalContext).pop();
-            handleNearbyAlert();
+            handleNearbyAlert(context);
           },
         );
       },

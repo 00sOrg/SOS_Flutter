@@ -68,7 +68,7 @@ class RescuePage extends ConsumerWidget {
               const SizedBox(height: 17),
               // const SizedBox(height: 40),
               RescueBtn(
-                onTap: () => viewModel.handleNearbyAlert(),
+                onTap: () => viewModel.handleNearbyAlert(context),
                 text: '내 주변에 도움 요청',
                 // color: AppColors.lightBlue,
                 color: const Color(0xFF8FBCFF),
