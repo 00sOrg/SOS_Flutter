@@ -8,7 +8,7 @@ class AppColors {
   static const Color textGray = Color(0xFFB6B6B6);
   static const Color finalGray = Color(0xFFF3F3F3);
   static const Color red = Color(0xFFFF0000);
-  static const Color black = Color(0xFF000000);
+  static const Color black = Color(0xFF1B1B1B);
   static const Color white = Color(0xFFFFFFFF);
 }
 
@@ -16,14 +16,14 @@ class AppTexts {
   static const TextStyle titleStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w700,
-    color: Color(0xFF000000),
+    color: AppColors.black,
     height: 1.2,
   );
 
   static const TextStyle bodyStyle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
-    color: Color(0xFF000000),
+    color: AppColors.black,
     height: 1.2,
   );
 }

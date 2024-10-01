@@ -20,7 +20,7 @@ class SettingFavoriteAddButton extends ConsumerWidget {
           color: AppColors.white,
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF000000).withOpacity(0.25),
+              color: AppColors.black.withOpacity(0.25),
               offset: const Offset(1, 2),
               blurRadius: 2,
               spreadRadius: 0,
