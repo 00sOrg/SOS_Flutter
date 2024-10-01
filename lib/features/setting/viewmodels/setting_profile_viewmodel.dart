@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sos/features/setting/repositories/setting_repository.dart';
 import 'package:sos/shared/models/user.dart';
+import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/viewmodels/user_viewmodel.dart';
+import 'package:sos/shared/widgets/custom_snack_bar.dart';
 // import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class SettingProfileViewModel extends StateNotifier<User> {
-  SettingProfileViewModel()
+  final SettingRepository settingRepository;
+  final UserViewModel userViewModel;
+  SettingProfileViewModel(this.settingRepository, this.userViewModel)
       : super(
           User(
             name: '',
@@ -40,30 +47,26 @@ class SettingProfileViewModel extends StateNotifier<User> {
   late TextEditingController monthTEC;
   late TextEditingController dayTEC;
 
-  void loadUserData() {
-    // TODO: 일단 더미 -> 서버에서 받아오도록 수정
-    final dummyUser = User(
-      name: '김채리',
-      email: 'dummy@example.com',
-      password: '',
-      nickname: '챌챌',
-      phoneNumber: '010-8575-4997',
-      sex: '여자',
-      birthDate: DateTime(2000, 9, 25),
-      profilePicture: 'https://picsum.photos/100',
-    );
-    state = dummyUser;
+  Future<void> loadUserData() async {
+    // userViewModel.printDecodedToken();
+    await userViewModel.loadUserInfo();
+
+    final user = userViewModel.state;
+
+    state = user;
+
     updateControllers();
   }
 
+  // TODO: API 수정 후 다시 손봐야함
   void updateControllers() {
     emailTEC.text = state.email!;
     nameTEC.text = state.name!;
     nicknameTEC.text = state.nickname!;
     numberTEC.text = state.phoneNumber!;
-    yearTEC.text = state.birthDate!.year.toString();
-    monthTEC.text = state.birthDate!.month.toString().padLeft(2, '0');
-    dayTEC.text = state.birthDate!.day.toString().padLeft(2, '0');
+    yearTEC.text = state.birthDate?.year.toString() ?? '0000';
+    monthTEC.text = state.birthDate?.month.toString().padLeft(2, '0') ?? '00';
+    dayTEC.text = state.birthDate?.day.toString().padLeft(2, '0') ?? '00';
   }
 
   String? localImagePath;
@@ -75,6 +78,10 @@ class SettingProfileViewModel extends StateNotifier<User> {
       localImagePath = null;
     }
     state = state.copyWith(profilePicture: imagePath); // trigger
+  }
+
+  bool hasProfilePictureChanged() {
+    return localImagePath != null || state.profilePicture == '';
   }
 
   void updatePassword(String password) {
@@ -95,22 +102,23 @@ class SettingProfileViewModel extends StateNotifier<User> {
     state = state.copyWith(birthDate: birthDay);
   }
 
-  bool isNicknameAvailable = false;
+  bool isNicknameAvailable = true;
   bool isCheckingNickname = false;
   bool hasCheckedNickname = false;
   Future<void> checkName() async {
-    debugPrint('닉네임 중복확인 액션');
     if (nicknameTEC.text.isEmpty) return;
 
     isCheckingNickname = true;
     hasCheckedNickname = false;
     state = state.copyWith(); // trigger
-    // dummy 시간 줌
-    await Future.delayed(const Duration(seconds: 1));
 
-    // dummy 닉네임
-    isNicknameAvailable =
-        (nicknameTEC.text != 'hi') && (nicknameTEC.text.isNotEmpty);
+    try {
+      isNicknameAvailable =
+          await settingRepository.checkNickname(nicknameTEC.text);
+    } catch (e) {
+      debugPrint('닉네임 검증 실패: $e');
+      isNicknameAvailable = false;
+    }
 
     isCheckingNickname = false;
     hasCheckedNickname = true;
@@ -118,20 +126,54 @@ class SettingProfileViewModel extends StateNotifier<User> {
   }
 
   bool areFieldsValid() {
-    return nicknameTEC.text.isNotEmpty &&
+    return isNicknameAvailable &&
+        nicknameTEC.text.isNotEmpty &&
         yearTEC.text.isNotEmpty &&
         monthTEC.text.isNotEmpty &&
         dayTEC.text.isNotEmpty;
   }
 
   Future<void> submit(BuildContext context) async {
-    // if (areFieldsValid()) {
-    debugPrint('유저정보: ${state.nickname}, ${state.email}');
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     //customSnackBar(text: '입력값을 확인해주세요')
-    //   );
-    // }
+    if (areFieldsValid()) {
+      debugPrint('유저정보: ${state.nickname}, ${state.email}');
+      final nickname = nicknameTEC.text;
+      final password = passwordTEC.text.isNotEmpty ? passwordTEC.text : null;
+      final sex = state.sex;
+      final birthDate = state.birthDate;
+      String? media;
+
+      if (hasProfilePictureChanged()) {
+        media = localImagePath ?? ''; // '' 가는 경우는 원래 있었는데 삭제된 경우
+      }
+
+      final success = await settingRepository.updateUserInfo(
+        nickname,
+        password,
+        sex,
+        birthDate,
+        media,
+      );
+
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(
+            text: '프로필 수정에 성공했습니다.',
+            backgroundColor: AppColors.blue,
+          ),
+        );
+        GoRouter.of(context).pop();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(text: '프로필 수정을 실패했습니다.'),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(
+          text: '모든 필드를 입력해야 합니다.',
+        ),
+      );
+    }
   }
 
   @override
@@ -150,6 +192,9 @@ class SettingProfileViewModel extends StateNotifier<User> {
 }
 
 final settingProfileViewModelProvider =
-    StateNotifierProvider<SettingProfileViewModel, User>(
-  (ref) => SettingProfileViewModel(),
-);
+    StateNotifierProvider<SettingProfileViewModel, User>((ref) {
+  final settingRepository = ref.read(settingRepositoryProvider);
+  final userViewModel = ref.read(userViewModelProvider.notifier);
+
+  return SettingProfileViewModel(settingRepository, userViewModel);
+});

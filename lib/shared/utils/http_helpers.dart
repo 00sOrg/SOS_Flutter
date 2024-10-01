@@ -103,15 +103,35 @@ Future<http.Response> makePatchRequest(
   return response;
 }
 
+Future<http.Response> makeDeleteRequest(Uri url, String methodName,
+    {String? accessToken}) async {
+  final headers = {
+    'Content-Type': 'application/json',
+    if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+  };
+
+  final response = await http.delete(url, headers: headers);
+
+  if (!handleResponse(response, methodName)) {
+    throw Exception('$methodName: Bad Response');
+  }
+
+  return response;
+}
+
 // Multipart 헬퍼메소드
 Future<http.Response> makeMultipartRequest(
-    Uri url, Map<String, String> fields, String methodName, String? filePath,
-    {String? accessToken}) async {
+    Uri url, Map<String, String?> fields, String methodName, String? filePath,
+    {String? accessToken, String method = 'POST'}) async {
   try {
-    var request = http.MultipartRequest('POST', url);
+    var request = http.MultipartRequest(method, url);
 
-    // request.headers['Content-Type'] = 'multipart/form-data';
-    request.fields.addAll(fields);
+    // request.fields.addAll(fields);
+    fields.forEach((key, value) {
+      if (value != null) {
+        request.fields[key] = value;
+      }
+    });
 
     if (accessToken != null) {
       request.headers['Authorization'] = 'Bearer $accessToken';

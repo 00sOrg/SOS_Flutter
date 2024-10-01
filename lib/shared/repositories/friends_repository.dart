@@ -9,7 +9,7 @@ import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class FriendsRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
-  final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   Future<List<Friend>> getFriendsList() async {
     final url = Uri.parse('$baseUrl/members/favorites');
@@ -72,6 +72,22 @@ class FriendsRepository {
       return response.statusCode == 200;
     } catch (e) {
       LogUtil.e('Error reject Friend Request: $e');
+      return false;
+    }
+  }
+
+  Future<bool> deleteFriend(int friendId) async {
+    final url = Uri.parse('$baseUrl/members/favorites/$friendId');
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+
+      final response = await makeDeleteRequest(url, "deleteFriend",
+          accessToken: accessToken);
+
+      return response.statusCode == 200;
+    } catch (e) {
+      LogUtil.e('deleteFriend 에러: $e');
       return false;
     }
   }

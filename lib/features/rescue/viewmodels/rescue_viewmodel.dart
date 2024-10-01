@@ -1,18 +1,34 @@
 import 'dart:developer';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sms/flutter_sms.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sos/features/rescue/repositories/rescue_repository.dart';
+import 'package:sos/features/setting/views/widgets/setting_modal.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/providers/friend_repository_provider.dart';
 import 'package:sos/shared/repositories/friends_repository.dart';
 import 'package:sos/shared/services/geolocator_service.dart';
+import 'package:sos/shared/utils/log_util.dart';
 
 class RescueViewModel extends StateNotifier<List<Friend>> {
+  final RescueRepository rescueRepository;
   final FriendsRepository friendsRepository;
 
-  RescueViewModel(this.friendsRepository) : super([]) {
+  RescueViewModel(this.friendsRepository, this.rescueRepository) : super([]) {
     fetchFriends();
+  }
+
+  Position? _currentPosition;
+
+  Future<void> getCurrentPosition() async {
+    try {
+      _currentPosition = await GeolocatorService.getCurrentPosition();
+      debugPrint('Current Position: $_currentPosition');
+    } catch (e) {
+      LogUtil.e("위치 가져오기 실패: $e");
+    }
   }
 
   Future<void> fetchFriends() async {
@@ -33,20 +49,61 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
     GoRouter.of(context).push('/setting-favorite-search');
   }
 
-  void handleNearbyAlert() {
-    log("HANDLE NEARBY ALERT");
+  void handleNearbyAlert() async {
+    await getCurrentPosition();
+
+    if (_currentPosition == null) {
+      debugPrint("위치 정보 없음");
+      return;
+    }
+
+    final lat = _currentPosition!.latitude;
+    final lon = _currentPosition!.longitude;
+
+    final success = await rescueRepository.requestHelp(lat, lon);
+    if (success) {
+      debugPrint('Help request sent successfully');
+    } else {
+      debugPrint('Failed to send help request');
+    }
+  }
+
+  void showDeleteModal({
+    required BuildContext context,
+  }) {
+  showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext modalContext) {
+        return SettingModal(
+          title: '도움 요청',
+          content: '내 주변에 도움을 요청하시겠습니까?',
+          leftBtn: '취소',
+          rightBtn: '삭제',
+          onRightBtnPressed: () {
+            Navigator.of(modalContext).pop();
+            handleNearbyAlert();
+          },
+        );
+      },
+    );
   }
 
   final String dummyName = '더미네임F';
   final String dummySex = '성별별~';
 
   void handleEmergencyAlert() async {
-    final position = await GeolocatorService.getCurrentPosition();
-    final lat = position.latitude;
-    final lon = position.longitude;
+    await getCurrentPosition();
+
+    if (_currentPosition == null) {
+      debugPrint("위치 정보가 없음");
+      return;
+    }
+
+    final lat = _currentPosition!.latitude;
+    final lon = _currentPosition!.longitude;
 
     String message = '''
-  [SOS] 긴급 상황입니다! 긴급 구조fmf 요청합니다.
+  [SOS] 긴급 상황입니다! 긴급 구조를 요청합니다.
   구조 요청자 정보:
   이름: $dummyName
   성별: $dummySex
@@ -74,5 +131,6 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
 final rescueViewModelProvider =
     StateNotifierProvider<RescueViewModel, List<Friend>>((ref) {
   final friendsRepository = ref.read(friendsRepositoryProvider);
-  return RescueViewModel(friendsRepository);
+  final rescueRepository = ref.read(rescueRepositoryProvider);
+  return RescueViewModel(friendsRepository, rescueRepository);
 });

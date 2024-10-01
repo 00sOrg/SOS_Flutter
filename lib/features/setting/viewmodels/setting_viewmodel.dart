@@ -30,6 +30,10 @@ class SettingViewModel extends StateNotifier<SettingState> {
     debugPrint('NOTI SWITCH ACTION');
   }
 
+  void goToMyPosts(BuildContext context) {
+    GoRouter.of(context).push('/setting-my-post');
+  }
+
   void goToEditProfile(BuildContext context) {
     GoRouter.of(context).push('/setting-profile');
   }

@@ -20,7 +20,8 @@ Board _$BoardFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Board {
-  int get eventId => throw _privateConstructorUsedError;
+  int? get eventId => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   String? get media => throw _privateConstructorUsedError;
@@ -35,7 +36,8 @@ abstract class $BoardCopyWith<$Res> {
   factory $BoardCopyWith(Board value, $Res Function(Board) then) =
       _$BoardCopyWithImpl<$Res, Board>;
   @useResult
-  $Res call({int eventId, String title, String? content, String? media});
+  $Res call(
+      {int? eventId, int? id, String title, String? content, String? media});
 }
 
 /// @nodoc
@@ -51,16 +53,21 @@ class _$BoardCopyWithImpl<$Res, $Val extends Board>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? eventId = null,
+    Object? eventId = freezed,
+    Object? id = freezed,
     Object? title = null,
     Object? content = freezed,
     Object? media = freezed,
   }) {
     return _then(_value.copyWith(
-      eventId: null == eventId
+      eventId: freezed == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -84,7 +91,8 @@ abstract class _$$BoardImplCopyWith<$Res> implements $BoardCopyWith<$Res> {
       __$$BoardImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int eventId, String title, String? content, String? media});
+  $Res call(
+      {int? eventId, int? id, String title, String? content, String? media});
 }
 
 /// @nodoc
@@ -98,16 +106,21 @@ class __$$BoardImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? eventId = null,
+    Object? eventId = freezed,
+    Object? id = freezed,
     Object? title = null,
     Object? content = freezed,
     Object? media = freezed,
   }) {
     return _then(_$BoardImpl(
-      eventId: null == eventId
+      eventId: freezed == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -128,13 +141,15 @@ class __$$BoardImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BoardImpl implements _Board {
   const _$BoardImpl(
-      {required this.eventId, required this.title, this.content, this.media});
+      {this.eventId, this.id, required this.title, this.content, this.media});
 
   factory _$BoardImpl.fromJson(Map<String, dynamic> json) =>
       _$$BoardImplFromJson(json);
 
   @override
-  final int eventId;
+  final int? eventId;
+  @override
+  final int? id;
   @override
   final String title;
   @override
@@ -144,7 +159,7 @@ class _$BoardImpl implements _Board {
 
   @override
   String toString() {
-    return 'Board(eventId: $eventId, title: $title, content: $content, media: $media)';
+    return 'Board(eventId: $eventId, id: $id, title: $title, content: $content, media: $media)';
   }
 
   @override
@@ -153,6 +168,7 @@ class _$BoardImpl implements _Board {
         (other.runtimeType == runtimeType &&
             other is _$BoardImpl &&
             (identical(other.eventId, eventId) || other.eventId == eventId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.media, media) || other.media == media));
@@ -160,7 +176,8 @@ class _$BoardImpl implements _Board {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, eventId, title, content, media);
+  int get hashCode =>
+      Object.hash(runtimeType, eventId, id, title, content, media);
 
   @JsonKey(ignore: true)
   @override
@@ -178,7 +195,8 @@ class _$BoardImpl implements _Board {
 
 abstract class _Board implements Board {
   const factory _Board(
-      {required final int eventId,
+      {final int? eventId,
+      final int? id,
       required final String title,
       final String? content,
       final String? media}) = _$BoardImpl;
@@ -186,7 +204,9 @@ abstract class _Board implements Board {
   factory _Board.fromJson(Map<String, dynamic> json) = _$BoardImpl.fromJson;
 
   @override
-  int get eventId;
+  int? get eventId;
+  @override
+  int? get id;
   @override
   String get title;
   @override

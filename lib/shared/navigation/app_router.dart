@@ -15,6 +15,7 @@ import 'package:sos/features/setting/views/subpages/setting_favorite_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_favorite_search_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_favorite_search_result_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_health_page.dart';
+import 'package:sos/features/setting/views/subpages/setting_my_post_page.dart';
 import 'package:sos/features/setting/views/subpages/setting_profile_page.dart';
 import 'package:sos/features/write/viewmodels/camera_viewmodel.dart';
 import 'package:sos/features/write/views/custom_camera_screen.dart';
@@ -141,21 +142,17 @@ class AppRouter {
           path: '/setting',
           builder: (context, state) => const SettingPage(),
         ),
-        // GoRoute(
-        //   path: '/post/:id',
-        //   builder: (context, state) {
-        //     final postId = int.parse(
-        //         state.pathParameters['id']!); // Convert the string to an int
-        //     return PostPage(postId: postId);
-        //   },
-        // ),
+        GoRoute(
+          path: '/setting-my-post',
+          builder: (context, state) => const SettingMyPostPage(),
+        ),
         GoRoute(
           path: '/setting-profile',
           builder: (context, state) => const SettingProfilePage(),
         ),
         GoRoute(
           path: '/setting-health',
-          builder: (context, state) => SettingHealthPage(),
+          builder: (context, state) => const SettingHealthPage(),
         ),
         GoRoute(
           path: '/setting-favorite',

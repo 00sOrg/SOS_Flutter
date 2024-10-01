@@ -6,7 +6,8 @@ part 'board.g.dart';
 @freezed
 class Board with _$Board {
   const factory Board({
-    required int eventId,
+    int? eventId,
+    int? id,
     required String title,
     String? content,
     String? media,

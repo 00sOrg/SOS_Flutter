@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_carousel_widget.dart';
@@ -109,44 +108,3 @@ class _BoardPageState extends ConsumerState<BoardPage> {
     );
   }
 }
-
-
-              // Expanded(
-              //   child: RefreshIndicator.adaptive(
-              //     displacement: 20,
-              //     onRefresh: () async {
-              //       await ref
-              //           .read(boardViewModelProvider.notifier)
-              //           .refreshBoard();
-              //     },
-              //     child: SingleChildScrollView(
-              //       physics: const AlwaysScrollableScrollPhysics(),
-              //       child: ConstrainedBox(
-              //         constraints: BoxConstraints(
-              //           minHeight: MediaQuery.of(context).size.height - 59 - 71 - 94,
-              //         ),
-              //         child: boardItems.isEmpty
-              //             ? const Center(
-              //                 child: Text('게시글이 없어요'),
-              //               )
-              //             : GridView.builder(
-              //                 shrinkWrap: true,
-              //                 padding: EdgeInsets.zero,
-              //                 controller: _scrollController,
-              //                 gridDelegate:
-              //                     const SliverGridDelegateWithFixedCrossAxisCount(
-              //                   crossAxisCount: 3,
-              //                   crossAxisSpacing: 1,
-              //                   mainAxisSpacing: 1,
-              //                   childAspectRatio: 1,
-              //                 ),
-              //                 itemCount: boardItems.length,
-              //                 itemBuilder: (context, idx) {
-              //                   return BoardItem(post: boardItems[idx]);
-              //                 },
-              //                 physics: const PageScrollPhysics(),
-              //               ),
-              //       ),
-              //     ),
-              //   ),
-              // )

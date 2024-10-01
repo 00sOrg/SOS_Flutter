@@ -8,6 +8,7 @@ import 'package:sos/shared/providers/user_repository_provider.dart';
 import 'package:sos/shared/repositories/friends_repository.dart';
 import 'package:sos/shared/repositories/user_repository.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/utils/log_util.dart';
 
 class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
   final FriendsRepository friendsRepository;
@@ -40,8 +41,7 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
       _nicknameTECs[friendId] = TextEditingController(
         text: state
                 .firstWhere((friend) => friend.favoriteMemberId == friendId)
-                .modifiedNickname ??
-            '',
+                .modifiedNickname,
       );
       _nicknameTECs[friendId]!.addListener(() {
         state = [...state]; // trigger
@@ -82,12 +82,17 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
     );
   }
 
-  void deleteFavorite(int friendId) {
-    // TODO: Implement deleteFavorite API call
-    state =
-        state.where((friend) => friend.favoriteMemberId != friendId).toList();
-    _nicknameTECs.remove(friendId);
-    _editModeStates.remove(friendId);
+  Future<void> deleteFavorite(int friendId) async {
+    final success = await friendsRepository.deleteFriend(friendId);
+
+    if (success) {
+      state =
+          state.where((friend) => friend.favoriteMemberId != friendId).toList();
+      _nicknameTECs.remove(friendId);
+      _editModeStates.remove(friendId);
+    } else {
+      LogUtil.e('deleteFavorite 실패 - id: $friendId');
+    }
   }
 
   void saveFavorite(int friendId, String name) {
