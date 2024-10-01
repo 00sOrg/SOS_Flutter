@@ -111,10 +111,11 @@ class NearbyEvents extends ConsumerWidget {
                     ref
                         .read(bottomSheetViewModelProvider.notifier)
                         .navigateToPost(context, event.postId),
-                    ref.read(mapViewModelProvider.notifier).centerMapOnPost(
-                          //TODO: api 수정완료되면 고쳐야함
-                          event.latitude ?? 37.22,
-                          event.longitude ?? 127.04,
+                    ref
+                        .read(mapViewModelProvider.notifier)
+                        .updateCameraToCenter(
+                          event.latitude!,
+                          event.longitude!,
                           naverMapController!,
                         ),
                   },
