@@ -18,10 +18,10 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
   final AlarmRepository alarmRepository;
 
   AlarmViewModel(this.friendsRepository, this.alarmRepository) : super([]) {
-    _loadInitialAlarms();
+    fetchAlarms();
   }
 
-  Future<void> _loadInitialAlarms() async {
+  Future<void> fetchAlarms() async {
     final fetchedAlarms = await alarmRepository.getAlarms();
     state = fetchedAlarms;
   }

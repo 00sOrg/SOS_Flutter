@@ -119,7 +119,7 @@ class _AlarmSideSheetState extends ConsumerState<AlarmSideSheet> {
 }
 
 void showAlarmSideSheet(BuildContext context, WidgetRef ref) {
-  ref.read(userViewModelProvider.notifier).loadUserInfo();
+  ref.read(alarmViewModelProvider.notifier).fetchAlarms();
 
   showDialog(
     context: context,
