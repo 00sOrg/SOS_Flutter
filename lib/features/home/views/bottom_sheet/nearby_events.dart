@@ -107,9 +107,18 @@ class NearbyEvents extends ConsumerWidget {
                 final event = events[index - 1]; // HandleBar 이후의 항목은 -1
                 return PostPreview(
                   event: event,
-                  onTap: () => ref
-                      .read(bottomSheetViewModelProvider.notifier)
-                      .navigateToPost(context, event.postId),
+                  onTap: () => {
+                    ref
+                        .read(bottomSheetViewModelProvider.notifier)
+                        .navigateToPost(context, event.postId),
+                    ref
+                        .read(mapViewModelProvider.notifier)
+                        .updateCameraToCenter(
+                          event.latitude!,
+                          event.longitude!,
+                          naverMapController!,
+                        ),
+                  },
                 );
               }
             },
