@@ -28,6 +28,9 @@ class SettingPage extends ConsumerWidget {
               onChanged: (value) => settingViewModel.toggleNotification(value),
             ),
             settingTile(
+                title: '내 게시글',
+                onTap: () => settingViewModel.goToMyPosts(context)),
+            settingTile(
                 title: '회원 정보 수정',
                 onTap: () => settingViewModel.goToEditProfile(context)),
             settingTile(

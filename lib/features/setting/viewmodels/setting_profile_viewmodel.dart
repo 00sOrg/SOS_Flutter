@@ -206,7 +206,9 @@ class SettingProfileViewModel extends StateNotifier<User> {
 }
 
 final settingProfileViewModelProvider =
-    StateNotifierProvider<SettingProfileViewModel, User>(
-  (ref) => SettingProfileViewModel(
-      SettingRepository(), ref.read(userViewModelProvider.notifier)),
-);
+    StateNotifierProvider<SettingProfileViewModel, User>((ref) {
+  final settingRepository = ref.read(settingRepositoryProvider);
+  final userViewModel = ref.read(userViewModelProvider.notifier);
+
+  return SettingProfileViewModel(settingRepository, userViewModel);
+});

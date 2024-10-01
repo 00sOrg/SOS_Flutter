@@ -1,13 +1,18 @@
 import 'dart:convert';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/auth/repositories/auth_repository.dart';
+import 'package:sos/shared/models/board.dart';
 import 'package:sos/shared/utils/http_helpers.dart';
 import 'package:sos/shared/utils/log_util.dart';
 
 class SettingRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
-  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  final AuthRepository authRepository;
+
+  // final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+
+  SettingRepository(this.authRepository);
 
   // Todo: 사용자 정보 수정에 연결
   Future<bool> updateUserInfo(String? nickname, String? password, String? sex,
@@ -23,7 +28,11 @@ class SettingRepository {
     LogUtil.d('Request fields: ${jsonEncode(body)}');
 
     try {
-      final accessToken = await secureStorage.read(key: 'access_token');
+      // final accessToken = await secureStorage.read(key: 'access_token');
+      final accessToken = await authRepository.getAccessToken();
+      if (accessToken == null) {
+        throw Exception('Unauthorized: Access token 없음');
+      }
 
       final response = await makeMultipartRequest(
         url,
@@ -52,4 +61,38 @@ class SettingRepository {
       return false;
     }
   }
+
+  Future<List<Board>> getMyBoardList() async {
+    final url = Uri.parse('$baseUrl/events');
+
+    try {
+      final accessToken = await authRepository.getAccessToken();
+      if (accessToken == null) {
+        throw Exception('Unauthorized: Access token 없음');
+      }
+
+      final response = await makeGetRequest(
+        url,
+        'getMyBoardList',
+        accessToken: accessToken,
+      );
+
+      final responseBody = jsonDecode(response.body);
+      if (responseBody['success'] == true) {
+        final List events = responseBody['data']['events'];
+
+        return events.map((event) => Board.fromJson(event)).toList();
+      } else {
+        throw Exception('My Board list fetch 실패');
+      }
+    } catch (e) {
+      LogUtil.e('getMyBoardList 에러: $e');
+      return [];
+    }
+  }
 }
+
+final settingRepositoryProvider = Provider<SettingRepository>((ref) {
+  final authRepository = ref.read(authRepositoryProvider);
+  return SettingRepository(authRepository);
+});
