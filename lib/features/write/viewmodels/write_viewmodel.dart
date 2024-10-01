@@ -68,7 +68,9 @@ class WriteViewModel extends StateNotifier<Post> {
         mediaFilePath: state.mediaURL,
       );
       if (success) {
-        debugPrint('게시물 작성 성공');
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(text: '게시물이 작성되었습니다'),
+        );
         debugPrint('TODO: 작성 후 지도로 가서 작성한 게시물 보이게? 해야됨');
         clearImagePicker();
         GoRouter.of(context).go('/home');

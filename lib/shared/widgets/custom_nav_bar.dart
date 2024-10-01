@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/utils/check_real_device.dart';
 
 class CustomNavBar extends StatelessWidget {
   final int selectedIdx;
@@ -14,6 +15,10 @@ class CustomNavBar extends StatelessWidget {
     required this.onHomePressed,
     required this.onOtherPressed,
   });
+
+  void _openWritePage(BuildContext context) {
+    GoRouter.of(context).push('/write');
+  }
 
   Future<void> _openCustomCamera(BuildContext context) async {
     GoRouter.of(context).push('/custom-camera');
@@ -78,9 +83,14 @@ class CustomNavBar extends StatelessWidget {
             // bottom: 70,
             bottom: 50,
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 //  _onItemTap(context, 2);
-                _openCustomCamera(context);
+                bool isRealDevice = await checkRealDevice();
+                if (isRealDevice) {
+                  _openCustomCamera(context);
+                } else {
+                  _openWritePage(context);
+                }
               },
               child: Container(
                 width: 60,

@@ -91,6 +91,12 @@ class AppRouter {
             }
           },
         ),
+        GoRoute(
+            path: '/write',
+            builder: (context, state) {
+              final XFile? camImg = state.extra as XFile?;
+              return WritePage(camImg: camImg);
+            }),
         ShellRoute(
           builder: (context, state, child) {
             return Scaffold(
@@ -129,12 +135,12 @@ class AppRouter {
           path: '/rescue',
           builder: (context, state) => const RescuePage(),
         ),
-        GoRoute(
-            path: '/write',
-            builder: (context, state) {
-              final XFile? camImg = state.extra as XFile?;
-              return WritePage(camImg: camImg);
-            }),
+        // GoRoute(
+        //     path: '/write',
+        //     builder: (context, state) {
+        //       final XFile? camImg = state.extra as XFile?;
+        //       return WritePage(camImg: camImg);
+        //     }),
         GoRoute(
           path: '/board',
           builder: (context, state) => BoardPage(),
