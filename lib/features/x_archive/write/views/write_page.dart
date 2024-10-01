@@ -17,7 +17,7 @@ class WritePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(writeViewModelProvider.notifier);
-    final location = ref.watch(locationProvider);
+    final location = ref.watch(locationViewModelProvider);
 
     return KeyboardDismisser(
       child: Scaffold(
@@ -49,7 +49,9 @@ class WritePage extends ConsumerWidget {
                       buttonIcon: Icons.sync,
                       onTap: () {
                         debugPrint('위치 누름');
-                        ref.read(locationProvider.notifier).refreshLocation();
+                        ref
+                            .read(locationViewModelProvider.notifier)
+                            .refreshLocation();
                       },
                     ),
                   ),

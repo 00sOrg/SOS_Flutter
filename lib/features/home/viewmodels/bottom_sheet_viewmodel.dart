@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sos/features/home/providers/home_repo_provider.dart';
 import 'package:sos/features/home/repositories/home_repository.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/services/geolocator_service.dart';
@@ -9,126 +11,114 @@ class BottomSheetState {
   final Post? tappedPost;
   final List<Post> nearbyEvents;
   final double sheetHeight;
+  final bool isViewingTappedPost;
+  final NLatLng? nLatLng;
 
   BottomSheetState({
     this.tappedPost,
     required this.nearbyEvents,
     required this.sheetHeight,
+    this.isViewingTappedPost = false,
+    this.nLatLng, //지도 상 현재 위치 (초기에는 내 현재 위치로 설정)
   });
 
   BottomSheetState copyWith({
     Post? tappedPost,
     List<Post>? nearbyEvents,
     double? sheetHeight,
+    bool? isViewingTappedPost,
+    NLatLng? nLatLng,
   }) {
     return BottomSheetState(
       tappedPost: tappedPost ?? this.tappedPost,
       nearbyEvents: nearbyEvents ?? this.nearbyEvents,
       sheetHeight: sheetHeight ?? this.sheetHeight,
+      isViewingTappedPost: isViewingTappedPost ?? this.isViewingTappedPost,
+      nLatLng: nLatLng ?? this.nLatLng,
     );
   }
 }
 
 class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
-  final HomeRepository _homeRepository;
-
   BottomSheetViewModel(this._homeRepository)
-      : super(BottomSheetState(nearbyEvents: [], sheetHeight: 0.15)) {
-    _fetchNearbyEvents();
-  }
+      : super(BottomSheetState(nearbyEvents: [], sheetHeight: 0.15));
 
-  DraggableScrollableController _scrollableController =
-      DraggableScrollableController();
-
-  bool _wasExpanded = false;
-
-  @override
-  void dispose() {
-    _scrollableController =
-        DraggableScrollableController(); // Reset the controller
-    super.dispose();
-  }
-
-  Future<void> _fetchNearbyEvents() async {
-    final position = await GeolocatorService.getCurrentPosition();
-    final lat = position.latitude;
-    final lon = position.longitude;
-
-    final nearbyEvents = await _homeRepository.getAllNearbyPosts(lat, lon);
-    if (nearbyEvents != null) {
-      state = state.copyWith(nearbyEvents: nearbyEvents);
-    }
-  }
-
-  void toggleBottomSheet() {
-    // Ensure the controller is attached before calling animateTo
-    if (!_scrollableController.isAttached) {
-      return;
-    }
-    if (state.sheetHeight == 0.0) {
-      _scrollableController.animateTo(
-        0.15,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.15);
-      _wasExpanded = false;
-    } else if (state.sheetHeight == 0.15 && !_wasExpanded) {
-      _scrollableController.animateTo(
-        0.75,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.75);
-      _wasExpanded = true;
-    } else if (state.sheetHeight == 0.75) {
-      _scrollableController.animateTo(
-        0.15,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.15);
-      _wasExpanded = true;
-    } else if (state.sheetHeight == 0.15 && _wasExpanded) {
-      _scrollableController.animateTo(
-        0.0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-      state = state.copyWith(sheetHeight: 0.0);
-      _wasExpanded = false;
-    }
-  }
-
-  void closeBottomSheet() {
-    _scrollableController.animateTo(
-      0.0,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-    state = state.copyWith(sheetHeight: 0.0);
-  }
+  final HomeRepository _homeRepository;
+  late DraggableScrollableController _scrollableController;
 
   DraggableScrollableController get scrollableController =>
       _scrollableController;
 
+  Future<void> initState() async {
+    _scrollableController = DraggableScrollableController();
+
+    final position = await GeolocatorService.getCurrentPosition();
+    final lat = position.latitude;
+    final lng = position.longitude;
+    await fetchNearbyEvents(lat, lng);
+  }
+
+  @override
+  void dispose() {
+    _scrollableController.dispose();
+    super.dispose();
+  }
+
+  Future<void> fetchNearbyEvents(double lat, double lng) async {
+    final nearbyEvents = await _homeRepository.getAllNearbyPosts(lat, lng);
+    if (nearbyEvents != []) {
+      state = state.copyWith(
+          nearbyEvents: nearbyEvents,
+          tappedPost: null,
+          isViewingTappedPost: false);
+    } else {
+      state = state.copyWith(nearbyEvents: []);
+    }
+
+    updateNLatLng(NLatLng(lat, lng));
+  }
+
+  toggleBottomSheet() {
+    if (!_scrollableController.isAttached) {
+      return;
+    }
+    if (state.sheetHeight == 0.15) {
+      setBottomSheetHeight(0.75);
+    } else if (state.sheetHeight == 0.75) {
+      setBottomSheetHeight(0.15);
+    }
+  }
+
+  setBottomSheetHeight(double height) {
+    _scrollableController.animateTo(
+      height,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    state = state.copyWith(sheetHeight: height);
+  }
+
   void navigateToPost(BuildContext context, int postId) {
-    closeBottomSheet();
-    context.push('/post/$postId'); // 포스트 페이지로 이동
+    context.push('/post/$postId');
   }
 
-  void tapPost(Post post) {
-    state = state.copyWith(tappedPost: post);
+  Future<void> fetchTappedPost(int postId) async {
+    setBottomSheetHeight(0.36);
+    await Future.delayed(const Duration(milliseconds: 200));
+    final postOverview = await _homeRepository.getPostOverviewById(postId);
+    state = state.copyWith(tappedPost: postOverview, isViewingTappedPost: true);
   }
 
-  void clearTappedPost() {
-    state = state.copyWith(tappedPost: null);
+  Future<void> clearTappedPost() async {
+    setBottomSheetHeight(0.15);
+    await Future.delayed(const Duration(milliseconds: 400));
+    state = state.copyWith(tappedPost: null, isViewingTappedPost: false);
+  }
+
+  void updateNLatLng(NLatLng newNLatLng) {
+    state = state.copyWith(nLatLng: newNLatLng);
   }
 }
-
-final homeRepositoryProvider = Provider<HomeRepository>((ref) {
-  return HomeRepository();
-});
 
 final bottomSheetViewModelProvider =
     StateNotifierProvider<BottomSheetViewModel, BottomSheetState>((ref) {

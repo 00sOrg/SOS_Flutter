@@ -7,7 +7,7 @@ class HandleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 18, 0, 18),
+      padding: const EdgeInsets.fromLTRB(0, 16, 0, 10),
       child: Container(
         height: 4,
         width: 94,

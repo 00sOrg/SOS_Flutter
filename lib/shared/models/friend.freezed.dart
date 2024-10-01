@@ -26,6 +26,8 @@ mixin _$Friend {
   String get modifiedNickname => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String? get profilePicture => throw _privateConstructorUsedError;
+  double? get latitude => throw _privateConstructorUsedError;
+  double? get longitude => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +45,9 @@ abstract class $FriendCopyWith<$Res> {
       String? lastLocation,
       String modifiedNickname,
       String nickname,
-      String? profilePicture});
+      String? profilePicture,
+      double? latitude,
+      double? longitude});
 }
 
 /// @nodoc
@@ -65,6 +69,8 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
     Object? modifiedNickname = null,
     Object? nickname = null,
     Object? profilePicture = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
   }) {
     return _then(_value.copyWith(
       favoriteMemberId: null == favoriteMemberId
@@ -91,6 +97,14 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -108,7 +122,9 @@ abstract class _$$FriendImplCopyWith<$Res> implements $FriendCopyWith<$Res> {
       String? lastLocation,
       String modifiedNickname,
       String nickname,
-      String? profilePicture});
+      String? profilePicture,
+      double? latitude,
+      double? longitude});
 }
 
 /// @nodoc
@@ -128,6 +144,8 @@ class __$$FriendImplCopyWithImpl<$Res>
     Object? modifiedNickname = null,
     Object? nickname = null,
     Object? profilePicture = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
   }) {
     return _then(_$FriendImpl(
       favoriteMemberId: null == favoriteMemberId
@@ -154,6 +172,14 @@ class __$$FriendImplCopyWithImpl<$Res>
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -167,7 +193,9 @@ class _$FriendImpl implements _Friend {
       this.lastLocation,
       required this.modifiedNickname,
       required this.nickname,
-      this.profilePicture});
+      this.profilePicture,
+      this.latitude,
+      this.longitude});
 
   factory _$FriendImpl.fromJson(Map<String, dynamic> json) =>
       _$$FriendImplFromJson(json);
@@ -184,10 +212,14 @@ class _$FriendImpl implements _Friend {
   final String nickname;
   @override
   final String? profilePicture;
+  @override
+  final double? latitude;
+  @override
+  final double? longitude;
 
   @override
   String toString() {
-    return 'Friend(favoriteMemberId: $favoriteMemberId, isAccepted: $isAccepted, lastLocation: $lastLocation, modifiedNickname: $modifiedNickname, nickname: $nickname, profilePicture: $profilePicture)';
+    return 'Friend(favoriteMemberId: $favoriteMemberId, isAccepted: $isAccepted, lastLocation: $lastLocation, modifiedNickname: $modifiedNickname, nickname: $nickname, profilePicture: $profilePicture, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -206,13 +238,25 @@ class _$FriendImpl implements _Friend {
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
             (identical(other.profilePicture, profilePicture) ||
-                other.profilePicture == profilePicture));
+                other.profilePicture == profilePicture) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, favoriteMemberId, isAccepted,
-      lastLocation, modifiedNickname, nickname, profilePicture);
+  int get hashCode => Object.hash(
+      runtimeType,
+      favoriteMemberId,
+      isAccepted,
+      lastLocation,
+      modifiedNickname,
+      nickname,
+      profilePicture,
+      latitude,
+      longitude);
 
   @JsonKey(ignore: true)
   @override
@@ -235,7 +279,9 @@ abstract class _Friend implements Friend {
       final String? lastLocation,
       required final String modifiedNickname,
       required final String nickname,
-      final String? profilePicture}) = _$FriendImpl;
+      final String? profilePicture,
+      final double? latitude,
+      final double? longitude}) = _$FriendImpl;
 
   factory _Friend.fromJson(Map<String, dynamic> json) = _$FriendImpl.fromJson;
 
@@ -251,6 +297,10 @@ abstract class _Friend implements Friend {
   String get nickname;
   @override
   String? get profilePicture;
+  @override
+  double? get latitude;
+  @override
+  double? get longitude;
   @override
   @JsonKey(ignore: true)
   _$$FriendImplCopyWith<_$FriendImpl> get copyWith =>

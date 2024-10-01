@@ -100,8 +100,8 @@ class AuthRepository {
       'name': user.name!,
       'nickname': user.nickname!,
       'phoneNumber': user.phoneNumber!,
-      'sex': user.gender!,
-      'birthDate': user.birthDay!.toIso8601String(),
+      'sex': user.sex!,
+      'birthDate': user.birthDate!.toIso8601String(),
     };
 
     final url = Uri.parse('$baseUrl/auth/register');

@@ -65,7 +65,7 @@ class RescuePage extends ConsumerWidget {
                   height: 1.2,
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 17),
               // const SizedBox(height: 40),
               RescueBtn(
                 onTap: () => viewModel.handleNearbyAlert(),

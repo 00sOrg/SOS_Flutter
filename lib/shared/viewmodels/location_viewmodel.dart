@@ -89,7 +89,7 @@ class LocationViewModel extends StateNotifier<AsyncValue<Location>> {
   }
 }
 
-final locationProvider =
+final locationViewModelProvider =
     StateNotifierProvider<LocationViewModel, AsyncValue<Location>>((ref) {
   final locationService = LocationService();
   return LocationViewModel(locationService);

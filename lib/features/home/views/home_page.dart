@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/features/home/views/bottom_sheet/bottom_sheet.dart';
 import 'package:sos/features/home/views/widgets/header_btn.dart';
@@ -24,16 +24,22 @@ class HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-
-    // 페이지가 로드될 때 사용자 정보를 불러옵니다.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(userViewModelProvider.notifier).loadUserInfo();
     });
+    ref.read(bottomSheetViewModelProvider.notifier).initState();
+    ref.read(userViewModelProvider.notifier).updateUserLocation();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    debugPrint('HomePageState dispose');
   }
 
   @override
   Widget build(BuildContext context) {
-    final locationAsyncValue = ref.watch(locationProvider);
+    final locationAsyncValue = ref.watch(locationViewModelProvider);
     final isFavoritesOpen = ref
         .watch(homeViewModelProvider.select((state) => state.isFavoritesOpen));
     final isSideSheetOpen = ref.watch(homeViewModelProvider
@@ -77,7 +83,7 @@ class HomePageState extends ConsumerState<HomePage> {
             if (isSideSheetOpen) const AlarmSideSheet(),
           ],
         ),
-        bottomSheet: const HomePageBottomSheet(),
+        bottomSheet: HomePageBottomSheet(),
       ),
     );
   }

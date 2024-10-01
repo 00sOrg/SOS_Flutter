@@ -56,10 +56,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
         isNotificationSideSheetOpen: !state.isNotificationSideSheetOpen);
   }
 
-  void toggleSearchFocus(bool isFocused){
+  void toggleSearchFocus(bool isFocused) {
     state = state.copyWith(isSearchFocused: isFocused);
   }
 
+  // 현재 사용하지 않음 - map viewmodel에서 사용자 누르는면 이동하는거 처리 중
   void navigateToUser(BuildContext context, String user) {
     Navigator.of(context).push(
       MaterialPageRoute(

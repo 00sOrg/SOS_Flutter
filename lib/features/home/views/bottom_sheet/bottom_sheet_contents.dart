@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
 import 'package:sos/features/home/views/bottom_sheet/handle_bar.dart';
 import 'package:sos/features/home/views/bottom_sheet/nearby_events.dart';
-import 'package:sos/features/home/views/bottom_sheet/tapped_event.dart';
+import 'package:sos/features/home/views/bottom_sheet/tapped_post/tapped_post.dart';
 
 class BottomSheetContent extends ConsumerWidget {
   final ScrollController scrollController;
@@ -12,23 +12,23 @@ class BottomSheetContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(bottomSheetViewModelProvider);
-    final nearbyEvents = viewModel.nearbyEvents;
-    final tappedPost = viewModel.tappedPost;
+    final bottomSheetState = ref.watch(bottomSheetViewModelProvider);
+    final nearbyEvents = bottomSheetState.nearbyEvents;
+    final isViewingTappedPost = bottomSheetState.isViewingTappedPost;
 
     return Column(
       children: [
-        // if (tappedPost != null)
-        //   TappedEvent(
-        //     post: tappedPost,
-        //     scrollController: scrollController,
-        //   ) // Display tapped event
-        // else
         const HandleBar(),
-        NearbyEvents(
-          events: nearbyEvents,
-          scrollController: scrollController,
-        ),
+        if (isViewingTappedPost)
+          TappedPost(
+            post: bottomSheetState.tappedPost!,
+            scrollController: scrollController,
+          ) // Display tapped event
+        else
+          NearbyEvents(
+            events: nearbyEvents,
+            scrollController: scrollController,
+          ),
       ],
     );
   }

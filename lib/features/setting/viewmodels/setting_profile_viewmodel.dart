@@ -19,8 +19,8 @@ class SettingProfileViewModel extends StateNotifier<User> {
             password: '',
             nickname: '',
             phoneNumber: '',
-            gender: '',
-            birthDay: DateTime(2000, 1, 1),
+            sex: '',
+            birthDate: DateTime(2000, 1, 1),
             profilePicture: '',
           ),
         ) {
@@ -30,11 +30,11 @@ class SettingProfileViewModel extends StateNotifier<User> {
     nameTEC = TextEditingController(text: state.name);
     nicknameTEC = TextEditingController(text: state.nickname);
     numberTEC = TextEditingController(text: state.phoneNumber);
-    yearTEC = TextEditingController(text: state.birthDay!.year.toString());
+    yearTEC = TextEditingController(text: state.birthDate!.year.toString());
     monthTEC = TextEditingController(
-        text: state.birthDay!.month.toString().padLeft(2, '0'));
+        text: state.birthDate!.month.toString().padLeft(2, '0'));
     dayTEC = TextEditingController(
-        text: state.birthDay!.day.toString().padLeft(2, '0'));
+        text: state.birthDate!.day.toString().padLeft(2, '0'));
   }
 
   late TextEditingController emailTEC;
@@ -49,13 +49,15 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   Future<void> loadUserData() async {
     // userViewModel.printDecodedToken();
-    final user = await userViewModel.loadUserInfoDetail();
+    await userViewModel.loadUserInfo();
+
+    final user = userViewModel.state;
 
     state = user;
 
     // 성별 실제로 온 다음에는 아래 두 줄 지우기
-    final gender = user.gender?.isNotEmpty == true ? user.gender : '여자';
-    state = user.copyWith(gender: gender);
+    // final gender = user.sex?.isNotEmpty == true ? user.sex : '여자';
+    // state = user.copyWith(gender: gender);
 
     updateControllers();
     // final dummyUser = User(
@@ -75,10 +77,10 @@ class SettingProfileViewModel extends StateNotifier<User> {
     emailTEC.text = state.email!;
     nameTEC.text = state.name!;
     nicknameTEC.text = state.nickname!;
-    numberTEC.text = state.phoneNumber ?? '전번없음';
-    yearTEC.text = state.birthDay?.year.toString() ?? '생년없음';
-    monthTEC.text = state.birthDay?.month.toString().padLeft(2, '0') ?? '생월없음';
-    dayTEC.text = state.birthDay?.day.toString().padLeft(2, '0') ?? '생일없음';
+    numberTEC.text = state.phoneNumber!;
+    yearTEC.text = state.birthDate!.year.toString();
+    monthTEC.text = state.birthDate!.month.toString().padLeft(2, '0');
+    dayTEC.text = state.birthDate!.day.toString().padLeft(2, '0');
   }
 
   String? localImagePath;
@@ -106,12 +108,12 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   void updateGender(String? gender) {
     if (gender != null) {
-      state = state.copyWith(gender: gender);
+      state = state.copyWith(sex: gender);
     }
   }
 
   void updateBirthDate(DateTime birthDay) {
-    state = state.copyWith(birthDay: birthDay);
+    state = state.copyWith(birthDate: birthDay);
   }
 
   bool isNicknameAvailable = true;
@@ -150,8 +152,8 @@ class SettingProfileViewModel extends StateNotifier<User> {
       debugPrint('유저정보: ${state.nickname}, ${state.email}');
       final nickname = nicknameTEC.text;
       final password = passwordTEC.text.isNotEmpty ? passwordTEC.text : null;
-      final sex = state.gender;
-      final birthDate = state.birthDay;
+      final sex = state.sex;
+      final birthDate = state.birthDate;
       String? media;
 
       if (hasProfilePictureChanged()) {

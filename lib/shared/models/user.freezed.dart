@@ -20,15 +20,26 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  String? get profilePicture => throw _privateConstructorUsedError;
+//member info
   int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get password => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get password =>
+      throw _privateConstructorUsedError; //Todo: 비밀번호는 필요한가?
+  String? get name => throw _privateConstructorUsedError;
   String? get nickname => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
-  String? get gender => throw _privateConstructorUsedError;
-  DateTime? get birthDay => throw _privateConstructorUsedError;
+  double? get latitude => throw _privateConstructorUsedError;
+  double? get longitude =>
+      throw _privateConstructorUsedError; // String? device,
+//member detail info
+  String? get sex => throw _privateConstructorUsedError;
+  DateTime? get birthDate => throw _privateConstructorUsedError;
+  String? get profilePicture => throw _privateConstructorUsedError;
+  String? get height => throw _privateConstructorUsedError;
+  String? get weight => throw _privateConstructorUsedError;
+  String? get bloodType => throw _privateConstructorUsedError;
+  String? get disease => throw _privateConstructorUsedError;
+  String? get medication => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,15 +53,22 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {String? profilePicture,
-      int? id,
-      String? name,
-      String? password,
+      {int? id,
       String? email,
+      String? password,
+      String? name,
       String? nickname,
       String? phoneNumber,
-      String? gender,
-      DateTime? birthDay,
+      double? latitude,
+      double? longitude,
+      String? sex,
+      DateTime? birthDate,
+      String? profilePicture,
+      String? height,
+      String? weight,
+      String? bloodType,
+      String? disease,
+      String? medication,
       String? address});
 }
 
@@ -67,37 +85,40 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? profilePicture = freezed,
     Object? id = freezed,
-    Object? name = freezed,
-    Object? password = freezed,
     Object? email = freezed,
+    Object? password = freezed,
+    Object? name = freezed,
     Object? nickname = freezed,
     Object? phoneNumber = freezed,
-    Object? gender = freezed,
-    Object? birthDay = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? sex = freezed,
+    Object? birthDate = freezed,
+    Object? profilePicture = freezed,
+    Object? height = freezed,
+    Object? weight = freezed,
+    Object? bloodType = freezed,
+    Object? disease = freezed,
+    Object? medication = freezed,
     Object? address = freezed,
   }) {
     return _then(_value.copyWith(
-      profilePicture: freezed == profilePicture
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
-              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String?,
       nickname: freezed == nickname
           ? _value.nickname
@@ -107,14 +128,46 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sex: freezed == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
               as String?,
-      birthDay: freezed == birthDay
-          ? _value.birthDay
-          : birthDay // ignore: cast_nullable_to_non_nullable
+      birthDate: freezed == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      profilePicture: freezed == profilePicture
+          ? _value.profilePicture
+          : profilePicture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      height: freezed == height
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as String?,
+      weight: freezed == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bloodType: freezed == bloodType
+          ? _value.bloodType
+          : bloodType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      disease: freezed == disease
+          ? _value.disease
+          : disease // ignore: cast_nullable_to_non_nullable
+              as String?,
+      medication: freezed == medication
+          ? _value.medication
+          : medication // ignore: cast_nullable_to_non_nullable
+              as String?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -131,15 +184,22 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? profilePicture,
-      int? id,
-      String? name,
-      String? password,
+      {int? id,
       String? email,
+      String? password,
+      String? name,
       String? nickname,
       String? phoneNumber,
-      String? gender,
-      DateTime? birthDay,
+      double? latitude,
+      double? longitude,
+      String? sex,
+      DateTime? birthDate,
+      String? profilePicture,
+      String? height,
+      String? weight,
+      String? bloodType,
+      String? disease,
+      String? medication,
       String? address});
 }
 
@@ -153,37 +213,40 @@ class __$$UserImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? profilePicture = freezed,
     Object? id = freezed,
-    Object? name = freezed,
-    Object? password = freezed,
     Object? email = freezed,
+    Object? password = freezed,
+    Object? name = freezed,
     Object? nickname = freezed,
     Object? phoneNumber = freezed,
-    Object? gender = freezed,
-    Object? birthDay = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? sex = freezed,
+    Object? birthDate = freezed,
+    Object? profilePicture = freezed,
+    Object? height = freezed,
+    Object? weight = freezed,
+    Object? bloodType = freezed,
+    Object? disease = freezed,
+    Object? medication = freezed,
     Object? address = freezed,
   }) {
     return _then(_$UserImpl(
-      profilePicture: freezed == profilePicture
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
-              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String?,
       nickname: freezed == nickname
           ? _value.nickname
@@ -193,14 +256,46 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sex: freezed == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
               as String?,
-      birthDay: freezed == birthDay
-          ? _value.birthDay
-          : birthDay // ignore: cast_nullable_to_non_nullable
+      birthDate: freezed == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      profilePicture: freezed == profilePicture
+          ? _value.profilePicture
+          : profilePicture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      height: freezed == height
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as String?,
+      weight: freezed == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bloodType: freezed == bloodType
+          ? _value.bloodType
+          : bloodType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      disease: freezed == disease
+          ? _value.disease
+          : disease // ignore: cast_nullable_to_non_nullable
+              as String?,
+      medication: freezed == medication
+          ? _value.medication
+          : medication // ignore: cast_nullable_to_non_nullable
+              as String?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -213,44 +308,69 @@ class __$$UserImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserImpl implements _User {
   _$UserImpl(
-      {this.profilePicture,
-      this.id,
-      this.name,
-      this.password,
+      {this.id,
       this.email,
+      this.password,
+      this.name,
       this.nickname,
       this.phoneNumber,
-      this.gender,
-      this.birthDay,
+      this.latitude,
+      this.longitude,
+      this.sex,
+      this.birthDate,
+      this.profilePicture,
+      this.height,
+      this.weight,
+      this.bloodType,
+      this.disease,
+      this.medication,
       this.address});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
 
-  @override
-  final String? profilePicture;
+//member info
   @override
   final int? id;
   @override
-  final String? name;
+  final String? email;
   @override
   final String? password;
+//Todo: 비밀번호는 필요한가?
   @override
-  final String? email;
+  final String? name;
   @override
   final String? nickname;
   @override
   final String? phoneNumber;
   @override
-  final String? gender;
+  final double? latitude;
   @override
-  final DateTime? birthDay;
+  final double? longitude;
+// String? device,
+//member detail info
+  @override
+  final String? sex;
+  @override
+  final DateTime? birthDate;
+  @override
+  final String? profilePicture;
+  @override
+  final String? height;
+  @override
+  final String? weight;
+  @override
+  final String? bloodType;
+  @override
+  final String? disease;
+  @override
+  final String? medication;
   @override
   final String? address;
 
   @override
   String toString() {
-    return 'User(profilePicture: $profilePicture, id: $id, name: $name, password: $password, email: $email, nickname: $nickname, phoneNumber: $phoneNumber, gender: $gender, birthDay: $birthDay, address: $address)';
+    return 'User(id: $id, email: $email, password: $password, name: $name, nickname: $nickname, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, sex: $sex, birthDate: $birthDate, profilePicture: $profilePicture, height: $height, weight: $weight, bloodType: $bloodType, disease: $disease, medication: $medication, address: $address)';
   }
 
   @override
@@ -258,27 +378,55 @@ class _$UserImpl implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.profilePicture, profilePicture) ||
-                other.profilePicture == profilePicture) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.birthDay, birthDay) ||
-                other.birthDay == birthDay) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.sex, sex) || other.sex == sex) &&
+            (identical(other.birthDate, birthDate) ||
+                other.birthDate == birthDate) &&
+            (identical(other.profilePicture, profilePicture) ||
+                other.profilePicture == profilePicture) &&
+            (identical(other.height, height) || other.height == height) &&
+            (identical(other.weight, weight) || other.weight == weight) &&
+            (identical(other.bloodType, bloodType) ||
+                other.bloodType == bloodType) &&
+            (identical(other.disease, disease) || other.disease == disease) &&
+            (identical(other.medication, medication) ||
+                other.medication == medication) &&
             (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, profilePicture, id, name,
-      password, email, nickname, phoneNumber, gender, birthDay, address);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      email,
+      password,
+      name,
+      nickname,
+      phoneNumber,
+      latitude,
+      longitude,
+      sex,
+      birthDate,
+      profilePicture,
+      height,
+      weight,
+      bloodType,
+      disease,
+      medication,
+      address);
 
   @JsonKey(ignore: true)
   @override
@@ -296,37 +444,59 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   factory _User(
-      {final String? profilePicture,
-      final int? id,
-      final String? name,
-      final String? password,
+      {final int? id,
       final String? email,
+      final String? password,
+      final String? name,
       final String? nickname,
       final String? phoneNumber,
-      final String? gender,
-      final DateTime? birthDay,
+      final double? latitude,
+      final double? longitude,
+      final String? sex,
+      final DateTime? birthDate,
+      final String? profilePicture,
+      final String? height,
+      final String? weight,
+      final String? bloodType,
+      final String? disease,
+      final String? medication,
       final String? address}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
-  @override
-  String? get profilePicture;
-  @override
+  @override //member info
   int? get id;
   @override
-  String? get name;
+  String? get email;
   @override
   String? get password;
-  @override
-  String? get email;
+  @override //Todo: 비밀번호는 필요한가?
+  String? get name;
   @override
   String? get nickname;
   @override
   String? get phoneNumber;
   @override
-  String? get gender;
+  double? get latitude;
   @override
-  DateTime? get birthDay;
+  double? get longitude;
+  @override // String? device,
+//member detail info
+  String? get sex;
+  @override
+  DateTime? get birthDate;
+  @override
+  String? get profilePicture;
+  @override
+  String? get height;
+  @override
+  String? get weight;
+  @override
+  String? get bloodType;
+  @override
+  String? get disease;
+  @override
+  String? get medication;
   @override
   String? get address;
   @override
