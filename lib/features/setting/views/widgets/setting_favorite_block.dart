@@ -193,7 +193,10 @@ class SettingFavoriteBlock extends StatelessWidget {
               SmallTextButton(
                 text: '완료',
                 onTap: () => viewModel.saveFavorite(
-                    friend.favoriteMemberId, friend.modifiedNickname),
+                  friend.favoriteMemberId,
+                  friend.modifiedNickname,
+                  friend.nickname,
+                ),
               ),
             ],
           ),

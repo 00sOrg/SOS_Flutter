@@ -58,6 +58,8 @@ class FriendViewModel extends StateNotifier<List<Friend>> {
       LogUtil.e('Error fetching friends locations: $e');
     }
   }
+
+  // 친구
 }
 
 // FriendViewModel을 관리하는 StateNotifierProvider 정의
