@@ -111,14 +111,14 @@ class _CustomCameraScreenState extends ConsumerState<CustomCameraScreen> {
                         }
                       },
                       child: Container(
-                        width: 62.w,
-                        height: 62.w,
+                        width: 63.w,
+                        height: 63.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           color: Colors.transparent,
                           border: Border.all(
                             color: AppColors.lightBlue,
-                            width: 1.7,
+                            width: 2.3,
                           ),
                         ),
                         child: Center(
@@ -129,10 +129,10 @@ class _CustomCameraScreenState extends ConsumerState<CustomCameraScreen> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            child: Image.asset(
-                              'assets/images/new_logo.png',
-                              width: double.maxFinite,
-                            ),
+                            // child: Image.asset(
+                            //   'assets/images/new_logo.png',
+                            //   width: double.maxFinite,
+                            // ),
                           ),
                         ),
                       ),
