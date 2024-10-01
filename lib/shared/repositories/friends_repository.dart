@@ -17,8 +17,11 @@ class FriendsRepository {
     try {
       final accessToken = await secureStorage.read(key: 'access_token');
 
-      final response =
-          await makeGetRequest(url, "getFriendsList", accessToken: accessToken);
+      final response = await makeGetRequest(
+        url,
+        "getFriendsList",
+        accessToken: accessToken,
+      );
       final jsonResponse = jsonDecode(response.body);
       final favoritesData = jsonResponse['data']['favorites'] as List;
 

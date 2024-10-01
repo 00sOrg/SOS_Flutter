@@ -142,7 +142,10 @@ class MapWidget extends ConsumerWidget {
     WidgetRef ref,
     NaverMapController controller,
   ) async {
-    if (post.mediaURL != null && post.mediaURL!.isNotEmpty) {
+    if (post.mediaURL != null &&
+        post.mediaURL!.isNotEmpty &&
+        post.disasterLevel != null &&
+        post.disasterLevel == 'PRIMARY') {
       final nOverlayImage = await buildImageMarkerWidget(
         post.mediaURL!,
         post.disasterType!,
@@ -202,6 +205,22 @@ class MapWidget extends ConsumerWidget {
     for (var friend in friends) {
       final markerId = friend.favoriteMemberId.toString();
       if (!currentMarkerIds.contains(markerId)) {
+        NOverlayImage friendOverlayImage;
+
+        // 친구의 profilePicture가 있으면 buildFriendImageMarkerWidget 호출, 없으면 기본 마커 생성
+        if (friend.profilePicture != null &&
+            friend.profilePicture!.isNotEmpty) {
+          friendOverlayImage = await buildFriendImageMarkerWidget(
+            friend.profilePicture!,
+            context,
+          );
+        } else {
+          friendOverlayImage = await buildFriendMarkerWidget(
+            friend.profilePicture, // null이므로 기본 마커 생성
+            context,
+          );
+        }
+
         final marker = FriendMarker(
           id: markerId,
           nickname: friend.nickname,
@@ -211,9 +230,12 @@ class MapWidget extends ConsumerWidget {
                 .read(mapViewModelProvider.notifier)
                 .onFriendMarkerTap(friend, ref, controller);
           },
+          nOverlayImage: friendOverlayImage, // 친구 프로필 이미지를 마커에 적용
         );
-        controller.addOverlay(marker);
-        currentMarkerIds.add(markerId);
+
+        marker.setZIndex(100); // 친구 마커는 우선 순위가 높음
+        controller.addOverlay(marker); // 마커를 지도에 추가
+        currentMarkerIds.add(markerId); // 추가된 마커의 ID를 추적
       }
     }
   }

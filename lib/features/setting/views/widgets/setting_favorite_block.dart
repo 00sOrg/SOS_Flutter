@@ -43,18 +43,11 @@ class SettingFavoriteBlock extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: Colors.grey[300],
                 radius: 51,
-                child: (friend.profilePicture != null &&
+                backgroundImage: (friend.profilePicture != null &&
                         friend.profilePicture!.isNotEmpty)
-                    ? ClipOval(
-                        child: Image.network(
-                          friend.profilePicture!,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Image.asset(
-                        'assets/images/default_profile.png',
-                        width: 76,
-                      ),
+                    ? NetworkImage(friend.profilePicture!)
+                    : const AssetImage('assets/images/default_profile.png')
+                        as ImageProvider,
               ),
               const SizedBox(width: 24),
               viewModel.isEditMode(friend.favoriteMemberId)
@@ -253,18 +246,11 @@ class SettingNotFavoriteBlock extends StatelessWidget {
                 child: CircleAvatar(
                   backgroundColor: Colors.grey[300],
                   radius: 51,
-                  child: (friend.profilePicture != null &&
+                  backgroundImage: (friend.profilePicture != null &&
                           friend.profilePicture!.isNotEmpty)
-                      ? ClipOval(
-                          child: Image.network(
-                            friend.profilePicture!,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Image.asset(
-                          'assets/images/default_profile.png',
-                          width: 76,
-                        ),
+                      ? NetworkImage(friend.profilePicture!)
+                      : const AssetImage('assets/images/default_profile.png')
+                          as ImageProvider,
                 ),
               ),
               const SizedBox(width: 24),

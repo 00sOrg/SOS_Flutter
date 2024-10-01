@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -83,6 +84,32 @@ Future<NOverlayImage> buildImageMarkerWidget(
   BuildContext context,
 ) async {
   final Color widgetColor = _getImageMarkerColor(eventType);
+
+  // NetworkImage를 사용하여 비동기적으로 이미지를 로드
+  final completer = Completer<ImageInfo>();
+  final image = NetworkImage(imageUrl);
+  image.resolve(const ImageConfiguration()).addListener(
+        ImageStreamListener((ImageInfo info, bool syncCall) {
+          completer.complete(info);
+        }, onError: (dynamic error, StackTrace? stackTrace) {
+          completer.completeError(error, stackTrace);
+        }),
+      );
+
+  try {
+    // 이미지 로드 완료 대기
+    await completer.future;
+  } catch (error) {
+    debugPrint('Error loading image: $error');
+    // 로드 실패 시 기본 오류 아이콘을 반환
+    return NOverlayImage.fromWidget(
+      widget: const Icon(Icons.error, size: 48),
+      size: const Size(70, 70 + 10),
+      context: context,
+    );
+  }
+
+  // 이미지가 로드되면 NOverlayImage 생성
   final nOverlayImage = await NOverlayImage.fromWidget(
     widget: Stack(
       alignment: Alignment.bottomCenter,
@@ -97,8 +124,7 @@ Future<NOverlayImage> buildImageMarkerWidget(
             padding: const EdgeInsets.all(3.5),
             decoration: BoxDecoration(
               color: widgetColor,
-              borderRadius:
-                  BorderRadius.circular(6.5), // 내부 radius + 패딩값으로 계산해야 예쁘게 나옴
+              borderRadius: BorderRadius.circular(6.5),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(3),
@@ -106,16 +132,12 @@ Future<NOverlayImage> buildImageMarkerWidget(
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.error, size: 48);
-                },
               ),
             ),
           ),
         ),
         Positioned(
           bottom: 0,
-          // 삼각형 핀
           child: CustomPaint(
             size: const Size(16, 13),
             painter: _TrianglePainter(widgetColor),
@@ -123,37 +145,8 @@ Future<NOverlayImage> buildImageMarkerWidget(
         ),
       ],
     ),
-    size: const Size(70, 70 + 10), // 원래 13이어야하지만..
+    size: const Size(70, 70 + 10),
     context: context,
-    // Stack(
-    //   alignment: Alignment.center,
-    //   children: [
-    //     Image.asset(
-    //       getImageMarkerIcon(eventType), // Custom marker background asset
-    //       width: 86,
-    //       height: 94,
-    //     ),
-    //     Positioned(
-    //       top: 5,
-    //       child: ClipRRect(
-    //         borderRadius: BorderRadius.circular(3.0),
-    //         child: Image.network(
-    //           imageUrl,
-    //           width: 72,
-    //           height: 72,
-    //           fit: BoxFit.cover,
-    //           errorBuilder: (context, error, stackTrace) {
-    //             return const Icon(Icons.error, size: 72);
-    //           },
-    //           // loadingBuilder: (context, child, loadingProgress) {
-    //           //   if (loadingProgress == null) return child;
-    //           //   return const CircularProgressIndicator();
-    //           // },
-    //         ),
-    //       ),
-    //     ),
-    //   ],
-    // ),
   );
 
   return nOverlayImage;

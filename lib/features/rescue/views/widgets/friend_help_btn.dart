@@ -36,18 +36,11 @@ class FriendHelpBtn extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.grey[300],
               radius: 32.w,
-              child: (friend.profilePicture != null &&
+              backgroundImage: (friend.profilePicture != null &&
                       friend.profilePicture!.isNotEmpty)
-                  ? ClipOval(
-                      child: Image.network(
-                        friend.profilePicture!,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : Image.asset(
-                      'assets/images/default_profile.png',
-                      width: 76,
-                    ),
+                  ? NetworkImage(friend.profilePicture!)
+                  : AssetImage('assets/images/default_profile.png')
+                      as ImageProvider,
             ),
             Text(
               '''${friend.modifiedNickname}\n 주변 도움 요청''',
