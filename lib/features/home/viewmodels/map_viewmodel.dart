@@ -36,6 +36,7 @@ class MapViewModel extends StateNotifier<List<Post>> {
   // Method to handle marker tap
   void onMarkerTap(Post post, WidgetRef ref, NaverMapController controller) {
     centerMapOnPost(post.latitude!, post.longitude!, controller);
+
     ref
         .read(bottomSheetViewModelProvider.notifier)
         .fetchTappedPost(post.postId); // Notify bottom sheet
@@ -53,16 +54,17 @@ class MapViewModel extends StateNotifier<List<Post>> {
     // 다음 tracking 모드를 순차적으로 설정
     switch (trackingMode) {
       case NLocationTrackingMode.face:
-        controller.setLocationTrackingMode(NLocationTrackingMode.follow);
+        await controller.setLocationTrackingMode(NLocationTrackingMode.follow);
         break;
       case NLocationTrackingMode.follow:
-        controller.setLocationTrackingMode(NLocationTrackingMode.noFollow);
+        await controller
+            .setLocationTrackingMode(NLocationTrackingMode.noFollow);
         break;
       case NLocationTrackingMode.noFollow:
-        controller.setLocationTrackingMode(NLocationTrackingMode.none);
+        await controller.setLocationTrackingMode(NLocationTrackingMode.none);
         break;
       case NLocationTrackingMode.none:
-        controller.setLocationTrackingMode(NLocationTrackingMode.face);
+        await controller.setLocationTrackingMode(NLocationTrackingMode.face);
         break;
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/utils/http_helpers.dart';
@@ -60,7 +61,7 @@ class PostRepository {
   }
 
   // events/map/search -> TODO: 어떻게 검색으로 띄울지 고민
-  Future<List<Post>> getPostsForMap(String keyword) async {
+  Future<List<Post>> searchPosts(String keyword) async {
     final url = Uri.parse('$baseUrl/events/map/search?keyword=$keyword');
 
     try {
@@ -78,3 +79,8 @@ class PostRepository {
     }
   }
 }
+
+final postRepositoryProvider = Provider<PostRepository>((ref) {
+  // PostRepository의 인스턴스를 반환
+  return PostRepository();
+});

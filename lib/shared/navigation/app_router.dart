@@ -22,8 +22,9 @@ import 'package:sos/features/write/views/custom_camera_screen.dart';
 import 'package:sos/features/write/views/image_check_page.dart';
 import 'package:sos/features/write/views/write_page.dart';
 import 'package:sos/features/rescue/views/rescue_page.dart';
-import 'package:sos/features/x_archive/geolocator_test_page.dart';
 import 'package:sos/shared/navigation/app_routes.dart';
+import 'package:sos/shared/views/geolocator_test_page.dart';
+import 'package:sos/shared/views/post_search_result_page.dart';
 import 'package:sos/shared/widgets/custom_nav_bar.dart';
 import 'package:sos/features/post/views/post_page.dart';
 
@@ -169,6 +170,13 @@ class AppRouter {
         GoRoute(
           path: '/location-test',
           builder: (context, state) => const GeolocatorTestPage(),
+        ),
+        GoRoute(
+          path: '/post-search-result',
+          builder: (context, state) {
+            final keyword = state.extra as String;
+            return PostSearchResultPage(keyword: keyword);
+          },
         ),
       ];
 
