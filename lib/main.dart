@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:sos/features/auth/viewmodels/login_viewmodel.dart';
 import 'package:sos/firebase_options.dart';
 import 'package:sos/shared/navigation/app_router.dart';
+import 'package:sos/shared/services/push_notification_service.dart';
 import 'package:sos/shared/utils/log_util.dart';
 import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 
@@ -24,12 +25,7 @@ Future<void> _initialize() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  // FirebaseMessaging messaging = FirebaseMessaging.instance;
-  // String? token = await messaging.getToken();
-  // debugPrint('FCM Token: $token');
+  await PushNotificationService().init();
 
   try {
     await dotenv.load(fileName: '.env');
@@ -49,6 +45,8 @@ Future<void> _initialize() async {
 
   log('latitude: ${position.latitude}');
   log('longitude: ${position.longitude}');
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
 class MyApp extends ConsumerWidget {
