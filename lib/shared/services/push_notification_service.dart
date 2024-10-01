@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sos/shared/utils/check_real_device.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  Future<void> init() async {
+  // runApp 전에 부름
+  Future<void> preAppInitialization() async {
     NotificationSettings settings = await _firebaseMessaging.requestPermission(
       alert: true,
       badge: true,
@@ -32,59 +36,40 @@ class PushNotificationService {
     // 수신 메시지 listen
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("Firebase 메세지 수신: ${message.notification?.title}");
-      // if (onMessageReceived != null) {
-      //   onMessageReceived!(message);
-      // }
-      // _showForegroundNotification(message);
     });
-
-    // void _showForegroundNoti(BuildContext context, RemoteMessage message) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return AlertDialog(
-    //         title: Text(message.notification?.title ?? 'Notification'),
-    //         content:
-    //             Text(message.notification?.body ?? 'You have a new message.'),
-    //         actions: [
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.of(context).pop(); // Dismiss the dialog
-    //             },
-    //             child: const Text('Close'),
-    //           ),
-    //         ],
-    //       );
-    //     },
-    //   );
-    // }
-
-    //   const DarwinInitializationSettings initializationSettingsIOS =
-    //       DarwinInitializationSettings();
-
-    //   const InitializationSettings initializationSettings =
-    //       InitializationSettings(iOS: initializationSettingsIOS);
-    //   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    // }
-
-    // Future<void> _showForegroundNotification(RemoteMessage message) async {
-    //   const NotificationDetails platformChannelSpecifics = NotificationDetails(
-    //     iOS: DarwinNotificationDetails(),
-    //   );
-
-    //   await flutterLocalNotificationsPlugin.show(
-    //     0,
-    //     message.notification?.title ?? 'No title',
-    //     message.notification?.body ?? 'No body',
-    //     platformChannelSpecifics,
-    //   );
   }
 
-  // Function(RemoteMessage message)? onMessageReceived;
+  void postAppInitialization(BuildContext context, WidgetRef ref) {
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        debugPrint(
+            "(1)message.notification?.title: ${message.notification?.title}");
+        debugPrint(
+            "(1)message.notification?.body: ${message.notification?.body}");
+        debugPrint("(1)message.data: ${message.data}");
+        _handleNotificationTap(context, message);
+      }
+    });
 
-  // void setOnMessageReceivedCallback(Function(RemoteMessage message) callback) {
-  //   onMessageReceived = callback;
-  // }
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      debugPrint(
+          "(2)message.notification?.title: ${message.notification?.title}");
+      debugPrint(
+          "(2)message.notification?.body: ${message.notification?.body}");
+      debugPrint("(2)message.data: ${message.data}");
+      _handleNotificationTap(context, message);
+    });
+  }
+
+  void _handleNotificationTap(BuildContext context, RemoteMessage message) {
+    log('handleNotificationTap 눌림!!');
+    if (message.data.containsKey('route')) {
+      String route = message.data['route'];
+      GoRouter.of(context).push(route);
+    } else {
+      GoRouter.of(context).push('/');
+    }
+  }
 
   static Future<String?> getDeviceToken() async {
     bool isRealDevice = await checkRealDevice();
@@ -108,3 +93,5 @@ class PushNotificationService {
     }
   }
 }
+
+final pushNotificationProvider = Provider((ref) => PushNotificationService());
