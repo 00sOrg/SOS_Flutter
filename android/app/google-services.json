@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "644505275007",
+    "project_id": "team-sos-3f720",
+    "storage_bucket": "team-sos-3f720.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644505275007:android:c2097a5c8bb33743574d4a",
+        "android_client_info": {
+          "package_name": "com.sos.khu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBon22A7h0UfQ7Pe0u3sA1H5N_tfm55b6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
