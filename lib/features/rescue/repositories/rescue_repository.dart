@@ -10,7 +10,7 @@ class RescueRepository {
 
   RescueRepository(this.secureStorage);
 
-  Future<bool> requestHelp(double lat, double lng) async {
+  Future<bool> requestNearbyHelp(double lat, double lng) async {
     final url = Uri.parse('$baseUrl/alarm/help/request?lat=$lat&lng=$lng');
 
     try {
@@ -19,7 +19,25 @@ class RescueRepository {
         throw Exception('Access token is missing');
       }
 
-      final response = await makePostRequest(url, {}, 'requestHelp',
+      final response = await makePostRequest(url, {}, 'requestNearbyHelp',
+          accessToken: accessToken);
+      return response.statusCode == 200 || response.statusCode == 201;
+    } catch (e) {
+      LogUtil.e('Error requesting help: $e');
+      return false;
+    }
+  }
+
+  Future<bool> requestFriendHelp(int id) async {
+    final url = Uri.parse('$baseUrl/alarm/help/request/favorite/$id');
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+      if (accessToken == null) {
+        throw Exception('Access token is missing');
+      }
+
+      final response = await makePostRequest(url, {}, 'requestFriendHelp',
           accessToken: accessToken);
       return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/features/auth/repositories/auth_repository.dart';
 import 'package:sos/shared/models/user.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class SignupViewmodel extends StateNotifier<User> {
@@ -169,7 +170,10 @@ class SignupViewmodel extends StateNotifier<User> {
 
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          customSnackBar(text: '회원가입에 성공했습니다'),
+          customSnackBar(
+            text: '회원가입에 성공했습니다',
+            backgroundColor: AppColors.blue,
+          ),
         );
         GoRouter.of(context).go('/login');
       } else {

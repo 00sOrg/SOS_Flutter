@@ -30,7 +30,7 @@ class SettingFavoriteBlock extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF000000).withOpacity(0.25),
+                color: AppColors.black.withOpacity(0.25),
                 blurRadius: 4,
                 offset: const Offset(0, 4),
                 spreadRadius: 0,
@@ -234,7 +234,7 @@ class SettingNotFavoriteBlock extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF000000).withOpacity(0.25),
+                color: AppColors.black.withOpacity(0.25),
                 blurRadius: 4,
                 offset: const Offset(0, 4),
                 spreadRadius: 0,
@@ -305,7 +305,7 @@ class SettingFavoriteBlockForEmpty extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF000000).withOpacity(0.25),
+            color: AppColors.black.withOpacity(0.25),
             blurRadius: 4,
             offset: const Offset(0, 4),
             spreadRadius: 0,
