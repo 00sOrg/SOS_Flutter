@@ -65,7 +65,7 @@ class HomePageState extends ConsumerState<HomePage> {
                     ),
                     _homeTopArea(context, ref),
                     if (isFavoritesOpen)
-                      Positioned(
+                      const Positioned(
                         top: 70 + 42 + 7,
                         left: 20,
                         child: FavoritesDropdown(),
