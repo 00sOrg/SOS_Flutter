@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,15 +45,60 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
     state = friends.where((friend) => friend.isAccepted!).toList();
   }
 
-  void handleFriendHelp({
+  Future<void> handleFriendHelp({
+    required BuildContext context,
+    required int id,
+    required String name,
+  }) async {
+    try {
+      bool success = await rescueRepository.requestFriendHelp(id);
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(
+            text: '$name 근처에 도움 요청을 보냈습니다',
+            backgroundColor: AppColors.blue,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(text: '도움 요청 전송에 실패했습니다.'),
+        );
+      }
+    } catch (e) {
+      LogUtil.e('handleFriendHelp 에러: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(text: '도움 요청 중 문제가 발생했습니다'),
+      );
+    }
+  }
+
+  void askFriendHelpModal({
+    required BuildContext context,
     required int id,
     required String name,
   }) {
-    log('HANDLE FRIEND HELP: $name');
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext modalContext) {
+        return SettingModal(
+          title: '도움 요청',
+          content: '$name 주변에 도움을 요청하시겠습니까?',
+          leftBtn: '취소',
+          rightBtn: '확인',
+          onRightBtnPressed: () {
+            Navigator.of(modalContext).pop();
+            handleFriendHelp(
+              context: context,
+              id: id,
+              name: name,
+            );
+          },
+        );
+      },
+    );
   }
 
   void handleFriendAdd(BuildContext context) {
-    log("HANDLE ADD FRIEND");
     GoRouter.of(context).push('/setting-favorite-search');
   }
 
@@ -69,7 +113,7 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
     final lat = _currentPosition!.latitude;
     final lon = _currentPosition!.longitude;
 
-    final success = await rescueRepository.requestHelp(lat, lon);
+    final success = await rescueRepository.requestNearbyHelp(lat, lon);
 
     if (success) {
       debugPrint('내 주변 도움 요청 성공');
@@ -85,26 +129,6 @@ class RescueViewModel extends StateNotifier<List<Friend>> {
         customSnackBar(text: '도움 요청을 실패했습니다'),
       );
     }
-  }
-
-  void askFriendHelpModal({
-    required BuildContext context,
-  }) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext modalContext) {
-        return SettingModal(
-          title: '도움 요청',
-          content: '내 주변에 도움을 요청하시겠습니까?',
-          leftBtn: '취소',
-          rightBtn: '삭제',
-          onRightBtnPressed: () {
-            Navigator.of(modalContext).pop();
-            handleNearbyAlert(context);
-          },
-        );
-      },
-    );
   }
 
   void handleEmergencyAlert() async {

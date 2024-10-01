@@ -56,9 +56,11 @@ class _RescuePageState extends ConsumerState<RescuePage> {
                     final friend = friends[index];
                     return FriendHelpBtn(
                       friend: friend,
-                      onTap: () => viewModel.handleFriendHelp(
-                          id: friend.favoriteMemberId,
-                          name: friend.modifiedNickname),
+                      onTap: () => viewModel.askFriendHelpModal(
+                        context: context,
+                        id: friend.favoriteMemberId,
+                        name: friend.modifiedNickname,
+                      ),
                     );
                   } else if (index == friends.length && friends.length < 4) {
                     return FriendAddBtn(
