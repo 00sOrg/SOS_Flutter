@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/widgets/custom_animated_scale.dart';
 
-class WriteSubmitBtn extends ConsumerWidget {
+class WriteSubmitBtn extends StatelessWidget {
   final VoidCallback onTap;
 
   const WriteSubmitBtn({
@@ -11,9 +11,11 @@ class WriteSubmitBtn extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return InkWell(
+  Widget build(BuildContext context) {
+    return CustomAnimatedScaleDown(
       onTap: onTap,
+      scaleValue: 0.99,
+      duration: 90,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         decoration: BoxDecoration(
