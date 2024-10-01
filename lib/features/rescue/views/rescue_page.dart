@@ -81,7 +81,7 @@ class _RescuePageState extends ConsumerState<RescuePage> {
               ),
               const SizedBox(height: 17),
               RescueBtn(
-                onTap: () => viewModel.handleNearbyAlert(),
+                onTap: () => viewModel.handleNearbyAlert(context),
                 text: '내 주변에 도움 요청',
                 color: const Color(0xFF8FBCFF),
               ),
