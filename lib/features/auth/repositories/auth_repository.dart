@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sos/shared/models/user.dart';
 import 'package:sos/shared/providers/secure_storage_provider.dart';
+import 'package:sos/shared/services/push_notification_service.dart';
 import 'package:sos/shared/utils/http_helpers.dart';
 import 'package:sos/shared/utils/log_util.dart';
 
@@ -55,9 +56,16 @@ class AuthRepository {
     };
 
     try {
+      String? deviceToken = await PushNotificationService.getDeviceToken();
+
+      if (deviceToken != null) {
+        body['token'] = deviceToken;
+      }
+
       final response = await makePostRequest(url, body, 'loginUser');
       final token = jsonDecode(response.body)['data']['access_token'];
       await setAccessToken(token);
+      debugPrint('Sending body: $body');
       return true;
     } catch (e) {
       LogUtil.e('loginUser 에러: $e');

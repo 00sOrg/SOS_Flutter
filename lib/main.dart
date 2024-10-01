@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sos/features/auth/viewmodels/login_viewmodel.dart';
+import 'package:sos/firebase_options.dart';
 import 'package:sos/shared/navigation/app_router.dart';
 import 'package:sos/shared/utils/log_util.dart';
 import 'package:sos/shared/viewmodels/location_viewmodel.dart';
@@ -17,6 +19,15 @@ Future<void> main() async {
 
 Future<void> _initialize() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // String? token = await messaging.getToken();
+  // debugPrint('FCM Token: $token');
+
   try {
     await dotenv.load(fileName: '.env');
   } catch (e) {
