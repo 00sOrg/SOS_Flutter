@@ -100,8 +100,16 @@ class EmergencyResponse extends StatelessWidget {
         return '지진 시 행동요령';
       case PostType.flood:
         return '홍수 시 행동요령';
+      case PostType.typhoon:
+        return '태풍 시 행동요령';
+      case PostType.war:
+        return '전쟁 시 대처 방법';
+      case PostType.accident:
+        return '사고 시 행동요령';
+      case PostType.carAccident:
+        return '교통사고 시 행동요령';
       default:
-        return '긴급 상황';
+        return '긴급 상황 시 대처 방법';
     }
   }
 
@@ -110,10 +118,10 @@ class EmergencyResponse extends StatelessWidget {
       case PostType.fire:
         return Column(
           children: <Widget>[
-            _buildImage('assets/icons/post/emergency_response/earthquake.png'),
-            SizedBox(height: 14),
+            _buildImage('assets/icons/post/emergency_response/fire.png'),
+            const SizedBox(height: 14),
             _buildInstruction(1, "화재를 발견했을 때", "즉시 119에 신고하고 주변 사람들에게 알립니다."),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             _buildInstruction(2, "대피 준비", "불길에서 멀리 떨어져 안전한 장소로 대피합니다."),
           ],
         );
@@ -121,29 +129,73 @@ class EmergencyResponse extends StatelessWidget {
         return Column(
           children: <Widget>[
             _buildImage('assets/icons/post/emergency_response/earthquake.png'),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             _buildInstruction(
                 1, "지진을 감지했을 때", "탁자 아래로 들어가 몸을 보호하고, 떨어지는 물건을 조심합니다."),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             _buildInstruction(2, "대피 준비", "떨어지는 물건이 없는 곳으로 대피하며, 최대한 몸을 낮춥니다."),
           ],
         );
       case PostType.flood:
         return Column(
           children: <Widget>[
-            _buildImage('assets/icons/post/emergency_response/earthquake.png'),
-            SizedBox(height: 14),
+            _buildImage('assets/icons/post/emergency_response/flood.png'),
+            const SizedBox(height: 14),
             _buildInstruction(1, "홍수를 감지했을 때", "높은 곳으로 대피하고 물이 빠질 때까지 기다립니다."),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             _buildInstruction(2, "대피 준비", "필요한 물품을 챙겨 안전한 장소로 대피합니다."),
+          ],
+        );
+      case PostType.typhoon:
+        return Column(
+          children: <Widget>[
+            _buildImage('assets/icons/post/emergency_response/typhoon.png'),
+            const SizedBox(height: 14),
+            _buildInstruction(1, "태풍 접근 시", "바람에 날아갈 수 있는 물건을 고정하고 외출을 자제합니다."),
+            const SizedBox(height: 14),
+            _buildInstruction(2, "태풍 진행 중", "실내에서 안전하게 머물며 창문을 단단히 닫습니다."),
+          ],
+        );
+      case PostType.war:
+        return Column(
+          children: <Widget>[
+            _buildImage('assets/icons/post/emergency_response/war.png'),
+            const SizedBox(height: 14),
+            _buildInstruction(1, "전쟁 발생 시", "안전한 대피소로 이동하고, 공습 경보에 주의합니다."),
+            const SizedBox(height: 14),
+            _buildInstruction(2, "대피 준비", "필수 물품을 준비하고 정부 지침을 따릅니다."),
+          ],
+        );
+      case PostType.accident:
+        return Column(
+          children: <Widget>[
+            _buildImage('assets/icons/post/emergency_response/accident.png'),
+            const SizedBox(height: 14),
+            _buildInstruction(1, "사고를 발견했을 때", "신속하게 도움을 요청하고, 안전을 확인합니다."),
+            const SizedBox(height: 14),
+            _buildInstruction(2, "구조 대기", "응급 구조대가 도착할 때까지 부상자를 안정시킵니다."),
+          ],
+        );
+      case PostType.carAccident:
+        return Column(
+          children: <Widget>[
+            _buildImage(
+                'assets/icons/post/emergency_response/car_accident.png'),
+            const SizedBox(height: 14),
+            _buildInstruction(1, "교통사고 발생 시", "비상등을 켜고 즉시 119와 경찰에 신고합니다."),
+            const SizedBox(height: 14),
+            _buildInstruction(
+                2, "사고 처리", "부상자가 있으면 응급조치를 시행하고, 현장을 안전하게 보호합니다."),
           ],
         );
       default:
         return Column(
           children: <Widget>[
-            _buildImage('assets/icons/post/emergency_response/earthquake.png'),
-            SizedBox(height: 14),
+            _buildImage('assets/icons/post/emergency_response/emergency.png'),
+            const SizedBox(height: 14),
             _buildInstruction(1, "긴급 상황 발생", "상황에 맞게 대처하고 빠르게 대응합니다."),
+            const SizedBox(height: 14),
+            _buildInstruction(2, "긴급신고전화", "112·119·110만 기억하면 됩니다."),
           ],
         );
     }
