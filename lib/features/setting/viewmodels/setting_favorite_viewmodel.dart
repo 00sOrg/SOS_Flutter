@@ -40,8 +40,8 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
     if (!_nicknameTECs.containsKey(friendId)) {
       _nicknameTECs[friendId] = TextEditingController(
         text: state
-                .firstWhere((friend) => friend.favoriteMemberId == friendId)
-                .modifiedNickname,
+            .firstWhere((friend) => friend.favoriteMemberId == friendId)
+            .modifiedNickname,
       );
       _nicknameTECs[friendId]!.addListener(() {
         state = [...state]; // trigger
@@ -133,15 +133,14 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
         favoriteMemberId: -1,
         nickname: 'Unknown',
         modifiedNickname: 'Unknown',
-        lastLocation: '',
       );
     } else {
       _searchedUser = Friend(
         favoriteMemberId: user.id!,
         nickname: user.nickname!,
         modifiedNickname: user.nickname!,
-        lastLocation: user.address!,
-        isAccepted: true,
+        profilePicture: user.profilePicture,
+        isAccepted: true, //true로 임의로 처리중 (SettingNotFavoriteBlock을 사용하고 있기 때문)
       );
     }
     debugPrint(_searchedUser.toString());

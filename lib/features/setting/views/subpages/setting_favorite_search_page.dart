@@ -16,7 +16,7 @@ class SettingFavoriteSearchPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: '즐겨찾는 지인 관리',
+        title: '사용자 검색',
         onTapLeading: () => GoRouter.of(context).pop(),
       ),
       body: KeyboardDismisser(
