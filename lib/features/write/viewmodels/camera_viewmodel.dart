@@ -60,7 +60,7 @@ class CameraViewModel extends StateNotifier<CameraState> {
         final image = await state.cameraController?.takePicture();
         return image;
       } catch (e) {
-        print('Capture error: $e');
+        debugPrint('Capture error: $e');
       }
     }
     return null;
