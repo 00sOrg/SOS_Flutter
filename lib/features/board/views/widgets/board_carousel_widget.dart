@@ -91,7 +91,7 @@ class _CarouselWidgetState extends ConsumerState<BoardCarouselWidget> {
                     // width: Curves.easeOut.transform(value) * 200,
                     height: 480.w,
                     width: 297,
-                    child: BoardCarouselItem(post: boardItems[actualIndex]),
+                    child: BoardCarouselItem(board: boardItems[actualIndex]),
                   ),
                 ),
               );

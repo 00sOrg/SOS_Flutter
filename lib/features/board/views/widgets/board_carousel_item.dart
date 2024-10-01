@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sos/features/board/views/widgets/board_tag_grid.dart';
+import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/models/board.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class BoardCarouselItem extends StatelessWidget {
-  final Board post;
-  const BoardCarouselItem({super.key, required this.post});
+  final Board board;
+  const BoardCarouselItem({super.key, required this.board});
 
   @override
   Widget build(BuildContext context) {
-    final dummyTags = ['홍수', '지진', '대박티비', '어쩔ㅎ'];
+    final eventType = getPostTypeFromString(board.eventType!);
+    final keywords = [eventType.koreanName, ...?board.keywords];
 
     return GestureDetector(
-      onTap: () => context.push('/post/${post.eventId}'),
+      onTap: () => context.push('/post/${board.eventId}'),
       child: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: post.media != null && post.media!.isNotEmpty
-                    ? NetworkImage(post.media!)
+                image: board.media != null && board.media!.isNotEmpty
+                    ? NetworkImage(board.media!)
                     : const NetworkImage(
                         'https://sos-khu-backend.s3.ap-northeast-2.amazonaws.com/sos-background.png',
                       ), //쿠옹이
@@ -32,7 +34,7 @@ class BoardCarouselItem extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              gradient: post.media != null && post.media!.isNotEmpty
+              gradient: board.media != null && board.media!.isNotEmpty
                   ? const LinearGradient(
                       begin: Alignment.center,
                       end: Alignment.bottomCenter,
@@ -52,7 +54,7 @@ class BoardCarouselItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  post.title,
+                  board.title,
                   style: const TextStyle(
                     color: AppColors.white,
                     fontSize: 22,
@@ -61,10 +63,10 @@ class BoardCarouselItem extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                BoardTagGrid(items: dummyTags),
+                BoardTagGrid(items: keywords),
                 const SizedBox(height: 12),
                 Text(
-                  post.content ?? '',
+                  board.content ?? '',
                   style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 16,

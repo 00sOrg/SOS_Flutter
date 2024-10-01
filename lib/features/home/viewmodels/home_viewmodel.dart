@@ -59,26 +59,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
   void toggleSearchFocus(bool isFocused) {
     state = state.copyWith(isSearchFocused: isFocused);
   }
-
-  // 현재 사용하지 않음 - map viewmodel에서 사용자 누르는면 이동하는거 처리 중
-  void navigateToUser(BuildContext context, String user) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(user),
-                const Text('이렇게 페이지 이동 되는거 신경쓰지 마셈'),
-                const Text('걍 아무 액션이나 할당해놓은거임'),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 final homeViewModelProvider =

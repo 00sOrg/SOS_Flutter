@@ -16,7 +16,7 @@ import 'package:sos/shared/viewmodels/location_viewmodel.dart';
 
 Future<void> main() async {
   await _initialize();
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 Future<void> _initialize() async {
@@ -25,7 +25,9 @@ Future<void> _initialize() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await PushNotificationService().init();
+
+  PushNotificationService pushNotificationService = PushNotificationService();
+  await pushNotificationService.init();
 
   try {
     await dotenv.load(fileName: '.env');
@@ -50,7 +52,7 @@ Future<void> _initialize() async {
 }
 
 class MyApp extends ConsumerWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
