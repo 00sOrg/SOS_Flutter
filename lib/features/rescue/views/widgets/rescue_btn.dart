@@ -42,7 +42,7 @@ class _RescueBtnState extends State<RescueBtn> {
         });
       },
       child: AnimatedScale(
-        scale: _isTapped ? 0.96 : 1.0,
+        scale: _isTapped ? 0.97 : 1.0,
         duration: const Duration(milliseconds: 150),
         curve: Curves.easeIn,
         child: Container(
