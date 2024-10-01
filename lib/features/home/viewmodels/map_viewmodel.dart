@@ -66,6 +66,10 @@ class MapViewModel extends StateNotifier<List<Post>> {
         break;
     }
   }
+
+  Future<void> onToggleSwitchTapped(NaverMapController controller) async {
+    await controller.clearOverlays();
+  }
 }
 
 final mapViewModelProvider =
