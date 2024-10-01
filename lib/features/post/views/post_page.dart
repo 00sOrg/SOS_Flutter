@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/features/post/views/widgets/comment_write_section.dart';
+import 'package:sos/features/post/views/widgets/emergency_respose_popup.dart';
 import 'package:sos/features/post/views/widgets/user_profile_section.dart';
+import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 import 'widgets/header_section.dart';
@@ -78,6 +80,47 @@ class PostPage extends ConsumerWidget {
                   left: 0,
                   right: 0,
                   child: CommentWriteSection(postId: post.postId),
+                ),
+                Positioned(
+                  right: 20, // 오른쪽 여백
+                  bottom: 130, // 버튼의 세로 위치
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return EmergencyResponse(
+                            eventType:
+                                getPostTypeFromString(post.disasterType!),
+                          ); // PostType에 맞는 팝업 호출
+                        },
+                      );
+                    },
+                    child: Container(
+                      width: 54,
+                      height: 54,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: const OvalBorder(),
+                        shadows: const [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 5,
+                            offset: Offset(2, 1),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/icons/home/F-Megaphone.png', // 아이콘 경로
+                          width: 44, // 아이콘 크기 설정
+                          height: 44,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             );
