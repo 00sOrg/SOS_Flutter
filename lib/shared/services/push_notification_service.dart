@@ -1,14 +1,21 @@
 import 'dart:io';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
     NotificationSettings settings = await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
@@ -23,11 +30,62 @@ class PushNotificationService {
     String? token = await _firebaseMessaging.getToken();
     debugPrint("FCM Token: $token");
 
-    // Listen for incoming messages
+    // 수신 메시지 listen
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugPrint("Received message: ${message.notification?.title}");
+      debugPrint("Firebase 메세지 수신: ${message.notification?.title}");
+      // if (onMessageReceived != null) {
+      //   onMessageReceived!(message);
+      // }
+      // _showForegroundNotification(message);
     });
+
+    // void _showForegroundNoti(BuildContext context, RemoteMessage message) {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         title: Text(message.notification?.title ?? 'Notification'),
+    //         content:
+    //             Text(message.notification?.body ?? 'You have a new message.'),
+    //         actions: [
+    //           TextButton(
+    //             onPressed: () {
+    //               Navigator.of(context).pop(); // Dismiss the dialog
+    //             },
+    //             child: const Text('Close'),
+    //           ),
+    //         ],
+    //       );
+    //     },
+    //   );
+    // }
+
+    //   const DarwinInitializationSettings initializationSettingsIOS =
+    //       DarwinInitializationSettings();
+
+    //   const InitializationSettings initializationSettings =
+    //       InitializationSettings(iOS: initializationSettingsIOS);
+    //   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    // }
+
+    // Future<void> _showForegroundNotification(RemoteMessage message) async {
+    //   const NotificationDetails platformChannelSpecifics = NotificationDetails(
+    //     iOS: DarwinNotificationDetails(),
+    //   );
+
+    //   await flutterLocalNotificationsPlugin.show(
+    //     0,
+    //     message.notification?.title ?? 'No title',
+    //     message.notification?.body ?? 'No body',
+    //     platformChannelSpecifics,
+    //   );
   }
+
+  // Function(RemoteMessage message)? onMessageReceived;
+
+  // void setOnMessageReceivedCallback(Function(RemoteMessage message) callback) {
+  //   onMessageReceived = callback;
+  // }
 
   static Future<String?> getDeviceToken() async {
     bool isRealDevice = await _isRealDevice();
