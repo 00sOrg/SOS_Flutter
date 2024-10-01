@@ -109,10 +109,10 @@ class HomePageState extends ConsumerState<HomePage> {
                     height: 36,
                   ),
                 ),
-                const SizedBox(width: 15),
+                const SizedBox(width: 12),
                 // HomeSearchBar(toggleOverlay: _toggleOverlay),
                 const HomeSearchBar(),
-                const SizedBox(width: 15),
+                const SizedBox(width: 12),
                 HeaderBtn(
                   onTap: () => showAlarmSideSheet(context, ref),
                   icon: Align(

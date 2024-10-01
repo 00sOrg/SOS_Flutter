@@ -20,14 +20,30 @@ class HeaderBtn extends StatelessWidget {
         height: 42,
         decoration: ShapeDecoration(
           gradient: RadialGradient(
-            center: Alignment(0, 0), // 중앙에서 시작
-            radius: 1, // 그라데이션 반경 설정
+            center: const Alignment(0, 0), // 중앙에서 시작
+            radius: 1.6, // 그라데이션 반경 설정
             colors: [AppColors.white, AppColors.blue],
           ),
-          shape: OvalBorder(),
+          shape: const OvalBorder(),
+          shadows: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              offset: const Offset(0, 3), // 그림자 위치
+              blurRadius: 5, // 그림자 퍼짐
+            ),
+          ],
         ),
-        child: Center(
-          child: icon,
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColors.lightBlue.withOpacity(0.7), // 테두리 색상
+              width: 2.0, // 테두리 두께
+            ),
+          ),
+          child: Center(
+            child: icon,
+          ),
         ),
       ),
     );

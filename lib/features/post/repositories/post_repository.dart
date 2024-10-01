@@ -61,7 +61,7 @@ class PostRepository {
   }
 
   // events/map/search -> TODO: 어떻게 검색으로 띄울지 고민
-  Future<List<Post>> searchPosts(String keyword) async {
+  Future<List<Post>> getPostsByKeyword(String keyword) async {
     final url = Uri.parse('$baseUrl/events/map/search?keyword=$keyword');
 
     try {
