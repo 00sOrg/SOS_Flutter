@@ -57,12 +57,12 @@ class HomePageState extends ConsumerState<HomePage> {
                 return Stack(
                   children: [
                     // MapWidget에 위치와 Post 리스트를 전달합니다.
-                    MapWidget(
-                      currentLocation: location,
-                      level: isSwitchLeft
-                          ? 'all'
-                          : 'primary', // Handle the switch here
-                    ),
+                    // MapWidget(
+                    //   currentLocation: location,
+                    //   level: isSwitchLeft
+                    //       ? 'all'
+                    //       : 'primary', // Handle the switch here
+                    // ),
                     _homeTopArea(context, ref),
                     if (isFavoritesOpen)
                       Positioned(
