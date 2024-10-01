@@ -4,6 +4,7 @@ import 'package:sos/features/board/views/widgets/board_tag_grid.dart';
 import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/models/board.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/widgets/custom_animated_scale.dart';
 
 class BoardCarouselItem extends StatelessWidget {
   final Board board;
@@ -14,7 +15,9 @@ class BoardCarouselItem extends StatelessWidget {
     final eventType = getPostTypeFromString(board.eventType!);
     final keywords = [eventType.koreanName, ...?board.keywords];
 
-    return GestureDetector(
+    return CustomAnimatedScaleDown(
+      duration: 100,
+      scaleValue: 0.98,
       onTap: () => context.push('/post/${board.eventId}'),
       child: Stack(
         children: [
