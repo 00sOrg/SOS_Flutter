@@ -152,7 +152,7 @@ class AppRouter {
         ),
         GoRoute(
           path: '/setting-health',
-          builder: (context, state) => SettingHealthPage(),
+          builder: (context, state) => const SettingHealthPage(),
         ),
         GoRoute(
           path: '/setting-favorite',

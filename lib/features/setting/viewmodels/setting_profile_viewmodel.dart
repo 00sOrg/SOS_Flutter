@@ -55,21 +55,7 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
     state = user;
 
-    // 성별 실제로 온 다음에는 아래 두 줄 지우기
-    // final gender = user.sex?.isNotEmpty == true ? user.sex : '여자';
-    // state = user.copyWith(gender: gender);
-
     updateControllers();
-    // final dummyUser = User(
-    //   name: '김채리',
-    //   email: 'dummy@example.com',
-    //   password: '',
-    //   nickname: '챌챌',
-    //   phoneNumber: '010-8575-4997',
-    //   gender: '여자',
-    //   birthDay: DateTime(2000, 9, 25),
-    //   profilePicture: 'https://picsum.photos/100',
-    // );
   }
 
   // TODO: API 수정 후 다시 손봐야함
@@ -78,9 +64,9 @@ class SettingProfileViewModel extends StateNotifier<User> {
     nameTEC.text = state.name!;
     nicknameTEC.text = state.nickname!;
     numberTEC.text = state.phoneNumber!;
-    yearTEC.text = state.birthDate!.year.toString();
-    monthTEC.text = state.birthDate!.month.toString().padLeft(2, '0');
-    dayTEC.text = state.birthDate!.day.toString().padLeft(2, '0');
+    yearTEC.text = state.birthDate?.year.toString() ?? '0000';
+    monthTEC.text = state.birthDate?.month.toString().padLeft(2, '0') ?? '00';
+    dayTEC.text = state.birthDate?.day.toString().padLeft(2, '0') ?? '00';
   }
 
   String? localImagePath;

@@ -14,7 +14,6 @@ class SettingRepository {
 
   SettingRepository(this.authRepository);
 
-  // Todo: 사용자 정보 수정에 연결
   Future<bool> updateUserInfo(String? nickname, String? password, String? sex,
       DateTime? birthDate, String? media) async {
     final url = Uri.parse('$baseUrl/members/update');
@@ -58,6 +57,44 @@ class SettingRepository {
       return true;
     } catch (e) {
       LogUtil.e('checkEmail 에러: $e');
+      return false;
+    }
+  }
+
+  Future<bool> updateHealthInfo(
+    String? height,
+    String? weight,
+    String? bloodType,
+    String? disease,
+    String? medication,
+  ) async {
+    final url = Uri.parse('$baseUrl/members/detail');
+    final body = {
+      'height': height,
+      'weight': weight,
+      'bloodType': bloodType,
+      'disease': disease,
+      'medication': medication,
+    };
+
+    LogUtil.d('Request fields: ${jsonEncode(body)}');
+
+    try {
+      final accessToken = await authRepository.getAccessToken();
+      if (accessToken == null) {
+        throw Exception('Unauthorized: Access token 없음');
+      }
+
+      final response = await makePatchRequest(
+        url,
+        body,
+        'updateHealthInfo',
+        accessToken: accessToken,
+      );
+      LogUtil.d('updateHealthInfo 성공; ${jsonDecode(response.body.toString())}');
+      return response.statusCode == 200;
+    } catch (e) {
+      LogUtil.e('Error updating user health info: $e');
       return false;
     }
   }

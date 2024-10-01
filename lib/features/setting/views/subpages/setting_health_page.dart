@@ -55,8 +55,9 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                           keyboardType: TextInputType.number,
                           controller: viewModel.heightTEC,
                           onChanged: (value) {
-                            final height = double.tryParse(value) ?? 0.0;
-                            viewModel.updateHeight(height);
+                            // final height = double.tryParse(value) ?? 0.0;
+                            // viewModel.updateHeight(height);
+                            viewModel.updateHeight(value);
                           },
                         ),
                       ),
@@ -64,9 +65,8 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                       const Text(
                         'cm',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: AppColors.black,
                           fontSize: 16,
-                          fontFamily: 'Apple SD Gothic Neo',
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -78,8 +78,9 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                           keyboardType: TextInputType.number,
                           controller: viewModel.weightTEC,
                           onChanged: (value) {
-                            final weight = double.tryParse(value) ?? 0.0;
-                            viewModel.updateWeight(weight);
+                            // final weight = double.tryParse(value) ?? 0.0;
+                            // viewModel.updateWeight(weight);
+                            viewModel.updateWeight(value);
                           },
                         ),
                       ),
@@ -87,9 +88,8 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                       const Text(
                         'kg',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: AppColors.black,
                           fontSize: 16,
-                          fontFamily: 'Apple SD Gothic Neo',
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -106,38 +106,37 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                       _customRadioListTile(
                         title: 'A',
                         value: 'A',
-                        groupValue: userhealthInfo.bloodType,
+                        groupValue: userhealthInfo.bloodType ?? '',
                         onChanged: (value) => viewModel.updateBloodType(value),
                       ),
                       const SizedBox(width: 50),
                       _customRadioListTile(
                         title: 'B',
                         value: 'B',
-                        groupValue: userhealthInfo.bloodType,
+                        groupValue: userhealthInfo.bloodType ?? '',
                         onChanged: (value) => viewModel.updateBloodType(value),
                       ),
                       const SizedBox(width: 50),
                       _customRadioListTile(
                         title: 'AB',
                         value: 'AB',
-                        groupValue: userhealthInfo.bloodType,
+                        groupValue: userhealthInfo.bloodType ?? '',
                         onChanged: (value) => viewModel.updateBloodType(value),
                       ),
                       const SizedBox(width: 50),
                       _customRadioListTile(
                         title: 'O',
                         value: 'O',
-                        groupValue: userhealthInfo.bloodType,
+                        groupValue: userhealthInfo.bloodType ?? '',
                         onChanged: (value) => viewModel.updateBloodType(value),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 3),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  child: const Text(
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  child: Text(
                     '기존에 앓고 있던 질병',
                     style: TextStyle(
                       fontSize: 16,
@@ -149,14 +148,16 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                 const SizedBox(height: 6),
                 SettingExpandingTextfield(
                   hintText: '고혈압, 당뇨, 등 질병 목록 (최대 250자)',
-                  onChanged: (temp) => (),
+                  controller: viewModel.diseaseTEC,
+                  onChanged: (value) => {
+                    viewModel.updateDisease(value)
+                  },
                   maxLength: 250,
                 ),
                 const SizedBox(height: 30),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  child: const Text(
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  child: Text(
                     '현재 섭취하고 있는 약',
                     style: TextStyle(
                       fontSize: 16,
@@ -168,7 +169,10 @@ class _SettingHealthPageState extends ConsumerState<SettingHealthPage> {
                 const SizedBox(height: 6),
                 SettingExpandingTextfield(
                   hintText: '고혈압, 당뇨, 등 질병 목록 (최대 250자)',
-                  onChanged: (temp) => (),
+                  controller: viewModel.medicationTEC,
+                  onChanged: (value) => {
+                    viewModel.updateMedication(value)
+                  },
                   maxLength: 250,
                 ),
               ],
