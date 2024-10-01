@@ -204,7 +204,7 @@ class _WritePageState extends ConsumerState<WritePage> {
       '전쟁',
       '홍수',
       '교통사고',
-      '기타'
+      // '기타'
     ];
     const List<PostType> postTypes = [
       PostType.accident,
@@ -214,7 +214,7 @@ class _WritePageState extends ConsumerState<WritePage> {
       PostType.war,
       PostType.flood,
       PostType.carAccident,
-      PostType.other,
+      // PostType.other,
     ];
 
     return SingleChildScrollView(
