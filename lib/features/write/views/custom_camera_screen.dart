@@ -129,18 +129,19 @@ class _CustomCameraScreenState extends ConsumerState<CustomCameraScreen> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            // child: Image.asset(
-                            //   'assets/images/new_logo.png',
-                            //   width: double.maxFinite,
-                            // ),
                           ),
                         ),
                       ),
                     ),
-                    const Icon(
-                      Icons.autorenew,
-                      color: AppColors.white,
-                      size: 32,
+                    GestureDetector(
+                      onTap: () {
+                        viewModel.flipCamera();
+                      },
+                      child: const Icon(
+                        Icons.autorenew,
+                        color: AppColors.white,
+                        size: 32,
+                      ),
                     ),
                   ],
                 ),
