@@ -58,4 +58,23 @@ class PostRepository {
       return false;
     }
   }
+
+  // events/map/search -> TODO: 어떻게 검색으로 띄울지 고민
+  Future<List<Post>> getPostsForMap(String keyword) async {
+    final url = Uri.parse('$baseUrl/events/map/search?keyword=$keyword');
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+      final response =
+          await makeGetRequest(url, 'getPostsForMap', accessToken: accessToken);
+      final jsonResponse = jsonDecode(response.body);
+      final events = jsonResponse['data']['events'] as List<dynamic>;
+      final posts = events.map((event) => Post.fromJson(event)).toList();
+
+      return posts;
+    } catch (e) {
+      LogUtil.e('Error getting posts for map: $e');
+      return [];
+    }
+  }
 }

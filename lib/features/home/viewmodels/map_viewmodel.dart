@@ -2,6 +2,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/providers/home_repo_provider.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
+import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/features/home/repositories/home_repository.dart';
 
@@ -40,13 +41,29 @@ class MapViewModel extends StateNotifier<List<Post>> {
         .fetchTappedPost(post.postId); // Notify bottom sheet
   }
 
+  void onFriendMarkerTap(
+      Friend friend, WidgetRef ref, NaverMapController controller) {
+    centerMapOnPost(friend.latitude!, friend.longitude!, controller);
+    // Todo: 친구를 누르고 어떤 로직을 처리할지
+  }
+
   Future<void> onLocationBtnTap(NaverMapController controller) async {
     final trackingMode = await controller.getLocationTrackingMode();
 
-    if (trackingMode == NLocationTrackingMode.face) {
-      controller.setLocationTrackingMode(NLocationTrackingMode.none);
-    } else {
-      controller.setLocationTrackingMode(NLocationTrackingMode.face);
+    // 다음 tracking 모드를 순차적으로 설정
+    switch (trackingMode) {
+      case NLocationTrackingMode.face:
+        controller.setLocationTrackingMode(NLocationTrackingMode.follow);
+        break;
+      case NLocationTrackingMode.follow:
+        controller.setLocationTrackingMode(NLocationTrackingMode.noFollow);
+        break;
+      case NLocationTrackingMode.noFollow:
+        controller.setLocationTrackingMode(NLocationTrackingMode.none);
+        break;
+      case NLocationTrackingMode.none:
+        controller.setLocationTrackingMode(NLocationTrackingMode.face);
+        break;
     }
   }
 }

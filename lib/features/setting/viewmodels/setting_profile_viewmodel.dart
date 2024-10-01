@@ -12,8 +12,8 @@ class SettingProfileViewModel extends StateNotifier<User> {
             password: '',
             nickname: '',
             phoneNumber: '',
-            gender: '',
-            birthDay: DateTime(2000, 1, 1),
+            sex: '',
+            birthDate: DateTime(2000, 1, 1),
             profilePicture: '',
           ),
         ) {
@@ -23,11 +23,11 @@ class SettingProfileViewModel extends StateNotifier<User> {
     nameTEC = TextEditingController(text: state.name);
     nicknameTEC = TextEditingController(text: state.nickname);
     numberTEC = TextEditingController(text: state.phoneNumber);
-    yearTEC = TextEditingController(text: state.birthDay!.year.toString());
+    yearTEC = TextEditingController(text: state.birthDate!.year.toString());
     monthTEC = TextEditingController(
-        text: state.birthDay!.month.toString().padLeft(2, '0'));
+        text: state.birthDate!.month.toString().padLeft(2, '0'));
     dayTEC = TextEditingController(
-        text: state.birthDay!.day.toString().padLeft(2, '0'));
+        text: state.birthDate!.day.toString().padLeft(2, '0'));
   }
 
   late TextEditingController emailTEC;
@@ -41,15 +41,15 @@ class SettingProfileViewModel extends StateNotifier<User> {
   late TextEditingController dayTEC;
 
   void loadUserData() {
-    // 일단 더미
+    // TODO: 일단 더미 -> 서버에서 받아오도록 수정
     final dummyUser = User(
       name: '김채리',
       email: 'dummy@example.com',
       password: '',
       nickname: '챌챌',
       phoneNumber: '010-8575-4997',
-      gender: '여자',
-      birthDay: DateTime(2000, 9, 25),
+      sex: '여자',
+      birthDate: DateTime(2000, 9, 25),
       profilePicture: 'https://picsum.photos/100',
     );
     state = dummyUser;
@@ -61,9 +61,9 @@ class SettingProfileViewModel extends StateNotifier<User> {
     nameTEC.text = state.name!;
     nicknameTEC.text = state.nickname!;
     numberTEC.text = state.phoneNumber!;
-    yearTEC.text = state.birthDay!.year.toString();
-    monthTEC.text = state.birthDay!.month.toString().padLeft(2, '0');
-    dayTEC.text = state.birthDay!.day.toString().padLeft(2, '0');
+    yearTEC.text = state.birthDate!.year.toString();
+    monthTEC.text = state.birthDate!.month.toString().padLeft(2, '0');
+    dayTEC.text = state.birthDate!.day.toString().padLeft(2, '0');
   }
 
   String? localImagePath;
@@ -87,12 +87,12 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   void updateGender(String? gender) {
     if (gender != null) {
-      state = state.copyWith(gender: gender);
+      state = state.copyWith(sex: gender);
     }
   }
 
   void updateBirthDate(DateTime birthDay) {
-    state = state.copyWith(birthDay: birthDay);
+    state = state.copyWith(birthDate: birthDay);
   }
 
   bool isNicknameAvailable = false;
