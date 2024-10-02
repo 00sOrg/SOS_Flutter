@@ -28,8 +28,9 @@ class NearbyEvents extends ConsumerWidget {
       data: (location) {
         final currentLocation = location.adminAddress;
         return Flexible(
-          child: ListView.separated(
+          child: ListView.builder(
             controller: scrollController,
+            padding: const EdgeInsets.only(bottom: 20),
             shrinkWrap: true,
             itemCount: events.length + 1,
             itemBuilder: (context, index) {
@@ -120,20 +121,6 @@ class NearbyEvents extends ConsumerWidget {
                   },
                 );
               }
-            },
-            separatorBuilder: (context, index) {
-              return index == 0
-                  ? const SizedBox.shrink()
-                  : Container(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width - 40,
-                        child: const Divider(
-                          thickness: 0.5,
-                          height: 1,
-                        ),
-                      ),
-                    );
             },
           ),
         );
