@@ -63,7 +63,7 @@ class _BoardPageState extends ConsumerState<BoardPage> {
               ),
               const Spacer(),
               const BoardCarouselWidget(),
-              const SizedBox(height: 33),
+              //const SizedBox(height: 33),
               if (_showDesc) ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
