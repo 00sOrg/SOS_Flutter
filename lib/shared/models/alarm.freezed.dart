@@ -28,8 +28,12 @@ mixin _$Alarm {
   String get notificationMessage => throw _privateConstructorUsedError;
   String get apiUrl => throw _privateConstructorUsedError;
 
+  /// Serializes this Alarm to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Alarm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AlarmCopyWith<Alarm> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -58,6 +62,8 @@ class _$AlarmCopyWithImpl<$Res, $Val extends Alarm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Alarm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,6 +133,8 @@ class __$$AlarmImplCopyWithImpl<$Res>
       _$AlarmImpl _value, $Res Function(_$AlarmImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Alarm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -225,12 +233,14 @@ class _$AlarmImpl implements _Alarm {
             (identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, notificationId, notificationType,
       isRead, createdAt, referenceId, notificationMessage, apiUrl);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Alarm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AlarmImplCopyWith<_$AlarmImpl> get copyWith =>
@@ -270,8 +280,11 @@ abstract class _Alarm implements Alarm {
   String get notificationMessage;
   @override
   String get apiUrl;
+
+  /// Create a copy of Alarm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AlarmImplCopyWith<_$AlarmImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

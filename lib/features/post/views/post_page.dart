@@ -39,47 +39,89 @@ class PostPage extends ConsumerWidget {
             }
             return Stack(
               children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: getTagColor(post.disasterType!), // 이벤트 타입에 따른 배경색
+                    gradient: LinearGradient(
+                      colors: [
+                        getTagColor(post.disasterType!)
+                            .withOpacity(0.9), // 진한 색
+                        getTagColor(post.disasterType!)
+                            .withOpacity(0.6), // 연한 색
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.black.withOpacity(0.8),
+                        spreadRadius: 8, // 그림자 크기를 넓게
+                        blurRadius: 10, // 그림자를 더 흐리게
+                        offset: const Offset(0, 15), // 그림자가 더 아래로 멀리 떨어지도록
+                      ),
+                    ],
+                  ),
+                ),
                 RefreshIndicator.adaptive(
                   onRefresh: () async {
                     await postViewModel.refreshPost(postId);
                   },
-                  child: ListView(
-                    // padding: const EdgeInsets.fromLTRB(20, 18, 20, 80),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
-                        child: Column(
-                          children: [
-                            PostBadge(post: post),
-                            const SizedBox(height: 2),
-                            HeaderSection(post: post),
-                            const SizedBox(height: 14),
-                            UserProfileSection(post: post),
-                            const SizedBox(height: 8),
-                            ImageSection(post: post),
-                            const SizedBox(height: 16),
-                            ContentSection(post: post),
-                            const SizedBox(height: 19),
-                            LikeAndCommentSection(post: post),
-                            const SizedBox(height: 13),
-                          ],
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    decoration: const BoxDecoration(
+                      color: AppColors.white, // 배경색 설정
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20), // 왼쪽 상단 모서리 둥글게
+                        topRight: Radius.circular(20), // 오른쪽 상단 모서리 둥글게
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                          offset: Offset(0, 4), // 살짝 떠 있는 효과
                         ),
-                      ),
-                      const Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: AppColors.lineGray,
-                      ),
-                      CommentSection(comments: post.comments),
-                      const SizedBox(height: 80),
-                    ],
+                      ],
+                    ),
+                    child: ListView(
+                      // padding: const EdgeInsets.fromLTRB(20, 18, 20, 80),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                          child: Column(
+                            children: [
+                              PostBadge(post: post),
+                              const SizedBox(height: 2),
+                              HeaderSection(post: post),
+                              const SizedBox(height: 14),
+                              UserProfileSection(post: post),
+                              const SizedBox(height: 8),
+                              ImageSection(post: post),
+                              const SizedBox(height: 16),
+                              ContentSection(post: post),
+                              const SizedBox(height: 19),
+                              LikeAndCommentSection(post: post),
+                              const SizedBox(height: 13),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          height: 1,
+                          thickness: 1,
+                          color: AppColors.lineGray,
+                        ),
+                        CommentSection(comments: post.comments),
+                        const SizedBox(height: 80),
+                      ],
+                    ),
                   ),
                 ),
                 Positioned(
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  child: CommentWriteSection(postId: post.postId),
+                  child: CommentWriteSection(
+                      postId: post.postId, postType: post.disasterType!),
                 ),
                 Positioned(
                   right: 20, // 오른쪽 여백
@@ -99,10 +141,10 @@ class PostPage extends ConsumerWidget {
                     child: Container(
                       width: 54,
                       height: 54,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: const OvalBorder(),
-                        shadows: const [
+                      decoration: const ShapeDecoration(
+                        color: AppColors.white,
+                        shape: OvalBorder(),
+                        shadows: [
                           BoxShadow(
                             color: Color(0x3F000000),
                             blurRadius: 5,

@@ -66,7 +66,7 @@ class LocationService {
       double latitude, double longitude) async {
     final String baseGeoUrl = dotenv.env['NAVER_REVERSE_GEOCODE_URL']!;
     final String fullUrl =
-        '$baseGeoUrl?coords=$longitude,$latitude&sourcecrs=epsg:4326&orders=addr,roadaddr&output=json';
+        '$baseGeoUrl?coords=$longitude,$latitude&sourcecrs=epsg:4326&orders=roadaddr,addr&output=json';
 
     final headers = {
       'X-NCP-APIGW-API-KEY-ID': dotenv.env['NAVER_MAP_API_ID']!,
@@ -85,15 +85,32 @@ class LocationService {
 
     final jsonData = jsonDecode(response.body);
 
+    // 응답 로그 출력 (디버깅용)
+    //print('Naver API Response: $jsonData');
+
     if (jsonData["results"] == null || jsonData["results"].isEmpty) {
       throw RangeError("No address found for the given coordinates");
     }
 
-    // 도로명 주소와 지번 주소 모두 가져오기
-    final roadAddress = jsonData["results"][0]["land"]?["roadAddress"];
-    final jibunAddress = jsonData["results"][0]["land"]?["address"];
+    // 'land' 정보가 없는 경우에는 'region' 정보로 주소를 구성
+    final land = jsonData["results"][0]["land"];
+    final region = jsonData["results"][0]["region"];
 
-    // 우선 도로명 주소를 반환하고, 없으면 지번 주소를 반환
-    return roadAddress ?? jibunAddress ?? '주소를 찾을 수 없습니다.';
+    // 도로명 주소나 지번 주소가 없는 경우, 'region' 정보를 활용해 주소 구성
+    final roadAddress = land?["roadAddress"];
+    final jibunAddress = land?["address"];
+
+    if (roadAddress != null) {
+      return roadAddress;
+    } else if (jibunAddress != null) {
+      return jibunAddress;
+    } else {
+      // 'region' 정보로 기본 주소 구성 (시, 구, 동 정보)
+      final area1 = region["area1"]["name"]; // 예: 경기도
+      final area2 = region["area2"]["name"]; // 예: 수원시 영통구
+      final area3 = region["area3"]["name"]; // 예: 영통동
+
+      return '$area1 $area2 $area3';
+    }
   }
 }

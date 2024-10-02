@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_carousel_item.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 
 class BoardCarouselWidget extends ConsumerStatefulWidget {
   const BoardCarouselWidget({super.key});
@@ -83,16 +84,31 @@ class _CarouselWidgetState extends ConsumerState<BoardCarouselWidget> {
                   // Transform.translate(
                   //   offset: Offset(value * 7.5, 0),
                   Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7.5),
+                padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 33),
                 child: Opacity(
                   opacity: value,
-                  child: SizedBox(
-                    // height: Curves.easeOut.transform(value) * 300,
-                    // width: Curves.easeOut.transform(value) * 200,
-                    height: 480.w,
-                    width: 297,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20), // 모서리 둥글게
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.black.withOpacity(0.4),
+                          spreadRadius: 3,
+                          blurRadius: 8,
+                          offset: const Offset(6, 20),
+                        ),
+                      ],
+                    ),
                     child: BoardCarouselItem(board: boardItems[actualIndex]),
                   ),
+
+                  // SizedBox(
+                  //   // height: Curves.easeOut.transform(value) * 300,
+                  //   // width: Curves.easeOut.transform(value) * 200,
+                  //   height: 480.w,
+                  //   width: 297,
+                  //   child: BoardCarouselItem(board: boardItems[actualIndex]),
+                  // ),
                 ),
               );
             },

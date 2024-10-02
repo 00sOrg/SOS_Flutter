@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/features/home/providers/home_repo_provider.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
+import 'package:sos/features/post/repositories/post_repository.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/models/post.dart';
-import 'package:sos/features/home/repositories/home_repository.dart';
+import 'package:sos/shared/repositories/user_repository.dart';
 import 'package:sos/shared/services/location_service.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
+import 'package:intl/intl.dart';
 
 class MapViewModel extends StateNotifier<List<Post>> {
-  final HomeRepository homeRepository;
-  MapViewModel(this.homeRepository) : super([]);
+  final PostRepository postRepository;
+  final UserRepository userRepository = UserRepository();
+  MapViewModel(this.postRepository) : super([]);
 
   Future<void> fetchPostsForMap(
       String level, double latitude, double longitude, int zoom) async {
     final posts =
-        await homeRepository.getPostsForMap(level, latitude, longitude, zoom);
+        await postRepository.getPostsForMap(level, latitude, longitude, zoom);
     if (posts != []) {
       state = posts;
     }
@@ -45,10 +48,24 @@ class MapViewModel extends StateNotifier<List<Post>> {
         .fetchTappedPost(post.postId); // Notify bottom sheet
   }
 
-  void onFriendMarkerTap(
-      Friend friend, WidgetRef ref, NaverMapController controller) {
+  Future<void> onFriendMarkerTap(BuildContext context, WidgetRef ref,
+      NaverMapController controller, Friend friend) async {
     updateCameraToCenter(friend.latitude!, friend.longitude!, controller);
     // Todo: 친구를 누르고 어떤 로직을 처리할지
+    // 친구 정보 불러와서 마지막 위치 정보를 보여주는 것이 좋을 듯
+    // ref.read(bottomSheetViewModelProvider.notifier).fetchTappedPost(post.postId);
+    final user = await userRepository.getUserById(friend.favoriteMemberId);
+    final address = await LocationService()
+        .getAddressByCoordinates(user.latitude!, user.longitude!);
+    final formattedDate =
+        DateFormat('yy년 MM월 dd일 HH시 mm분').format(user.updatedAt!);
+    ScaffoldMessenger.of(context).showSnackBar(
+      customSnackBar(
+        text:
+            '${friend.nickname}님의 마지막 위치: $address \n 마지막 업데이트 시간: ${formattedDate}',
+        backgroundColor: AppColors.blue,
+      ),
+    );
   }
 
   Future<void> onLocationBtnTap(NaverMapController controller) async {
@@ -111,6 +128,6 @@ class MapViewModel extends StateNotifier<List<Post>> {
 
 final mapViewModelProvider =
     StateNotifierProvider<MapViewModel, List<Post>>((ref) {
-  final homeRepository = ref.watch(homeRepositoryProvider);
+  final homeRepository = ref.watch(postRepositoryProvider);
   return MapViewModel(homeRepository);
 });

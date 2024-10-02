@@ -29,11 +29,11 @@ class TappedPost extends ConsumerWidget {
             children: [
               const SizedBox(height: 10),
               OverviewHeader(
-                profilePictureURL: post.userProfilePictureURL,
-                title: post.title!,
-                roadAddress: post.roadAddress!,
-                createdAt: post.createdAt!,
-              ),
+                  profilePictureURL: post.userProfilePictureURL,
+                  title: post.title!,
+                  roadAddress: post.roadAddress!,
+                  createdAt: post.createdAt!,
+                  postId: post.postId),
               const SizedBox(height: 10),
               OverviewKeywordsandimage(
                 mediaUrl: post.mediaURL,

@@ -26,6 +26,12 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       disease: json['disease'] as String?,
       medication: json['medication'] as String?,
       address: json['address'] as String?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -47,4 +53,6 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'disease': instance.disease,
       'medication': instance.medication,
       'address': instance.address,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
     };
