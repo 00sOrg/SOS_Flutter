@@ -53,7 +53,7 @@ class PostSearchResultPage extends ConsumerWidget {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10), // 양쪽에 10만큼 패딩 추가
-                    child: ListView.separated(
+                    child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: events.length,
                       itemBuilder: (context, index) {
@@ -67,15 +67,6 @@ class PostSearchResultPage extends ConsumerWidget {
                                 .read(bottomSheetViewModelProvider.notifier)
                                 .navigateToPost(context, event.postId);
                           },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Container(
-                          alignment: Alignment.center,
-                          child: const Divider(
-                            thickness: 0.5,
-                            height: 1,
-                          ),
                         );
                       },
                     ),
