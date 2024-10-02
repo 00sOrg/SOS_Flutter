@@ -92,10 +92,10 @@ class _CarouselWidgetState extends ConsumerState<BoardCarouselWidget> {
                       borderRadius: BorderRadius.circular(20), // 모서리 둥글게
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.black.withOpacity(0.5),
+                          color: AppColors.black.withOpacity(0.4),
                           spreadRadius: 3,
                           blurRadius: 8,
-                          offset: const Offset(0, 20),
+                          offset: const Offset(6, 20),
                         ),
                       ],
                     ),

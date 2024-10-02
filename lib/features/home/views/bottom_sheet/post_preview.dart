@@ -178,22 +178,3 @@ class PostPreview extends StatelessWidget {
         ));
   }
 }
-
-Color getTagColor(String eventType) {
-  switch (eventType) {
-    case 'FIRE':
-      return const Color(0xFFFF3535);
-    case 'TYPHOON':
-      return const Color(0xFFAA3DC2);
-    case 'FLOOD':
-      return const Color(0xFF0046AE);
-    case 'WAR':
-      return const Color(0xFF16AE0B);
-    case 'OTHER':
-      return const Color(0xFFF28C2C);
-    case 'CAR_ACCIDENT':
-      return const Color(0xFF00A392);
-    default:
-      return const Color(0xFF6398E9);
-  }
-}
