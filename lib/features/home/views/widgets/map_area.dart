@@ -223,9 +223,12 @@ class MapWidget extends ConsumerWidget {
           nickname: friend.nickname,
           position: NLatLng(friend.latitude!, friend.longitude!),
           onTap: () {
-            ref
-                .read(mapViewModelProvider.notifier)
-                .onFriendMarkerTap(friend, ref, controller);
+            ref.read(mapViewModelProvider.notifier).onFriendMarkerTap(
+                  context,
+                  ref,
+                  controller,
+                  friend,
+                );
           },
           nOverlayImage: friendOverlayImage, // 친구 프로필 이미지를 마커에 적용
         );

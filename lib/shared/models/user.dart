@@ -28,6 +28,8 @@ class User with _$User {
     String? disease,
     String? medication,
     String? address,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

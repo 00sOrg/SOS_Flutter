@@ -41,9 +41,15 @@ mixin _$User {
   String? get disease => throw _privateConstructorUsedError;
   String? get medication => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
+  /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -69,7 +75,9 @@ abstract class $UserCopyWith<$Res> {
       String? bloodType,
       String? disease,
       String? medication,
-      String? address});
+      String? address,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -82,6 +90,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -102,6 +112,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? disease = freezed,
     Object? medication = freezed,
     Object? address = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -172,6 +184,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -200,7 +220,9 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? bloodType,
       String? disease,
       String? medication,
-      String? address});
+      String? address,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -210,6 +232,8 @@ class __$$UserImplCopyWithImpl<$Res>
   __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -230,6 +254,8 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? disease = freezed,
     Object? medication = freezed,
     Object? address = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$UserImpl(
       id: freezed == id
@@ -300,6 +326,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -324,7 +358,9 @@ class _$UserImpl implements _User {
       this.bloodType,
       this.disease,
       this.medication,
-      this.address});
+      this.address,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -367,10 +403,14 @@ class _$UserImpl implements _User {
   final String? medication;
   @override
   final String? address;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, password: $password, name: $name, nickname: $nickname, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, sex: $sex, birthDate: $birthDate, profilePicture: $profilePicture, height: $height, weight: $weight, bloodType: $bloodType, disease: $disease, medication: $medication, address: $address)';
+    return 'User(id: $id, email: $email, password: $password, name: $name, nickname: $nickname, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, sex: $sex, birthDate: $birthDate, profilePicture: $profilePicture, height: $height, weight: $weight, bloodType: $bloodType, disease: $disease, medication: $medication, address: $address, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -403,32 +443,41 @@ class _$UserImpl implements _User {
             (identical(other.disease, disease) || other.disease == disease) &&
             (identical(other.medication, medication) ||
                 other.medication == medication) &&
-            (identical(other.address, address) || other.address == address));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      email,
-      password,
-      name,
-      nickname,
-      phoneNumber,
-      latitude,
-      longitude,
-      sex,
-      birthDate,
-      profilePicture,
-      height,
-      weight,
-      bloodType,
-      disease,
-      medication,
-      address);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        email,
+        password,
+        name,
+        nickname,
+        phoneNumber,
+        latitude,
+        longitude,
+        sex,
+        birthDate,
+        profilePicture,
+        height,
+        weight,
+        bloodType,
+        disease,
+        medication,
+        address,
+        createdAt,
+        updatedAt
+      ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
@@ -460,17 +509,20 @@ abstract class _User implements User {
       final String? bloodType,
       final String? disease,
       final String? medication,
-      final String? address}) = _$UserImpl;
+      final String? address,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
-  @override //member info
+//member info
+  @override
   int? get id;
   @override
   String? get email;
   @override
-  String? get password;
-  @override //Todo: 비밀번호는 필요한가?
+  String? get password; //Todo: 비밀번호는 필요한가?
+  @override
   String? get name;
   @override
   String? get nickname;
@@ -479,9 +531,9 @@ abstract class _User implements User {
   @override
   double? get latitude;
   @override
-  double? get longitude;
-  @override // String? device,
+  double? get longitude; // String? device,
 //member detail info
+  @override
   String? get sex;
   @override
   DateTime? get birthDate;
@@ -500,7 +552,14 @@ abstract class _User implements User {
   @override
   String? get address;
   @override
-  @JsonKey(ignore: true)
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

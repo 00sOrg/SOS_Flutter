@@ -34,8 +34,12 @@ class FavoritesDropdown extends ConsumerWidget {
                       if (naverMapController != null) {
                         ref
                             .read(mapViewModelProvider.notifier)
-                            .onFriendMarkerTap(friend, ref,
-                                naverMapController); // 친구 마커를 탭했을 때의 동작
+                            .onFriendMarkerTap(
+                              context,
+                              ref,
+                              naverMapController,
+                              friend,
+                            ); // 친구 마커를 탭했을 때의 동작
                       } else {
                         // NaverMapController가 null일 때의 처리
                         ScaffoldMessenger.of(context).showSnackBar(
