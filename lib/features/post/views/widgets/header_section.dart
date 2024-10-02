@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/format_date_time.dart';

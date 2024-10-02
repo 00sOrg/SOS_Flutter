@@ -90,7 +90,7 @@ class MapWidget extends ConsumerWidget {
     ref.read(mapControllerProvider.notifier).initializeController(controller);
 
     // NLocationTrackingMode 설정 (face, follow, noFollow, none)
-    controller.setLocationTrackingMode(NLocationTrackingMode.face);
+    controller.setLocationTrackingMode(NLocationTrackingMode.follow);
     controller
         .getLocationOverlay()
         .setCircleColor(AppColors.lightBlue.withOpacity(0.3));
