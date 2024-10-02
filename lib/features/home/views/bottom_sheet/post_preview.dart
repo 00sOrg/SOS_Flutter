@@ -78,6 +78,23 @@ class PostPreview extends StatelessWidget {
                                   image: NetworkImage(event.mediaURL!),
                                   fit: BoxFit.cover,
                                 ),
+                                border: Border(
+                                  // top: BorderSide(
+                                  //   color: getTagColor(
+                                  //       event.disasterType!), // 위 테두리 색상
+                                  //   width: 3, // 테두리 두께
+                                  // ),
+                                  // bottom: BorderSide(
+                                  //   color: getTagColor(
+                                  //       event.disasterType!), // 아래 테두리 색상
+                                  //   width: 3, // 테두리 두께
+                                  // ),
+                                  right: BorderSide(
+                                    color: getTagColor(event.disasterType!)
+                                        .withOpacity(0.8), // 오른쪽 테두리 색상
+                                    width: 5, // 테두리 두께
+                                  ),
+                                ),
                               ),
                             )
                           : const SizedBox(width: 15),
