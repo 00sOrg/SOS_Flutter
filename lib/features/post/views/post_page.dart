@@ -54,10 +54,10 @@ class PostPage extends ConsumerWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.black.withOpacity(0.6),
-                        spreadRadius: 5,
-                        blurRadius: 15,
-                        offset: Offset(0, 10), // 그림자가 아래쪽으로 더 멀리 떨어지도록 설정
+                        color: AppColors.black.withOpacity(0.8),
+                        spreadRadius: 8, // 그림자 크기를 넓게
+                        blurRadius: 10, // 그림자를 더 흐리게
+                        offset: const Offset(0, 15), // 그림자가 더 아래로 멀리 떨어지도록
                       ),
                     ],
                   ),
