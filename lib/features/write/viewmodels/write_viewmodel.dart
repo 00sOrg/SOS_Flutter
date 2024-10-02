@@ -6,6 +6,7 @@ import 'package:sos/features/write/repositories/write_repository.dart';
 import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/models/location.dart';
 import 'package:sos/shared/models/post.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/log_util.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
@@ -69,7 +70,7 @@ class WriteViewModel extends StateNotifier<Post> {
       );
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          customSnackBar(text: '게시물이 작성되었습니다'),
+          customSnackBar(text: '게시물이 작성되었습니다', backgroundColor: AppColors.blue),
         );
         debugPrint('TODO: 작성 후 지도로 가서 작성한 게시물 보이게? 해야됨');
         clearImagePicker();

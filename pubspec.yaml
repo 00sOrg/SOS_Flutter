@@ -73,6 +73,7 @@ flutter:
     - assets/icons/home/
     - assets/icons/home/marker/
     - assets/icons/post/
+    - assets/icons/post/emergency_response/
     - assets/icons/setting/
     - assets/images/
     - assets/lottie/
