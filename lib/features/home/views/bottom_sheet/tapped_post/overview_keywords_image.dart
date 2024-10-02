@@ -32,13 +32,16 @@ class OverviewKeywordsandimage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     EventTypeBlock(
-                        eventType: eventType), // Always show event type
+                      eventType: eventType,
+                      mediaUrl: mediaUrl,
+                    ), // Always show event type
                     const SizedBox(height: 8),
                     ...keywords!.take(3).map((keyword) {
                       // Display up to 3 keywords
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: KeywordBlock(keyword: keyword),
+                        child:
+                            KeywordBlock(keyword: keyword, mediaUrl: mediaUrl),
                       );
                     }).toList(),
                   ],
