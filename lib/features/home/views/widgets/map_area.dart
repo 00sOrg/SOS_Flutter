@@ -131,9 +131,7 @@ class MapWidget extends ConsumerWidget {
       }
     }
 
-    // 기존 마커 중에서 더 이상 존재하지 않는 마커 제거
-    // TODO: 오류 해결 (_AssertionError ('package:flutter_naver_map/src/controller/overlay/overlay_controller_impl.dart': Failed assertion: line 49 pos 12: 'helper != null': Not Added or Already Deleted this overlay : NOverlayInfo(type: NOverlayType.marker, id: 1)))
-    //_removeOldMarkers(controller, newMarkerIds);
+    // TODO: 기존 마커 중에서 더 이상 존재하지 않는 마커 제거
   }
 
   Future<NMarker> _buildMarker(
@@ -144,7 +142,6 @@ class MapWidget extends ConsumerWidget {
   ) async {
     if (post.mediaURL != null &&
         post.mediaURL!.isNotEmpty &&
-        post.disasterLevel != null &&
         post.disasterLevel == 'PRIMARY') {
       final nOverlayImage = await buildImageMarkerWidget(
         post.mediaURL!,

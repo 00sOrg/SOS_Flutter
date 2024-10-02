@@ -7,7 +7,7 @@ import 'package:sos/shared/utils/log_util.dart';
 
 class AlarmRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
-  final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   Future<List<Alarm>> getAlarms() async {
     final url = Uri.parse('$baseUrl/alarm');
@@ -32,7 +32,7 @@ class AlarmRepository {
     }
   }
 
-  Future<bool> patchReadAlarm(int alarmId) async {
+  Future<bool> patchAlarmRead(int alarmId) async {
     final url = Uri.parse('$baseUrl/alarm/$alarmId');
 
     try {

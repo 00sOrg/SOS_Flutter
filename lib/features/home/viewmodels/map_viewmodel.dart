@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sos/features/home/providers/home_repo_provider.dart';
 import 'package:sos/features/home/viewmodels/bottom_sheet_viewmodel.dart';
+import 'package:sos/features/post/repositories/post_repository.dart';
 import 'package:sos/shared/models/friend.dart';
 import 'package:sos/shared/models/post.dart';
-import 'package:sos/features/home/repositories/home_repository.dart';
 import 'package:sos/shared/services/location_service.dart';
 import 'package:sos/shared/widgets/custom_snack_bar.dart';
 
 class MapViewModel extends StateNotifier<List<Post>> {
-  final HomeRepository homeRepository;
-  MapViewModel(this.homeRepository) : super([]);
+  final PostRepository postRepository;
+  MapViewModel(this.postRepository) : super([]);
 
   Future<void> fetchPostsForMap(
       String level, double latitude, double longitude, int zoom) async {
     final posts =
-        await homeRepository.getPostsForMap(level, latitude, longitude, zoom);
+        await postRepository.getPostsForMap(level, latitude, longitude, zoom);
     if (posts != []) {
       state = posts;
     }
@@ -111,6 +110,6 @@ class MapViewModel extends StateNotifier<List<Post>> {
 
 final mapViewModelProvider =
     StateNotifierProvider<MapViewModel, List<Post>>((ref) {
-  final homeRepository = ref.watch(homeRepositoryProvider);
+  final homeRepository = ref.watch(postRepositoryProvider);
   return MapViewModel(homeRepository);
 });
