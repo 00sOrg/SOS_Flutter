@@ -30,7 +30,7 @@ class PostPreview extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.white,
             border: Border.all(
-              color: AppColors.lineGray.withOpacity(0.4),
+              color: AppColors.lineGray.withOpacity(0.6),
             ),
             borderRadius: BorderRadius.circular(12), // 모서리 둥글게
             boxShadow: [
