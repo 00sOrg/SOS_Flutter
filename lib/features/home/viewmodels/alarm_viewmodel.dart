@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sos/features/home/repositories/alarm_repository.dart';
 import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
 import 'package:sos/features/home/views/side_sheet/favorite_alert_modal.dart';
@@ -101,7 +100,7 @@ class AlarmViewModel extends StateNotifier<List<Alarm>> {
     await markAsRead(alarm.notificationId);
     final post = await postRepository.getPostOverviewById(alarm.referenceId);
 
-    // 방법2: 알림 창을 닫은 뒤 해당 위치로 지도 이동
+    // 알림 창을 닫은 뒤 해당 위치로 지도 이동
     Navigator.of(context).pop();
     final NaverMapController? mapController = ref.read(mapControllerProvider);
     if (mapController != null) {

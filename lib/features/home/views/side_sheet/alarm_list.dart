@@ -26,14 +26,12 @@ class AlarmList extends ConsumerWidget {
           return AlarmTemplate(
             alarm: alarm,
             onTap: () async {
-              // debugPrint('Alarm tapped: ${alarm} ');
-
-              // if (alarm.isRead) {
-              //   return;
-              // }
+              if (alarm.isRead) {
+                return;
+              }
 
               final alarmType = getAlarmType(alarm.notificationType);
-              debugPrint(alarmType.toString());
+
               switch (alarmType) {
                 case AlarmType.FAVORITE_REQUEST:
                   ref
