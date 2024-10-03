@@ -22,8 +22,8 @@ class HeaderBtn extends StatelessWidget {
         width: 42,
         height: 42,
         decoration: ShapeDecoration(
-          gradient: RadialGradient(
-            center: const Alignment(0, 0), // 중앙에서 시작
+          gradient: const RadialGradient(
+            center: Alignment(0, 0), // 중앙에서 시작
             radius: 1.6, // 그라데이션 반경 설정
             colors: [AppColors.white, AppColors.blue],
           ),

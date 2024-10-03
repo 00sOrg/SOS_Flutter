@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/features/post/views/widgets/comment_write_section.dart';
 import 'package:sos/features/post/views/widgets/emergency_respose_popup.dart';
 import 'package:sos/features/post/views/widgets/user_profile_section.dart';
 import 'package:sos/shared/enums/type_enum.dart';
+import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 import 'package:sos/shared/widgets/animated_button.dart';
@@ -30,6 +32,8 @@ class PostPage extends ConsumerStatefulWidget {
 }
 
 class _PostPageState extends ConsumerState<PostPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -53,111 +57,107 @@ class _PostPageState extends ConsumerState<PostPage> {
 
     return KeyboardDismisser(
       child: Scaffold(
-        appBar: CustomAppBar(
-          title: '게시글',
-          onTapLeading: () => GoRouter.of(context).pop(),
-        ),
+        key: _scaffoldKey,
+        appBar: _postAppBar(context, postAsync, ref, user.memberId ?? -1),
         body: postAsync.when(
           data: (post) {
             if (post == null) {
-              return const Center(child: Text('No post found'));
+              return const Center(child: Text('게시글이 없습니다'));
             }
             final currentUserId = user.memberId;
-
             return Stack(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: getTagColor(post.disasterType!), // 이벤트 타입에 따른 배경색
-                    gradient: LinearGradient(
-                      colors: [
-                        getTagColor(post.disasterType!)
-                            .withOpacity(0.9), // 진한 색
-                        getTagColor(post.disasterType!)
-                            .withOpacity(0.6), // 연한 색
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.black.withOpacity(0.8),
-                        spreadRadius: 8, // 그림자 크기를 넓게
-                        blurRadius: 10, // 그림자를 더 흐리게
-                        offset: const Offset(0, 15), // 그림자가 더 아래로 멀리 떨어지도록
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: getTagColor(post.disasterType!), // 이벤트 타입에 따른 배경색
+                //     gradient: LinearGradient(
+                //       colors: [
+                //         getTagColor(post.disasterType!)
+                //             .withOpacity(0.9), // 진한 색
+                //         getTagColor(post.disasterType!)
+                //             .withOpacity(0.6), // 연한 색
+                //       ],
+                //       begin: Alignment.topCenter,
+                //       end: Alignment.bottomCenter,
+                //     ),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: AppColors.black.withOpacity(0.8),
+                //         spreadRadius: 8, // 그림자 크기를 넓게
+                //         blurRadius: 10, // 그림자를 더 흐리게
+                //         offset: const Offset(0, 15), // 그림자가 더 아래로 멀리 떨어지도록
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 RefreshIndicator.adaptive(
                   onRefresh: () async {
                     await postViewModel.refreshPost(widget.postId);
                   },
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
-                    decoration: const BoxDecoration(
-                      color: AppColors.white, // 배경색 설정
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                  // child: Container(
+                  //   margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                  //   decoration: const BoxDecoration(
+                  //     color: AppColors.white, // 배경색 설정
+                  //     borderRadius: BorderRadius.only(
+                  //       topLeft: Radius.circular(20),
+                  //       topRight: Radius.circular(20),
+                  //     ),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Color.fromARGB(60, 0, 0, 0),
+                  //         spreadRadius: 2,
+                  //         blurRadius: 4,
+                  //         offset: Offset(2, -4), // 살짝 떠 있는 효과
+                  //       ),
+                  //     ],
+                  //   ),
+                  child: ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
+                        child: Column(
+                          children: [
+                            PostBadge(post: post),
+                            const SizedBox(height: 2),
+                            HeaderSection(
+                              post: post,
+                              // currentUserId: currentUserId,
+                              // onDelete: () async {
+                              //   final shouldDelete =
+                              //       await _showDeleteConfirmation(context);
+                              //   if (shouldDelete) {
+                              //     await postViewModel.deletePost(widget.postId);
+                              //     Navigator.of(context).pop();
+                              //   }
+                              // },
+                            ),
+                            const SizedBox(height: 10),
+                            UserProfileSection(post: post),
+                            const SizedBox(height: 14),
+                            ImageSection(post: post),
+                            const SizedBox(height: 16),
+                            ContentSection(post: post),
+                            const SizedBox(height: 19),
+                            LikeAndCommentSection(post: post),
+                            const SizedBox(height: 13),
+                          ],
+                        ),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(60, 0, 0, 0),
-                          spreadRadius: 2,
-                          blurRadius: 4,
-                          offset: Offset(2, -4), // 살짝 떠 있는 효과
-                        ),
-                      ],
-                    ),
-                    child: ListView(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
-                          child: Column(
-                            children: [
-                              PostBadge(post: post),
-                              const SizedBox(height: 2),
-                              HeaderSection(
-                                post: post,
-                                currentUserId: currentUserId,
-                                onDelete: () async {
-                                  final shouldDelete =
-                                      await _showDeleteConfirmation(context);
-                                  if (shouldDelete) {
-                                    await postViewModel
-                                        .deletePost(widget.postId);
-                                    Navigator.of(context).pop();
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 10),
-                              UserProfileSection(post: post),
-                              const SizedBox(height: 12),
-                              ImageSection(post: post),
-                              const SizedBox(height: 16),
-                              ContentSection(post: post),
-                              const SizedBox(height: 19),
-                              LikeAndCommentSection(post: post),
-                              const SizedBox(height: 13),
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          height: 1,
-                          thickness: 4,
-                          color: AppColors.lineGray,
-                        ),
-                        CommentSection(
-                          comments: post.comments,
-                          currentUserId: currentUserId,
-                          postId: post.postId,
-                        ),
-                        const SizedBox(height: 80),
-                      ],
-                    ),
+                      const Divider(
+                        height: 1,
+                        thickness: 4,
+                        color: AppColors.lineGray,
+                      ),
+                      CommentSection(
+                        comments: post.comments,
+                        currentUserId: currentUserId,
+                        postId: post.postId,
+                      ),
+                      const SizedBox(height: 80),
+                    ],
                   ),
                 ),
+                //),
                 Positioned(
                   bottom: 0,
                   left: 0,
@@ -233,5 +233,103 @@ class _PostPageState extends ConsumerState<PostPage> {
           },
         ) ??
         false;
+  }
+
+  void _showOptions(BuildContext context, Post post, WidgetRef ref) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) {
+        final postViewModel =
+            ref.watch(postViewModelProvider(widget.postId).notifier);
+        return CupertinoActionSheet(
+          actions: <CupertinoActionSheetAction>[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // 수정 동작 구현
+              },
+              child: const Text('수정'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () async {
+                Navigator.of(context).pop();
+
+                final shouldDelete = await _showDeleteConfirmation(context);
+
+                if (shouldDelete) {
+                  await postViewModel.deletePost(widget.postId);
+                  ref.read(boardViewModelProvider.notifier).refreshBoard();
+
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (_scaffoldKey.currentState?.mounted ?? false) {
+                      GoRouter.of(_scaffoldKey.currentContext!).pop();
+                    }
+                  });
+                }
+              },
+              isDestructiveAction: true,
+              child: const Text('삭제'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('취소'),
+          ),
+        );
+      },
+    );
+  }
+
+  //   if (currentUserId == post.memberId) // 현재 유저와 작성자가 같을 때만 옵션 아이콘을 보여줌
+  // IconButton(
+  //   icon: const Icon(Icons.more_vert, color: AppColors.textGray),
+  //   onPressed: () {
+  //     // 옵션 아이콘 클릭 시 행동 정의
+  //     _showOptions(context, post, ref);
+  //   },
+  // ),
+
+  PreferredSizeWidget _postAppBar(
+    BuildContext context,
+    AsyncValue<Post?> postAsync,
+    WidgetRef ref,
+    int currentUserId,
+  ) {
+    return postAsync.when(
+      data: (post) {
+        if (post == null) {
+          return CustomAppBar(
+            title: '게시글',
+            onTapLeading: () => GoRouter.of(context).pop(),
+          );
+        }
+        return CustomAppBar(
+          title: '게시글',
+          onTapLeading: () => GoRouter.of(context).pop(),
+          trailingAction: (currentUserId == post.memberId)
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: Color(0xFF232323),
+                    size: 26,
+                  ),
+                  onPressed: () {
+                    _showOptions(context, post, ref);
+                  },
+                )
+              : const SizedBox.shrink(),
+        );
+      },
+      loading: () => CustomAppBar(
+        title: '게시글',
+        onTapLeading: () => GoRouter.of(context).pop(),
+      ),
+      error: (error, stackTrace) => CustomAppBar(
+        title: '게시글',
+        onTapLeading: () => GoRouter.of(context).pop(),
+      ),
+    );
   }
 }
