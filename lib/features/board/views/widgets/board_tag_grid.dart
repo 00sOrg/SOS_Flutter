@@ -14,33 +14,34 @@ class BoardTagGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> rows = [];
+    // List<Widget> rows = [];
 
-    // 2개씩 배치하도록 수정
-    for (int i = 0; i < items.length; i += 2) {
-      List<String> rowItems = items.sublist(
-        i,
-        i + 2 > items.length ? items.length : i + 2,
-      );
+    // for (int i = 0; i < items.length; i += 3) {
+    //   List<String> rowItems = items.sublist(
+    //     i,
+    //     i + 3 > items.length ? items.length : i + 3,
+    //   );
 
-      rows.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: rowItems
-              .map(
-                (item) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: tagBlock(text: item),
-                ),
-              )
-              .toList(),
-        ),
-      );
-      rows.add(const SizedBox(height: 6));
-    }
+    //   rows.add(
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       children: rowItems
+    //           .map(
+    //             (item) => Padding(
+    //               padding: const EdgeInsets.symmetric(horizontal: 5),
+    //               child: tagBlock(text: item),
+    //             ),
+    //           )
+    //           .toList(),
+    //     ),
+    //   );
+    //   rows.add(const SizedBox(height: 6));
+    // }
 
-    return Column(
-      children: rows,
+    return Wrap(
+      spacing: 5, // hor
+      runSpacing: 6, // vert
+      children: items.map((item) => tagBlock(text: item)).toList(),
     );
   }
 
@@ -77,6 +78,8 @@ class BoardTagGrid extends StatelessWidget {
               color: AppColors.white,
               fontWeight: FontWeight.w700,
             ),
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
           ),
         ],
       ),
