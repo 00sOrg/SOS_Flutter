@@ -14,20 +14,28 @@ class SettingRepository {
 
   SettingRepository(this.authRepository);
 
-  Future<bool> updateUserInfo(String? nickname, String? password, String? sex,
-      DateTime? birthDate, String? media) async {
+  Future<bool> updateUserInfo(
+    String? nickname,
+    String? phoneNumber,
+    String? password,
+    String? sex,
+    DateTime? birthDate,
+    String? profilePicture,
+    String? media,
+  ) async {
     final url = Uri.parse('$baseUrl/members/update');
     final body = {
       'nickname': nickname,
+      'phoneNumber': phoneNumber,
       'password': password,
       'sex': sex,
       'birthDate': birthDate?.toIso8601String(),
+      'profilePicture': profilePicture,
     };
 
-    LogUtil.d('Request fields: ${jsonEncode(body)}');
+    LogUtil.d('Request fields: ${jsonEncode(body)}, media: $media');
 
     try {
-      // final accessToken = await secureStorage.read(key: 'access_token');
       final accessToken = await authRepository.getAccessToken();
       if (accessToken == null) {
         throw Exception('Unauthorized: Access token 없음');

@@ -58,7 +58,6 @@ class SettingProfileViewModel extends StateNotifier<User> {
     updateControllers();
   }
 
-  // TODO: API 수정 후 다시 손봐야함
   void updateControllers() {
     emailTEC.text = state.email!;
     nameTEC.text = state.name!;
@@ -135,22 +134,25 @@ class SettingProfileViewModel extends StateNotifier<User> {
 
   Future<void> submit(BuildContext context) async {
     if (areFieldsValid()) {
-      debugPrint('유저정보: ${state.nickname}, ${state.email}');
       final nickname = nicknameTEC.text;
+      final phoneNumber = numberTEC.text;
       final password = passwordTEC.text.isNotEmpty ? passwordTEC.text : null;
       final sex = state.sex;
       final birthDate = state.birthDate;
+      String? profilePicture = state.profilePicture;
       String? media;
 
       if (hasProfilePictureChanged()) {
-        media = localImagePath ?? ''; // '' 가는 경우는 원래 있었는데 삭제된 경우
+        media = localImagePath; // '' 가는 경우는 원래 있었는데 삭제된 경우
       }
 
       final success = await settingRepository.updateUserInfo(
         nickname,
+        phoneNumber,
         password,
         sex,
         birthDate,
+        profilePicture,
         media,
       );
 
