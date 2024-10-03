@@ -78,3 +78,22 @@ Color getTagColor(String eventType) {
       return const Color(0xFF6398E9);
   }
 }
+
+Color getTagColor2(String eventType) {
+  switch (eventType) {
+    case 'FIRE':
+      return const Color.fromARGB(255, 255, 113, 113);
+    case 'TYPHOON':
+      return const Color.fromARGB(255, 210, 120, 230);
+    case 'FLOOD':
+      return const Color.fromARGB(255, 119, 168, 241);
+    case 'WAR':
+      return const Color.fromARGB(255, 147, 236, 140);
+    case 'EARTHQUAKE':
+      return const Color.fromARGB(255, 241, 180, 123);
+    case 'CAR_ACCIDENT':
+      return const Color.fromARGB(255, 71, 209, 196);
+    default:
+      return const Color.fromARGB(255, 157, 193, 246);
+  }
+}
