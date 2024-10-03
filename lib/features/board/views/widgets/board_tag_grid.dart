@@ -1,9 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class BoardTagGrid extends StatelessWidget {
   final List<String> items;
-  const BoardTagGrid({super.key, required this.items});
+  final PostType eventType;
+
+  const BoardTagGrid({
+    super.key,
+    required this.items,
+    required this.eventType,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +85,11 @@ class BoardTagGrid extends StatelessWidget {
   }
 
   Widget tagBlock({Widget? icon, required String text}) {
+    log('6666666666666');
+    log('eventType: $eventType, text: $text, bool: ${text == eventType.koreanName}, color: ${getTagColor(eventType.name)}');
+    final Color tagColor =
+        text == eventType.koreanName ? getTagColor(eventType.name) : AppColors.blue;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
       decoration: BoxDecoration(
@@ -86,7 +100,8 @@ class BoardTagGrid extends StatelessWidget {
         //       Color(0xFF0017a7),
         //       AppColors.blue,
         //     ]),
-        color: AppColors.blue,
+        // color: tagColor,
+        color: tagColor,
         borderRadius: BorderRadius.circular(50),
       ),
       child: Row(

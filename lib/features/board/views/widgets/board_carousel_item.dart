@@ -78,7 +78,10 @@ class BoardCarouselItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  BoardTagGrid(items: keywords),
+                  BoardTagGrid(
+                    items: keywords,
+                    eventType: eventType,
+                  ),
                   const SizedBox(height: 12),
                   Text(
                     board.content ?? '',
