@@ -23,11 +23,17 @@ class ProfileImagePicker extends StatelessWidget {
       imageWidget = Image.file(
         File(localImagePath!),
         fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return const Icon(Icons.error);
+        },
       );
     } else if (profilePicture != null && profilePicture!.isNotEmpty) {
       imageWidget = Image.network(
         profilePicture!,
         fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return const Icon(Icons.error);
+        },
       );
     } else {
       imageWidget = Image.asset(
