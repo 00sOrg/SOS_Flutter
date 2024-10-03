@@ -67,12 +67,12 @@ class PostPreview extends StatelessWidget {
                                   left: BorderSide(
                                     color: getTagColor(event.disasterType!)
                                         .withOpacity(0.8),
-                                    width: 5, // 테두리 두께
+                                    width: 3, // 테두리 두께
                                   ),
                                   right: BorderSide(
                                     color: getTagColor(event.disasterType!)
                                         .withOpacity(0.8), // 오른쪽 테두리 색상
-                                    width: 5, // 테두리 두께
+                                    width: 3, // 테두리 두께
                                   ),
                                 ),
                               ),

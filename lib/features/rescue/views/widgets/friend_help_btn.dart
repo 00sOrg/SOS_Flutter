@@ -22,6 +22,10 @@ class FriendHelpBtn extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
+          border: Border.all(
+            color: AppColors.lineGray,
+            width: 2,
+          ),
           borderRadius: BorderRadius.circular(radius),
           gradient: LinearGradient(
             colors: [
@@ -34,14 +38,14 @@ class FriendHelpBtn extends StatelessWidget {
           boxShadow: [
             // 그림자 추가 (입체감 주는 효과)
             BoxShadow(
-              offset: const Offset(4, 4), // 그림자 위치
-              color: Colors.black.withOpacity(0.15), // 그림자 색상 및 투명도
-              blurRadius: 10, // 그림자 흐림 효과
+              offset: const Offset(2, 2), // 그림자 위치
+              color: Colors.black.withOpacity(0.1), // 그림자 색상 및 투명도
+              blurRadius: 12, // 그림자 흐림 효과
             ),
             BoxShadow(
-              offset: const Offset(-4, -4), // 반대 방향 그림자
-              color: Colors.white.withOpacity(0.6), // 그림자 색상 및 투명도
-              blurRadius: 10, // 흐림 효과
+              offset: const Offset(-2, -2), // 반대 방향 그림자
+              color: Colors.white.withOpacity(0.3), // 그림자 색상 및 투명도
+              blurRadius: 12, // 흐림 효과
             ),
           ],
         ),
@@ -60,7 +64,7 @@ class FriendHelpBtn extends StatelessWidget {
               ),
               child: CircleAvatar(
                 backgroundColor: Colors.grey[300],
-                radius: 32.w, // 프로필 이미지 크기
+                radius: 30.w, // 프로필 이미지 크기
                 backgroundImage: (friend.profilePicture != null &&
                         friend.profilePicture!.isNotEmpty)
                     ? NetworkImage(friend.profilePicture!)
@@ -72,9 +76,9 @@ class FriendHelpBtn extends StatelessWidget {
             Text(
               '''${friend.modifiedNickname}\n 주변 도움 요청''',
               style: const TextStyle(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: AppColors.black,
-                fontSize: 15,
+                fontSize: 14,
                 height: 1.2,
               ),
               textAlign: TextAlign.center,

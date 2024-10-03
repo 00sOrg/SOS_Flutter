@@ -12,7 +12,7 @@ class OverviewContent extends StatelessWidget {
       return const SizedBox.shrink(); // If empty, return an empty widget
     }
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 30),
+      padding: const EdgeInsets.only(left: 10, right: 30, bottom: 40),
       child: Container(
         alignment: Alignment.topLeft,
         child: SizedBox(

@@ -14,7 +14,6 @@ class BoardTagGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> rows = [];
 
     for (int i = 0; i < items.length; i += 3) {
