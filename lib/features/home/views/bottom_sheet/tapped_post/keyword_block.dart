@@ -5,8 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class KeywordBlock extends StatelessWidget {
   final String keyword;
+  final String? mediaUrl;
 
-  const KeywordBlock({super.key, required this.keyword});
+  const KeywordBlock({
+    super.key,
+    required this.keyword,
+    this.mediaUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +21,21 @@ class KeywordBlock extends StatelessWidget {
       decoration: ShapeDecoration(
         color: AppColors.lightBlue,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: (mediaUrl != null &&
+                  mediaUrl!.isNotEmpty) // mediaUrl이 null이 아니고 비어있지 않으면
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                )
+              : BorderRadius.circular(50), // mediaUrl이 없으면 전체에 radius 적용
         ),
-        shadows: [
+        shadows: const [
           BoxShadow(
             color: Color(0x3F000000),
             blurRadius: 4,
             offset: Offset(0, 4),
             spreadRadius: 0,
-          )
+          ),
         ],
       ),
       child: Padding(
@@ -47,8 +58,13 @@ class KeywordBlock extends StatelessWidget {
 
 class EventTypeBlock extends StatelessWidget {
   final String eventType;
+  final String? mediaUrl;
 
-  const EventTypeBlock({super.key, required this.eventType});
+  const EventTypeBlock({
+    super.key,
+    required this.eventType,
+    this.mediaUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,22 +75,28 @@ class EventTypeBlock extends StatelessWidget {
       decoration: ShapeDecoration(
         color: AppColors.blue,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: AppColors.blue),
-          borderRadius: BorderRadius.circular(50),
+          side: const BorderSide(width: 1, color: AppColors.blue),
+          borderRadius: (mediaUrl != null &&
+                  mediaUrl!.isNotEmpty) // mediaUrl이 있으면 왼쪽만 radius 적용
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                )
+              : BorderRadius.circular(50), // mediaUrl이 없으면 전체에 radius 적용
         ),
-        shadows: [
+        shadows: const [
           BoxShadow(
             color: Color(0x3F000000),
             blurRadius: 4,
             offset: Offset(0, 4),
             spreadRadius: 0,
-          )
+          ),
         ],
       ),
       child: Center(
         child: Text(
           postType.koreanName,
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.white,
             fontSize: 14,
             fontWeight: FontWeight.w800,

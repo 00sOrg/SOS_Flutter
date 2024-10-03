@@ -39,7 +39,6 @@ class ImageCheckPage extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
-                      print('hihih');
                     },
                     child: CircleAvatar(
                       backgroundColor: AppColors.black.withOpacity(0.4),

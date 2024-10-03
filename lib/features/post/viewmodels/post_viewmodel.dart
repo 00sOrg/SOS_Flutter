@@ -49,7 +49,7 @@ class PostViewModelNotifier extends StateNotifier<Post?> {
 
   // 게시글 새로고침
   Future<void> refreshPost(int postId) async {
-    await getOnePostById(postId.toString());
+    state = await getOnePostById(postId.toString());
   }
 }
 

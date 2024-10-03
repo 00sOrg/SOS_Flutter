@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sos/features/home/providers/home_repo_provider.dart';
-import 'package:sos/features/home/repositories/home_repository.dart';
+import 'package:sos/features/post/repositories/post_repository.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/services/geolocator_service.dart';
 
@@ -40,10 +39,10 @@ class BottomSheetState {
 }
 
 class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
-  BottomSheetViewModel(this._homeRepository)
+  BottomSheetViewModel(this._postRepository)
       : super(BottomSheetState(nearbyEvents: [], sheetHeight: 0.15));
 
-  final HomeRepository _homeRepository;
+  final PostRepository _postRepository;
   late DraggableScrollableController _scrollableController;
 
   DraggableScrollableController get scrollableController =>
@@ -65,7 +64,7 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
   }
 
   Future<void> fetchNearbyEvents(double lat, double lng) async {
-    final nearbyEvents = await _homeRepository.getAllNearbyPosts(lat, lng);
+    final nearbyEvents = await _postRepository.getAllNearbyPosts(lat, lng);
     if (nearbyEvents != []) {
       state = state.copyWith(
           nearbyEvents: nearbyEvents,
@@ -105,7 +104,7 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
   Future<void> fetchTappedPost(int postId) async {
     setBottomSheetHeight(0.36);
     await Future.delayed(const Duration(milliseconds: 200));
-    final postOverview = await _homeRepository.getPostOverviewById(postId);
+    final postOverview = await _postRepository.getPostOverviewById(postId);
     state = state.copyWith(tappedPost: postOverview, isViewingTappedPost: true);
   }
 
@@ -122,6 +121,6 @@ class BottomSheetViewModel extends StateNotifier<BottomSheetState> {
 
 final bottomSheetViewModelProvider =
     StateNotifierProvider<BottomSheetViewModel, BottomSheetState>((ref) {
-  final homeRepository = ref.watch(homeRepositoryProvider);
+  final homeRepository = ref.watch(postRepositoryProvider);
   return BottomSheetViewModel(homeRepository);
 });

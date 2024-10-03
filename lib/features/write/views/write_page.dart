@@ -26,6 +26,7 @@ class _WritePageState extends ConsumerState<WritePage> {
   final TextEditingController _contentTEC = TextEditingController();
   final FocusNode _contentFocusNode = FocusNode();
   PostType _selectedPostType = PostType.none;
+  bool _isSubmitting = false; // 버튼이 눌렸는지 여부를 추적하는 플래그
 
   @override
   void initState() {
@@ -74,6 +75,28 @@ class _WritePageState extends ConsumerState<WritePage> {
     });
   }
 
+  void _submitPost(AsyncValue<Location> location, WriteViewModel viewModel,
+      BuildContext context) async {
+    if (_isSubmitting) return; // 이미 제출 중이라면 중복 처리 방지
+    setState(() {
+      _isSubmitting = true; // 제출 중 상태로 변경
+    });
+
+    location.whenData((loc) async {
+      await viewModel.submitPost(
+        context: context,
+        title: _titleTEC.text,
+        content: _contentTEC.text,
+        location: loc,
+        type: _selectedPostType,
+      );
+
+      setState(() {
+        _isSubmitting = false; // 제출 완료 후 다시 버튼 활성화
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = ref.watch(writeViewModelProvider.notifier);
@@ -101,19 +124,9 @@ class _WritePageState extends ConsumerState<WritePage> {
                 // if (_contentTEC.text.isNotEmpty) _buildPostTypeButtons(),
                 const SizedBox(height: 25),
                 WriteSubmitBtn(
-                  onTap: () async {
-                    location.whenData(
-                      (loc) {
-                        viewModel.submitPost(
-                          context: context,
-                          title: _titleTEC.text,
-                          content: _contentTEC.text,
-                          location: loc,
-                          type: _selectedPostType,
-                        );
-                      },
-                    );
-                  },
+                  onTap: _isSubmitting // 제출 중일 때는 비활성화
+                      ? () {}
+                      : () => _submitPost(location, viewModel, context),
                 ),
                 const SizedBox(height: 16),
               ],

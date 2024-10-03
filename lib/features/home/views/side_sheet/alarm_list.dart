@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/alarm_viewmodel.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/home/views/side_sheet/alarm_template.dart';
+import 'package:sos/shared/enums/alarm_enum.dart';
 import 'package:sos/shared/models/alarm.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
@@ -25,8 +26,6 @@ class AlarmList extends ConsumerWidget {
           return AlarmTemplate(
             alarm: alarm,
             onTap: () async {
-              debugPrint('Alarm tapped: ${alarm} ');
-
               if (alarm.isRead) {
                 return;
               }
@@ -41,12 +40,21 @@ class AlarmList extends ConsumerWidget {
                   break;
                 case AlarmType.NEARBY_EVENT:
                   // Nearby event logic
+                  ref
+                      .read(alarmViewModelProvider.notifier)
+                      .handleNearbyEvent(context, ref, alarm);
                   break;
                 case AlarmType.HELP_REQUEST:
                   // Help request logic
+                  ref
+                      .read(alarmViewModelProvider.notifier)
+                      .handleHelpRequest(context, ref, alarm);
                   break;
                 case AlarmType.FAVORITE_NEARBY_EVENT:
                   // Favorite nearby event logic
+                  ref
+                      .read(alarmViewModelProvider.notifier)
+                      .handleFavoriteNearbyEvent(context, ref, alarm);
                   break;
               }
             },

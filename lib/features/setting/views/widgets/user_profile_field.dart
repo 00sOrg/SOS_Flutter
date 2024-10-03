@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/viewmodels/user_viewmodel.dart';
 
@@ -8,9 +7,9 @@ class UserProfileField extends ConsumerWidget {
   final VoidCallback onPressed;
 
   const UserProfileField({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

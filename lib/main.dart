@@ -26,20 +26,26 @@ Future<void> _initialize() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  PushNotificationService pushNotificationService = PushNotificationService();
-  await pushNotificationService.init();
+  final container = ProviderContainer();
+  final pushNotificationService = container.read(pushNotificationProvider);
+  await pushNotificationService.preAppInitialization();
+
+  // PushNotificationService pushNotificationService = PushNotificationService();
+  // await pushNotificationService.preAppInitialization();
 
   try {
     await dotenv.load(fileName: '.env');
   } catch (e) {
     LogUtil.e("Could not load .env file: $e");
   }
+
   await NaverMapSdk.instance.initialize(
     clientId: dotenv.env['NAVER_MAP_API_ID']!,
     onAuthFailed: (ex) {
       LogUtil.e("네이버맵 인증오류 : $ex");
     },
   );
+
   await Geolocator.checkPermission();
   await Geolocator.requestPermission();
   final position = await Geolocator.getCurrentPosition(
@@ -56,6 +62,10 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Future.microtask(() {
+      final pushNotificationService = ref.read(pushNotificationProvider);
+      pushNotificationService.postAppInitialization(context, ref);
+    });
     ref.read(loginViewModelProvider.notifier).checkLoginStatus();
     final locationAsyncValue = ref.watch(locationViewModelProvider);
 

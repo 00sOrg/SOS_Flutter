@@ -29,8 +29,12 @@ mixin _$Board {
   String? get media => throw _privateConstructorUsedError;
   List<String>? get keywords => throw _privateConstructorUsedError;
 
+  /// Serializes this Board to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BoardCopyWith<Board> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -60,6 +64,8 @@ class _$BoardCopyWithImpl<$Res, $Val extends Board>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -135,6 +141,8 @@ class __$$BoardImplCopyWithImpl<$Res>
       _$BoardImpl _value, $Res Function(_$BoardImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -247,7 +255,7 @@ class _$BoardImpl implements _Board {
             const DeepCollectionEquality().equals(other._keywords, _keywords));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -260,7 +268,9 @@ class _$BoardImpl implements _Board {
       media,
       const DeepCollectionEquality().hash(_keywords));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BoardImplCopyWith<_$BoardImpl> get copyWith =>
@@ -303,8 +313,11 @@ abstract class _Board implements Board {
   String? get media;
   @override
   List<String>? get keywords;
+
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BoardImplCopyWith<_$BoardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

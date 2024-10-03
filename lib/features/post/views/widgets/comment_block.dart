@@ -16,27 +16,35 @@ class CommentBlock extends StatelessWidget {
         const SizedBox(height: 17),
         Row(
           children: [
-            // 댓글 작성자의 프로필 사진을 원형으로 표시
-            comment.userProfilePictureURL != null &&
-                    comment.userProfilePictureURL!.isNotEmpty
-                ? CircleAvatar(
-                    radius: 18,
-                    backgroundImage:
-                        NetworkImage(comment.userProfilePictureURL!),
-                  )
-                : CircleAvatar(
-                    radius: 18,
-                    backgroundColor: AppColors.lineGray,
-                    child: Image.asset(
-                      'assets/images/default_profile.png',
-                      width: 30,
+            Container(
+              padding: const EdgeInsets.all(2), // 테두리 두께 설정
+              decoration: BoxDecoration(
+                shape: BoxShape.circle, // 원형 모양 유지
+                border: Border.all(
+                  color: AppColors.lightBlue, // 테두리 색상 설정 (파란색)
+                  width: 3, // 테두리 두께 설정 (2짜리)
+                ),
+              ),
+              child: comment.userProfilePictureURL != null &&
+                      comment.userProfilePictureURL!.isNotEmpty
+                  ? CircleAvatar(
+                      radius: 18,
+                      backgroundImage:
+                          NetworkImage(comment.userProfilePictureURL!),
+                    )
+                  : CircleAvatar(
+                      radius: 18,
+                      backgroundColor: AppColors.lineGray,
+                      child: Image.asset(
+                        'assets/images/default_profile.png',
+                        width: 30,
+                      ),
                     ),
-                  ),
+            ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 댓글 작성자의 이름 표시
                 Text(
                   comment.userNickname,
                   style: const TextStyle(
@@ -46,8 +54,7 @@ class CommentBlock extends StatelessWidget {
                     height: 1.2,
                   ),
                 ),
-                const SizedBox(height: 2),
-                // 댓글 작성 시간 표시
+                const SizedBox(height: 3),
                 Text(
                   formatDateTime(comment.createdAt),
                   style: const TextStyle(

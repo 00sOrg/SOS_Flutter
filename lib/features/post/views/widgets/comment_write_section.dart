@@ -4,9 +4,11 @@ import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 
 class CommentWriteSection extends ConsumerStatefulWidget {
-  final int postId; // Accept postId as a parameter
+  final int postId;
+  final String postType;
 
-  const CommentWriteSection({super.key, required this.postId});
+  const CommentWriteSection(
+      {super.key, required this.postId, required this.postType});
 
   @override
   ConsumerState<CommentWriteSection> createState() =>
@@ -18,6 +20,8 @@ class _CommentWriteSectionState extends ConsumerState<CommentWriteSection> {
 
   @override
   Widget build(BuildContext context) {
+    final buttonColor = getTagColor(widget.postType);
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -57,8 +61,8 @@ class _CommentWriteSectionState extends ConsumerState<CommentWriteSection> {
             Container(
               height: 41,
               width: 41,
-              decoration: const BoxDecoration(
-                color: AppColors.blue,
+              decoration: BoxDecoration(
+                color: buttonColor,
                 shape: BoxShape.circle,
               ),
               child: IconButton(
