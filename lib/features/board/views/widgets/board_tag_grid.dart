@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/styles/global_styles.dart';
@@ -16,44 +14,6 @@ class BoardTagGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final List<String> oddItems = [];
-    // final List<String> evenItems = [];
-
-    // for (int i = 0; i < items.length; i++) {
-    //   if (i % 2 == 0) {
-    //     oddItems.add(items[i]);
-    //   } else {
-    //     evenItems.add(items[i]);
-    //   }
-    // }
-
-    // return Column(
-    //   children: [
-    //     Row(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       children: oddItems
-    //           .map(
-    //             (item) => Padding(
-    //               padding: const EdgeInsets.symmetric(horizontal: 5),
-    //               child: tagBlock(text: item),
-    //             ),
-    //           )
-    //           .toList(),
-    //     ),
-    //     const SizedBox(height: 6),
-    //     Row(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       children: evenItems
-    //           .map(
-    //             (item) => Padding(
-    //               padding: const EdgeInsets.symmetric(horizontal: 5),
-    //               child: tagBlock(text: item),
-    //             ),
-    //           )
-    //           .toList(),
-    //     ),
-    //   ],
-    // );
 
     List<Widget> rows = [];
 
@@ -85,13 +45,12 @@ class BoardTagGrid extends StatelessWidget {
   }
 
   Widget tagBlock({Widget? icon, required String text}) {
-    log('6666666666666');
-    log('eventType: $eventType, text: $text, bool: ${text == eventType.koreanName}, color: ${getTagColor(eventType.name)}');
-    final Color tagColor =
-        text == eventType.koreanName ? getTagColor(eventType.name) : AppColors.blue;
+    final Color tagColor = text == eventType.koreanName
+        ? getTagColor(eventType.name)
+        : AppColors.blue;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.9),
       decoration: BoxDecoration(
         // gradient: const LinearGradient(
         //     begin: Alignment.topCenter,
@@ -107,11 +66,9 @@ class BoardTagGrid extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // icon ?? SizedBox.shrink(),
-          const Icon(
-            Icons.house,
-            color: AppColors.white,
-            size: 16, // Icon size
+          Image.asset(
+            getTagIcon(eventType.name, isWhite: true),
+            height: 16,
           ),
           const SizedBox(width: 5),
           Text(
