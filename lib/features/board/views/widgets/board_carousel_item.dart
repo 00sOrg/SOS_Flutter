@@ -19,68 +19,84 @@ class BoardCarouselItem extends StatelessWidget {
       duration: 100,
       scaleValue: 0.98,
       onTap: () => context.push('/post/${board.eventId}'),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: board.media != null && board.media!.isNotEmpty
-                    ? NetworkImage(board.media!)
-                    : const NetworkImage(
-                        'https://sos-khu-backend.s3.ap-northeast-2.amazonaws.com/sos-background.png',
-                      ), //쿠옹이
-                fit: BoxFit.cover,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), // 모서리 둥글게
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withOpacity(0.35),
+              spreadRadius: 3,
+              blurRadius: 7,
+              offset: const Offset(5, 8),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: board.media != null && board.media!.isNotEmpty
+                      ? NetworkImage(board.media!)
+                      : const NetworkImage(
+                          'https://sos-khu-backend.s3.ap-northeast-2.amazonaws.com/sos-background.png',
+                        ), //쿠옹이
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(20),
               ),
-              borderRadius: BorderRadius.circular(20),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: board.media != null && board.media!.isNotEmpty
-                  ? const LinearGradient(
-                      begin: Alignment.center,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black,
-                      ],
-                      stops: [0.1, 1],
-                    )
-                  : null,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: board.media != null && board.media!.isNotEmpty
+                    ? const LinearGradient(
+                        begin: Alignment.center,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black,
+                        ],
+                        stops: [0.1, 1],
+                      )
+                    : null,
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 36),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  board.title,
-                  style: const TextStyle(
-                    color: AppColors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                BoardTagGrid(items: keywords),
-                const SizedBox(height: 12),
-                Text(
-                  board.content ?? '',
-                  style: const TextStyle(
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 36),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    board.title,
+                    style: const TextStyle(
                       color: AppColors.white,
-                      fontSize: 16,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
                       overflow: TextOverflow.ellipsis,
-                      height: 1.2),
-                  maxLines: 3,
-                ),
-              ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  BoardTagGrid(
+                    items: keywords,
+                    eventType: eventType,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    board.content ?? '',
+                    style: const TextStyle(
+                        color: AppColors.white,
+                        fontSize: 16,
+                        overflow: TextOverflow.ellipsis,
+                        height: 1.2),
+                    maxLines: 3,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

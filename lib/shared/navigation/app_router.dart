@@ -143,7 +143,7 @@ class AppRouter {
         //     }),
         GoRoute(
           path: '/board',
-          builder: (context, state) => BoardPage(),
+          builder: (context, state) => const BoardPage(),
         ),
         GoRoute(
           path: '/setting',

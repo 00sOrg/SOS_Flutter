@@ -92,17 +92,16 @@ class SettingPage extends ConsumerWidget {
   }) {
     return InkWell(
       onTap: () => onChanged(!value),
-      borderRadius: BorderRadius.circular(12), // 테두리 둥글게 설정
-      child: Container(
+      borderRadius: BorderRadius.circular(20),
+      child: Ink(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-            horizontal: 16, vertical: 16), // 적절한 패딩 적용
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
-          color: Colors.white, // 배경색
-          borderRadius: BorderRadius.circular(20), // 테두리 둥글게 설정
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: AppColors.textGray.withOpacity(0.1), // 그림자 색상
+              color: AppColors.textGray.withOpacity(0.1),
               spreadRadius: 2,
               blurRadius: 5,
               offset: const Offset(0, 10),
@@ -110,7 +109,7 @@ class SettingPage extends ConsumerWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 텍스트와 스위치 간격 설정
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title,
@@ -136,17 +135,16 @@ class SettingPage extends ConsumerWidget {
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12), // 테두리 둥글게 설정
-      child: Container(
+      borderRadius: BorderRadius.circular(20),
+      child: Ink(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-            horizontal: 16, vertical: 16), // 적절한 패딩 적용
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
-          color: Colors.white, // 배경색
-          borderRadius: BorderRadius.circular(20), // 테두리 둥글게 설정
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: AppColors.textGray.withOpacity(0.1), // 그림자 색상
+              color: AppColors.textGray.withOpacity(0.1),
               spreadRadius: 2,
               blurRadius: 5,
               offset: const Offset(0, 10),
@@ -154,7 +152,7 @@ class SettingPage extends ConsumerWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 텍스트와 아이콘 간격 설정
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title,
@@ -164,8 +162,7 @@ class SettingPage extends ConsumerWidget {
                 height: 1.2,
               ),
             ),
-            const Icon(Icons.arrow_forward_ios,
-                size: 16, color: Colors.grey), // 화살표 아이콘 추가
+            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
           ],
         ),
       ),

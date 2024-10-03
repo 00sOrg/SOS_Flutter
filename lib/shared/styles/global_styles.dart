@@ -97,3 +97,24 @@ Color getTagColor2(String eventType) {
       return const Color.fromARGB(255, 157, 193, 246);
   }
 }
+
+String getTagIcon(String eventType, {bool isWhite = false}) {
+  final suffix = isWhite ? '_white.png' : '.png';
+
+  switch (eventType) {
+    case 'FIRE':
+      return 'assets/icons/post/types/fire_icon$suffix';
+    case 'TYPHOON':
+      return 'assets/icons/post/types/typhoon_icon$suffix';
+    case 'FLOOD':
+      return 'assets/icons/post/types/flood_icon$suffix';
+    case 'WAR':
+      return 'assets/icons/post/types/war_icon$suffix';
+    case 'EARTHQUAKE':
+      return 'assets/icons/post/types/earthquake_icon$suffix';
+    case 'CAR_ACCIDENT':
+      return 'assets/icons/post/types/car_accident_icon$suffix';
+    default:
+      return 'assets/icons/post/types/accident_icon$suffix';
+  }
+}
