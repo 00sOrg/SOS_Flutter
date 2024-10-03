@@ -29,7 +29,7 @@ class HeaderSection extends ConsumerWidget {
             Flexible(
               child: Text(
                 post.title!,
-                overflow: TextOverflow.ellipsis,
+                softWrap: true,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontSize: 24,
