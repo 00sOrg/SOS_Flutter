@@ -10,7 +10,7 @@ class PostRepository {
   final String baseUrl = dotenv.env['BASE_URL']!;
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
-  Future<Post> getOnePostbyId(String postId) async {
+  Future<Post> getOnePostbyId(int postId) async {
     final url = Uri.parse('$baseUrl/events/$postId');
 
     try {
@@ -141,6 +141,36 @@ class PostRepository {
     } catch (e) {
       LogUtil.e('getPostOverviewById 에러: $e');
       return Post(postId: 0, title: '', createdAt: DateTime.now());
+    }
+  }
+
+  Future<bool> deletePostById(int postId) async {
+    final url = Uri.parse('$baseUrl/events/$postId');
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+
+      final response = await makeDeleteRequest(url, "deletePostById",
+          accessToken: accessToken);
+      return response.statusCode == 200;
+    } catch (e) {
+      LogUtil.e('deletePostById 에러: $e');
+      return false;
+    }
+  }
+
+  Future<bool> deleteCommentById(int commentId) async {
+    final url = Uri.parse('$baseUrl/events/comment/$commentId');
+
+    try {
+      final accessToken = await secureStorage.read(key: 'access_token');
+
+      final response = await makeDeleteRequest(url, "deleteCommentById",
+          accessToken: accessToken);
+      return response.statusCode == 200;
+    } catch (e) {
+      LogUtil.e('deleteCommentById 에러: $e');
+      return false;
     }
   }
 }

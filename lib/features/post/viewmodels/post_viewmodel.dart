@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sos/features/post/repositories/post_repository.dart';
 import 'package:sos/shared/models/post.dart';
 
@@ -8,11 +10,9 @@ class PostViewModelNotifier extends StateNotifier<Post?> {
   PostViewModelNotifier(this._postRepository) : super(null);
 
   // 게시글 불러오기
-  Future<Post?> getOnePostById(String id) async {
+  Future<Post?> getOnePostById(int id) async {
     final post = await _postRepository.getOnePostbyId(id);
-    if (post != null) {
-      state = post; // Update the single post state
-    }
+    state = post; // Update the single post state
     return post;
   }
 
@@ -49,7 +49,29 @@ class PostViewModelNotifier extends StateNotifier<Post?> {
 
   // 게시글 새로고침
   Future<void> refreshPost(int postId) async {
-    state = await getOnePostById(postId.toString());
+    state = await getOnePostById(postId);
+  }
+
+  // 게시글 삭제
+  Future<void> deletePost(int postId) async {
+    final success = await _postRepository.deletePostById(postId);
+    if (success) {
+      // 상태를 null로 설정하여 삭제된 게시글을 처리
+      state = null;
+    }
+  }
+
+  // 댓글 삭제
+  Future<void> deleteComment(int postId, int commentId) async {
+    final success = await _postRepository.deleteCommentById(commentId);
+    if (success && state != null) {
+      state = state!.copyWith(commentsCount: state!.commentsCount - 1);
+    }
+  }
+
+  // 홈페이지로 이동
+  void navigateToHome(BuildContext context) {
+    GoRouter.of(context).go('/home');
   }
 }
 
@@ -58,12 +80,11 @@ final postViewModelProvider =
     StateNotifierProvider.family<PostViewModelNotifier, Post?, int>(
         (ref, postId) {
   final postRepository = PostRepository();
-  return PostViewModelNotifier(postRepository)
-    ..getOnePostById(postId.toString());
+  return PostViewModelNotifier(postRepository)..getOnePostById(postId);
 });
 
 // Provider for accessing a single post by ID using FutureProvider
 final postByIdProvider = FutureProvider.family<Post?, int>((ref, postId) async {
   final postViewModel = ref.read(postViewModelProvider(postId).notifier);
-  return postViewModel.getOnePostById(postId.toString());
+  return postViewModel.getOnePostById(postId);
 });

@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/shared/models/comment.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/format_date_time.dart';
 
-class CommentBlock extends StatelessWidget {
+class CommentBlock extends ConsumerWidget {
   final Comment comment;
   final int currentUserId;
+  final int postId; // 게시글 ID 추가
 
-  const CommentBlock(
-      {super.key, required this.comment, required this.currentUserId});
+  const CommentBlock({
+    super.key,
+    required this.comment,
+    required this.currentUserId,
+    required this.postId, // 게시글 ID 추가
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.all(16),
@@ -97,7 +104,7 @@ class CommentBlock extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.more_vert, color: AppColors.textGray),
                   onPressed: () {
-                    _showOptions(context);
+                    _showOptions(context, ref, comment.commentId);
                   },
                 ),
             ],
@@ -120,7 +127,7 @@ class CommentBlock extends StatelessWidget {
   }
 
 // 옵션 아이콘을 눌렀을 때의 동작
-  void _showOptions(BuildContext context) {
+  void _showOptions(BuildContext context, WidgetRef ref, int commentId) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -138,9 +145,15 @@ class CommentBlock extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.delete),
                 title: const Text('삭제'),
-                onTap: () {
+                onTap: () async {
                   Navigator.of(context).pop();
                   // 댓글 삭제 로직
+                  final postViewModel =
+                      ref.read(postViewModelProvider(postId).notifier);
+                  await postViewModel.deleteComment(postId, commentId);
+
+                  // 댓글 삭제 후 새로고침
+                  ref.refresh(postByIdProvider(postId)); // 댓글 삭제 후 상태 새로고침
                 },
               ),
             ],
