@@ -15,61 +15,70 @@ class HeaderSection extends ConsumerWidget {
     super.key,
     required this.post,
     // this.currentUserId,
-    // required this.onDelete,
+    // required this.onDelete,]
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween, // 좌우로 분리
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              post.title!,
-              style: const TextStyle(
-                color: AppColors.black,
-                fontSize: 20,
-                fontFamily: 'Apple SD Gothic Neo',
-                fontWeight: FontWeight.w700,
-                height: 1.2,
+            Flexible(
+              child: Text(
+                post.title!,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                ),
               ),
             ),
-            const SizedBox(height: 2.0),
-            Text(
-              post.roadAddress ?? '',
-              style: const TextStyle(
-                color: AppColors.black,
-                fontSize: 14,
-                fontFamily: 'Apple SD Gothic Neo',
-                fontWeight: FontWeight.w300,
-                height: 1.2,
-              ),
-            ),
-            const SizedBox(height: 2.0),
-            Text(
-              '${formatDateTime(post.createdAt!)} (${formatTimeAgo(post.createdAt!)})',
-              style: const TextStyle(
-                color: AppColors.textGray,
-                fontSize: 11,
-                fontFamily: 'Apple SD Gothic Neo',
-                fontWeight: FontWeight.w300,
-                height: 1.2,
-              ),
+            const SizedBox(width: 4),
+            Image.asset(
+              getTagIcon(post.disasterType!),
+              width: 24,
+              height: 22,
+              fit: BoxFit.contain,
             ),
           ],
         ),
-        // if (currentUserId == post.memberId) // 현재 유저와 작성자가 같을 때만 옵션 아이콘을 보여줌
-        //   IconButton(
-        //     icon: const Icon(Icons.more_vert, color: AppColors.textGray),
-        //     onPressed: () {
-        //       // 옵션 아이콘 클릭 시 행동 정의
-        //       _showOptions(context, post, ref);
-        //     },
-        //   ),
+        const SizedBox(height: 2.0),
+        Text(
+          post.roadAddress ?? '',
+          style: const TextStyle(
+            color: AppColors.black,
+            fontSize: 14,
+            fontFamily: 'Apple SD Gothic Neo',
+            fontWeight: FontWeight.w300,
+            height: 1.2,
+          ),
+        ),
+        const SizedBox(height: 2.0),
+        Text(
+          '${formatDateTime(post.createdAt!)} (${formatTimeAgo(post.createdAt!)})',
+          style: const TextStyle(
+            color: AppColors.textGray,
+            fontSize: 11,
+            fontFamily: 'Apple SD Gothic Neo',
+            fontWeight: FontWeight.w300,
+            height: 1.2,
+          ),
+        ),
       ],
     );
+    // if (currentUserId == post.memberId) // 현재 유저와 작성자가 같을 때만 옵션 아이콘을 보여줌
+    //   IconButton(
+    //     icon: const Icon(Icons.more_vert, color: AppColors.textGray),
+    //     onPressed: () {
+    //       // 옵션 아이콘 클릭 시 행동 정의
+    //       _showOptions(context, post, ref);
+    //     },
+    //   ),
   }
 
   // 옵션 아이콘을 눌렀을 때의 동작
