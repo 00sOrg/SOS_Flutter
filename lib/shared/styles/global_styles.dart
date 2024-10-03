@@ -88,13 +88,13 @@ Color getTagColor2(String eventType) {
     case 'FLOOD':
       return const Color.fromARGB(255, 119, 168, 241);
     case 'WAR':
-      return const Color.fromARGB(255, 147, 236, 140);
+      return const Color.fromARGB(255, 121, 202, 115);
     case 'EARTHQUAKE':
-      return const Color.fromARGB(255, 241, 180, 123);
+      return const Color.fromARGB(255, 230, 172, 118);
     case 'CAR_ACCIDENT':
-      return const Color.fromARGB(255, 71, 209, 196);
+      return const Color.fromARGB(255, 71, 209, 195);
     default:
-      return const Color.fromARGB(255, 157, 193, 246);
+      return const Color.fromARGB(255, 133, 174, 235);
   }
 }
 
