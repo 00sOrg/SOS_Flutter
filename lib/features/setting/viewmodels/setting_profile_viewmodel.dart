@@ -155,6 +155,8 @@ class SettingProfileViewModel extends StateNotifier<User> {
       );
 
       if (success) {
+        await userViewModel.loadUserInfo();
+
         ScaffoldMessenger.of(context).showSnackBar(
           customSnackBar(
             text: '프로필 수정에 성공했습니다.',

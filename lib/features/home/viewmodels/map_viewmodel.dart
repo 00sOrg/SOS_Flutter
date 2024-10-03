@@ -62,7 +62,7 @@ class MapViewModel extends StateNotifier<List<Post>> {
     ScaffoldMessenger.of(context).showSnackBar(
       customSnackBar(
         text:
-            '${friend.nickname}님의 마지막 위치: $address \n 마지막 업데이트 시간: ${formattedDate}',
+            '${friend.nickname}님의 마지막 위치: $address \n마지막 업데이트 시간: $formattedDate',
         backgroundColor: AppColors.blue,
       ),
     );

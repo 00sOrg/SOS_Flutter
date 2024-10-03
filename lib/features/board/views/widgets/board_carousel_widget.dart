@@ -87,21 +87,7 @@ class _CarouselWidgetState extends ConsumerState<BoardCarouselWidget> {
                 padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 33),
                 child: Opacity(
                   opacity: value,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글게
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.black.withOpacity(0.4),
-                          spreadRadius: 3,
-                          blurRadius: 8,
-                          offset: const Offset(6, 20),
-                        ),
-                      ],
-                    ),
-                    child: BoardCarouselItem(board: boardItems[actualIndex]),
-                  ),
-
+                  child: BoardCarouselItem(board: boardItems[actualIndex]),
                   // SizedBox(
                   //   // height: Curves.easeOut.transform(value) * 300,
                   //   // width: Curves.easeOut.transform(value) * 200,
