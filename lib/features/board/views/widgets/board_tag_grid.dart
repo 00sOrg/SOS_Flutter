@@ -48,7 +48,7 @@ class BoardTagGrid extends StatelessWidget {
   Widget tagBlock({Widget? icon, required String text}) {
     final Color tagColor = text == eventType.koreanName
         ? getTagColor(eventType.name)
-        : AppColors.blue;
+        : getTagColor2(eventType.name);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.9),
