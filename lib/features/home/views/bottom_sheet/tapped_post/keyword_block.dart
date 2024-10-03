@@ -6,20 +6,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class KeywordBlock extends StatelessWidget {
   final String keyword;
   final String? mediaUrl;
+  final String eventType;
 
   const KeywordBlock({
     super.key,
     required this.keyword,
     this.mediaUrl,
+    required this.eventType,
   });
 
   @override
   Widget build(BuildContext context) {
+    final color = getTagColor2(eventType);
     return Container(
       width: 162.w,
       height: 28.h,
       decoration: ShapeDecoration(
-        color: AppColors.lightBlue,
+        color: color,
         shape: RoundedRectangleBorder(
           borderRadius: (mediaUrl != null &&
                   mediaUrl!.isNotEmpty) // mediaUrl이 null이 아니고 비어있지 않으면
@@ -73,9 +76,9 @@ class EventTypeBlock extends StatelessWidget {
       width: 162.w,
       height: 28.h,
       decoration: ShapeDecoration(
-        color: AppColors.blue,
+        color: getTagColor(eventType),
         shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 1, color: AppColors.blue),
+          side: BorderSide(width: 1, color: getTagColor(eventType)),
           borderRadius: (mediaUrl != null &&
                   mediaUrl!.isNotEmpty) // mediaUrl이 있으면 왼쪽만 radius 적용
               ? const BorderRadius.only(

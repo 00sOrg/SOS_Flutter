@@ -5,8 +5,14 @@ import 'package:sos/features/post/views/widgets/comment_block.dart';
 class CommentSection extends StatelessWidget {
   final List<Comment>? comments;
   final int? currentUserId;
+  final int postId;
 
-  const CommentSection({super.key, this.comments, this.currentUserId});
+  const CommentSection({
+    super.key,
+    this.comments,
+    this.currentUserId,
+    required this.postId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,8 @@ class CommentSection extends StatelessWidget {
         itemCount: comments!.length,
         itemBuilder: (context, index) {
           final comment = comments![index];
-          return CommentBlock(comment: comment, currentUserId: currentUserId!);
+          return CommentBlock(
+              comment: comment, currentUserId: currentUserId!, postId: postId);
         },
       ),
     );

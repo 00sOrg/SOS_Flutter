@@ -1,21 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/shared/models/post.dart';
 import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/utils/format_date_time.dart';
 import 'package:sos/shared/utils/format_time_ago.dart';
 
-class HeaderSection extends StatelessWidget {
+class HeaderSection extends ConsumerWidget {
   final Post post;
   final int? currentUserId;
+  final VoidCallback onDelete;
 
   const HeaderSection({
     super.key,
     required this.post,
     this.currentUserId,
+    required this.onDelete,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // 좌우로 분리
       children: [
@@ -61,7 +65,7 @@ class HeaderSection extends StatelessWidget {
             icon: const Icon(Icons.more_vert, color: AppColors.textGray),
             onPressed: () {
               // 옵션 아이콘 클릭 시 행동 정의
-              _showOptions(context, post);
+              _showOptions(context, post, ref);
             },
           ),
       ],
@@ -69,7 +73,7 @@ class HeaderSection extends StatelessWidget {
   }
 
   // 옵션 아이콘을 눌렀을 때의 동작
-  void _showOptions(BuildContext context, Post post) {
+  void _showOptions(BuildContext context, Post post, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -80,7 +84,6 @@ class HeaderSection extends StatelessWidget {
                 leading: const Icon(Icons.edit),
                 title: const Text('수정'),
                 onTap: () {
-                  Navigator.of(context).pop();
                   // 수정 동작 구현
                 },
               ),
@@ -89,7 +92,7 @@ class HeaderSection extends StatelessWidget {
                 title: const Text('삭제'),
                 onTap: () {
                   Navigator.of(context).pop();
-                  // 삭제 동작 구현
+                  onDelete(); // 삭제 콜백 실행
                 },
               ),
             ],
