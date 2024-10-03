@@ -8,6 +8,7 @@ part 'post.g.dart';
 @freezed
 class Post with _$Post {
   factory Post({
+    int? memberId,
     @JsonKey(name: 'id') required int postId,
     @JsonKey(name: 'title') String? title,
     @JsonKey(name: 'memberNickname') String? userNickname,

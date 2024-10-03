@@ -21,7 +21,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
 //member info
-  int? get id => throw _privateConstructorUsedError;
+  int? get memberId => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get password =>
       throw _privateConstructorUsedError; //Todo: 비밀번호는 필요한가?
@@ -59,7 +59,7 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {int? id,
+      {int? memberId,
       String? email,
       String? password,
       String? name,
@@ -95,7 +95,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? memberId = freezed,
     Object? email = freezed,
     Object? password = freezed,
     Object? name = freezed,
@@ -116,9 +116,9 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      memberId: freezed == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as int?,
       email: freezed == email
           ? _value.email
@@ -204,7 +204,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? id,
+      {int? memberId,
       String? email,
       String? password,
       String? name,
@@ -237,7 +237,7 @@ class __$$UserImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? memberId = freezed,
     Object? email = freezed,
     Object? password = freezed,
     Object? name = freezed,
@@ -258,9 +258,9 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
   }) {
     return _then(_$UserImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      memberId: freezed == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as int?,
       email: freezed == email
           ? _value.email
@@ -342,7 +342,7 @@ class __$$UserImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserImpl implements _User {
   _$UserImpl(
-      {this.id,
+      {this.memberId,
       this.email,
       this.password,
       this.name,
@@ -367,7 +367,7 @@ class _$UserImpl implements _User {
 
 //member info
   @override
-  final int? id;
+  final int? memberId;
   @override
   final String? email;
   @override
@@ -410,7 +410,7 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, password: $password, name: $name, nickname: $nickname, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, sex: $sex, birthDate: $birthDate, profilePicture: $profilePicture, height: $height, weight: $weight, bloodType: $bloodType, disease: $disease, medication: $medication, address: $address, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'User(memberId: $memberId, email: $email, password: $password, name: $name, nickname: $nickname, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, sex: $sex, birthDate: $birthDate, profilePicture: $profilePicture, height: $height, weight: $weight, bloodType: $bloodType, disease: $disease, medication: $medication, address: $address, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -418,7 +418,8 @@ class _$UserImpl implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
@@ -454,7 +455,7 @@ class _$UserImpl implements _User {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        id,
+        memberId,
         email,
         password,
         name,
@@ -493,7 +494,7 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   factory _User(
-      {final int? id,
+      {final int? memberId,
       final String? email,
       final String? password,
       final String? name,
@@ -517,7 +518,7 @@ abstract class _User implements User {
 
 //member info
   @override
-  int? get id;
+  int? get memberId;
   @override
   String? get email;
   @override

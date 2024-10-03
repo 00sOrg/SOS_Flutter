@@ -8,6 +8,8 @@ import 'package:sos/features/post/views/widgets/emergency_respose_popup.dart';
 import 'package:sos/features/post/views/widgets/user_profile_section.dart';
 import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/viewmodels/user_viewmodel.dart';
+import 'package:sos/shared/widgets/animated_button.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
 import 'widgets/header_section.dart';
 import 'widgets/image_section.dart';
@@ -17,7 +19,7 @@ import 'widgets/comment_section.dart';
 import 'package:sos/features/post/views/widgets/post_badge.dart';
 
 class PostPage extends ConsumerWidget {
-  final int postId; // 게시글 ID를 받는 변수
+  final int postId;
 
   const PostPage({super.key, required this.postId});
 
@@ -25,6 +27,10 @@ class PostPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final postAsync = ref.watch(postByIdProvider(postId));
     final postViewModel = ref.watch(postViewModelProvider(postId).notifier);
+
+    final user = ref.watch(userViewModelProvider);
+
+    debugPrint('Current User ID: ${user.memberId}');
 
     return KeyboardDismisser(
       child: Scaffold(
@@ -37,6 +43,8 @@ class PostPage extends ConsumerWidget {
             if (post == null) {
               return const Center(child: Text('No post found'));
             }
+            final currentUserId = user.memberId;
+
             return Stack(
               children: [
                 Container(
@@ -67,19 +75,19 @@ class PostPage extends ConsumerWidget {
                     await postViewModel.refreshPost(postId);
                   },
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                     decoration: const BoxDecoration(
                       color: AppColors.white, // 배경색 설정
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20), // 왼쪽 상단 모서리 둥글게
-                        topRight: Radius.circular(20), // 오른쪽 상단 모서리 둥글게
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: Color.fromARGB(60, 0, 0, 0),
                           spreadRadius: 2,
-                          blurRadius: 10,
-                          offset: Offset(0, 4), // 살짝 떠 있는 효과
+                          blurRadius: 4,
+                          offset: Offset(2, -4), // 살짝 떠 있는 효과
                         ),
                       ],
                     ),
@@ -87,15 +95,16 @@ class PostPage extends ConsumerWidget {
                       // padding: const EdgeInsets.fromLTRB(20, 18, 20, 80),
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
                           child: Column(
                             children: [
                               PostBadge(post: post),
                               const SizedBox(height: 2),
-                              HeaderSection(post: post),
-                              const SizedBox(height: 14),
+                              HeaderSection(
+                                  post: post, currentUserId: currentUserId),
+                              const SizedBox(height: 10),
                               UserProfileSection(post: post),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 12),
                               ImageSection(post: post),
                               const SizedBox(height: 16),
                               ContentSection(post: post),
@@ -107,10 +116,13 @@ class PostPage extends ConsumerWidget {
                         ),
                         const Divider(
                           height: 1,
-                          thickness: 1,
+                          thickness: 4,
                           color: AppColors.lineGray,
                         ),
-                        CommentSection(comments: post.comments),
+                        CommentSection(
+                          comments: post.comments,
+                          currentUserId: currentUserId,
+                        ),
                         const SizedBox(height: 80),
                       ],
                     ),
@@ -126,7 +138,7 @@ class PostPage extends ConsumerWidget {
                 Positioned(
                   right: 20, // 오른쪽 여백
                   bottom: 130, // 버튼의 세로 위치
-                  child: GestureDetector(
+                  child: AnimatedButton(
                     onTap: () {
                       showDialog(
                         context: context,
@@ -134,7 +146,7 @@ class PostPage extends ConsumerWidget {
                           return EmergencyResponse(
                             eventType:
                                 getPostTypeFromString(post.disasterType!),
-                          ); // PostType에 맞는 팝업 호출
+                          );
                         },
                       );
                     },
