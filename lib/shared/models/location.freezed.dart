@@ -25,12 +25,8 @@ mixin _$Location {
   String get adminAddress => throw _privateConstructorUsedError;
   String get roadAddress => throw _privateConstructorUsedError;
 
-  /// Serializes this Location to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $LocationCopyWith<Location> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -57,8 +53,6 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -111,8 +105,6 @@ class __$$LocationImplCopyWithImpl<$Res>
       _$LocationImpl _value, $Res Function(_$LocationImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -183,14 +175,12 @@ class _$LocationImpl implements _Location {
                 other.roadAddress == roadAddress));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, latitude, longitude, adminAddress, roadAddress);
 
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
@@ -222,11 +212,8 @@ abstract class _Location implements Location {
   String get adminAddress;
   @override
   String get roadAddress;
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

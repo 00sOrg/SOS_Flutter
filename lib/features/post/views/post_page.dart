@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +9,10 @@ import 'package:sos/features/post/views/widgets/emergency_respose_popup.dart';
 import 'package:sos/features/post/views/widgets/user_profile_section.dart';
 import 'package:sos/shared/enums/type_enum.dart';
 import 'package:sos/shared/styles/global_styles.dart';
+import 'package:sos/shared/viewmodels/user_viewmodel.dart';
+import 'package:sos/shared/widgets/animated_button.dart';
 import 'package:sos/shared/widgets/custom_app_bar.dart';
+import '../../setting/views/widgets/setting_modal.dart';
 import 'widgets/header_section.dart';
 import 'widgets/image_section.dart';
 import 'widgets/content_section.dart';
@@ -16,15 +20,36 @@ import 'widgets/like_and_comment_section.dart';
 import 'widgets/comment_section.dart';
 import 'package:sos/features/post/views/widgets/post_badge.dart';
 
-class PostPage extends ConsumerWidget {
-  final int postId; // 게시글 ID를 받는 변수
+class PostPage extends ConsumerStatefulWidget {
+  final int postId;
 
   const PostPage({super.key, required this.postId});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final postAsync = ref.watch(postByIdProvider(postId));
-    final postViewModel = ref.watch(postViewModelProvider(postId).notifier);
+  _PostPageState createState() => _PostPageState();
+}
+
+class _PostPageState extends ConsumerState<PostPage> {
+  @override
+  void initState() {
+    super.initState();
+    // 페이지가 로드될 때마다 새로고침
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(postViewModelProvider(widget.postId).notifier)
+          .getOnePostById(widget.postId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final postAsync = ref.watch(postByIdProvider(widget.postId));
+    final postViewModel =
+        ref.watch(postViewModelProvider(widget.postId).notifier);
+
+    final user = ref.watch(userViewModelProvider);
+
+    debugPrint('Current User ID: ${user.memberId}');
 
     return KeyboardDismisser(
       child: Scaffold(
@@ -37,6 +62,8 @@ class PostPage extends ConsumerWidget {
             if (post == null) {
               return const Center(child: Text('No post found'));
             }
+            final currentUserId = user.memberId;
+
             return Stack(
               children: [
                 Container(
@@ -64,38 +91,49 @@ class PostPage extends ConsumerWidget {
                 ),
                 RefreshIndicator.adaptive(
                   onRefresh: () async {
-                    await postViewModel.refreshPost(postId);
+                    await postViewModel.refreshPost(widget.postId);
                   },
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                     decoration: const BoxDecoration(
                       color: AppColors.white, // 배경색 설정
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20), // 왼쪽 상단 모서리 둥글게
-                        topRight: Radius.circular(20), // 오른쪽 상단 모서리 둥글게
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: Color.fromARGB(60, 0, 0, 0),
                           spreadRadius: 2,
-                          blurRadius: 10,
-                          offset: Offset(0, 4), // 살짝 떠 있는 효과
+                          blurRadius: 4,
+                          offset: Offset(2, -4), // 살짝 떠 있는 효과
                         ),
                       ],
                     ),
                     child: ListView(
-                      // padding: const EdgeInsets.fromLTRB(20, 18, 20, 80),
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
                           child: Column(
                             children: [
                               PostBadge(post: post),
                               const SizedBox(height: 2),
-                              HeaderSection(post: post),
-                              const SizedBox(height: 14),
+                              HeaderSection(
+                                post: post,
+                                currentUserId: currentUserId,
+                                onDelete: () async {
+                                  final shouldDelete =
+                                      await _showDeleteConfirmation(context);
+                                  if (shouldDelete) {
+                                    await postViewModel
+                                        .deletePost(widget.postId);
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 10),
                               UserProfileSection(post: post),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 12),
                               ImageSection(post: post),
                               const SizedBox(height: 16),
                               ContentSection(post: post),
@@ -107,10 +145,14 @@ class PostPage extends ConsumerWidget {
                         ),
                         const Divider(
                           height: 1,
-                          thickness: 1,
+                          thickness: 4,
                           color: AppColors.lineGray,
                         ),
-                        CommentSection(comments: post.comments),
+                        CommentSection(
+                          comments: post.comments,
+                          currentUserId: currentUserId,
+                          postId: post.postId,
+                        ),
                         const SizedBox(height: 80),
                       ],
                     ),
@@ -124,9 +166,9 @@ class PostPage extends ConsumerWidget {
                       postId: post.postId, postType: post.disasterType!),
                 ),
                 Positioned(
-                  right: 20, // 오른쪽 여백
-                  bottom: 130, // 버튼의 세로 위치
-                  child: GestureDetector(
+                  right: 20,
+                  bottom: 130,
+                  child: AnimatedButton(
                     onTap: () {
                       showDialog(
                         context: context,
@@ -134,7 +176,7 @@ class PostPage extends ConsumerWidget {
                           return EmergencyResponse(
                             eventType:
                                 getPostTypeFromString(post.disasterType!),
-                          ); // PostType에 맞는 팝업 호출
+                          );
                         },
                       );
                     },
@@ -155,8 +197,8 @@ class PostPage extends ConsumerWidget {
                       ),
                       child: Center(
                         child: Image.asset(
-                          'assets/icons/home/F-Megaphone.png', // 아이콘 경로
-                          width: 44, // 아이콘 크기 설정
+                          'assets/icons/home/F-Megaphone.png',
+                          width: 44,
                           height: 44,
                           fit: BoxFit.cover,
                         ),
@@ -172,5 +214,24 @@ class PostPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> _showDeleteConfirmation(BuildContext context) async {
+    return await showCupertinoDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return SettingModal(
+              title: '게시글 삭제',
+              content: '정말로 이 게시글을 삭제하시겠습니까?',
+              leftBtn: '취소',
+              rightBtn: '삭제',
+              rightBtnColor: Colors.red,
+              onRightBtnPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            );
+          },
+        ) ??
+        false;
   }
 }

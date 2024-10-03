@@ -21,7 +21,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
 //member info
-  int? get id => throw _privateConstructorUsedError;
+  int? get memberId => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get password =>
       throw _privateConstructorUsedError; //Todo: 비밀번호는 필요한가?
@@ -44,12 +44,8 @@ mixin _$User {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
-  /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -59,7 +55,7 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {int? id,
+      {int? memberId,
       String? email,
       String? password,
       String? name,
@@ -90,12 +86,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? memberId = freezed,
     Object? email = freezed,
     Object? password = freezed,
     Object? name = freezed,
@@ -116,9 +110,9 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      memberId: freezed == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as int?,
       email: freezed == email
           ? _value.email
@@ -204,7 +198,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? id,
+      {int? memberId,
       String? email,
       String? password,
       String? name,
@@ -232,12 +226,10 @@ class __$$UserImplCopyWithImpl<$Res>
   __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? memberId = freezed,
     Object? email = freezed,
     Object? password = freezed,
     Object? name = freezed,
@@ -258,9 +250,9 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
   }) {
     return _then(_$UserImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      memberId: freezed == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as int?,
       email: freezed == email
           ? _value.email
@@ -342,7 +334,7 @@ class __$$UserImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserImpl implements _User {
   _$UserImpl(
-      {this.id,
+      {this.memberId,
       this.email,
       this.password,
       this.name,
@@ -367,7 +359,7 @@ class _$UserImpl implements _User {
 
 //member info
   @override
-  final int? id;
+  final int? memberId;
   @override
   final String? email;
   @override
@@ -410,7 +402,7 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, password: $password, name: $name, nickname: $nickname, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, sex: $sex, birthDate: $birthDate, profilePicture: $profilePicture, height: $height, weight: $weight, bloodType: $bloodType, disease: $disease, medication: $medication, address: $address, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'User(memberId: $memberId, email: $email, password: $password, name: $name, nickname: $nickname, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, sex: $sex, birthDate: $birthDate, profilePicture: $profilePicture, height: $height, weight: $weight, bloodType: $bloodType, disease: $disease, medication: $medication, address: $address, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -418,7 +410,8 @@ class _$UserImpl implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
@@ -450,11 +443,11 @@ class _$UserImpl implements _User {
                 other.updatedAt == updatedAt));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        id,
+        memberId,
         email,
         password,
         name,
@@ -475,9 +468,7 @@ class _$UserImpl implements _User {
         updatedAt
       ]);
 
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
@@ -493,7 +484,7 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   factory _User(
-      {final int? id,
+      {final int? memberId,
       final String? email,
       final String? password,
       final String? name,
@@ -515,14 +506,13 @@ abstract class _User implements User {
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
-//member info
-  @override
-  int? get id;
+  @override //member info
+  int? get memberId;
   @override
   String? get email;
   @override
-  String? get password; //Todo: 비밀번호는 필요한가?
-  @override
+  String? get password;
+  @override //Todo: 비밀번호는 필요한가?
   String? get name;
   @override
   String? get nickname;
@@ -531,9 +521,9 @@ abstract class _User implements User {
   @override
   double? get latitude;
   @override
-  double? get longitude; // String? device,
+  double? get longitude;
+  @override // String? device,
 //member detail info
-  @override
   String? get sex;
   @override
   DateTime? get birthDate;
@@ -555,11 +545,8 @@ abstract class _User implements User {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
-
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

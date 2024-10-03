@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sos/features/home/viewmodels/mapController_viewmodel.dart';
 import 'package:sos/features/home/viewmodels/map_viewmodel.dart';
+import 'package:sos/shared/styles/global_styles.dart';
 import 'package:sos/shared/viewmodels/friend_viewmodel.dart';
 
 class FavoritesDropdown extends ConsumerWidget {
@@ -16,7 +17,7 @@ class FavoritesDropdown extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-          color: const Color(0xFFDADADA).withOpacity(0.7),
+          color: AppColors.white.withOpacity(0.8),
           borderRadius: BorderRadius.circular(10)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -28,7 +29,15 @@ class FavoritesDropdown extends ConsumerWidget {
                     child: Container(
                       height: 35,
                       alignment: Alignment.center,
-                      child: Text(friend.nickname), // 친구의 닉네임을 표시
+                      child: Text(
+                        friend.nickname,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontFamily: 'Apple SD Gothic Neo',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ), // 친구의 닉네임을 표시
                     ),
                     onTap: () {
                       if (naverMapController != null) {

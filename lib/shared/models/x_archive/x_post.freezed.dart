@@ -28,12 +28,8 @@ mixin _$XPost {
   String get content => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
-  /// Serializes this XPost to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of XPost
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $XPostCopyWith<XPost> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -62,8 +58,6 @@ class _$XPostCopyWithImpl<$Res, $Val extends XPost>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of XPost
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,8 +127,6 @@ class __$$XPostImplCopyWithImpl<$Res>
       _$XPostImpl _value, $Res Function(_$XPostImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of XPost
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -230,14 +222,12 @@ class _$XPostImpl implements _XPost {
                 other.createdAt == createdAt));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, title, address, category, image, content, createdAt);
 
-  /// Create a copy of XPost
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$XPostImplCopyWith<_$XPostImpl> get copyWith =>
@@ -277,11 +267,8 @@ abstract class _XPost implements XPost {
   String get content;
   @override
   DateTime get createdAt;
-
-  /// Create a copy of XPost
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$XPostImplCopyWith<_$XPostImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

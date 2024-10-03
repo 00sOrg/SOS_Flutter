@@ -136,7 +136,7 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
     final user = await userRepository.getUserByNickname(text);
 
     // 검색했는데 사용자가 없는 경우
-    if (user.id == -1) {
+    if (user.memberId == -1) {
       debugPrint('검색 결과 없음');
       _searchedUser = Friend(
         favoriteMemberId: -1,
@@ -145,7 +145,7 @@ class SettingFavoriteViewModel extends StateNotifier<List<Friend>> {
       );
     } else {
       _searchedUser = Friend(
-        favoriteMemberId: user.id!,
+        favoriteMemberId: user.memberId!,
         nickname: user.nickname!,
         modifiedNickname: user.nickname!,
         profilePicture: user.profilePicture,

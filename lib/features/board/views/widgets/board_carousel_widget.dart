@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/board/views/widgets/board_carousel_item.dart';
-import 'package:sos/shared/styles/global_styles.dart';
-
 class BoardCarouselWidget extends ConsumerStatefulWidget {
   const BoardCarouselWidget({super.key});
 

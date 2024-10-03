@@ -30,9 +30,13 @@ class _CommentWriteSectionState extends ConsumerState<CommentWriteSection> {
             offset: const Offset(0, 3),
             color: AppColors.black.withOpacity(0.20),
             blurRadius: 3,
-            spreadRadius: 2,
+            spreadRadius: 4,
           ),
         ],
+        // borderRadius: BorderRadius.only(
+        //   topLeft: Radius.circular(20), // 왼쪽 상단 모서리 둥글게
+        //   topRight: Radius.circular(20), // 오른쪽 상단 모서리 둥글게
+        // ),
       ),
       padding: const EdgeInsets.fromLTRB(16, 14, 13, 14),
       child: SafeArea(

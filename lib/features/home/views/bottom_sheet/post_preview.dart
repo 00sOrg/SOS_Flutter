@@ -44,19 +44,6 @@ class PostPreview extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // 왼쪽 색상 바 추가
-              Container(
-                margin: const EdgeInsets.only(left: 1),
-                width: 5, // 너비를 5로 설정
-                height: 120, // 높이는 부모 높이에 맞게 설정
-                decoration: BoxDecoration(
-                  color: getTagColor(event.disasterType!), // 태그 색상에 맞게 설정
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    bottomLeft: Radius.circular(12),
-                  ),
-                ),
-              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -70,25 +57,18 @@ class PostPreview extends StatelessWidget {
                               height: 118,
                               margin: const EdgeInsets.only(right: 15),
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(8),
-                                  bottomRight: Radius.circular(8),
-                                ),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8)),
                                 image: DecorationImage(
                                   image: NetworkImage(event.mediaURL!),
                                   fit: BoxFit.cover,
                                 ),
                                 border: Border(
-                                  // top: BorderSide(
-                                  //   color: getTagColor(
-                                  //       event.disasterType!), // 위 테두리 색상
-                                  //   width: 3, // 테두리 두께
-                                  // ),
-                                  // bottom: BorderSide(
-                                  //   color: getTagColor(
-                                  //       event.disasterType!), // 아래 테두리 색상
-                                  //   width: 3, // 테두리 두께
-                                  // ),
+                                  left: BorderSide(
+                                    color: getTagColor(event.disasterType!)
+                                        .withOpacity(0.8),
+                                    width: 5, // 테두리 두께
+                                  ),
                                   right: BorderSide(
                                     color: getTagColor(event.disasterType!)
                                         .withOpacity(0.8), // 오른쪽 테두리 색상
@@ -97,7 +77,20 @@ class PostPreview extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : const SizedBox(width: 15),
+                          : // 왼쪽 색상 바 추가
+                          Container(
+                              margin: const EdgeInsets.only(left: 1, right: 15),
+                              width: 5, // 너비를 5로 설정
+                              height: 120, // 높이는 부모 높이에 맞게 설정
+                              decoration: BoxDecoration(
+                                color: getTagColor(
+                                    event.disasterType!), // 태그 색상에 맞게 설정
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  bottomLeft: Radius.circular(12),
+                                ),
+                              ),
+                            ),
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

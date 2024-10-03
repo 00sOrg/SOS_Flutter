@@ -20,6 +20,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Post {
+  int? get memberId => throw _privateConstructorUsedError;
   @JsonKey(name: 'id')
   int get postId => throw _privateConstructorUsedError;
   @JsonKey(name: 'title')
@@ -50,12 +51,8 @@ mixin _$Post {
   List<String>? get keywords => throw _privateConstructorUsedError;
   List<Comment>? get comments => throw _privateConstructorUsedError;
 
-  /// Serializes this Post to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $PostCopyWith<Post> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -65,7 +62,8 @@ abstract class $PostCopyWith<$Res> {
       _$PostCopyWithImpl<$Res, Post>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int postId,
+      {int? memberId,
+      @JsonKey(name: 'id') int postId,
       @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'memberNickname') String? userNickname,
       @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
@@ -94,11 +92,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? memberId = freezed,
     Object? postId = null,
     Object? title = freezed,
     Object? userNickname = freezed,
@@ -118,6 +115,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? comments = freezed,
   }) {
     return _then(_value.copyWith(
+      memberId: freezed == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
+              as int?,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -198,7 +199,8 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int postId,
+      {int? memberId,
+      @JsonKey(name: 'id') int postId,
       @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'memberNickname') String? userNickname,
       @JsonKey(name: 'memberProfile') String? userProfilePictureURL,
@@ -224,11 +226,10 @@ class __$$PostImplCopyWithImpl<$Res>
   __$$PostImplCopyWithImpl(_$PostImpl _value, $Res Function(_$PostImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? memberId = freezed,
     Object? postId = null,
     Object? title = freezed,
     Object? userNickname = freezed,
@@ -248,6 +249,10 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? comments = freezed,
   }) {
     return _then(_$PostImpl(
+      memberId: freezed == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
+              as int?,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -324,7 +329,8 @@ class __$$PostImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PostImpl implements _Post {
   _$PostImpl(
-      {@JsonKey(name: 'id') required this.postId,
+      {this.memberId,
+      @JsonKey(name: 'id') required this.postId,
       @JsonKey(name: 'title') this.title,
       @JsonKey(name: 'memberNickname') this.userNickname,
       @JsonKey(name: 'memberProfile') this.userProfilePictureURL,
@@ -347,6 +353,8 @@ class _$PostImpl implements _Post {
   factory _$PostImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostImplFromJson(json);
 
+  @override
+  final int? memberId;
   @override
   @JsonKey(name: 'id')
   final int postId;
@@ -411,7 +419,7 @@ class _$PostImpl implements _Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, title: $title, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, content: $content, mediaURL: $mediaURL, roadAddress: $roadAddress, likesCount: $likesCount, commentsCount: $commentsCount, isLiked: $isLiked, createdAt: $createdAt, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, disasterType: $disasterType, keywords: $keywords, comments: $comments)';
+    return 'Post(memberId: $memberId, postId: $postId, title: $title, userNickname: $userNickname, userProfilePictureURL: $userProfilePictureURL, content: $content, mediaURL: $mediaURL, roadAddress: $roadAddress, likesCount: $likesCount, commentsCount: $commentsCount, isLiked: $isLiked, createdAt: $createdAt, latitude: $latitude, longitude: $longitude, disasterLevel: $disasterLevel, disasterType: $disasterType, keywords: $keywords, comments: $comments)';
   }
 
   @override
@@ -419,6 +427,8 @@ class _$PostImpl implements _Post {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PostImpl &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
             (identical(other.postId, postId) || other.postId == postId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.userNickname, userNickname) ||
@@ -449,10 +459,11 @@ class _$PostImpl implements _Post {
             const DeepCollectionEquality().equals(other._comments, _comments));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      memberId,
       postId,
       title,
       userNickname,
@@ -471,9 +482,7 @@ class _$PostImpl implements _Post {
       const DeepCollectionEquality().hash(_keywords),
       const DeepCollectionEquality().hash(_comments));
 
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PostImplCopyWith<_$PostImpl> get copyWith =>
@@ -489,7 +498,8 @@ class _$PostImpl implements _Post {
 
 abstract class _Post implements Post {
   factory _Post(
-      {@JsonKey(name: 'id') required final int postId,
+      {final int? memberId,
+      @JsonKey(name: 'id') required final int postId,
       @JsonKey(name: 'title') final String? title,
       @JsonKey(name: 'memberNickname') final String? userNickname,
       @JsonKey(name: 'memberProfile') final String? userProfilePictureURL,
@@ -509,6 +519,8 @@ abstract class _Post implements Post {
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
 
+  @override
+  int? get memberId;
   @override
   @JsonKey(name: 'id')
   int get postId;
@@ -555,11 +567,8 @@ abstract class _Post implements Post {
   List<String>? get keywords;
   @override
   List<Comment>? get comments;
-
-  /// Create a copy of Post
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PostImplCopyWith<_$PostImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -19,14 +19,14 @@ class UserRepository {
         accessToken: accessToken);
 
     if (response.statusCode != 200) {
-      return User(id: -1, nickname: '사용자 없음');
+      return User(memberId: -1, nickname: '사용자 없음');
     }
 
     final jsonResponse = jsonDecode(response.body);
     final userData = jsonResponse['data'];
 
     final user = User(
-      id: userData['memberId'] as int,
+      memberId: userData['memberId'] as int,
       nickname: userData['memberNickname'] as String,
       profilePicture: userData['memberProfile'] as String?,
       address: userData['address'] as String,
@@ -71,7 +71,7 @@ class UserRepository {
       return user;
     } catch (e) {
       LogUtil.e('getUserById 에러: $e');
-      return User(id: -1, nickname: '사용자 없음');
+      return User(memberId: -1, nickname: '사용자 없음');
     }
   }
 
@@ -89,7 +89,7 @@ class UserRepository {
       return user;
     } catch (e) {
       LogUtil.e('getUserDetail 에러: $e');
-      return User(id: -1, nickname: '사용자 없음');
+      return User(memberId: -1, nickname: '사용자 없음');
     }
   }
 }
