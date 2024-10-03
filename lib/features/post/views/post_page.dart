@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:sos/features/board/viewmodels/board_viewmodel.dart';
 import 'package:sos/features/post/viewmodels/post_viewmodel.dart';
 import 'package:sos/features/post/views/widgets/comment_write_section.dart';
 import 'package:sos/features/post/views/widgets/emergency_respose_popup.dart';
@@ -31,6 +32,8 @@ class PostPage extends ConsumerStatefulWidget {
 }
 
 class _PostPageState extends ConsumerState<PostPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +57,7 @@ class _PostPageState extends ConsumerState<PostPage> {
 
     return KeyboardDismisser(
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: _postAppBar(context, postAsync, ref, user.memberId ?? -1),
         body: postAsync.when(
           data: (post) {
@@ -232,36 +236,46 @@ class _PostPageState extends ConsumerState<PostPage> {
   }
 
   void _showOptions(BuildContext context, Post post, WidgetRef ref) {
-    showModalBottomSheet(
+    showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) {
         final postViewModel =
             ref.watch(postViewModelProvider(widget.postId).notifier);
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.edit),
-                title: const Text('수정'),
-                onTap: () {
-                  // 수정 동작 구현
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.delete),
-                title: const Text('삭제'),
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  {
-                    final shouldDelete = await _showDeleteConfirmation(context);
-                    if (shouldDelete) {
-                      await postViewModel.deletePost(widget.postId);
-                      Navigator.of(context).pop();
+        return CupertinoActionSheet(
+          actions: <CupertinoActionSheetAction>[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // 수정 동작 구현
+              },
+              child: const Text('수정'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () async {
+                Navigator.of(context).pop();
+
+                final shouldDelete = await _showDeleteConfirmation(context);
+
+                if (shouldDelete) {
+                  await postViewModel.deletePost(widget.postId);
+                  ref.read(boardViewModelProvider.notifier).refreshBoard();
+
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (_scaffoldKey.currentState?.mounted ?? false) {
+                      GoRouter.of(_scaffoldKey.currentContext!).pop();
                     }
-                  }
-                },
-              ),
-            ],
+                  });
+                }
+              },
+              isDestructiveAction: true,
+              child: const Text('삭제'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('취소'),
           ),
         );
       },
