@@ -8,7 +8,7 @@ part 'user.g.dart';
 class User with _$User {
   factory User({
     //member info
-    int? id,
+    int? memberId,
     String? email,
     String? password, //Todo: 비밀번호는 필요한가?
     String? name,

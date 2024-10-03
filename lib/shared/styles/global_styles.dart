@@ -70,7 +70,7 @@ Color getTagColor(String eventType) {
       return const Color(0xFF0046AE);
     case 'WAR':
       return const Color(0xFF16AE0B);
-    case 'OTHER':
+    case 'EARTHQUAKE':
       return const Color(0xFFF28C2C);
     case 'CAR_ACCIDENT':
       return const Color(0xFF00A392);
